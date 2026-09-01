@@ -173,3 +173,16 @@ body {
   .nav { display: none; }
   .brand__name small { display: none; }
 }
+
+/* ---------- 工具页主体布局（左工作区 + 右设置面板，两列网格） ---------- */
+.tool-intro { padding: 22px 20px 8px; flex-shrink: 0; }
+.tool-body {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 360px;
+  overflow: hidden;
+}
+@media (max-width: 1080px) {
+  .tool-body { grid-template-columns: 1fr; overflow: visible; }
+}

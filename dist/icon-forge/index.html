@@ -148,14 +148,14 @@
   /* ============ 主布局：工作区 + 设置面板 ============ */
   main {
     flex: 1;
-    min-height: 0;            /* 允许网格子项收缩并内部滚动，避免底部被裁切导致“显示不全” */
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) 360px;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
     overflow: hidden;
   }
   /* 中屏及以下：改为竖排，整页自然滚动，不再依赖两侧内部滚动，彻底杜绝“显示不全” */
   @media (max-width: 1080px) {
-    main { grid-template-columns: 1fr; overflow: visible; }
+    main { overflow: visible; }
     .workspace { height: auto; overflow: visible; }
     .panel { height: auto; border-left: none; border-top: 1px solid var(--border); }
     .panel-scroll { overflow: visible; }
@@ -433,14 +433,19 @@
     </button>
   </header>
 
-  <!-- 主界面布局 -->
+  <!-- 主界面布局：介绍区 + 工具主体 -->
   <main>
-    <nav class="breadcrumb"><a href="/" data-i18n="crumb_home">首页</a><span class="sep">/</span><span data-i18n="if_name">图标工坊 IconForge</span></nav>
-    <h1 class="page-h1" data-i18n="if_name">图标工坊 IconForge</h1>
-    <p class="page-sub" data-i18n="if_desc">上传 Logo，一键导出多尺寸 ICO / PNG / favicon（Light &amp; Dark 双主题）。</p>
+    <!-- 介绍区：面包屑 + 标题 + 副标题（置于 main 顶部，不参与两列网格，避免布局错乱） -->
+    <div class="tool-intro">
+      <nav class="breadcrumb"><a href="/" data-i18n="crumb_home">首页</a><span class="sep">/</span><span data-i18n="if_name">图标工坊 IconForge</span></nav>
+      <h1 class="page-h1" data-i18n="if_name">图标工坊 IconForge</h1>
+      <p class="page-sub" data-i18n="if_desc">上传 Logo，一键导出多尺寸 ICO / PNG / favicon（Light &amp; Dark 双主题）。</p>
+    </div>
 
-    <!-- 工作区：双主题卡，每张卡 = 标题 + 上传 + 预览（合并为一张卡省空间） -->
-    <section class="workspace">
+    <!-- 工具主体：左工作区 + 右设置面板，两列网格 -->
+    <div class="tool-body">
+      <!-- 工作区：双主题卡，每张卡 = 标题 + 上传 + 预览（合并为一张卡省空间） -->
+      <section class="workspace">
 
       <div class="themes-row">
 
@@ -646,6 +651,7 @@
         </button>
       </div>
     </aside>
+    </div><!-- /.tool-body -->
   </main>
 
   <!-- 生成进度 Modal -->
