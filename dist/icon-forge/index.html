@@ -153,13 +153,30 @@
     flex-direction: column;
     overflow: hidden;
   }
-  /* 中屏及以下：改为竖排，整页自然滚动，不再依赖两侧内部滚动，彻底杜绝“显示不全” */
+  /* 中屏及以下：解锁固定高度链，整页恢复自然文档流滚动，
+     彻底杜绝“只有上传区能滚、其余板块被压住/互相遮挡” */
   @media (max-width: 1080px) {
-    main { overflow: visible; }
-    .workspace { height: auto; overflow: visible; }
-    .panel { height: auto; border-left: none; border-top: 1px solid var(--border); }
-    .panel-scroll { overflow: visible; }
-    .themes-row { min-height: 460px; }
+    /* body 不再锁定为 100vh 的 flex 列，改为常规块级流式布局，随内容自然增高 */
+    html, body { height: auto; }
+    body { display: block; min-height: 100vh; min-height: 100dvh; overflow-x: hidden; }
+
+    /* main 解除 flex:1 锁高与 overflow:hidden，整页可滚 */
+    main { display: block; flex: none; min-height: 0; height: auto; overflow: visible; }
+
+    .tool-intro { padding: 18px 16px 6px; }
+
+    /* 工具主体（原两列网格）改为单列块级，高度自适应内容 */
+    .tool-body { display: block; flex: none; min-height: 0; height: auto; overflow: visible; padding-bottom: 28px; }
+
+    /* 工作区：去掉 height:100% 与内部滚动，跟随整页一起滚 */
+    .workspace { height: auto; min-height: 0; overflow: visible; padding: 16px; gap: 16px; }
+
+    /* 设置面板：从“右侧固定列”变为底部自然堆叠的一块 */
+    .panel { height: auto; min-height: 0; border-left: none; border-top: 1px solid var(--border); }
+    .panel-scroll { flex: none; overflow: visible; padding: 16px; gap: 20px; }
+
+    /* 主题卡行：不再强制 460px 高，按内容收缩 */
+    .themes-row { min-height: 0; }
   }
 
   /* ---------- 工作区（画布） ---------- */
