@@ -419,10 +419,10 @@
 
     <!-- 主题切换（已修复：真正生效） -->
     <div class="theme-toggle">
-      <button onclick="setTheme('light')" id="theme-light-btn" class="theme-btn" title="亮色">
+      <button onclick="setTheme('light')" id="theme-light-btn" class="theme-btn" data-i18n-title="theme_light">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
       </button>
-      <button onclick="setTheme('dark')" id="theme-dark-btn" class="theme-btn" title="暗色">
+      <button onclick="setTheme('dark')" id="theme-dark-btn" class="theme-btn" data-i18n-title="theme_dark">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
       </button>
     </div>
@@ -452,8 +452,8 @@
         <!-- Light 主题卡 -->
         <div class="theme-card">
           <div class="theme-head">
-            <span class="uh-title">Light 图标</span>
-            <span class="uh-tag accent-text">默认 / 通用</span>
+            <span class="uh-title" data-i18n="if_light_title">Light 图标</span>
+            <span class="uh-tag accent-text" data-i18n="if_light_tag">默认 / 通用</span>
           </div>
           <div class="theme-body">
             <div id="drop-zone-light" onclick="document.getElementById('file-light').click()" class="dropzone compact">
@@ -462,14 +462,14 @@
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--text-3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"/><path d="M12 12v9"/><path d="m16 16-4-4-4 4"/></svg>
               </div>
               <div class="dz-text">
-                <div class="dz-title">点击或拖入图片</div>
-                <div class="dz-sub">自动 1:1 纠偏防变形</div>
+                <div class="dz-title" data-i18n="if_light_drop_title">点击或拖入图片</div>
+                <div class="dz-sub" data-i18n="if_light_drop_sub">自动 1:1 纠偏防变形</div>
               </div>
             </div>
             <div class="theme-stage-wrap">
               <div class="preview-stage light">
                 <img id="render-preview-light" src="" alt="" style="display:none">
-                <div id="placeholder-preview-light" class="ph">暂无预览</div>
+                <div id="placeholder-preview-light" class="ph" data-i18n="if_no_preview">暂无预览</div>
               </div>
             </div>
           </div>
@@ -478,8 +478,8 @@
         <!-- Dark 主题卡 -->
         <div class="theme-card">
           <div class="theme-head">
-            <span class="uh-title">Dark 图标</span>
-            <span class="uh-tag">可选</span>
+            <span class="uh-title" data-i18n="if_dark_title">Dark 图标</span>
+            <span class="uh-tag" data-i18n="if_dark_tag">可选</span>
           </div>
           <div class="theme-body">
             <div id="drop-zone-dark" onclick="document.getElementById('file-dark').click()" class="dropzone compact">
@@ -488,14 +488,14 @@
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--text-3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"/><path d="M12 12v9"/><path d="m16 16-4-4-4 4"/></svg>
               </div>
               <div class="dz-text">
-                <div class="dz-title">点击或拖入暗色版</div>
-                <div class="dz-sub">不填则复用 Light</div>
+                <div class="dz-title" data-i18n="if_dark_drop_title">点击或拖入暗色版</div>
+                <div class="dz-sub" data-i18n="if_dark_drop_sub">不填则复用 Light</div>
               </div>
             </div>
             <div class="theme-stage-wrap">
               <div class="preview-stage dark">
                 <img id="render-preview-dark" src="" alt="" style="display:none">
-                <div id="placeholder-preview-dark" class="ph">暂无预览</div>
+                <div id="placeholder-preview-dark" class="ph" data-i18n="if_no_preview">暂无预览</div>
               </div>
             </div>
           </div>
@@ -507,8 +507,8 @@
       <div class="preview-note" id="padding-note"></div>
 
       <div class="mid-foot">
-        <span>渲染引擎：多级降采样抗锯齿重采样（contain / fill 防变形）</span>
-        <span class="hint" id="source-info">等待上传主图标...</span>
+        <span data-i18n="if_engine">渲染引擎：多级降采样抗锯齿重采样（contain / fill 防变形）</span>
+        <span class="hint" id="source-info" data-i18n="if_waiting_upload">等待上传主图标...</span>
       </div>
     </section>
 
@@ -519,18 +519,18 @@
         <!-- 命名规则（默认展开） -->
         <div class="group">
           <button type="button" class="group-header" onclick="toggleAcc(this)" aria-expanded="true">
-            <span class="group-title">命名</span>
+            <span class="group-title" data-i18n="if_name_group">命名</span>
             <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
           </button>
           <div class="group-body"><div class="group-body-inner">
             <div class="field">
-              <label class="field-label" for="custom-file-name">应用 / 图标名称</label>
-              <input type="text" id="custom-file-name" value="app-icon" placeholder="例如 ChatGPT">
+              <label class="field-label" for="custom-file-name" data-i18n="if_name_label">应用 / 图标名称</label>
+              <input type="text" id="custom-file-name" value="app-icon" data-i18n-placeholder="if_name_placeholder" placeholder="例如 ChatGPT">
             </div>
             <div class="switch-row">
               <div>
                 <div class="field-label" data-i18n="if_suffix">主题后缀</div>
-                <div class="hint">生成 Name-light.ico / Name-dark.ico</div>
+                <div class="hint" data-i18n="if_suffix_hint">生成 Name-light.ico / Name-dark.ico</div>
               </div>
               <span class="switch">
                 <input type="checkbox" id="use-theme-suffix" checked>
@@ -544,8 +544,8 @@
         <div class="field">
           <label class="field-label" for="bg-strategy" data-i18n="if_protect">保护</label>
           <select id="bg-strategy" onchange="updatePaddingNote()">
-            <option value="contain">等比居中（留白防拉伸）</option>
-            <option value="fill">强行铺满（可能形变）</option>
+            <option value="contain" data-i18n="if_contain">等比居中（留白防拉伸）</option>
+            <option value="fill" data-i18n="if_fill">强行铺满（可能形变）</option>
           </select>
         </div>
 
@@ -558,10 +558,10 @@
           <div class="group-body"><div class="group-body-inner">
             <div class="field">
               <div class="field-label">
-                <span>选择需要的尺寸</span>
+                <span data-i18n="if_choose_sizes">选择需要的尺寸</span>
                 <span class="group-actions">
-                  <button class="link-btn" onclick="toggleAllSizes(true)">全选</button>
-                  <button class="link-btn" onclick="toggleAllSizes(false)">清空</button>
+                  <button class="link-btn" onclick="toggleAllSizes(true)" data-i18n="if_select_all">全选</button>
+                  <button class="link-btn" onclick="toggleAllSizes(false)" data-i18n="if_clear">清空</button>
                 </span>
               </div>
               <div class="chip-grid" id="size-checkboxes">
@@ -597,7 +597,7 @@
                 <label class="chip"><input type="checkbox" value="512" checked title="macOS @2x / Play Store（超过 256，仅输出 PNG）"><span>512</span></label>
                 <label class="chip"><input type="checkbox" value="1024" title="App Store / Play Store（超过 256，仅输出 PNG）"><span>1024</span></label>
               </div>
-              <div class="hint">ICO 规范上限为 256px，更大的尺寸只会输出为 PNG，不会写进 ICO。</div>
+              <div class="hint" data-i18n="if_ico_limit_hint">ICO 规范上限为 256px，更大的尺寸只会输出为 PNG，不会写进 ICO。</div>
             </div>
           </div></div>
         </div>
@@ -605,15 +605,15 @@
         <!-- 格式与结构（默认收起的下拉框选择） -->
         <div class="group collapsed">
           <button type="button" class="group-header" onclick="toggleAcc(this)" aria-expanded="false">
-            <span class="group-title">格式 <span class="group-meta" id="format-summary"></span></span>
+            <span class="group-title"><span data-i18n="if_format">格式</span> <span class="group-meta" id="format-summary"></span></span>
             <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
           </button>
           <div class="group-body"><div class="group-body-inner">
             <div class="field">
-              <label class="field-label">输出格式</label>
+              <label class="field-label" data-i18n="if_format_label">输出格式</label>
               <div class="chip-row">
-                <label class="chip-box"><input type="checkbox" id="format-ico" checked onchange="updateFormatSummary()"><span>ICO（Windows）</span></label>
-                <label class="chip-box"><input type="checkbox" id="format-png" checked onchange="updateFormatSummary()"><span>PNG（多尺寸）</span></label>
+                <label class="chip-box"><input type="checkbox" id="format-ico" checked onchange="updateFormatSummary()"><span data-i18n="if_format_ico">ICO（Windows）</span></label>
+                <label class="chip-box"><input type="checkbox" id="format-png" checked onchange="updateFormatSummary()"><span data-i18n="if_format_png">PNG（多尺寸）</span></label>
               </div>
             </div>
           </div></div>
@@ -622,21 +622,21 @@
         <!-- 文件夹结构（默认收起的下拉框选择） -->
         <div class="group collapsed">
           <button type="button" class="group-header" onclick="toggleAcc(this)" aria-expanded="false">
-            <span class="group-title">打包模式 <span class="group-meta" id="structure-summary"></span></span>
+            <span class="group-title"><span data-i18n="if_structure">打包模式</span> <span class="group-meta" id="structure-summary"></span></span>
             <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
           </button>
           <div class="group-body"><div class="group-body-inner">
             <div class="field">
-              <label class="field-label">打包目录模式</label>
+              <label class="field-label" data-i18n="if_structure_label">打包目录模式</label>
               <div class="chip-row">
-                <label class="chip-box"><input type="radio" name="structure" value="flat" checked onchange="updateStructureSummary()"><span>单文件夹</span></label>
-                <label class="chip-box"><input type="radio" name="structure" value="nested" onchange="updateStructureSummary()"><span>分类目录 Light/Dark</span></label>
-                <label class="chip-box"><input type="radio" name="structure" value="custom" onchange="updateStructureSummary(); toggleCustomRoot()"><span>自定义目录</span></label>
+                <label class="chip-box"><input type="radio" name="structure" value="flat" checked onchange="updateStructureSummary()"><span data-i18n="if_structure_flat">单文件夹</span></label>
+                <label class="chip-box"><input type="radio" name="structure" value="nested" onchange="updateStructureSummary()"><span data-i18n="if_structure_nested">分类目录 Light/Dark</span></label>
+                <label class="chip-box"><input type="radio" name="structure" value="custom" onchange="updateStructureSummary(); toggleCustomRoot()"><span data-i18n="if_structure_custom">自定义目录</span></label>
               </div>
               <div id="custom-root-wrap" class="sub-field" style="display:none; margin-top: var(--sp-3);">
-                <label class="field-label" for="custom-root-name">顶层文件夹名称</label>
-                <input type="text" id="custom-root-name" value="icons" placeholder="例如 MyApp-Icons" oninput="updateStructureSummary()">
-                <div style="font-size: var(--fs-xs); color: var(--text-3); margin-top: 4px;">所有图标将统一打包进此文件夹。</div>
+                <label class="field-label" for="custom-root-name" data-i18n="if_custom_root_label">顶层文件夹名称</label>
+                <input type="text" id="custom-root-name" value="icons" data-i18n-placeholder="if_custom_root_placeholder" placeholder="例如 MyApp-Icons" oninput="updateStructureSummary()">
+                <div style="font-size: var(--fs-xs); color: var(--text-3); margin-top: 4px;" data-i18n="if_custom_root_hint">所有图标将统一打包进此文件夹。</div>
               </div>
             </div>
           </div></div>
@@ -658,12 +658,12 @@
   <div id="loading-modal" class="modal">
     <div class="modal-card">
       <div class="modal-row">
-        <span class="modal-title">正在打包图标资源...</span>
+        <span class="modal-title" data-i18n="if_packaging">正在打包图标资源...</span>
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="spin"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px">
         <div class="modal-sub">
-          <span id="progress-text">准备中...</span>
+          <span id="progress-text" data-i18n="if_progress_ready">准备中...</span>
           <span id="progress-percent">0%</span>
         </div>
         <div class="progress-track"><div id="progress-bar" class="progress-bar" style="width:0%"></div></div>
@@ -678,12 +678,19 @@
       <svg class="ic-err" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
     </div>
     <div>
-      <div class="toast-title">生成成功！</div>
-      <div class="toast-sub">压缩包已成功下载</div>
+      <div class="toast-title" data-i18n="if_toast_ok_title">生成成功！</div>
+      <div class="toast-sub" data-i18n="if_toast_ok_sub">压缩包已成功下载</div>
     </div>
   </div>
 
+<div id="site-footer"></div>
+<script src="/assets/js/site.js"></script>
 <script>
+  /* 运行时翻译助手 */
+  function t(key, vars) {
+    return window.CATAITO_I18N ? window.CATAITO_I18N.t(key, vars) : key;
+  }
+
   /* ============ 主题切换（真正生效） ============ */
   function setTheme(theme) {
     const html = document.documentElement;
@@ -751,7 +758,17 @@
   }
 
   /* ============ 状态 ============ */
-  let state = { lightImage: null, darkImage: null };
+  let state = { lightImage: null, darkImage: null, lastFile: null };
+
+  function refreshSourceInfo() {
+    const el = document.getElementById('source-info');
+    if (!el) return;
+    if (state.lastFile) {
+      el.textContent = t('if_loaded', { name: state.lastFile.name, w: state.lastFile.width, h: state.lastFile.height });
+    } else {
+      el.textContent = t('if_waiting_upload');
+    }
+  }
 
   /* ============ 拖放上传 ============ */
   function initDropZone(zoneId, inputId, type) {
@@ -775,7 +792,7 @@
       const dt = e.dataTransfer;
       if (!dt || !dt.files || !dt.files.length) return;
       const file = dt.files[0];
-      if (dt.files.length > 1) showError("一次只能处理一张图片，已取第一张。");
+      if (dt.files.length > 1) showError(t('if_error_one_file'));
       handleFile(file, type, input);
     });
   }
@@ -799,7 +816,7 @@
     const clearInput = function () { if (inputEl) inputEl.value = ''; };
 
     if (!file.type || !file.type.startsWith('image/')) {
-      showError("请上传有效的图片文件 (PNG/JPG/SVG/WEBP)");
+      showError(t('if_error_invalid_image'));
       clearInput();
       return;
     }
@@ -813,18 +830,18 @@
           const dataUrl = normalizeSvg(e.target.result);
           loadImage(dataUrl, file, type, inputEl);
         } catch (err) {
-          showError("SVG 解析失败：" + (err && err.message ? err.message : err));
+          showError(t('if_error_svg_parse') + (err && err.message ? err.message : err));
           clearInput();
         }
       };
-      reader.onerror = function () { showError("文件读取失败，请检查权限。"); };
+      reader.onerror = function () { showError(t('if_error_read')); };
       reader.readAsText(file);
       return;
     }
 
     const reader = new FileReader();
     reader.onload = function (e) { loadImage(e.target.result, file, type, inputEl); };
-    reader.onerror = function () { showError("文件读取失败，请检查权限。"); };
+    reader.onerror = function () { showError(t('if_error_read')); };
     reader.readAsDataURL(file);
   }
 
@@ -832,22 +849,23 @@
   function loadImage(dataUrl, file, type, inputEl) {
     const img = new Image();
     img.onerror = function () {
-      showError("无法读取该图片，可能是格式损坏或不支持。");
+      showError(t('if_error_image_load'));
       if (inputEl) inputEl.value = '';
     };
     img.onload = function () {
       if (!img.width || !img.height) {
-        showError("该图片缺少有效尺寸，导出结果可能异常。");
+        showError(t('if_error_no_dimension'));
       }
       if (type === 'light') {
         state.lightImage = img;
+        state.lastFile = { name: file.name, width: img.width, height: img.height };
         const originalName = file.name.substring(0, file.name.lastIndexOf('.')) || 'app-icon';
         document.getElementById('custom-file-name').value = originalName;
         const preview = document.getElementById('render-preview-light');
         preview.src = dataUrl;
         preview.style.display = '';
         document.getElementById('placeholder-preview-light').style.display = 'none';
-        document.getElementById('source-info').innerText = `已载入: ${file.name} (${img.width}x${img.height})`;
+        refreshSourceInfo();
       } else {
         state.darkImage = img;
         const preview = document.getElementById('render-preview-dark');
@@ -864,9 +882,9 @@
   // 规范化 SVG：补齐 width/height（优先用 viewBox 推导，都没有则默认 512），确保 img 有内宽高
   function normalizeSvg(svgText) {
     const doc = new DOMParser().parseFromString(svgText, 'image/svg+xml');
-    if (doc.querySelector('parsererror')) throw new Error('XML 解析错误');
+    if (doc.querySelector('parsererror')) throw new Error(t('if_error_svg_xml'));
     const svg = doc.querySelector('svg');
-    if (!svg) throw new Error('未找到 <svg> 根节点');
+    if (!svg) throw new Error(t('if_error_svg_root'));
     if (!svg.getAttribute('xmlns')) svg.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
     let w = parseFloat(svg.getAttribute('width'));
     let h = parseFloat(svg.getAttribute('height'));
@@ -905,7 +923,7 @@
     const s = [];
     if (document.getElementById('format-ico').checked) s.push('ICO');
     if (document.getElementById('format-png').checked) s.push('PNG');
-    el.textContent = s.length ? s.join(' · ') : '未选择';
+    el.textContent = s.length ? s.join(' · ') : t('if_none_selected');
   }
   function updateStructureSummary() {
     const el = document.getElementById('structure-summary');
@@ -914,11 +932,11 @@
     if (!sel) { el.textContent = ''; return; }
     if (sel.value === 'custom') {
       const v = (document.getElementById('custom-root-name').value || '').trim();
-      el.textContent = v || '未填写';
+      el.textContent = v || t('if_none_selected');
       toggleCustomRoot();
       return;
     }
-    // 取 chip-box 上显示的文字（去掉括号内的备注）
+    // 取 chip-box 上显示的文字（已随语言切换）
     const txt = sel.parentElement.querySelector('span').textContent.trim();
     el.textContent = txt;
     toggleCustomRoot();
@@ -933,7 +951,7 @@
   // 用页面内 toast 替代 alert：与整体设计语言一致，且不阻塞主线程
   function showError(msg) {
     console.error('[IconForge]', msg);
-    showToast({ title: '出错了', sub: msg, error: true });
+    showToast({ title: t('if_error_title'), sub: msg, error: true });
   }
 
   /* ============ 防变形重采样核心算法（多级降采样，真正高清） ============ */
@@ -1151,9 +1169,7 @@
     const note = document.getElementById('padding-note');
     if (!note) return;
     const s = document.getElementById('bg-strategy').value;
-    note.innerText = s === 'contain'
-      ? 'contain 模式：导出为透明留白（非纯色底），预览框底色仅用于对比展示。'
-      : 'fill 模式：图标被拉伸铺满正方形，可能与原图比例不一致。';
+    note.innerText = t(s === 'contain' ? 'if_padding_note_contain' : 'if_padding_note_fill');
     // 预览同步反映 fill（铺满）/ contain（居中留白），与导出保持一致 [修复 P3]
     document.querySelectorAll('.preview-stage').forEach(el => el.classList.toggle('fill', s === 'fill'));
   }
@@ -1161,13 +1177,13 @@
   /* ============ 打包与下载 ============ */
   async function startGeneration() {
     if (!state.lightImage) {
-      showError("请先上传 Light 模式图标文件");
+      showError(t('if_error_upload_light'));
       return;
     }
 
     const selectedSizes = Array.from(document.querySelectorAll('#size-checkboxes input:checked')).map(cb => parseInt(cb.value));
     if (selectedSizes.length === 0) {
-      showError("请选择至少一个输出尺寸");
+      showError(t('if_error_choose_size'));
       return;
     }
 
@@ -1180,13 +1196,13 @@
 
     /* [修复 #2] 两种格式都不勾选 → 拦截，避免生成空 zip */
     if (!formatIco && !formatPng) {
-      showError("请至少选择一种输出格式（ICO 或 PNG）");
+      showError(t('if_error_choose_format'));
       return;
     }
 
     /* 自定义目录模式：文件夹名称必填（先判空，再净化，避免路径穿越） */
     if (structureMode === 'custom' && !rawRoot) {
-      showError("请输入自定义打包文件夹名称");
+      showError(t('if_error_custom_root'));
       return;
     }
     const customRoot = sanitizeName(rawRoot, 'icons');
@@ -1199,17 +1215,17 @@
     const maxSel = Math.max.apply(null, selectedSizes);
     const warns = [];
     if (maxSel > srcMax) {
-      warns.push(`源图最长边 ${srcMax}px 低于最大输出 ${maxSel}px，放大后可能模糊。`);
+      warns.push(t('if_warn_upscale', { src: srcMax, max: maxSel }));
     }
     // 原阈值按像素量估算（400MB），实际全选 31 个尺寸也只有约 11MB，永远不会触发；改按任务数判断
     const estTasks = selectedSizes.length * 2 + (formatIco ? 2 : 0) + (formatPng ? selectedSizes.length * 2 : 0);
     if (estTasks > 60) {
-      warns.push(`本次共 ${estTasks} 个文件，生成可能需要十几秒，请耐心等待。`);
+      warns.push(t('if_warn_many_files', { n: estTasks }));
     }
 
     const modal = document.getElementById('loading-modal');
     modal.classList.add('show');
-    setProgress(0, '准备中...');
+    setProgress(0, t('if_progress_ready'));
     await tick();   // 先让模态框真正绘制出来，再进入同步重活
 
     try {
@@ -1236,13 +1252,13 @@
 
       const lightCanvases = [];
       for (const size of selectedSizes) {
-        const canvas = await runStep(`缩放 Light ${size}×${size}`, () => resizeImage(state.lightImage, size));
+        const canvas = await runStep(t('if_progress_scale_light', { size: size }), () => resizeImage(state.lightImage, size));
         lightCanvases.push({ size, canvas });
       }
       const darkSource = state.darkImage || state.lightImage;
       const darkCanvases = [];
       for (const size of selectedSizes) {
-        const canvas = await runStep(`缩放 Dark ${size}×${size}`, () => resizeImage(darkSource, size));
+        const canvas = await runStep(t('if_progress_scale_dark', { size: size }), () => resizeImage(darkSource, size));
         darkCanvases.push({ size, canvas });
       }
 
@@ -1251,7 +1267,7 @@
       const icoDark = icoFrameCanvases(darkSource, darkCanvases, formatIco);
       const skippedIcoSizes = formatIco ? selectedSizes.filter(s => s > ICO_MAX_SIZE) : [];
       if (skippedIcoSizes.length) {
-        warns.push(`ICO 规范上限 ${ICO_MAX_SIZE}px，${skippedIcoSizes.join('/')}px 仅输出 PNG。`);
+        warns.push(t('if_warn_ico_skip', { max: ICO_MAX_SIZE, sizes: skippedIcoSizes.join('/') }));
       }
 
       const rootPrefix = structureMode === 'custom' ? customRoot + '/' : '';
@@ -1271,15 +1287,15 @@
 
       const files = [];
       for (let i = 0; i < jobs.length; i++) {
-        files.push(await runStep('正在生成 ' + jobs[i].label + '...',
+        files.push(await runStep(t('if_progress_gen', { label: jobs[i].label }),
           () => ({ name: jobs[i].name, data: jobs[i].produce() })));
       }
 
-      setProgress((done / totalSteps) * 100, '正在打包 ZIP...');
+      setProgress((done / totalSteps) * 100, t('if_progress_zip'));
       await tick();
       const content = buildZip(files);
       done++;
-      setProgress(100, '打包完成');
+      setProgress(100, t('if_progress_done'));
 
       const url = URL.createObjectURL(content);
       const a = document.createElement('a');
@@ -1290,18 +1306,18 @@
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
 
-      setProgress(100, '完成');
+      setProgress(100, t('if_progress_done'));
       modal.classList.remove('show');
-      if (warns.length) showToast({ title: '生成成功', sub: '压缩包已下载。' + warns.join(' '), warn: true });
+      if (warns.length) showToast({ title: t('if_toast_warn_title'), sub: t('if_toast_warn_sub') + warns.join(' '), warn: true });
       else showToast();
     } catch (err) {
       console.error(err);
       modal.classList.remove('show');
       // 含跨域外部资源的 SVG/PNG 会让 canvas 被污染，toDataURL 抛 SecurityError
       if (err && (err.name === 'SecurityError' || err.code === 18 || (err.message || '').indexOf('tainted') >= 0)) {
-        showError("导出失败：素材包含跨域外部资源，浏览器禁止读取像素。请改用纯本地素材后重试。");
+        showError(t('if_error_tainted'));
       } else {
-        showError("打包生成过程中发生错误。");
+        showError(t('if_error_pack'));
       }
     }
   }
@@ -1309,8 +1325,8 @@
   function showToast(opts) {
     opts = opts || {};
     const toast = document.getElementById('toast');
-    toast.querySelector('.toast-title').textContent = opts.title || '生成成功！';
-    toast.querySelector('.toast-sub').textContent = opts.sub || '压缩包已成功下载';
+    toast.querySelector('.toast-title').textContent = opts.title || t('if_toast_ok_title');
+    toast.querySelector('.toast-sub').textContent = opts.sub || t('if_toast_ok_sub');
     toast.classList.toggle('warn', !!opts.warn);
     toast.classList.toggle('error', !!opts.error);
     toast.classList.add('show');
@@ -1340,8 +1356,14 @@
     checks.forEach(c => console.log('   ', c[0], '=>', c[1]));
   }
   if (location.search.indexOf('selftest') >= 0) selfTest();
+
+  /* 语言切换后刷新动态文本（source-info 等） */
+  document.addEventListener('cataito-lang-change', function () {
+    updatePaddingNote();
+    updateFormatSummary();
+    updateStructureSummary();
+    refreshSourceInfo();
+  });
 </script>
-<div id="site-footer"></div>
-<script src="/assets/js/site.js"></script>
 </body>
 </html>

@@ -57,7 +57,7 @@
       <div class="fv-dz-inner">
         <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4m0 0L7 9m5-5l5 5"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
         <div class="fv-dz-title" data-i18n="fv_upload">上传图片</div>
-        <div class="fv-dz-hint">PNG / JPG / WebP / SVG · 点击或拖入</div>
+        <div class="fv-dz-hint" data-i18n="fv_dz_hint">PNG / JPG / WebP / SVG · 点击或拖入</div>
       </div>
       <div class="fv-preview-wrap" id="fv-preview" hidden>
         <img id="fv-preview-img" alt="preview">
@@ -82,6 +82,7 @@
 <script>
 (function () {
   'use strict';
+  var t = function (k) { return (window.CATAITO_I18N && window.CATAITO_I18N.t) ? window.CATAITO_I18N.t(k) : k; };
   var SIZES = [16, 32, 48, 64, 128, 180, 192, 256, 512];
   var DEFAULTS = { 16:1, 32:1, 48:1, 180:1, 192:1, 512:1 };
   var fvImage = null;
@@ -192,12 +193,12 @@
   }
   function loadFile(file) {
     if (!file) return;
-    if (!file.type.startsWith('image/')) { showToast('请上传图片文件', true); return; }
+    if (!file.type.startsWith('image/')) { showToast(t('fv_toast_img_type'), true); return; }
     var r = new FileReader();
     r.onload = function (e) {
       var img = new Image();
       img.onload = function () { fvImage = img; showPreview(); };
-      img.onerror = function () { showToast('图片解析失败', true); };
+      img.onerror = function () { showToast(t('fv_toast_img_parse'), true); };
       img.src = e.target.result;
     };
     r.readAsDataURL(file);
@@ -216,9 +217,9 @@
     return out;
   }
   function generate() {
-    if (!fvImage) { showToast('请先上传图片', true); return; }
+    if (!fvImage) { showToast(t('fv_toast_no_img'), true); return; }
     var sel = getSelected();
-    if (!sel.length) { showToast('请至少选择一个尺寸', true); return; }
+    if (!sel.length) { showToast(t('fv_toast_no_size'), true); return; }
     var canvases = sel.map(function (s) { return { size: s, canvas: fvResize(fvImage, s) }; });
     var files = [];
     var icoCanvases = canvases.filter(function (c) { return c.size <= 256; });
@@ -230,7 +231,7 @@
     a.download = 'favicon-pack.zip';
     document.body.appendChild(a); a.click(); a.remove();
     setTimeout(function () { URL.revokeObjectURL(a.href); }, 4000);
-    showToast('已生成 favicon 包');
+    showToast(t('fv_toast_done'));
   }
 
   /* ---------- 提示 ---------- */
