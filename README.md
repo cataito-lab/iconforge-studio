@@ -12,13 +12,20 @@
 - 错误用 Toast 提示，不再弹原生 `alert`
 - OG / Twitter Card / theme-color 元信息，利于分享与 SEO
 
-## 仓库结构
+## 站点结构（多工具站）
+`dist/` 既是部署产物，也是站点源码（纯静态、零构建、零依赖）：
 ```
-IconForge-Studio-v1.1-fixed.html   # 源文件（开发 / 修改在此）
-dist/index.html                    # 部署产物（由源文件复制而来，已 gitignore）
-robots.txt                         # 根目录源，构建时复制到 dist/
-LICENSE                            # MIT
+dist/
+  index.html              # 首页 / 工具 hub
+  icon-forge/index.html   # 工具一：图标工坊 IconForge
+  favicon/index.html      # 工具二：Favicon 生成器
+  assets/css/site.css     # 共享外壳样式（导航 / 双语 / 页脚 / 首页网格）
+  assets/js/site.js       # 共享外壳逻辑（导航注入 / 中英双语切换 / 页脚）
+  assets/img/icon.svg     # 站点图标
+  sitemap.xml             # 站点地图（含中英 hreflang 备用链接）
+  robots.txt
 ```
+根目录 `IconForge-Studio-v1.1-fixed.html` 为 IconForge 的单体历史源文件（逻辑已并入 `dist/icon-forge/`），新功能请在 `dist/` 内维护。
 
 > 注意：`2026-08-20-5d539ce0/`（约 3.28GB 旧构建快照）已被 `.gitignore` 排除，请勿入库。
 
@@ -35,8 +42,9 @@ python -m http.server 8080 --directory dist
 1. 把本仓库推到 GitHub / GitLab。
 2. Cloudflare Pages 控制台 → **Create a project** → 连接仓库。
 3. 构建设置：
-   - **Build command**：`cp IconForge-Studio-v1.1-fixed.html dist/index.html && cp robots.txt dist/robots.txt`
+   - **Build command**：**留空 / 不设**（站点为纯静态，无需构建；`dist/` 已是完整可部署目录）
    - **Output directory**：`dist`
+   - 若之前设置过旧命令 `cp IconForge-Studio-v1.1-fixed.html dist/index.html`，请务必清空，否则会覆盖新的首页 hub。
 4. 部署完成后，在 **Custom domains** 里添加你的子域名（见下方 DNS）。
 
 ### 方式 B：直接上传（无需 Git）
@@ -45,14 +53,14 @@ python -m http.server 8080 --directory dist
 3. 在 **Custom domains** 添加子域名。
 
 ### 子域名 DNS 配置
-假设你的子域名是 `tools.yourdomain.com`（**请把 `yourdomain.com` 替换成你的真实主域名**）：
+子域名为 `tools.cataito.com`（已上线，此处仅供参考）：
 1. Cloudflare Pages → 项目 → **Custom domains** → 输入子域名 → 点击 **Activate domain**。
 2. 按页面提示，在 Cloudflare DNS 添加一条 **CNAME** 记录：
    - **类型**：`CNAME`
    - **名称**：`tools`（即子域名前缀）
    - **目标**：`<你的 Pages 项目名>.pages.dev`
    - **代理状态**：已代理（橙色云朵 ☁️ 开启，可获免费 HTTPS + 缓存）
-3. 等待 DNS 生效（通常几分钟到几小时），Cloudflare 会自动签发 SSL 证书，访问 `https://icons.yourdomain.com` 即可。
+3. 等待 DNS 生效（通常几分钟到几小时），Cloudflare 会自动签发 SSL 证书，访问 `https://tools.cataito.com` 即可。
 
 > 若你的主域名 DNS 不在 Cloudflare，请先把域名 NS 指向 Cloudflare，或用 Pages 自带的 `*.pages.dev` 域名（无需自有域名）。
 
