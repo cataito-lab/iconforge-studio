@@ -45,11 +45,11 @@ python -m http.server 8080 --directory dist
 3. 在 **Custom domains** 添加子域名。
 
 ### 子域名 DNS 配置
-假设你的子域名是 `icons.yourdomain.com`（**请替换成你的真实子域名**）：
+假设你的子域名是 `tools.yourdomain.com`（**请把 `yourdomain.com` 替换成你的真实主域名**）：
 1. Cloudflare Pages → 项目 → **Custom domains** → 输入子域名 → 点击 **Activate domain**。
 2. 按页面提示，在 Cloudflare DNS 添加一条 **CNAME** 记录：
    - **类型**：`CNAME`
-   - **名称**：`icons`（即子域名前缀）
+   - **名称**：`tools`（即子域名前缀）
    - **目标**：`<你的 Pages 项目名>.pages.dev`
    - **代理状态**：已代理（橙色云朵 ☁️ 开启，可获免费 HTTPS + 缓存）
 3. 等待 DNS 生效（通常几分钟到几小时），Cloudflare 会自动签发 SSL 证书，访问 `https://icons.yourdomain.com` 即可。
