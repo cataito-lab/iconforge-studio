@@ -1,0 +1,14 @@
+# ===== 构建产物 / 历史快照（含 3.28GB 旧构建垃圾，绝不入库） =====
+2026-08-20-5d539ce0/
+node_modules/
+dist/
+target/
+
+# ===== WorkBuddy 项目数据 =====
+.workbuddy/
+
+# ===== 系统 / 编辑器 =====
+.DS_Store
+Thumbs.db
+*.log
+.audit-tmp/
