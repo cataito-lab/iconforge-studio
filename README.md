@@ -1,26 +1,33 @@
-# IconForge Studio v1.1
+# Cataito Tools（tools.cataito.com）
 
-纯前端、零依赖、完全本地运行的应用图标生成工作台。上传 Logo，一键导出 **ICO / 多尺寸 PNG / favicon**，支持 **Light / Dark 双主题**。所有图像处理均在浏览器本地完成，**图片不会上传到任何服务器**。
+纯前端、零依赖、完全本地运行的在线工具站。已上线三大工具 + 中英双语 SEO 指南，全部图像处理在浏览器本地完成，**文件不会上传到任何服务器**。
 
-## 特性
-- 单文件 HTML，无 CDN / 无外部字体 / 无构建步骤，可直接静态托管
-- 拖放上传 + 点击选择（真实实现，非装饰）
-- 多尺寸（16–1024）PNG、标准 ICO（含 PNG 编码帧，无重复尺寸错帧）、favicon 套件
-- ZIP 打包下载（自实现，合法 CRC32 + UTF-8 文件名 + 固定时间戳，跨平台解压无乱码）
-- 文件名净化，防止路径穿越
-- Light / Dark 主题记忆 + 跟随系统
-- 错误用 Toast 提示，不再弹原生 `alert`
-- OG / Twitter Card / theme-color 元信息，利于分享与 SEO
+- 线上地址：<https://tools.cataito.com>
+- 仓库：<https://github.com/cataito-lab/iconforge-studio>（Cloudflare Pages 连接此仓库自动部署）
+- 交接文档：[`HANDOVER.md`](./HANDOVER.md)（架构约定、开发流程、测试方法、待办——新会话必读）
 
-## 站点结构（多工具站）
+## 已上线工具
+
+| 工具 | 路径 | 说明 |
+| --- | --- | --- |
+| IconForge 图标工坊 | `/icon-forge/` | Logo → ICO / 多尺寸 PNG，Light/Dark 双变体，ZIP 打包（自实现 ZIP：查表法 CRC32 + UTF-8 文件名 + 固定时间戳；文件名净化防路径穿越） |
+| Favicon 生成器 | `/favicon/` | 一键生成全平台 favicon 套件 |
+| 图片压缩 | `/compress/` | 批量压缩 JPG/PNG/WebP（上限 20 张），智能格式选择（auto：透明走 WebP/PNG、不透明比 JPEG vs WebP 择小）、质量滑块 30–95、最长边限制、ZIP 批量下载；压缩结果反而更大时诚实保留原图 |
+
+另有三篇 SEO 内容支柱：`/guides/`（ICO 完全指南、Favicon 完全指南、暗色图标设计指南，中英双语）。
+
+## 站点结构
 `dist/` 既是部署产物，也是站点源码（纯静态、零构建、零依赖）：
 ```
 dist/
-  index.html              # 首页 / 工具 hub
-  icon-forge/index.html   # 工具一：图标工坊 IconForge
+  index.html              # 首页 / 工具 hub（JSON-LD 结构化数据）
+  icon-forge/index.html   # 工具一：图标工坊
   favicon/index.html      # 工具二：Favicon 生成器
-  assets/css/site.css     # 共享外壳样式（导航 / 双语 / 页脚 / 首页网格）
-  assets/js/site.js       # 共享外壳逻辑（导航注入 / 中英双语切换 / 页脚）
+  compress/index.html     # 工具三：图片压缩
+  guides/                 # SEO 指南（含中英 hreflang）
+  assets/css/site.css     # 共享外壳样式 + 全站设计令牌（:root / html.dark）
+  assets/js/site.js       # 共享外壳逻辑（导航注入 / 中英双语 / 页脚 / 主题按钮）
+  assets/js/theme-init.js # 全站主题系统（见下）
   assets/img/icon.svg     # 站点图标
   sitemap.xml             # 站点地图（含中英 hreflang 备用链接）
   robots.txt
@@ -29,6 +36,24 @@ dist/
 
 > 注意：`2026-08-20-5d539ce0/`（约 3.28GB 旧构建快照）已被 `.gitignore` 排除，请勿入库。
 
+## 全站约定（新增页面必须遵守）
+
+### 主题（亮/暗）
+- 每页 `<head>` 同步引入 `theme-init.js`（防首屏闪烁），**禁止**写死 `class="dark"`
+- 存储：`localStorage.cataito-theme`（旧键 `iconforge-theme` 自动迁移）；无显式选择时跟随系统 `prefers-color-scheme`
+- API：`window.CATAITO_THEME.{get,set,toggle}`；变更派发 `cataito-theme-change` 事件
+- 颜色令牌统一在 `site.css` 的 `:root` / `html.dark` 定义（含 `color-scheme` 声明），**工具页不得内嵌自定义颜色令牌**（IconForge 曾因此导致 favicon 页引用未定义变量的 bug）
+
+### 国际化（中/英）
+- 词条放 `site.js` 的 `t()` 词典；HTML 用 `data-i18n` 属性标记
+- 动态文本监听 `cataito-lang-change` 事件刷新；URL 支持 `?lang=en`
+
+### 新增工具四步
+1. 新建 `dist/<tool>/index.html`，挂 `theme-init.js` + `site.js` + `site.css`
+2. `site.js` 词典加 `home_tool_<name>` 等词条，导航注入处加入口
+3. 首页卡片转正（去 `is-soon`）+ JSON-LD 加 WebApplication 条目 + `sitemap.xml` 加 URL（priority ~0.9 + hreflang 三连）
+4. 测试（方法见 HANDOVER.md）→ commit → push
+
 ## 本地预览
 直接用浏览器打开 `dist/index.html` 即可。如需本地服务器：
 ```bash
@@ -36,37 +61,10 @@ python -m http.server 8080 --directory dist
 # 浏览器访问 http://localhost:8080
 ```
 
-## 部署（Cloudflare Pages，推荐）
+## 部署（Cloudflare Pages）
+仓库已连接自动部署：push 到 `master` 即上线（无需手动操作）。
+- **Build command**：留空（纯静态，`dist/` 已是完整可部署目录；**切勿**设置旧命令 `cp IconForge-Studio-v1.1-fixed.html dist/index.html`，会覆盖首页 hub）
+- **Output directory**：`dist`
+- 自定义域名 `tools.cataito.com`：CNAME → `<项目名>.pages.dev`，已代理（橙色云朵），SSL 自动签发
 
-### 方式 A：连接 Git 自动部署（推荐，后续改完即上线）
-1. 把本仓库推到 GitHub / GitLab。
-2. Cloudflare Pages 控制台 → **Create a project** → 连接仓库。
-3. 构建设置：
-   - **Build command**：**留空 / 不设**（站点为纯静态，无需构建；`dist/` 已是完整可部署目录）
-   - **Output directory**：`dist`
-   - 若之前设置过旧命令 `cp IconForge-Studio-v1.1-fixed.html dist/index.html`，请务必清空，否则会覆盖新的首页 hub。
-4. 部署完成后，在 **Custom domains** 里添加你的子域名（见下方 DNS）。
-
-### 方式 B：直接上传（无需 Git）
-1. Cloudflare Pages → **Create a project** → **Direct Upload**。
-2. 直接拖入本地 `dist/` 文件夹（含 `index.html` + `robots.txt`）。
-3. 在 **Custom domains** 添加子域名。
-
-### 子域名 DNS 配置
-子域名为 `tools.cataito.com`（已上线，此处仅供参考）：
-1. Cloudflare Pages → 项目 → **Custom domains** → 输入子域名 → 点击 **Activate domain**。
-2. 按页面提示，在 Cloudflare DNS 添加一条 **CNAME** 记录：
-   - **类型**：`CNAME`
-   - **名称**：`tools`（即子域名前缀）
-   - **目标**：`<你的 Pages 项目名>.pages.dev`
-   - **代理状态**：已代理（橙色云朵 ☁️ 开启，可获免费 HTTPS + 缓存）
-3. 等待 DNS 生效（通常几分钟到几小时），Cloudflare 会自动签发 SSL 证书，访问 `https://tools.cataito.com` 即可。
-
-> 若你的主域名 DNS 不在 Cloudflare，请先把域名 NS 指向 Cloudflare，或用 Pages 自带的 `*.pages.dev` 域名（无需自有域名）。
-
-## 改动记录（v1.1 上线前修复）
-- **P0**：ICO 含 512 尺寸时帧记录冲突 → 已修复（去重，每尺寸唯一帧）
-- **P0**：拖放上传原为装饰 → 实现真实 `dragover`/`drop` 文件读取
-- **P0**：ZIP 文件名含 `../` 路径穿越 → 文件名净化
-- **P1**：ZIP 时间戳固定为 `1980-01-01`（跨平台一致）；`alert` 改 Toast；进度条纳入缩放阶段；补齐 OG/Twitter/favicon 元信息；`:has()` 不支持时降级
-- **P2**：`crc32` 改查表法提速；主题记忆 + 跟随系统；SVG 栅格化基准尺寸；移除 Inter 外部字体依赖；`label` 关联；像素量警告阈值修正
+push 后若线上未更新，到 Cloudflare Dashboard → 该域名 → **缓存（Caching）→ 配置 → 清除缓存（Purge Everything）**——自定义域名有边缘缓存。
