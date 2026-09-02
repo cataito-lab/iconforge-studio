@@ -80,15 +80,14 @@
   }
 
   * { box-sizing: border-box; }
-  html, body { height: 100%; }
+  html, body { height: auto; }
   body {
     margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'PingFang SC', 'Microsoft YaHei', 'Inter', sans-serif;
     background: var(--bg);
     color: var(--text);
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
+    min-height: 100dvh;
+    overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
     line-height: 1.5;
   }
@@ -145,49 +144,37 @@
   .theme-btn:hover { color: var(--text); }
   .theme-btn.active { background: var(--accent-soft); color: var(--accent); }
 
-  /* ============ 主布局：工作区 + 设置面板 ============ */
+  /* ============ 主布局（移动优先）============
+     本文件中的基础样式 = 手机/窄屏默认表现：单列、常规文档流、
+     不锁高、不内滚，整页自然滚动，板块依次竖排，不可能重叠。
+     桌面端（≥1081px）的“视口锁定 + 双列 + 内部滚动”全部收进本样式表
+     末尾的 @media (min-width: 1081px)，避免被排在后面的基础规则反压。 */
   main {
-    flex: 1;
+    display: block;
+    flex: none;
     min-height: 0;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
+    overflow: visible;
   }
-  /* 中屏及以下：解锁固定高度链，整页恢复自然文档流滚动，
-     彻底杜绝“只有上传区能滚、其余板块被压住/互相遮挡” */
-  @media (max-width: 1080px) {
-    /* body 不再锁定为 100vh 的 flex 列，改为常规块级流式布局，随内容自然增高 */
-    html, body { height: auto; }
-    body { display: block; min-height: 100vh; min-height: 100dvh; overflow-x: hidden; }
-
-    /* main 解除 flex:1 锁高与 overflow:hidden，整页可滚 */
-    main { display: block; flex: none; min-height: 0; height: auto; overflow: visible; }
-
-    .tool-intro { padding: 18px 16px 6px; }
-
-    /* 工具主体（原两列网格）改为单列块级，高度自适应内容 */
-    .tool-body { display: block; flex: none; min-height: 0; height: auto; overflow: visible; padding-bottom: 28px; }
-
-    /* 工作区：去掉 height:100% 与内部滚动，跟随整页一起滚 */
-    .workspace { height: auto; min-height: 0; overflow: visible; padding: 16px; gap: 16px; }
-
-    /* 设置面板：从“右侧固定列”变为底部自然堆叠的一块 */
-    .panel { height: auto; min-height: 0; border-left: none; border-top: 1px solid var(--border); }
-    .panel-scroll { flex: none; overflow: visible; padding: 16px; gap: 20px; }
-
-    /* 主题卡行：不再强制 460px 高，按内容收缩 */
-    .themes-row { min-height: 0; }
+  .tool-intro { padding: 16px 14px 4px; }
+  /* 工具主体：窄屏为单列块级（覆盖 site.css 的两列 grid 与 flex 锁高） */
+  .tool-body {
+    display: block;
+    flex: none;
+    min-height: 0;
+    height: auto;
+    overflow: visible;
+    padding-bottom: 24px;
   }
 
   /* ---------- 工作区（画布） ---------- */
   .workspace {
     background: var(--bg-canvas);
-    padding: var(--sp-5);
+    padding: var(--sp-4);
     display: flex;
     flex-direction: column;
-    gap: var(--sp-5);
-    overflow: auto;
-    height: 100%;
+    gap: var(--sp-4);
+    overflow: visible;
+    height: auto;
     min-height: 0;
   }
 
@@ -237,9 +224,9 @@
 
   /* 合并后的主题卡：上传 + 预览 合一，去掉中间冗余标题 */
   .themes-row {
-    display: grid; grid-template-columns: 1fr 1fr;
+    display: grid; grid-template-columns: 1fr;
     gap: var(--sp-4);
-    flex: 1; min-height: 0;
+    flex: none; min-height: auto;
   }
   .theme-card {
     background: var(--card);
@@ -249,48 +236,21 @@
     display: flex; flex-direction: column;
     padding: var(--sp-4);
     gap: var(--sp-3);
-    min-height: 0;
+    min-height: auto;
   }
   .theme-body {
-    flex: 1; min-height: 0;
+    flex: none; min-height: auto;
     display: flex; flex-direction: column; align-items: stretch; justify-content: center;
-    gap: var(--sp-4);
+    gap: var(--sp-3);
   }
   .theme-stage-wrap {
-    flex: 1; min-height: 0;
+    flex: none; min-height: auto;
     display: flex; align-items: center; justify-content: center;
+    padding: 8px 0;
   }
   .theme-stage-wrap .preview-stage {
-    width: clamp(120px, 60%, 200px);
-    height: clamp(120px, 60%, 200px);
-  }
-  @media (max-width: 720px) {
-    .themes-row {
-      display: flex;
-      flex-direction: column;
-      flex: none;
-      min-height: auto;
-      gap: var(--sp-4);
-    }
-    .theme-card {
-      flex: none;
-      min-height: auto;
-      gap: var(--sp-3);
-    }
-    .theme-body {
-      flex: none;
-      min-height: auto;
-      gap: var(--sp-3);
-    }
-    .theme-stage-wrap {
-      flex: none;
-      min-height: auto;
-      padding: 10px 0;
-    }
-    .theme-stage-wrap .preview-stage {
-      width: 140px;
-      height: 140px;
-    }
+    width: 148px;
+    height: 148px;
   }
   .preview-note { font-size: var(--fs-xs); color: var(--text-3); text-align: center; line-height: 1.5; }
   .mid-foot {
@@ -301,12 +261,12 @@
 
   /* ---------- 设置面板 ---------- */
   .panel {
-    background: var(--bg); border-left: 1px solid var(--border);
-    display: flex; flex-direction: column; height: 100%; min-height: 0;
+    background: var(--bg); border-top: 1px solid var(--border);
+    display: flex; flex-direction: column; height: auto; min-height: 0;
   }
   .panel-scroll {
-    flex: 1; overflow-y: auto; padding: var(--sp-5);
-    display: flex; flex-direction: column; gap: var(--sp-6);
+    flex: none; overflow: visible; padding: var(--sp-4);
+    display: flex; flex-direction: column; gap: var(--sp-5);
   }
   .panel-foot { padding: var(--sp-4) var(--sp-5); border-top: 1px solid var(--border); background: var(--bg); }
 
@@ -421,6 +381,50 @@
   .toast.warn .ic-err, .toast.error .ic-err { display: block; }
   .toast-title { font-size: var(--fs-sm); font-weight: 600; color: var(--text); }
   .toast-sub { font-size: var(--fs-xs); color: var(--text-3); }
+
+  /* ============ 桌面端（≥1081px）：还原“视口锁定 + 双列 + 工作区内滚” ============
+     必须放在样式表最末尾：CSS 同权重规则按源序后来者胜，
+     若写在前面的基础样式之前，会被基础样式反压而失效（此前移动端修复失效的真因）。 */
+  @media (min-width: 1081px) {
+    html, body { height: 100%; }
+    body { display: flex; flex-direction: column; overflow: hidden; }
+
+    main { flex: 1; min-height: 0; display: flex; flex-direction: column; overflow: hidden; }
+
+    .tool-intro { padding: 22px 20px 8px; flex: none; }
+
+    .tool-body {
+      flex: 1; min-height: 0; height: auto;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 360px;
+      overflow: hidden;
+      padding-bottom: 0;
+    }
+
+    .workspace {
+      height: 100%; min-height: 0; overflow: auto;
+      padding: var(--sp-5); gap: var(--sp-5);
+    }
+
+    .themes-row { grid-template-columns: 1fr 1fr; flex: 1; min-height: 0; }
+    .theme-card { min-height: 0; }
+    .theme-body { flex: 1; min-height: 0; gap: var(--sp-4); }
+    .theme-stage-wrap { flex: 1; min-height: 0; padding: 0; }
+    .theme-stage-wrap .preview-stage {
+      width: clamp(120px, 60%, 200px);
+      height: clamp(120px, 60%, 200px);
+    }
+
+    .panel {
+      height: 100%; min-height: 0;
+      border-left: 1px solid var(--border);
+      border-top: none;
+    }
+    .panel-scroll {
+      flex: 1; overflow-y: auto;
+      padding: var(--sp-5); gap: var(--sp-6);
+    }
+  }
 </style>
 <script>
   (function () {
