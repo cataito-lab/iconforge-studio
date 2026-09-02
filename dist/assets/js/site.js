@@ -143,6 +143,39 @@
     /* 通用 */
     theme_light:    { zh: '亮色', en: 'Light' },
     theme_dark:     { zh: '暗色', en: 'Dark' },
+    theme_toggle:   { zh: '切换亮/暗主题', en: 'Toggle light/dark theme' },
+
+    /* 图片压缩 */
+    cp_name:          { zh: '图片压缩', en: 'Image Compressor' },
+    cp_desc:          { zh: '在线压缩 JPG / PNG / WebP：自由调质量、控尺寸，一键批量打包下载。纯浏览器本地处理。', en: 'Compress JPG / PNG / WebP online: adjustable quality and size, batch download as ZIP. Runs entirely in your browser.' },
+    cp_upload:        { zh: '点击或拖入图片（可多选）', en: 'Click or drop images (multiple allowed)' },
+    cp_dz_hint:      { zh: 'JPG / PNG / WebP · 全程本地处理，不上传', en: 'JPG / PNG / WebP · 100% local, never uploaded' },
+    cp_quality:       { zh: '压缩质量', en: 'Quality' },
+    cp_quality_hint:  { zh: '数值越低体积越小，画质越低。推荐 70–85。', en: 'Lower = smaller files, lower fidelity. 70–85 recommended.' },
+    cp_format:        { zh: '输出格式', en: 'Output format' },
+    cp_fmt_auto:      { zh: '智能（自动选最小）', en: 'Smart (smallest)' },
+    cp_fmt_jpeg:      { zh: 'JPEG', en: 'JPEG' },
+    cp_fmt_webp:      { zh: 'WebP（更小）', en: 'WebP (smaller)' },
+    cp_fmt_png:       { zh: 'PNG（无损，体积可能不减）', en: 'PNG (lossless, may not shrink)' },
+    cp_maxedge:       { zh: '最长边限制', en: 'Max edge' },
+    cp_edge_orig:     { zh: '原始尺寸', en: 'Original' },
+    cp_note:          { zh: 'JPEG/WebP 为有损压缩；含透明通道的图片会自动保留透明（输出 WebP/PNG）。', en: 'JPEG/WebP are lossy; images with transparency keep alpha automatically (WebP/PNG output).' },
+    cp_download_all:  { zh: '打包下载全部（ZIP）', en: 'Download all (ZIP)' },
+    cp_empty:         { zh: '还没有图片，先上传几张试试。', en: 'No images yet — drop some to start.' },
+    cp_total:         { zh: '共 ${n} 张 · ${saved}', en: '${n} images · ${saved}' },
+    cp_saved_percent: { zh: '总体减小 ${p}%', en: '${p}% smaller overall' },
+    cp_grew:          { zh: '该图已无法再小，保留原图', en: 'Already optimal; original kept' },
+    cp_dl:            { zh: '下载', en: 'Download' },
+    cp_remove:        { zh: '移除', en: 'Remove' },
+    cp_toast_type:    { zh: '请上传图片文件', en: 'Please upload image files' },
+    cp_toast_too_many:{ zh: '一次最多 ${n} 张，超出部分已忽略', en: 'Up to ${n} images at once; extras skipped' },
+    cp_toast_empty:   { zh: '请先添加图片', en: 'Please add images first' },
+    cp_toast_zip:     { zh: 'ZIP 已开始下载', en: 'ZIP download started' },
+    cp_add_more:      { zh: '继续添加', en: 'Add more' },
+    cp_clear_all:     { zh: '清空全部', en: 'Clear all' },
+    cp_compressing:   { zh: '压缩中...', en: 'Compressing...' },
+    cp_orig:          { zh: '原图', en: 'Original' },
+    cp_new:           { zh: '压缩后', en: 'Compressed' },
 
     /* 语言按钮（显示“切换到”的目标语言） */
     lang_to_en:     { zh: 'EN', en: '中' }
@@ -230,16 +263,27 @@
           '<a href="/" class="' + (active('/') ? 'active' : '') + '" data-i18n="nav_home">首页</a>' +
           '<a href="/icon-forge/" class="' + (active('/icon-forge/') ? 'active' : '') + '" data-i18n="if_name">图标工坊 IconForge</a>' +
           '<a href="/favicon/" class="' + (active('/favicon/') ? 'active' : '') + '" data-i18n="fv_name">Favicon 生成器</a>' +
+          '<a href="/compress/" class="' + (active('/compress/') ? 'active' : '') + '" data-i18n="cp_name">图片压缩</a>' +
           '<a href="/guides/" class="' + (active('/guides/') ? 'active' : '') + '" data-i18n="nav_guides">使用指南</a>' +
         '</nav>' +
-        '<button class="lang-switch" id="lang-switch" type="button" aria-label="Switch language">' +
-          '<svg class="globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.5 2.5 15 0 18M12 3c-2.5 2.5-2.5 15 0 18"/></svg>' +
-          '<span class="label">EN</span>' +
-        '</button>' +
+        '<div class="header-actions">' +
+          '<button class="theme-switch" id="theme-switch" type="button" data-i18n-title="theme_toggle" aria-label="Toggle theme">' +
+            '<svg class="ico-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>' +
+            '<svg class="ico-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>' +
+          '</button>' +
+          '<button class="lang-switch" id="lang-switch" type="button" aria-label="Switch language">' +
+            '<svg class="globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.5 2.5 15 0 18M12 3c-2.5 2.5-2.5 15 0 18"/></svg>' +
+            '<span class="label">EN</span>' +
+          '</button>' +
+        '</div>' +
       '</div>';
     var btn = document.getElementById('lang-switch');
     if (btn) btn.addEventListener('click', function () {
       setLang(getLang() === 'zh' ? 'en' : 'zh');
+    });
+    var tbtn = document.getElementById('theme-switch');
+    if (tbtn) tbtn.addEventListener('click', function () {
+      if (window.CATAITO_THEME) window.CATAITO_THEME.toggle();
     });
   }
 

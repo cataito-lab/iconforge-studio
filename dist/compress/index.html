@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>图片压缩 — 免费在线批量压缩 JPG/PNG/WebP | cataito</title>
+<meta name="title-zh" content="图片压缩 — 免费在线批量压缩 JPG/PNG/WebP | cataito">
+<meta name="title-en" content="Image Compressor — Free Online JPG/PNG/WebP Compression | cataito">
+<meta name="description" content="免费在线图片压缩：批量压缩 JPG / PNG / WebP，自由调节质量与尺寸，一键打包 ZIP 下载。纯浏览器本地处理，图片绝不上传服务器。">
+<meta name="theme-color" content="#fbfbfd">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="cataito 工具箱">
+<meta property="og:title" content="图片压缩 — 免费在线批量压缩">
+<meta property="og:description" content="批量压缩 JPG/PNG/WebP，调质量、控尺寸，本地处理不上传。">
+<meta property="og:url" content="https://tools.cataito.com/compress/">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:locale:alternate" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="图片压缩">
+<meta name="twitter:description" content="免费在线批量图片压缩，纯本地处理。">
+<link rel="icon" href="/assets/img/icon.svg">
+<link rel="canonical" href="https://tools.cataito.com/compress/">
+<link rel="stylesheet" href="/assets/css/site.css">
+<script src="/assets/js/theme-init.js"></script>
+<script>
+  (function () {
+    try {
+      var l = localStorage.getItem('cataito-lang');
+      document.documentElement.setAttribute('lang', (l === 'en') ? 'en' : 'zh-CN');
+    } catch (e) {}
+  })();
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Image Compressor",
+  "alternateName": "图片压缩",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "Any",
+  "url": "https://tools.cataito.com/compress/",
+  "inLanguage": ["zh-CN", "en"],
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "description": "免费在线图片压缩：批量压缩 JPG / PNG / WebP，自由调节质量与尺寸，纯本地处理。"
+}
+</script>
+</head>
+<body>
+<div id="site-header"></div>
+<main class="site-main">
+  <nav class="breadcrumb"><a href="/" data-i18n="crumb_home">首页</a><span class="sep">/</span><span data-i18n="cp_name">图片压缩</span></nav>
+  <h1 class="page-h1" data-i18n="cp_name">图片压缩</h1>
+  <p class="page-sub" data-i18n="cp_desc">在线压缩 JPG / PNG / WebP：自由调质量、控尺寸，一键批量打包下载。纯浏览器本地处理。</p>
+
+  <section class="cp-card">
+    <div id="cp-dropzone" class="cp-dropzone" tabindex="0">
+      <input type="file" id="cp-file" accept="image/*" multiple hidden>
+      <div class="cp-dz-inner">
+        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4m0 0L7 9m5-5l5 5"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
+        <div class="cp-dz-title" data-i18n="cp_upload">点击或拖入图片（可多选）</div>
+        <div class="cp-dz-hint" data-i18n="cp_dz_hint">JPG / PNG / WebP · 全程本地处理，不上传</div>
+      </div>
+    </div>
+
+    <div class="cp-controls">
+      <div class="cp-field">
+        <div class="cp-field-head">
+          <span class="cp-field-label" data-i18n="cp_quality">压缩质量</span>
+          <span class="cp-quality-val" id="cp-quality-val">80</span>
+        </div>
+        <input type="range" id="cp-quality" min="30" max="95" step="1" value="80" class="cp-range">
+        <div class="cp-field-hint" data-i18n="cp_quality_hint">数值越低体积越小，画质越低。推荐 70–85。</div>
+      </div>
+
+      <div class="cp-field">
+        <div class="cp-field-label" data-i18n="cp_format">输出格式</div>
+        <div class="cp-seg" id="cp-format">
+          <label class="cp-seg-item"><input type="radio" name="cp-format" value="auto" checked><span data-i18n="cp_fmt_auto">智能（自动选最小）</span></label>
+          <label class="cp-seg-item"><input type="radio" name="cp-format" value="jpeg"><span>JPEG</span></label>
+          <label class="cp-seg-item"><input type="radio" name="cp-format" value="webp"><span>WebP</span></label>
+          <label class="cp-seg-item"><input type="radio" name="cp-format" value="png"><span>PNG</span></label>
+        </div>
+      </div>
+
+      <div class="cp-field">
+        <div class="cp-field-label" data-i18n="cp_maxedge">最长边限制</div>
+        <div class="cp-seg" id="cp-maxedge">
+          <label class="cp-seg-item"><input type="radio" name="cp-edge" value="0" checked><span data-i18n="cp_edge_orig">原始尺寸</span></label>
+          <label class="cp-seg-item"><input type="radio" name="cp-edge" value="2560"><span>2560px</span></label>
+          <label class="cp-seg-item"><input type="radio" name="cp-edge" value="1920"><span>1920px</span></label>
+          <label class="cp-seg-item"><input type="radio" name="cp-edge" value="1280"><span>1280px</span></label>
+          <label class="cp-seg-item"><input type="radio" name="cp-edge" value="800"><span>800px</span></label>
+        </div>
+      </div>
+    </div>
+
+    <div id="cp-list" class="cp-list"></div>
+    <p id="cp-empty" class="cp-empty" data-i18n="cp_empty">还没有图片，先上传几张试试。</p>
+
+    <div id="cp-bar" class="cp-bar" hidden>
+      <div class="cp-bar-stats" id="cp-bar-stats"></div>
+      <div class="cp-bar-actions">
+        <button type="button" class="cp-btn ghost" id="cp-add" data-i18n="cp_add_more">继续添加</button>
+        <button type="button" class="cp-btn ghost" id="cp-clear" data-i18n="cp_clear_all">清空全部</button>
+        <button type="button" class="cp-btn primary" id="cp-zip" data-i18n="cp_download_all">打包下载全部（ZIP）</button>
+      </div>
+    </div>
+
+    <p class="cp-note" data-i18n="cp_note">JPEG/WebP 为有损压缩；含透明通道的图片会自动保留透明（输出 WebP/PNG）。</p>
+  </section>
+</main>
+
+<div id="site-footer"></div>
+<div id="cp-toast" class="cp-toast"></div>
+
+<script src="/assets/js/site.js"></script>
+<script>
+(function () {
+  'use strict';
+  var t = function (k, vars) { return (window.CATAITO_I18N && window.CATAITO_I18N.t) ? window.CATAITO_I18N.t(k, vars) : k; };
+  var MAX_FILES = 20;
+  var items = [];   /* { id, file, url, img, w, h, hasAlpha, outBlob, outName, kept } */
+  var seq = 0;
+  var running = false, pendingRerun = false;
+
+  /* ---------- 环境：WebP 编码支持检测 ---------- */
+  var webpOK = (function () {
+    var c = document.createElement('canvas'); c.width = c.height = 1;
+    return c.toDataURL('image/webp').indexOf('image/webp') === 5;
+  })();
+
+  /* ---------- 工具函数 ---------- */
+  function fmtSize(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  }
+  function canvasToBlob(canvas, type, quality) {
+    return new Promise(function (resolve) {
+      if (canvas.toBlob) {
+        canvas.toBlob(function (b) { resolve(b); }, type, quality);
+      } else {
+        var u = canvas.toDataURL(type, quality);
+        var bin = atob(u.split(',')[1]);
+        var bytes = new Uint8Array(bin.length);
+        for (var i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+        resolve(new Blob([bytes], { type: type }));
+      }
+    });
+  }
+  function loadFile(file) {
+    return new Promise(function (resolve, reject) {
+      var url = URL.createObjectURL(file);
+      var img = new Image();
+      img.onload = function () { resolve({ img: img, url: url }); };
+      img.onerror = function () { URL.revokeObjectURL(url); reject(); };
+      img.src = url;
+    });
+  }
+  function drawScaled(img, maxEdge) {
+    var w = img.naturalWidth || img.width, h = img.naturalHeight || img.height;
+    var scale = 1;
+    if (maxEdge > 0) {
+      var longest = Math.max(w, h);
+      if (longest > maxEdge) scale = maxEdge / longest;
+    }
+    var c = document.createElement('canvas');
+    c.width = Math.max(1, Math.round(w * scale));
+    c.height = Math.max(1, Math.round(h * scale));
+    var ctx = c.getContext('2d');
+    ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = 'high';
+    ctx.drawImage(img, 0, 0, c.width, c.height);
+    return c;
+  }
+  function detectAlpha(img) {
+    /* 用 64px 小图采样检测透明通道，避免大图逐像素开销 */
+    var s = 64;
+    var c = document.createElement('canvas'); c.width = s; c.height = s;
+    var ctx = c.getContext('2d', { willReadFrequently: true });
+    ctx.drawImage(img, 0, 0, s, s);
+    try {
+      var d = ctx.getImageData(0, 0, s, s).data;
+      for (var i = 3; i < d.length; i += 4) { if (d[i] < 250) return true; }
+    } catch (e) { /* 跨域画布等异常时保守认为有透明 */ return true; }
+    return false;
+  }
+
+  /* ---------- 压缩 ---------- */
+  function currentSettings() {
+    var fmt = (document.querySelector('input[name="cp-format"]:checked') || {}).value || 'auto';
+    var edge = parseInt((document.querySelector('input[name="cp-edge"]:checked') || {}).value || '0', 10);
+    var q = parseInt(document.getElementById('cp-quality').value, 10) / 100;
+    return { fmt: fmt, edge: edge, q: q };
+  }
+
+  async function compressItem(item, s) {
+    var canvas = drawScaled(item.img, s.edge);
+    var candidates = [];
+    var baseName = item.file.name.replace(/\.[^.]+$/, '');
+
+    if (s.fmt === 'png') {
+      candidates = [{ type: 'image/png', ext: 'png', q: undefined }];
+    } else if (s.fmt === 'jpeg') {
+      candidates = [{ type: 'image/jpeg', ext: 'jpg', q: s.q }];
+    } else if (s.fmt === 'webp') {
+      candidates = webpOK ? [{ type: 'image/webp', ext: 'webp', q: s.q }] : [{ type: 'image/jpeg', ext: 'jpg', q: s.q }];
+    } else { /* auto */
+      if (item.hasAlpha) {
+        /* 透明只能 WebP（有损带 alpha）或 PNG；WebP 通常远小于 PNG */
+        candidates = webpOK
+          ? [{ type: 'image/webp', ext: 'webp', q: s.q }, { type: 'image/png', ext: 'png', q: undefined }]
+          : [{ type: 'image/png', ext: 'png', q: undefined }];
+      } else {
+        candidates = [{ type: 'image/jpeg', ext: 'jpg', q: s.q }];
+        if (webpOK) candidates.push({ type: 'image/webp', ext: 'webp', q: s.q });
+      }
+    }
+
+    var best = null;
+    for (var i = 0; i < candidates.length; i++) {
+      var cd = candidates[i];
+      var blob = await canvasToBlob(canvas, cd.type, cd.q);
+      if (!best || blob.size < best.blob.size) best = { blob: blob, ext: cd.ext, type: cd.type };
+    }
+
+    /* 无损结果反而更大 → 保留原图，诚实告知 */
+    if (best.blob.size >= item.file.size) {
+      item.outBlob = item.file;
+      item.outName = item.file.name;
+      item.kept = true;
+    } else {
+      item.outBlob = best.blob;
+      item.outName = baseName + '.' + best.ext;
+      item.kept = false;
+    }
+  }
+
+  async function runAll() {
+    if (running) { pendingRerun = true; return; }
+    running = true;
+    document.body.classList.add('cp-busy');
+    var s = currentSettings();
+    for (var i = 0; i < items.length; i++) {
+      await compressItem(items[i], s);
+      renderRow(items[i]);
+    }
+    running = false;
+    document.body.classList.remove('cp-busy');
+    if (pendingRerun) { pendingRerun = false; runAll(); }
+    renderBar();
+  }
+  var rerunTimer = null;
+  function scheduleRerun() {
+    if (!items.length) return;
+    if (rerunTimer) clearTimeout(rerunTimer);
+    rerunTimer = setTimeout(runAll, 280);
+  }
+
+  /* ---------- 渲染 ---------- */
+  function renderRow(item) {
+    var row = document.getElementById('cp-row-' + item.id);
+    if (!row) return;
+    var outBytes = item.outBlob ? item.outBlob.size : 0;
+    var saved = item.outBlob && !item.kept ? Math.round((1 - outBytes / item.file.size) * 100) : 0;
+    var badge = item.kept
+      ? '<span class="cp-badge flat">' + esc(t('cp_grew')) + '</span>'
+      : '<span class="cp-badge ok">-' + saved + '%</span>';
+    row.innerHTML =
+      '<img class="cp-thumb" src="' + item.url + '" alt="">' +
+      '<div class="cp-info">' +
+        '<div class="cp-name" title="' + esc(item.file.name) + '">' + esc(item.file.name) + '</div>' +
+        '<div class="cp-meta">' +
+          '<span class="cp-dim">' + item.w + '×' + item.h + '</span>' +
+          '<span class="cp-size"><span class="cp-label" data-i18n="cp_orig">原图</span> ' + fmtSize(item.file.size) +
+          ' → <span class="cp-label" data-i18n="cp_new">压缩后</span> <strong>' + fmtSize(outBytes) + '</strong></span>' +
+          badge +
+        '</div>' +
+      '</div>' +
+      '<div class="cp-row-actions">' +
+        '<button type="button" class="cp-mini" data-act="dl" data-i18n-title="cp_dl">' +
+          '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3"/><path d="m7 10 5 5 5-5"/><path d="M4 21h16"/></svg>' +
+        '</button>' +
+        '<button type="button" class="cp-mini danger" data-act="rm" data-i18n-title="cp_remove">' +
+          '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>' +
+        '</button>' +
+      '</div>';
+    if (window.CATAITO_I18N) window.CATAITO_I18N.apply();
+  }
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+  function renderList() {
+    var list = document.getElementById('cp-list');
+    list.innerHTML = '';
+    items.forEach(function (item) {
+      var row = document.createElement('div');
+      row.className = 'cp-row';
+      row.id = 'cp-row-' + item.id;
+      list.appendChild(row);
+      renderRow(item);
+    });
+    document.getElementById('cp-empty').style.display = items.length ? 'none' : '';
+    document.getElementById('cp-bar').hidden = !items.length;
+  }
+  function renderBar() {
+    if (!items.length) return;
+    var orig = 0, out = 0;
+    items.forEach(function (it) { orig += it.file.size; if (it.outBlob) out += it.outBlob.size; });
+    var p = orig ? Math.round((1 - out / orig) * 100) : 0;
+    var txt = t('cp_total', { n: items.length, saved: t('cp_saved_percent', { p: p }) });
+    document.getElementById('cp-bar-stats').textContent = txt;
+  }
+
+  /* ---------- 添加文件 ---------- */
+  function addFiles(fileList) {
+    var added = 0;
+    var files = Array.prototype.slice.call(fileList || []);
+    for (var i = 0; i < files.length; i++) {
+      var f = files[i];
+      if (!f.type || f.type.indexOf('image/') !== 0) { showToast(t('cp_toast_type'), true); continue; }
+      if (items.length >= MAX_FILES) { showToast(t('cp_toast_too_many', { n: MAX_FILES }), true); break; }
+      (function (file) {
+        var item = { id: ++seq, file: file, url: '', img: null, w: 0, h: 0, hasAlpha: false, outBlob: null, outName: '', kept: false };
+        items.push(item);
+        added++;
+        loadFile(file).then(function (r) {
+          item.img = r.img; item.url = r.url;
+          item.w = r.img.naturalWidth || r.img.width;
+          item.h = r.img.naturalHeight || r.img.height;
+          item.hasAlpha = detectAlpha(r.img);
+          renderRow(item);
+          renderBar();
+        }).catch(function () {
+          removeItem(item.id);
+          showToast(t('cp_toast_type'), true);
+        });
+      })(f);
+    }
+    if (added) { renderList(); scheduleRerun(); }
+  }
+  function removeItem(id) {
+    for (var i = 0; i < items.length; i++) {
+      if (items[i].id === id) {
+        if (items[i].url) URL.revokeObjectURL(items[i].url);
+        items.splice(i, 1);
+        break;
+      }
+    }
+    renderList(); renderBar();
+  }
+  function downloadBlob(blob, name) {
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = name;
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(function () { URL.revokeObjectURL(a.href); }, 4000);
+  }
+
+  /* ---------- ZIP（与 favicon 工具同源的轻量实现） ---------- */
+  var CRC_TABLE = null;
+  function getCrcTable() {
+    if (CRC_TABLE) return CRC_TABLE;
+    CRC_TABLE = new Uint32Array(256);
+    for (var i = 0; i < 256; i++) {
+      var c = i;
+      for (var k = 0; k < 8; k++) c = (c & 1) ? (0xEDB88320 ^ (c >>> 1)) : (c >>> 1);
+      CRC_TABLE[i] = c >>> 0;
+    }
+    return CRC_TABLE;
+  }
+  function crc32(buf) {
+    var table = getCrcTable();
+    var crc = 0xFFFFFFFF;
+    for (var i = 0; i < buf.length; i++) crc = table[(crc ^ buf[i]) & 0xFF] ^ (crc >>> 8);
+    return (crc ^ 0xFFFFFFFF) >>> 0;
+  }
+  function buildZip(files) {
+    var enc = new TextEncoder();
+    var chunks = [], central = [], offset = 0;
+    var now = new Date();
+    var dosTime = ((now.getHours() & 31) << 11) | ((now.getMinutes() & 63) << 5) | ((now.getSeconds() >> 1) & 31);
+    var dosDate = ((Math.max(0, now.getFullYear() - 1980) & 127) << 9) | (((now.getMonth() + 1) & 15) << 5) | (now.getDate() & 31);
+    for (var f = 0; f < files.length; f++) {
+      var nameBytes = enc.encode(files[f].name);
+      var data = files[f].data;
+      var crc = crc32(data);
+      var local = new DataView(new ArrayBuffer(30));
+      local.setUint32(0, 0x04034b50, true); local.setUint16(4, 20, true); local.setUint16(6, 0x0800, true);
+      local.setUint16(8, 0, true); local.setUint16(10, dosTime, true); local.setUint16(12, dosDate, true);
+      local.setUint32(14, crc, true); local.setUint32(18, data.length, true); local.setUint32(22, data.length, true);
+      local.setUint16(26, nameBytes.length, true); local.setUint16(28, 0, true);
+      chunks.push(new Uint8Array(local.buffer), nameBytes, data);
+      var cd = new DataView(new ArrayBuffer(46));
+      cd.setUint32(0, 0x02014b50, true); cd.setUint16(4, 20, true); cd.setUint16(6, 20, true); cd.setUint16(8, 0x0800, true);
+      cd.setUint16(10, 0, true); cd.setUint16(12, dosTime, true); cd.setUint16(14, dosDate, true);
+      cd.setUint32(16, crc, true); cd.setUint32(20, data.length, true); cd.setUint32(24, data.length, true);
+      cd.setUint16(28, nameBytes.length, true); cd.setUint16(30, 0, true); cd.setUint16(32, 0, true); cd.setUint16(34, 0, true); cd.setUint16(36, 0, true);
+      cd.setUint32(38, 0, true); cd.setUint32(42, offset, true);
+      central.push({ header: new Uint8Array(cd.buffer), name: nameBytes });
+      offset += 30 + nameBytes.length + data.length;
+    }
+    var centralStart = offset, centralSize = 0;
+    central.forEach(function (c) { chunks.push(c.header, c.name); centralSize += c.header.length + c.name.length; });
+    var end = new DataView(new ArrayBuffer(22));
+    end.setUint32(0, 0x06054b50, true); end.setUint16(4, 0, true); end.setUint16(6, 0, true);
+    end.setUint16(8, files.length, true); end.setUint16(10, files.length, true);
+    end.setUint32(12, centralSize, true); end.setUint32(16, centralStart, true); end.setUint16(20, 0, true);
+    chunks.push(new Uint8Array(end.buffer));
+    return new Blob(chunks, { type: 'application/zip' });
+  }
+  function blobToU8(blob) {
+    return blob.arrayBuffer ? blob.arrayBuffer().then(function (b) { return new Uint8Array(b); })
+      : new Promise(function (resolve) {
+          var r = new FileReader();
+          r.onload = function () { resolve(new Uint8Array(r.result)); };
+          r.readAsArrayBuffer(blob);
+        });
+  }
+  async function downloadZip() {
+    if (!items.length) { showToast(t('cp_toast_empty'), true); return; }
+    var files = [];
+    var used = {};
+    for (var i = 0; i < items.length; i++) {
+      var it = items[i];
+      if (!it.outBlob) continue;
+      var name = it.outName;
+      if (used[name]) name = name.replace(/(\.[^.]+)$/, '-' + (i + 1) + '$1');
+      used[name] = 1;
+      files.push({ name: name, data: await blobToU8(it.outBlob) });
+    }
+    if (!files.length) { showToast(t('cp_toast_empty'), true); return; }
+    downloadBlob(buildZip(files), 'compressed-images.zip');
+    showToast(t('cp_toast_zip'));
+  }
+
+  /* ---------- Toast ---------- */
+  var toastTimer = null;
+  function showToast(msg, isErr) {
+    var el = document.getElementById('cp-toast');
+    el.textContent = msg;
+    el.className = 'cp-toast show' + (isErr ? ' err' : '');
+    if (toastTimer) clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { el.className = 'cp-toast'; }, 2600);
+  }
+
+  /* ---------- 事件绑定 ---------- */
+  var dz = document.getElementById('cp-dropzone');
+  var fileInput = document.getElementById('cp-file');
+  dz.addEventListener('click', function () { fileInput.click(); });
+  dz.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fileInput.click(); } });
+  fileInput.addEventListener('change', function (e) { addFiles(e.target.files); fileInput.value = ''; });
+  ['dragenter', 'dragover'].forEach(function (ev) {
+    dz.addEventListener(ev, function (e) { e.preventDefault(); dz.classList.add('drag'); });
+  });
+  ['dragleave', 'drop'].forEach(function (ev) {
+    dz.addEventListener(ev, function (e) { e.preventDefault(); dz.classList.remove('drag'); });
+  });
+  dz.addEventListener('drop', function (e) {
+    var dt = e.dataTransfer;
+    if (dt && dt.files && dt.files.length) addFiles(dt.files);
+  });
+
+  var q = document.getElementById('cp-quality');
+  q.addEventListener('input', function () {
+    document.getElementById('cp-quality-val').textContent = q.value;
+  });
+  q.addEventListener('change', scheduleRerun);
+  ['change'].forEach(function (ev) {
+    document.getElementById('cp-format').addEventListener(ev, scheduleRerun);
+    document.getElementById('cp-maxedge').addEventListener(ev, scheduleRerun);
+  });
+
+  document.getElementById('cp-list').addEventListener('click', function (e) {
+    var btn = e.target.closest ? e.target.closest('.cp-mini') : null;
+    if (!btn) return;
+    var row = btn.closest('.cp-row');
+    var id = parseInt(row.id.replace('cp-row-', ''), 10);
+    var act = btn.getAttribute('data-act');
+    if (act === 'rm') { removeItem(id); return; }
+    if (act === 'dl') {
+      for (var i = 0; i < items.length; i++) {
+        if (items[i].id === id && items[i].outBlob) {
+          downloadBlob(items[i].outBlob, items[i].outName);
+          return;
+        }
+      }
+    }
+  });
+  document.getElementById('cp-add').addEventListener('click', function () { fileInput.click(); });
+  document.getElementById('cp-clear').addEventListener('click', function () {
+    items.forEach(function (it) { if (it.url) URL.revokeObjectURL(it.url); });
+    items = [];
+    renderList();
+  });
+  document.getElementById('cp-zip').addEventListener('click', downloadZip);
+
+  /* 语言切换时刷新动态文本 */
+  document.addEventListener('cataito-lang-change', function () {
+    renderList();
+    renderBar();
+    var v = document.getElementById('cp-quality-val');
+    if (v) v.textContent = document.getElementById('cp-quality').value;
+  });
+})();
+</script>
+
+<style>
+  .cp-card {
+    max-width: 760px;
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 22px;
+  }
+  .cp-dropzone {
+    border: 1.5px dashed var(--border); border-radius: var(--radius);
+    min-height: 150px; display: grid; place-items: center; text-align: center;
+    cursor: pointer; transition: border-color .15s, background .15s; position: relative; padding: 18px;
+  }
+  .cp-dropzone:hover, .cp-dropzone.drag { border-color: var(--accent); background: var(--accent-soft-2); }
+  .cp-dz-inner { color: var(--text-2); display: grid; gap: 8px; justify-items: center; }
+  .cp-dz-title { font-size: 15px; font-weight: 600; color: var(--text); }
+  .cp-dz-hint { font-size: 12px; color: var(--text-3); }
+
+  .cp-controls { margin-top: 20px; display: grid; gap: 18px; }
+  .cp-field-head { display: flex; align-items: baseline; justify-content: space-between; }
+  .cp-field-label { font-size: 13px; font-weight: 600; color: var(--text-2); margin-bottom: 8px; display: block; }
+  .cp-quality-val { font-size: 13px; font-weight: 700; color: var(--accent); font-variant-numeric: tabular-nums; }
+  .cp-range { width: 100%; accent-color: var(--accent); cursor: pointer; }
+  .cp-field-hint { font-size: 11.5px; color: var(--text-3); margin-top: 6px; }
+  .cp-seg { display: flex; flex-wrap: wrap; gap: 8px; }
+  .cp-seg-item { display: inline-flex; }
+  .cp-seg-item input { position: absolute; opacity: 0; width: 0; height: 0; }
+  .cp-seg-item span {
+    padding: 7px 13px; border-radius: 9px; border: 1px solid var(--border);
+    background: var(--card-2); color: var(--text-2); font-size: 13px; cursor: pointer; transition: all .15s;
+  }
+  .cp-seg-item input:checked + span { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); font-weight: 600; }
+  .cp-seg-item input:focus-visible + span { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+  .cp-list { margin-top: 18px; display: grid; gap: 10px; }
+  .cp-row {
+    display: flex; align-items: center; gap: 12px;
+    background: var(--card-2); border: 1px solid var(--border);
+    border-radius: var(--radius-sm); padding: 10px 12px;
+    transition: opacity .2s;
+  }
+  body.cp-busy .cp-row { opacity: .55; }
+  .cp-thumb {
+    width: 52px; height: 52px; flex: none; object-fit: contain; border-radius: 8px;
+    border: 1px solid var(--border);
+    background: conic-gradient(var(--checker) 90deg, transparent 0 180deg, var(--checker) 0 270deg, transparent 0) 0 0 / 13px 13px;
+  }
+  .cp-info { flex: 1; min-width: 0; }
+  .cp-name {
+    font-size: 13.5px; font-weight: 600; color: var(--text);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .cp-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; margin-top: 4px; font-size: 12px; color: var(--text-3); }
+  .cp-meta strong { color: var(--text-2); font-variant-numeric: tabular-nums; }
+  .cp-dim { font-variant-numeric: tabular-nums; }
+  .cp-label { color: var(--text-3); }
+  .cp-badge {
+    font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 999px;
+    font-variant-numeric: tabular-nums;
+  }
+  .cp-badge.ok { color: var(--success); background: color-mix(in srgb, var(--success) 14%, transparent); }
+  .cp-badge.flat { color: var(--text-3); background: var(--card); border: 1px solid var(--border); font-weight: 600; }
+  .cp-row-actions { display: flex; gap: 6px; flex: none; }
+  .cp-mini {
+    width: 30px; height: 30px; border-radius: 8px; border: 1px solid var(--border);
+    background: var(--card); color: var(--text-2); cursor: pointer;
+    display: grid; place-items: center; transition: all .15s;
+  }
+  .cp-mini:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-soft-2); }
+  .cp-mini.danger:hover { border-color: var(--danger); color: var(--danger); background: color-mix(in srgb, var(--danger) 8%, transparent); }
+
+  .cp-empty { text-align: center; font-size: 13px; color: var(--text-3); margin: 22px 0 4px; }
+
+  .cp-bar {
+    margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--border);
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px;
+  }
+  .cp-bar-stats { font-size: 13px; font-weight: 600; color: var(--text-2); }
+  .cp-bar-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+  .cp-btn {
+    padding: 9px 16px; border-radius: 9px; font-size: 13px; font-weight: 600;
+    cursor: pointer; transition: all .15s; border: 1px solid var(--border);
+  }
+  .cp-btn.ghost { background: var(--card); color: var(--text-2); }
+  .cp-btn.ghost:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-soft-2); }
+  .cp-btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .cp-btn.primary:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
+  .cp-note { margin: 14px 0 0; font-size: 12px; color: var(--text-3); text-align: center; }
+
+  .cp-toast {
+    position: fixed; left: 50%; bottom: 28px; transform: translateX(-50%) translateY(20px);
+    background: var(--text); color: var(--bg); padding: 11px 18px; border-radius: 10px;
+    font-size: 13.5px; font-weight: 500; opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s; z-index: 80;
+  }
+  .cp-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+  .cp-toast.err { background: var(--danger); color: #fff; }
+
+  @media (max-width: 560px) {
+    .cp-card { padding: 16px; }
+    .cp-bar { flex-direction: column; align-items: stretch; }
+    .cp-bar-actions { width: 100%; }
+    .cp-btn { flex: 1; text-align: center; }
+    .cp-size { flex-basis: 100%; }
+  }
+</style>
+</body>
+</html>

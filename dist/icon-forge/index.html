@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN" class="dark">
+<html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,7 +7,7 @@
 <meta name="title-zh" content="图标工坊 IconForge — 免费多主题应用图标生成器 | cataito">
 <meta name="title-en" content="Icon Forge — Free Multi-Theme App Icon Generator | cataito">
 <meta name="description" content="免费在线图标生成器：上传 Logo，一键导出 Windows ICO、macOS 风格多尺寸 PNG 与 favicon。支持 Light/Dark 双主题、透明保护与自动去背景，全程在本机浏览器本地处理，图片不上传服务器。">
-<meta name="theme-color" content="#0e1016">
+<meta name="theme-color" content="#fbfbfd">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="cataito 工具箱">
 <meta property="og:title" content="图标工坊 IconForge — 免费多主题应用图标生成器">
@@ -21,62 +21,17 @@
 <link rel="canonical" href="https://tools.cataito.com/icon-forge/">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%236366f1'/%3E%3Crect x='8' y='8' width='7' height='7' rx='1.5' fill='white'/%3E%3Crect x='17' y='8' width='7' height='7' rx='1.5' fill='white' opacity='.55'/%3E%3Crect x='8' y='17' width='7' height='7' rx='1.5' fill='white' opacity='.55'/%3E%3Crect x='17' y='17' width='7' height='7' rx='1.5' fill='white' opacity='.3'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="/assets/css/site.css">
-<script>
-  /* 首屏防闪：在样式生效前就把主题定下来，避免深色/浅色切换时的白闪 */
-  (function () {
-    try {
-      var t = localStorage.getItem('iconforge-theme');
-      if (!t) t = (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) ? 'light' : 'dark';
-      var h = document.documentElement;
-      if (t === 'light') h.classList.remove('dark'); else h.classList.add('dark');
-    } catch (e) { /* 隐私模式下 localStorage 不可用，保持默认 dark */ }
-  })();
-</script>
+<script src="/assets/js/theme-init.js"></script>
 <style>
-  /* ============ 设计令牌：颜色 ============ */
+  /* ============ 设计令牌 ============
+     颜色令牌（含亮/暗双色板、--danger/--success/--checker）已统一收编进
+     /assets/css/site.css 的 :root 与 html.dark，由全站共享，此处不再重复定义，
+     避免两处漂移。此处仅保留本工具特有的间距/字号标尺。 */
   :root {
-    --bg: #fbfbfd;
-    --bg-canvas: #f1f2f6;
-    --card: #ffffff;
-    --card-2: #f6f7f9;
-    --border: #e6e8ee;
-    --text: #1f2430;
-    --text-2: #5b6472;
-    --text-3: #9aa1ad;
-    --accent: #6366f1;
-    --accent-hover: #4f46e5;
-    --accent-soft: rgba(99,102,241,0.10);
-    --accent-soft-2: rgba(99,102,241,0.05);
-    --danger: #ef4444;
-    --success: #10b981;
-    --checker: #e9ebf0;
-    --radius: 13px;
-    --radius-sm: 9px;
-    --shadow-sm: 0 1px 2px rgba(16,24,40,0.06), 0 1px 3px rgba(16,24,40,0.04);
-    --shadow-md: 0 10px 30px rgba(16,24,40,0.12);
     /* 间距标尺 */
     --sp-1: 4px; --sp-2: 8px; --sp-3: 12px; --sp-4: 16px; --sp-5: 20px; --sp-6: 26px;
     /* 字号标尺 */
     --fs-xs: 11px; --fs-sm: 12.5px; --fs-md: 13.5px; --fs-lg: 15px;
-  }
-  html.dark {
-    --bg: #0e1016;
-    --bg-canvas: #0a0c11;
-    --card: #171a21;
-    --card-2: #1c2029;
-    --border: #272b35;
-    --text: #eef0f4;
-    --text-2: #aab2bf;
-    --text-3: #717a89;
-    --accent: #818cf8;
-    --accent-hover: #6366f1;
-    --accent-soft: rgba(129,140,248,0.15);
-    --accent-soft-2: rgba(129,140,248,0.07);
-    --danger: #f87171;
-    --success: #34d399;
-    --checker: rgba(255,255,255,0.07);
-    --shadow-sm: 0 1px 2px rgba(0,0,0,0.4);
-    --shadow-md: 0 14px 34px rgba(0,0,0,0.55);
   }
 
   * { box-sizing: border-box; }
@@ -737,23 +692,20 @@
     return window.CATAITO_I18N ? window.CATAITO_I18N.t(key, vars) : key;
   }
 
-  /* ============ 主题切换（真正生效） ============ */
+  /* ============ 主题切换（委托全站共享主题系统） ============ */
   function setTheme(theme) {
-    const html = document.documentElement;
-    if (theme === 'dark') html.classList.add('dark'); else html.classList.remove('dark');
-    document.getElementById('theme-light-btn').classList.toggle('active', theme === 'light');
-    document.getElementById('theme-dark-btn').classList.toggle('active', theme === 'dark');
-    const meta = document.querySelector('meta[name="theme-color"]');
-    if (meta) meta.setAttribute('content', theme === 'dark' ? '#0e1016' : '#fbfbfd');
-    try { localStorage.setItem('iconforge-theme', theme); } catch (e) { /* 隐私模式下忽略 */ }
+    if (window.CATAITO_THEME) window.CATAITO_THEME.set(theme);
   }
-  // 初始化：优先沿用上次选择，其次跟随系统，最后兜底 dark（首屏防闪在 <head> 里已提前处理）
-  (function initTheme() {
-    let saved = null;
-    try { saved = localStorage.getItem('iconforge-theme'); } catch (e) { /* 忽略 */ }
-    const sysDark = !(window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches);
-    setTheme(saved || (sysDark ? 'dark' : 'light'));
-  })();
+  // 面板 Light/Dark 按钮与全站主题（顶栏按钮、系统偏好）保持同步
+  function syncThemeBtns() {
+    var dark = document.documentElement.classList.contains('dark');
+    var lb = document.getElementById('theme-light-btn');
+    var db = document.getElementById('theme-dark-btn');
+    if (lb) lb.classList.toggle('active', !dark);
+    if (db) db.classList.toggle('active', dark);
+  }
+  document.addEventListener('cataito-theme-change', syncThemeBtns);
+  syncThemeBtns();
 
   /* ============ :has() 降级兜底 ============ */
   // 选中态原本只靠 CSS :has()，Firefox 121 以下会完全看不到选中反馈
