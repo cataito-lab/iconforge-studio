@@ -277,10 +277,8 @@
           '</button>' +
         '</div>' +
       '</div>';
-    var btn = document.getElementById('lang-switch');
-    if (btn) btn.addEventListener('click', function () {
-      setLang(getLang() === 'zh' ? 'en' : 'zh');
-    });
+    /* 语言按钮的点击统一由 bindLangSwitch() 绑定（带 dataset.bound 幂等保护）。
+       此处若再绑一次，一次点击会触发两次切换而互相抵消，按钮看起来完全失效。 */
     var tbtn = document.getElementById('theme-switch');
     if (tbtn) tbtn.addEventListener('click', function () {
       if (window.CATAITO_THEME) window.CATAITO_THEME.toggle();
@@ -310,6 +308,32 @@
     }
   }
 
+  /* :has() 降级兜底
+     选中态主要依赖 CSS :has()，Firefox 121 以下完全看不到选中反馈。
+     这里统一给所有 .t-chip / .t-seg-item 补 .checked 类（CSS 里已并列支持）。
+     各工具页动态生成的控件也覆盖：MutationObserver 监听 document 变更。 */
+  function initHasFallback() {
+    var supported = false;
+    try { supported = !!(window.CSS && CSS.supports && CSS.supports('selector(:has(input:checked))')); } catch (e) { supported = false; }
+    if (supported) return;
+    function syncOne(inp) {
+      var host = inp.closest('.t-chip, .t-seg-item');
+      if (host) host.classList.toggle('checked', inp.checked);
+    }
+    function syncAll() {
+      var list = document.querySelectorAll('.t-chip input, .t-seg-item input');
+      for (var i = 0; i < list.length; i++) syncOne(list[i]);
+    }
+    document.addEventListener('change', function (e) {
+      var el = e.target;
+      if (el.matches && el.matches('.t-chip input, .t-seg-item input')) syncOne(el);
+    });
+    if (window.MutationObserver) {
+      new MutationObserver(syncAll).observe(document.body, { childList: true, subtree: true });
+    }
+    syncAll();
+  }
+
   function init() {
     /* 支持 ?lang=en / ?lang=zh URL 参数（供 sitemap hreflang 备选 URL 与外链直开指定语言） */
     try {
@@ -322,6 +346,7 @@
     renderFooter();
     bindLangSwitch();
     setLang(getLang());
+    initHasFallback();
   }
 
   if (document.readyState === 'loading') {

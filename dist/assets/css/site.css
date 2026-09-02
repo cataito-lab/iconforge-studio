@@ -198,15 +198,270 @@ html.dark .theme-switch .ico-sun { display: none; }
   .brand__name small { display: none; }
 }
 
-/* ---------- 工具页主体布局（左工作区 + 右设置面板，两列网格） ---------- */
-.tool-intro { padding: 22px 20px 8px; flex-shrink: 0; }
-.tool-body {
-  flex: 1;
-  min-height: 0;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 360px;
-  overflow: hidden;
+/* ============================================================
+   工具页共享组件层（.t-*）
+   三个工具页（icon-forge / favicon / compress）共用同一套组件，
+   避免各页内联复制样式导致视觉漂移。新增工具请直接复用这些类。
+   ============================================================ */
+
+/* ---------- 页面头部（面包屑 + 标题 + 副标题） ---------- */
+.t-head { margin-bottom: 18px; }
+.t-head .page-h1 { margin-bottom: 6px; }
+.t-head .page-sub { margin-bottom: 0; }
+
+/* ---------- 布局：单列卡片流 / 双列工作区 ---------- */
+/* 单列（favicon / compress）：内容居中，最大宽度收窄更易读 */
+.t-flow { max-width: 760px; }
+/* 双列（icon-forge 等需要常驻预览的工具）：左工作区 + 右侧设置栏 */
+.t-split { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 20px; align-items: start; }
+@media (max-width: 900px) {
+  .t-split { grid-template-columns: 1fr; }
 }
-@media (max-width: 1080px) {
-  .tool-body { grid-template-columns: 1fr; overflow: visible; }
+/* 侧栏随页面滚动吸附，避免长工作区下设置项滚出视野（替代旧的视口锁高 + 内滚） */
+.t-side { position: sticky; top: 76px; }
+@media (max-width: 900px) {
+  .t-side { position: static; }
 }
+
+/* ---------- 卡片 ---------- */
+.t-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  padding: 20px;
+}
+.t-card + .t-card { margin-top: 16px; }
+/* 卡片内区块（用于分组标题 + 内容） */
+.t-block + .t-block { margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--border); }
+.t-block-title {
+  font-size: 13.5px; font-weight: 650; color: var(--text);
+  margin: 0 0 12px; letter-spacing: -.1px;
+}
+
+/* ---------- 上传区 ---------- */
+.t-drop {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 8px; text-align: center;
+  border: 1.5px dashed var(--border); border-radius: var(--radius);
+  background: var(--card-2);
+  padding: 26px 18px; cursor: pointer;
+  color: var(--text-2);
+  transition: border-color .15s, background .15s, color .15s;
+}
+.t-drop:hover { border-color: var(--accent); background: var(--accent-soft-2); color: var(--accent); }
+.t-drop.is-over { border-color: var(--accent); border-style: solid; background: var(--accent-soft); color: var(--accent); }
+.t-drop svg { color: var(--text-3); }
+.t-drop:hover svg, .t-drop.is-over svg { color: var(--accent); }
+.t-drop-title { font-size: 13.5px; font-weight: 600; color: var(--text); }
+.t-drop:hover .t-drop-title, .t-drop.is-over .t-drop-title { color: var(--accent); }
+.t-drop-hint { font-size: 11.5px; color: var(--text-3); }
+/* 横向紧凑变体（icon-forge 双主题卡内） */
+.t-drop.compact {
+  flex-direction: row; text-align: left; gap: 12px;
+  padding: 12px; border-radius: var(--radius-sm);
+}
+.t-drop.compact .t-drop-ic {
+  width: 36px; height: 36px; flex: none; border-radius: 999px;
+  background: var(--border); color: var(--text-3);
+  display: grid; place-items: center;
+  transition: transform .15s;
+}
+.t-drop.compact:hover .t-drop-ic { transform: scale(1.05); }
+.t-drop.compact svg { width: 18px; height: 18px; }
+
+/* ---------- 字段 ---------- */
+.t-field { display: flex; flex-direction: column; gap: 8px; }
+.t-field + .t-field { margin-top: 18px; }
+.t-label { font-size: 12.5px; font-weight: 600; color: var(--text-2); display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.t-hint { font-size: 11.5px; color: var(--text-3); line-height: 1.5; }
+.t-input, .t-select {
+  width: 100%; background: var(--card); color: var(--text);
+  border: 1px solid var(--border); border-radius: var(--radius-sm);
+  padding: 9px 12px; font-size: 12.5px; outline: none;
+  transition: border-color .15s, box-shadow .15s;
+}
+.t-input:focus, .t-select:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+
+/* ---------- 分段控件（单选组） ---------- */
+.t-seg {
+  display: flex; flex-wrap: wrap; gap: 6px;
+  background: var(--card-2); border: 1px solid var(--border);
+  border-radius: var(--radius-sm); padding: 4px;
+}
+.t-seg-item {
+  position: relative; flex: 1 1 auto;
+  display: flex; align-items: center; justify-content: center;
+  padding: 7px 10px; border-radius: 7px;
+  font-size: 12.5px; color: var(--text-2); cursor: pointer;
+  white-space: nowrap; user-select: none;
+  transition: background .15s, color .15s;
+}
+.t-seg-item:hover { color: var(--accent); }
+.t-seg-item input { position: absolute; opacity: 0; pointer-events: none; }
+.t-seg-item:has(input:checked), .t-seg-item.checked {
+  background: var(--card); color: var(--accent);
+  font-weight: 600; box-shadow: var(--shadow-sm);
+}
+
+/* ---------- 芯片（多选尺寸 / 开关） ---------- */
+.t-chips { display: grid; grid-template-columns: repeat(auto-fill, minmax(56px, 1fr)); gap: 8px; }
+.t-chip {
+  position: relative; display: flex; align-items: center; justify-content: center;
+  height: 36px; padding: 0 6px;
+  border: 1px solid var(--border); border-radius: var(--radius-sm);
+  background: var(--card); color: var(--text-2);
+  font-size: 12.5px; cursor: pointer; user-select: none;
+  transition: border-color .15s, background .15s, color .15s;
+}
+.t-chip:hover { border-color: var(--accent); }
+.t-chip input { position: absolute; opacity: 0; pointer-events: none; }
+.t-chip:has(input:checked), .t-chip.checked {
+  background: var(--accent-soft); border-color: var(--accent);
+  color: var(--accent); font-weight: 600;
+}
+/* 带说明文字的方块型芯片（格式 / 打包模式） */
+.t-chips.boxes { grid-template-columns: 1fr 1fr; }
+.t-chip.box { justify-content: flex-start; gap: 8px; height: auto; min-height: 42px; padding: 0 12px; }
+.t-chip.box input { position: static; opacity: 1; pointer-events: auto; width: 15px; height: 15px; accent-color: var(--accent); flex: none; }
+.t-chip.box:has(input:checked), .t-chip.box.checked { font-weight: 550; }
+
+/* ---------- 开关行 ---------- */
+.t-switch-row {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  background: var(--card-2); border: 1px solid var(--border);
+  border-radius: var(--radius-sm); padding: 12px 14px;
+}
+.t-switch { position: relative; width: 40px; height: 23px; flex: none; cursor: pointer; }
+.t-switch input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; }
+.t-switch .track { position: absolute; inset: 0; background: var(--border); border-radius: 999px; transition: background .15s; }
+.t-switch .thumb { position: absolute; top: 3px; left: 3px; width: 17px; height: 17px; border-radius: 999px; background: #fff; box-shadow: var(--shadow-sm); transition: transform .18s; }
+.t-switch input:checked ~ .track { background: var(--accent); }
+.t-switch input:checked ~ .thumb { transform: translateX(17px); }
+
+/* ---------- 滑块 ---------- */
+.t-range { width: 100%; accent-color: var(--accent); }
+.t-range-val { font-size: 12.5px; font-weight: 650; color: var(--accent); }
+
+/* ---------- 按钮 ---------- */
+.t-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 11px 18px; border-radius: var(--radius-sm);
+  font-size: 13.5px; font-weight: 600; cursor: pointer;
+  border: 1px solid var(--border); background: var(--card); color: var(--text-2);
+  transition: background .15s, border-color .15s, color .15s, transform .08s;
+}
+.t-btn:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
+.t-btn:active { transform: scale(.985); }
+.t-btn.primary {
+  background: var(--accent); border-color: var(--accent); color: #fff;
+  box-shadow: 0 6px 18px rgba(99,102,241,0.28);
+}
+.t-btn.primary:hover { background: var(--accent-hover); border-color: var(--accent-hover); color: #fff; }
+.t-btn.block { width: 100%; }
+.t-link { color: var(--accent); font-size: 11.5px; font-weight: 600; cursor: pointer; background: none; border: none; padding: 0; }
+.t-link:hover { text-decoration: underline; }
+
+/* ---------- 方形图标按钮（结果行内的下载 / 移除） ---------- */
+.t-icon-btn {
+  width: 32px; height: 32px; flex: none; border-radius: 8px;
+  border: 1px solid var(--border); background: var(--card); color: var(--text-2);
+  display: grid; place-items: center; cursor: pointer;
+  transition: border-color .15s, color .15s, background .15s;
+}
+.t-icon-btn:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
+.t-icon-btn.danger:hover { border-color: var(--danger); color: var(--danger); background: rgba(239,68,68,0.08); }
+
+/* ---------- 结果行列表（压缩工具） ---------- */
+.t-list { display: flex; flex-direction: column; gap: 10px; }
+.t-row {
+  display: flex; align-items: center; gap: 12px;
+  border: 1px solid var(--border); border-radius: var(--radius-sm);
+  background: var(--card-2); padding: 10px 12px;
+}
+.t-thumb {
+  width: 44px; height: 44px; flex: none; border-radius: 8px; overflow: hidden;
+  background: var(--accent-soft); display: grid; place-items: center;
+}
+.t-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.t-row-main { flex: 1; min-width: 0; }
+.t-row-name { font-size: 13px; font-weight: 600; color: var(--text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.t-row-meta { font-size: 11.5px; color: var(--text-3); margin-top: 2px; }
+.t-badge {
+  font-size: 11px; font-weight: 700; color: var(--success);
+  background: rgba(16,185,129,0.12); padding: 3px 9px; border-radius: 999px; flex: none;
+}
+.t-badge.muted { color: var(--text-3); background: var(--card-2); border: 1px solid var(--border); font-weight: 600; }
+
+/* ---------- 汇总操作条 ---------- */
+.t-bar {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px; flex-wrap: wrap; margin-top: 16px;
+  padding-top: 16px; border-top: 1px solid var(--border);
+}
+.t-bar-stats { font-size: 13px; font-weight: 600; color: var(--text); }
+.t-bar-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+/* ---------- 备注 ---------- */
+.t-note { font-size: 11.5px; color: var(--text-3); line-height: 1.6; margin: 14px 0 0; }
+
+/* ---------- 空状态 ---------- */
+.t-empty { font-size: 13px; color: var(--text-3); text-align: center; padding: 24px 0; margin: 0; }
+
+/* ---------- 提示条（说明预览与产物差异等） ---------- */
+.t-callout {
+  font-size: 11.5px; color: var(--text-3); line-height: 1.6;
+  background: var(--card-2); border: 1px solid var(--border);
+  border-radius: var(--radius-sm); padding: 10px 12px;
+}
+
+/* ---------- Toast ---------- */
+.t-toast {
+  position: fixed; left: 50%; bottom: 24px; z-index: 90;
+  transform: translate(-50%, 80px); opacity: 0; pointer-events: none;
+  display: flex; align-items: center; gap: 10px;
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: var(--radius-sm); box-shadow: var(--shadow-md);
+  padding: 12px 16px; max-width: calc(100vw - 32px);
+  transition: transform .3s, opacity .3s;
+}
+.t-toast.show { transform: translate(-50%, 0); opacity: 1; }
+.t-toast-ic {
+  width: 28px; height: 28px; flex: none; border-radius: 999px;
+  background: rgba(16,185,129,0.12); color: var(--success);
+  display: grid; place-items: center;
+}
+.t-toast.warn { border-color: rgba(245,158,11,0.55); }
+.t-toast.warn .t-toast-ic { background: rgba(245,158,11,0.14); color: #f59e0b; }
+.t-toast.error { border-color: rgba(239,68,68,0.6); }
+.t-toast.error .t-toast-ic { background: rgba(239,68,68,0.14); color: var(--danger); }
+.t-toast .ic-err { display: none; }
+.t-toast.warn .ic-ok, .t-toast.error .ic-ok { display: none; }
+.t-toast.warn .ic-err, .t-toast.error .ic-err { display: block; }
+.t-toast-title { font-size: 12.5px; font-weight: 600; color: var(--text); }
+.t-toast-sub { font-size: 11.5px; color: var(--text-3); }
+
+/* ---------- 进度弹窗 ---------- */
+.t-modal {
+  position: fixed; inset: 0; z-index: 80; display: none;
+  align-items: center; justify-content: center;
+  background: rgba(0,0,0,.7); backdrop-filter: blur(4px);
+}
+.t-modal.show { display: flex; }
+.t-modal-card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 16px; padding: 20px; width: 384px; max-width: calc(100vw - 32px);
+  box-shadow: 0 24px 60px rgba(0,0,0,.45);
+  display: flex; flex-direction: column; gap: 16px;
+}
+.t-modal-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.t-modal-title { font-size: 13.5px; font-weight: 600; color: var(--text); }
+.t-modal-sub { font-size: 12.5px; color: var(--text-2); display: flex; justify-content: space-between; }
+.t-progress { width: 100%; height: 6px; background: var(--border); border-radius: 999px; overflow: hidden; }
+.t-progress-bar { height: 100%; width: 0%; background: var(--accent); transition: width .3s; }
+
+@keyframes t-spin { to { transform: rotate(360deg); } }
+.t-spin { animation: t-spin 1s linear infinite; }
+
+/* ---------- :has() 降级（Firefox 121 以下看不到选中态） ---------- */
+/* 由 site.js 的 initHasFallback 统一加 .checked 类兜底 */

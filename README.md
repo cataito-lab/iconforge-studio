@@ -48,11 +48,30 @@ dist/
 - 词条放 `site.js` 的 `t()` 词典；HTML 用 `data-i18n` 属性标记
 - 动态文本监听 `cataito-lang-change` 事件刷新；URL 支持 `?lang=en`
 
-### 新增工具四步
+### 共享组件层（`.t-*`，三个工具页统一使用）
+`site.css` 里定义了一套工具页通用组件，**新增工具必须直接复用，不要在各页内联复制样式**：
+
+| 类 | 用途 | 类 | 用途 |
+| --- | --- | --- | --- |
+| `.t-head` | 页头容器（面包屑+h1+sub） | `.t-card` | 卡片容器 |
+| `.t-flow` | 单列内容流（收窄 760px） | `.t-block` | 卡片内分区（带分隔线） |
+| `.t-split` | 双列布局（工作区+侧栏） | `.t-side` | 侧栏（桌面 sticky 吸附） |
+| `.t-drop` | 上传区（`.compact` 横向变体） | `.t-field` / `.t-label` / `.t-hint` | 字段与说明 |
+| `.t-input` / `.t-select` / `.t-range` | 表单控件 | `.t-seg` / `.t-seg-item` | 分段单选控件 |
+| `.t-chips` / `.t-chip`（`.box`） | 多选芯片 | `.t-switch-row` / `.t-switch` | 开关 |
+| `.t-btn`（`.primary` `.block`） | 按钮 | `.t-icon-btn`（`.danger`） | 方形图标按钮 |
+| `.t-list` / `.t-row` / `.t-thumb` / `.t-badge` | 结果行列表 | `.t-bar` / `.t-bar-stats` | 汇总操作条 |
+| `.t-toast` | 消息提示（`.warn` `.error`） | `.t-modal` / `.t-progress` | 进度弹窗 |
+| `.t-empty` / `.t-note` / `.t-callout` | 空状态 / 备注 / 提示条 | | |
+
+页面内只允许写**本工具专属**的样式（如 IconForge 的预览舞台、Favicon 的预览缩略图）。
+
+### 新增工具五步
 1. 新建 `dist/<tool>/index.html`，挂 `theme-init.js` + `site.js` + `site.css`
-2. `site.js` 词典加 `home_tool_<name>` 等词条，导航注入处加入口
-3. 首页卡片转正（去 `is-soon`）+ JSON-LD 加 WebApplication 条目 + `sitemap.xml` 加 URL（priority ~0.9 + hreflang 三连）
-4. 测试（方法见 HANDOVER.md）→ commit → push
+2. 页面骨架：`<div id="site-header">` → `<main class="site-main">`（含 `.t-head`）→ 内容区（`.t-flow` 单列或 `.t-split` 双列）→ `<div id="site-footer">`
+3. `site.js` 词典加 `home_tool_<name>` 等词条，导航注入处加入口
+4. 首页卡片转正（去 `is-soon`）+ JSON-LD 加 SoftwareApplication 条目 + `sitemap.xml` 加 URL（priority ~0.9 + hreflang 三连）
+5. 测试（方法见 HANDOVER.md）→ commit → push
 
 ## 本地预览
 直接用浏览器打开 `dist/index.html` 即可。如需本地服务器：
