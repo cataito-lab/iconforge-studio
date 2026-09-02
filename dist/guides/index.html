@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>使用指南 | cataito 工具箱</title>
+<meta name="title-zh" content="使用指南 | cataito 工具箱">
+<meta name="title-en" content="Guides | cataito Tools">
+<meta name="description" content="cataito 工具箱使用指南：ICO 图标文件格式详解、favicon 最佳实践等，帮你把工具用对、用好。">
+<meta name="theme-color" content="#0e1016">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="cataito 工具箱">
+<meta property="og:title" content="使用指南 | cataito 工具箱">
+<meta property="og:description" content="ICO 图标文件格式详解、favicon 最佳实践等使用指南。">
+<meta property="og:url" content="https://tools.cataito.com/guides/">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:locale:alternate" content="en_US">
+<link rel="canonical" href="https://tools.cataito.com/guides/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%236366f1'/%3E%3Crect x='8' y='8' width='7' height='7' rx='1.5' fill='white'/%3E%3Crect x='17' y='8' width='7' height='7' rx='1.5' fill='white' opacity='.55'/%3E%3Crect x='8' y='17' width='7' height='7' rx='1.5' fill='white' opacity='.55'/%3E%3Crect x='17' y='17' width='7' height='7' rx='1.5' fill='white' opacity='.3'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="/assets/css/site.css">
+<script>
+  (function () {
+    try {
+      var l = localStorage.getItem('cataito-lang');
+      document.documentElement.setAttribute('lang', (l === 'en') ? 'en' : 'zh-CN');
+      if (l === 'en') document.documentElement.classList.add('lang-en');
+    } catch (e) {}
+  })();
+</script>
+<style>
+  .guide-card {
+    display: flex; flex-direction: column; gap: 8px;
+    background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 20px 22px; box-shadow: var(--shadow-sm); text-decoration: none;
+    transition: border-color .15s, transform .12s;
+  }
+  .guide-card:hover { border-color: var(--accent); transform: translateY(-1px); }
+  .guide-card__tag {
+    font-size: 11px; font-weight: 600; color: var(--accent);
+    background: var(--accent-soft); border-radius: 6px; padding: 2px 8px;
+    align-self: flex-start; letter-spacing: .3px;
+  }
+  .guide-card__title { font-size: 17px; font-weight: 650; color: var(--text); margin: 0; }
+  .guide-card__desc { font-size: 13.5px; color: var(--text-2); margin: 0; line-height: 1.6; }
+  .guide-card__meta { font-size: 12px; color: var(--text-3); margin: 2px 0 0; }
+</style>
+</head>
+<body>
+<div id="site-header"></div>
+
+<main class="site-main">
+  <nav class="breadcrumb"><a href="/" data-i18n="crumb_home">首页</a><span class="sep">/</span><span data-i18n="nav_guides">使用指南</span></nav>
+  <h1 class="page-h1" data-i18n="gd_index_h1">使用指南</h1>
+  <p class="page-sub" data-i18n="gd_index_sub">把工具用对、用好：格式原理、尺寸规范与最佳实践。</p>
+
+  <h2 class="section-head" data-i18n="gd_index_all">全部指南</h2>
+  <div style="display:grid;grid-template-columns:1fr;gap:14px;max-width:680px;">
+    <a class="guide-card" href="/guides/ico-file-guide/">
+      <span class="guide-card__tag">ICO</span>
+      <h3 class="guide-card__title" data-i18n="gd_ico_h1_short">ICO 文件完全指南</h3>
+      <p class="guide-card__desc" data-i18n="gd_ico_card_desc">什么是 .ico、与 PNG 的区别、Windows 尺寸规范（16–256px），以及如何免费在线制作多尺寸 ICO 图标。</p>
+      <p class="guide-card__meta" data-i18n="gd_published">发布于</p>
+    </a>
+  </div>
+</main>
+
+<div id="site-footer"></div>
+<script src="/assets/js/site.js"></script>
+</body>
+</html>

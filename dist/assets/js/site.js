@@ -120,6 +120,18 @@
     /* 面包屑 */
     crumb_home:     { zh: '首页', en: 'Home' },
 
+    /* 指南栏目 */
+    nav_guides:         { zh: '使用指南', en: 'Guides' },
+    gd_published:       { zh: '发布于', en: 'Published' },
+    gd_index_h1:        { zh: '使用指南', en: 'Guides' },
+    gd_index_sub:       { zh: '把工具用对、用好：格式原理、尺寸规范与最佳实践。', en: 'Get the most out of the tools: formats, size specs, and best practices.' },
+    gd_index_all:       { zh: '全部指南', en: 'All guides' },
+    gd_ico_short:       { zh: 'ICO 文件完全指南', en: 'The Complete Guide to ICO Files' },
+    gd_ico_h1_short:    { zh: 'ICO 文件完全指南', en: 'The Complete Guide to ICO Files' },
+    gd_ico_h1:          { zh: 'ICO 文件完全指南：什么是 .ico、尺寸规范与在线制作方法', en: 'The Complete Guide to ICO Files: What They Are & How to Create Them' },
+    gd_ico_sub:         { zh: '一文搞懂 Windows 图标格式：原理、尺寸规范、与 PNG 的区别，以及如何免费在线制作多尺寸 .ico——纯浏览器本地处理。', en: 'Everything about the Windows icon format: how it works, size specs, PNG vs ICO, and how to create multi-size .ico files for free — right in your browser.' },
+    gd_ico_card_desc:   { zh: '什么是 .ico、与 PNG 的区别、Windows 尺寸规范（16–256px），以及如何免费在线制作多尺寸 ICO 图标。', en: 'What .ico is, how it differs from PNG, Windows size specs (16–256px), and how to create multi-size ICO files online for free.' },
+
     /* 通用 */
     theme_light:    { zh: '亮色', en: 'Light' },
     theme_dark:     { zh: '暗色', en: 'Dark' },
@@ -210,6 +222,7 @@
           '<a href="/" class="' + (active('/') ? 'active' : '') + '" data-i18n="nav_home">首页</a>' +
           '<a href="/icon-forge/" class="' + (active('/icon-forge/') ? 'active' : '') + '" data-i18n="if_name">图标工坊 IconForge</a>' +
           '<a href="/favicon/" class="' + (active('/favicon/') ? 'active' : '') + '" data-i18n="fv_name">Favicon 生成器</a>' +
+          '<a href="/guides/" class="' + (active('/guides/') ? 'active' : '') + '" data-i18n="nav_guides">使用指南</a>' +
         '</nav>' +
         '<button class="lang-switch" id="lang-switch" type="button" aria-label="Switch language">' +
           '<svg class="globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.5 2.5 15 0 18M12 3c-2.5 2.5-2.5 15 0 18"/></svg>' +
@@ -246,6 +259,13 @@
   }
 
   function init() {
+    /* 支持 ?lang=en / ?lang=zh URL 参数（供 sitemap hreflang 备选 URL 与外链直开指定语言） */
+    try {
+      var m = location.search.match(/[?&]lang=(en|zh)(?:&|$)/);
+      if (m) {
+        try { localStorage.setItem('cataito-lang', m[1]); } catch (e) {}
+      }
+    } catch (e) {}
     renderHeader();
     renderFooter();
     bindLangSwitch();
