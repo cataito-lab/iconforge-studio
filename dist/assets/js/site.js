@@ -131,6 +131,10 @@
     gd_ico_h1:          { zh: 'ICO 文件完全指南：什么是 .ico、尺寸规范与在线制作方法', en: 'The Complete Guide to ICO Files: What They Are & How to Create Them' },
     gd_ico_sub:         { zh: '一文搞懂 Windows 图标格式：原理、尺寸规范、与 PNG 的区别，以及如何免费在线制作多尺寸 .ico——纯浏览器本地处理。', en: 'Everything about the Windows icon format: how it works, size specs, PNG vs ICO, and how to create multi-size .ico files for free — right in your browser.' },
     gd_ico_card_desc:   { zh: '什么是 .ico、与 PNG 的区别、Windows 尺寸规范（16–256px），以及如何免费在线制作多尺寸 ICO 图标。', en: 'What .ico is, how it differs from PNG, Windows size specs (16–256px), and how to create multi-size ICO files online for free.' },
+    gd_fav_short:       { zh: 'Favicon 完全指南', en: 'The Complete Favicon Guide' },
+    gd_fav_h1:          { zh: 'Favicon 完全指南：尺寸规范、HTML 写法与在线制作', en: 'The Complete Favicon Guide: Sizes, HTML Code & How to Make One' },
+    gd_fav_sub:         { zh: '一文搞定网站小图标：什么是 favicon、全平台尺寸规范、favicon.ico 与 PNG/SVG 的取舍、可直接复制的 HTML 声明代码，以及如何免费在线生成 favicon 包。', en: 'Everything about website favicons: what they are, sizes for every platform, favicon.ico vs PNG vs SVG, copy-paste HTML code, and how to generate a favicon pack for free.' },
+    gd_fav_card_desc:   { zh: '全平台 favicon 尺寸规范（16–512px）、favicon.ico 与 PNG/SVG 的取舍、可直接复制的 HTML 声明代码，以及免费在线生成 favicon 包。', en: 'Favicon sizes for every platform (16–512px), favicon.ico vs PNG vs SVG, copy-paste HTML code, and a free online favicon pack generator.' },
 
     /* 通用 */
     theme_light:    { zh: '亮色', en: 'Light' },

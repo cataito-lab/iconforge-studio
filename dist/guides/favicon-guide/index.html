@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Favicon 完全指南：尺寸规范、HTML 写法与在线制作 | cataito</title>
+<meta name="title-zh" content="Favicon 完全指南：尺寸规范、HTML 写法与在线制作 | cataito">
+<meta name="title-en" content="The Complete Favicon Guide: Sizes, HTML Code & How to Make One | cataito">
+<meta name="description" content="Favicon 是什么？本文详解 favicon 尺寸规范（16/32/180/192/512px）、favicon.ico 与 PNG/SVG 的取舍、各平台 HTML 声明写法（含 apple-touch-icon 与 PWA manifest），以及如何免费在线生成 favicon 包——纯浏览器本地处理。">
+<meta name="theme-color" content="#0e1016">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="cataito 工具箱">
+<meta property="og:title" content="Favicon 完全指南：尺寸规范、HTML 写法与在线制作">
+<meta property="og:description" content="详解 favicon 尺寸规范、favicon.ico 与 PNG/SVG 的取舍、各平台 HTML 声明写法，以及免费在线生成 favicon 包。">
+<meta property="og:url" content="https://tools.cataito.com/guides/favicon-guide/">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:locale:alternate" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Favicon 完全指南">
+<meta name="twitter:description" content="尺寸规范、HTML 写法与在线制作，免费本地处理。">
+<link rel="canonical" href="https://tools.cataito.com/guides/favicon-guide/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%236366f1'/%3E%3Crect x='8' y='8' width='7' height='7' rx='1.5' fill='white'/%3E%3Crect x='17' y='8' width='7' height='7' rx='1.5' fill='white' opacity='.55'/%3E%3Crect x='8' y='17' width='7' height='7' rx='1.5' fill='white' opacity='.55'/%3E%3Crect x='17' y='17' width='7' height='7' rx='1.5' fill='white' opacity='.3'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="/assets/css/site.css">
+<script>
+  (function () {
+    try {
+      var l = localStorage.getItem('cataito-lang');
+      document.documentElement.setAttribute('lang', (l === 'en') ? 'en' : 'zh-CN');
+      if (l === 'en') document.documentElement.classList.add('lang-en');
+    } catch (e) {}
+  })();
+</script>
+<style>
+  /* ============ 指南页排版（移动优先，无锁高，自然文档流） ============ */
+  .guide-wrap { max-width: 760px; margin: 0 auto; }
+  .guide-meta { font-size: 13px; color: var(--text-3); margin: 0 0 6px; }
+  .page-sub { margin-bottom: 10px; }
+  .article { font-size: 15px; line-height: 1.85; color: var(--text); }
+  .article h2 {
+    font-size: 21px; font-weight: 700; letter-spacing: -.3px;
+    margin: 40px 0 14px; padding-top: 10px; color: var(--text);
+  }
+  .article h3 { font-size: 16.5px; font-weight: 650; margin: 26px 0 10px; color: var(--text); }
+  .article p { margin: 0 0 14px; color: var(--text-2); }
+  .article strong { color: var(--text); font-weight: 650; }
+  .article a { color: var(--accent); text-decoration: none; }
+  .article a:hover { text-decoration: underline; }
+  .article ul, .article ol { margin: 0 0 16px; padding-left: 22px; color: var(--text-2); }
+  .article li { margin: 6px 0; }
+  .article code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 13px; background: var(--card-2); border: 1px solid var(--border);
+    border-radius: 5px; padding: 1px 6px; color: var(--text);
+  }
+  .article pre {
+    background: var(--card-2); border: 1px solid var(--border); border-radius: 10px;
+    padding: 14px 16px; margin: 14px 0 18px; overflow-x: auto;
+  }
+  .article pre code { background: none; border: none; padding: 0; font-size: 12.5px; line-height: 1.7; }
+  .article table {
+    width: 100%; border-collapse: collapse; margin: 18px 0 22px;
+    font-size: 13.5px; background: var(--card);
+    border: 1px solid var(--border); border-radius: 10px; overflow: hidden;
+  }
+  .article th, .article td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--border); }
+  .article th { background: var(--card-2); color: var(--text); font-weight: 650; white-space: nowrap; }
+  .article td { color: var(--text-2); }
+  .article tr:last-child td { border-bottom: none; }
+  .toc {
+    background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 16px 18px; margin: 20px 0 8px; box-shadow: var(--shadow-sm);
+  }
+  .toc-title { font-size: 13px; font-weight: 650; color: var(--text); margin: 0 0 10px; }
+  .toc ol { margin: 0; padding-left: 20px; font-size: 13.5px; }
+  .toc li { margin: 5px 0; }
+  .toc a { color: var(--text-2); text-decoration: none; }
+  .toc a:hover { color: var(--accent); }
+  .faq-item {
+    background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-sm);
+    padding: 14px 16px; margin: 10px 0; box-shadow: var(--shadow-sm);
+  }
+  .faq-q { font-size: 14.5px; font-weight: 650; color: var(--text); margin: 0 0 8px; }
+  .faq-a { font-size: 14px; color: var(--text-2); margin: 0; line-height: 1.75; }
+  .cta-box {
+    background: linear-gradient(135deg, var(--accent-soft), var(--accent-soft-2));
+    border: 1px solid var(--accent); border-radius: var(--radius);
+    padding: 20px 22px; margin: 34px 0 10px; text-align: center;
+  }
+  .cta-box .cta-title { font-size: 17px; font-weight: 700; color: var(--text); margin: 0 0 6px; }
+  .cta-box .cta-sub { font-size: 13.5px; color: var(--text-2); margin: 0 0 14px; }
+  .cta-btn {
+    display: inline-block; background: var(--accent); color: #fff; text-decoration: none;
+    font-size: 14px; font-weight: 600; padding: 11px 26px; border-radius: var(--radius-sm);
+    box-shadow: 0 6px 18px rgba(99,102,241,0.30); transition: background .15s;
+  }
+  .cta-btn:hover { background: var(--accent-hover); }
+  .step-list { counter-reset: step; list-style: none; padding-left: 0; }
+  .step-list li { position: relative; padding-left: 44px; margin: 14px 0; }
+  .step-list li::before {
+    counter-increment: step; content: counter(step);
+    position: absolute; left: 0; top: 1px;
+    width: 28px; height: 28px; border-radius: 999px;
+    background: var(--accent-soft); color: var(--accent);
+    font-weight: 700; font-size: 14px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  /* 双语块：默认中文，html.lang-en 时切换英文（两语言均在原生 HTML 中，可被索引） */
+  .lb-en { display: none; }
+  html.lang-en .lb-zh { display: none; }
+  html.lang-en .lb-en { display: block; }
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Favicon 完全指南：尺寸规范、HTML 写法与在线制作",
+  "description": "详解 favicon 尺寸规范（16/32/180/192/512px）、favicon.ico 与 PNG/SVG 的取舍、各平台 HTML 声明写法，以及免费在线生成 favicon 包。",
+  "inLanguage": "zh-CN",
+  "datePublished": "2026-09-02",
+  "dateModified": "2026-09-02",
+  "author": { "@type": "Organization", "name": "cataito", "url": "https://tools.cataito.com/" },
+  "publisher": { "@type": "Organization", "name": "cataito 工具箱", "url": "https://tools.cataito.com/" },
+  "mainEntityOfPage": "https://tools.cataito.com/guides/favicon-guide/"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "favicon 的标准尺寸是多少？",
+      "acceptedAnswer": { "@type": "Answer", "text": "没有单一标准。常用组合：favicon.ico 打包 16/32/48px；apple-touch-icon 为 180×180；PWA 需要 192×192 与 512×512 的 PNG。建议一次生成全尺寸包。" }
+    },
+    {
+      "@type": "Question",
+      "name": "favicon.ico 和 PNG favicon 有什么区别？",
+      "acceptedAnswer": { "@type": "Answer", "text": "favicon.ico 是历史最久、兼容性最好的格式，是放在网站根目录的兜底方案；PNG 通过 <link rel=icon> 声明，支持更大尺寸与更小体积，现代浏览器均支持。两者并存最稳妥。" }
+    },
+    {
+      "@type": "Question",
+      "name": "为什么更换 favicon 后浏览器还显示旧的？",
+      "acceptedAnswer": { "@type": "Answer", "text": "浏览器和 CDN 都会强缓存 favicon。可通过给链接加版本查询参数（如 ?v=2）、改名文件，或强制刷新（Ctrl+F5）解决；线上环境建议每次更新都改文件名。" }
+    },
+    {
+      "@type": "Question",
+      "name": "favicon 一定要放在根目录吗？",
+      "acceptedAnswer": { "@type": "Answer", "text": "favicon.ico 建议放根目录，因为部分浏览器和历史爬虫默认请求 /favicon.ico。PNG/SVG 版本可以放任意路径，只要在 <head> 里用 <link> 正确声明。" }
+    },
+    {
+      "@type": "Question",
+      "name": "SVG favicon 值得用吗？",
+      "acceptedAnswer": { "@type": "Answer", "text": "SVG favicon 在 Chrome、Edge、Firefox 上表现很好且任意缩放不失真，但 Safari（含 iOS）支持不完整。最佳实践是 SVG + PNG/ICO 同时声明，SVG 写在后面作为渐进增强。" }
+    },
+    {
+      "@type": "Question",
+      "name": "favicon 可以用 JPG 或 GIF 吗？",
+      "acceptedAnswer": { "@type": "Answer", "text": "不建议。JPG 没有透明通道，边缘会出现白色方块；GIF 只有 1 位透明且体积效率差。统一使用 PNG（透明）+ ICO（兜底）+ 可选 SVG。" }
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "首页", "item": "https://tools.cataito.com/" },
+    { "@type": "ListItem", "position": 2, "name": "使用指南", "item": "https://tools.cataito.com/guides/" },
+    { "@type": "ListItem", "position": 3, "name": "Favicon 完全指南", "item": "https://tools.cataito.com/guides/favicon-guide/" }
+  ]
+}
+</script>
+</head>
+<body>
+<div id="site-header"></div>
+
+<main class="site-main">
+  <div class="guide-wrap">
+    <nav class="breadcrumb"><a href="/" data-i18n="crumb_home">首页</a><span class="sep">/</span><a href="/guides/" data-i18n="nav_guides">使用指南</a><span class="sep">/</span><span data-i18n="gd_fav_short">Favicon 完全指南</span></nav>
+    <p class="guide-meta"><span data-i18n="gd_published">发布于</span> 2026-09-02 · cataito</p>
+    <h1 class="page-h1" data-i18n="gd_fav_h1">Favicon 完全指南：尺寸规范、HTML 写法与在线制作</h1>
+    <p class="page-sub" data-i18n="gd_fav_sub">一文搞定网站小图标：什么是 favicon、全平台尺寸规范、favicon.ico 与 PNG/SVG 的取舍、可直接复制的 HTML 声明代码，以及如何免费在线生成 favicon 包。</p>
+
+    <!-- ================= 中文正文 ================= -->
+    <div class="article lb-zh">
+      <div class="toc">
+        <p class="toc-title">目录</p>
+        <ol>
+          <li><a href="#what-is-favicon">什么是 Favicon</a></li>
+          <li><a href="#sizes">全平台 Favicon 尺寸规范</a></li>
+          <li><a href="#formats">favicon.ico、PNG 还是 SVG</a></li>
+          <li><a href="#html">HTML 声明代码（可直接复制）</a></li>
+          <li><a href="#platforms">各平台行为差异</a></li>
+          <li><a href="#how-to-make">如何在线制作 Favicon</a></li>
+          <li><a href="#design-tips">Favicon 设计技巧</a></li>
+          <li><a href="#faq">常见问题</a></li>
+        </ol>
+      </div>
+
+      <h2 id="what-is-favicon">什么是 Favicon</h2>
+      <p><strong>Favicon（favorites icon）是显示在浏览器标签页、地址栏、书签列表和历史记录里的小图标</strong>，是网站品牌在浏览器中最小、也是曝光最频繁的载体。用户开了十几个标签页时，能帮他们快速定位你的站；一个含糊或默认的 favicon 则会让站点显得不可信。</p>
+      <p>favicon 的历史可以追溯到 1999 年的 Internet Explorer 5：最初它只是「加入收藏夹时显示的图标」，约定放在网站根目录、命名为 <code>favicon.ico</code>。二十多年后的今天，favicon 已经演变成一组面向不同设备与场景的<strong>图标文件集合</strong>——浏览器标签、iOS 主屏、Android 安装后的启动图标、PWA 窗口，各有各的尺寸要求。</p>
+
+      <h2 id="sizes">全平台 Favicon 尺寸规范</h2>
+      <p>现代网站需要覆盖的 favicon 尺寸远不止一个 16×16。下表是业界通行的完整清单：</p>
+      <table>
+        <tr><th>文件</th><th>尺寸</th><th>用途</th></tr>
+        <tr><td><code>favicon.ico</code></td><td>16 / 32 / 48 px 打包</td><td>浏览器标签页、地址栏、历史记录（兜底）</td></tr>
+        <tr><td><code>favicon-16x16.png</code></td><td>16×16</td><td>Chrome / Firefox 标签页标准档</td></tr>
+        <tr><td><code>favicon-32x32.png</code></td><td>32×32</td><td>Safari 标签页、Retina 屏标准档</td></tr>
+        <tr><td><code>apple-touch-icon.png</code></td><td>180×180</td><td>iOS 添加到主屏（Safari 会自动加圆角）</td></tr>
+        <tr><td><code>android-chrome-192x192.png</code></td><td>192×192</td><td>Android Chrome / PWA manifest 图标</td></tr>
+        <tr><td><code>android-chrome-512x512.png</code></td><td>512×512</td><td>PWA 启动画面与高分辨率场景</td></tr>
+        <tr><td><code>favicon.svg</code></td><td>矢量</td><td>支持 SVG 的现代浏览器（可跟随深色模式）</td></tr>
+      </table>
+      <p>如果只想做最低配置：<strong>根目录一个含 16/32px 的 favicon.ico + 一个 180×180 的 apple-touch-icon</strong>，即可覆盖绝大多数场景。追求完美则按上表全配。</p>
+
+      <h2 id="formats">favicon.ico、PNG 还是 SVG</h2>
+      <p>三种格式各有分工，不是三选一：</p>
+      <ul>
+        <li><strong>ICO</strong>：兼容性之王。部分老旧浏览器、爬虫和阅读器默认只请求 <code>/favicon.ico</code>。它是唯一支持在单个文件里打包多个尺寸的 favicon 格式。</li>
+        <li><strong>PNG</strong>：现代浏览器的主力。体积小、透明度好，通过 <code>&lt;link rel="icon"&gt;</code> 声明任意尺寸。iOS 主屏图标也用 PNG。</li>
+        <li><strong>SVG</strong>：一次绘制、任意缩放。还支持用 CSS 媒体查询让 favicon 跟随系统深色模式切换明暗。缺点是 Safari（含 iOS）不支持。</li>
+      </ul>
+      <p><strong>推荐组合：ICO（根目录兜底）+ PNG（按尺寸声明）+ SVG（渐进增强，声明在最后）。</strong>浏览器按声明顺序从后往前选用最合适的一个。</p>
+
+      <h2 id="html">HTML 声明代码（可直接复制）</h2>
+      <p>把下段代码放进每个页面的 <code>&lt;head&gt;</code> 中（实际部署时替换成你自己的路径）：</p>
+      <pre><code>&lt;!-- 兜底：根目录 favicon.ico（无需声明也会被请求，显式声明更稳） --&gt;
+&lt;link rel="icon" href="/favicon.ico" sizes="48x48"&gt;
+
+&lt;!-- PNG 各尺寸 --&gt;
+&lt;link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"&gt;
+&lt;link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"&gt;
+
+&lt;!-- iOS 主屏图标（不要加透明度，Safari 会补黑底） --&gt;
+&lt;link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"&gt;
+
+&lt;!-- SVG 矢量版（写在 PNG 之后作为增强） --&gt;
+&lt;link rel="icon" type="image/svg+xml" href="/favicon.svg"&gt;
+
+&lt;!-- PWA 清单（含 192/512 图标） --&gt;
+&lt;link rel="manifest" href="/site.webmanifest"&gt;</code></pre>
+      <p>对应的 <code>site.webmanifest</code> 最小示例：</p>
+      <pre><code>{
+  "name": "我的网站",
+  "icons": [
+    { "src": "/android-chrome-192x192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/android-chrome-512x512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}</code></pre>
+
+      <h2 id="platforms">各平台行为差异</h2>
+      <ul>
+        <li><strong>Chrome / Edge / Firefox</strong>：优先用 <code>&lt;link rel="icon"&gt;</code> 声明的文件，按 <code>sizes</code> 匹配设备像素密度；都没有时才回退到 <code>/favicon.ico</code>。</li>
+        <li><strong>Safari（macOS）</strong>：对 SVG favicon 支持有限，实践中以 PNG 为主；标签页固定显示低分辨率图标时，多半是缺 32×32 PNG。</li>
+        <li><strong>iOS Safari</strong>：「添加到主屏幕」读取 <code>apple-touch-icon</code>（180×180 最佳），并自动裁圆角——所以源图应<strong>满幅不透明、自绘圆角留白</strong>。</li>
+        <li><strong>Android Chrome</strong>：支持「添加到主屏」升级为 PWA，图标取自 webmanifest 中的 192/512 两档。</li>
+        <li><strong>搜索引擎</strong>：Google 移动端搜索结果有时会直接展示站点 favicon，模糊的图标会影响点击率。</li>
+      </ul>
+
+      <h2 id="how-to-make">如何在线制作 Favicon</h2>
+      <p>推荐使用本站的 <a href="/favicon/">Favicon 生成器</a>——免费、无需注册，上传一张图即可<strong>一次性生成全尺寸 favicon 包</strong>（多尺寸 .ico + 各档 PNG），且全部处理在浏览器本地完成，图片不会上传服务器。</p>
+      <ol class="step-list">
+        <li><strong>准备一张方形 Logo</strong>：建议 512×512 以上的 PNG（透明或纯色底均可，源图越大越清晰）。</li>
+        <li><strong>上传图片</strong>：打开 Favicon 生成器，点击或拖入即可，支持 PNG / JPG / WebP / SVG。</li>
+        <li><strong>选择需要的尺寸</strong>：默认勾选常用档位，按你网站的配置增减。</li>
+        <li><strong>生成并部署</strong>：下载 favicon 包，解压后把文件放到网站根目录，再把上文 HTML 代码复制进 <code>&lt;head&gt;</code>。</li>
+      </ol>
+
+      <h2 id="design-tips">Favicon 设计技巧</h2>
+      <ul>
+        <li><strong>做减法</strong>：16×16 下只有几十个像素可用，全称 Logo 必糊。取首字母、单一图形或简化版标志。</li>
+        <li><strong>高对比</strong>：图标要与浅色和深色两种标签栏背景都清晰可辨，可在设计工具里双底色预览。</li>
+        <li><strong>利用描边</strong>：浅色图形加一圈深色描边，在任何底色上都能「浮」出来。</li>
+        <li><strong>深色模式适配</strong>：提供 SVG 版并写入 <code>@media (prefers-color-scheme: dark)</code> 切换，是 2026 年的加分项。</li>
+        <li><strong>别用 JPG</strong>：无透明通道，边缘出白块；统一走 PNG + ICO + SVG。</li>
+      </ul>
+
+      <h2 id="faq">常见问题</h2>
+      <div class="faq-item"><p class="faq-q">Q：favicon 的标准尺寸到底是多少？</p><p class="faq-a">A：没有唯一标准。最低配：favicon.ico（16/32px）+ apple-touch-icon（180px）；全配再加上 16/32 PNG、192/512 PWA 图标与 SVG。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：换了 favicon 为什么浏览器还显示旧的？</p><p class="faq-a">A：favicon 被浏览器和 CDN 强缓存。给链接加版本参数（<code>?v=2</code>）、直接改文件名，或 Ctrl+F5 强刷；线上更新建议每次都换文件名。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：favicon.ico 必须放根目录吗？</p><p class="faq-a">A：强烈建议。许多浏览器和历史工具会无视 HTML 声明、直接请求 /favicon.ico。PNG/SVG 可以放任何路径。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：apple-touch-icon 为什么不要透明背景？</p><p class="faq-a">A：iOS 会把透明区域填成纯黑，透明 Logo 在主屏上会变成黑底碎块。主屏图标应做成满幅不透图片，圆角交给系统裁切。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：在线生成 favicon 安全吗？</p><p class="faq-a">A：取决于工具实现。本站 Favicon 生成器完全在浏览器本地运算（Canvas + Blob），网络面板可验证没有任何图片上传请求。</p></div>
+
+      <div class="cta-box">
+        <p class="cta-title">免费生成你的全尺寸 Favicon 包</p>
+        <p class="cta-sub">多尺寸 .ico + PNG 一键打包 · 纯浏览器本地处理 · 图片不上传</p>
+        <a class="cta-btn" href="/favicon/">打开 Favicon 生成器 →</a>
+      </div>
+    </div>
+
+    <!-- ================= English body ================= -->
+    <div class="article lb-en">
+      <div class="toc">
+        <p class="toc-title">Table of Contents</p>
+        <ol>
+          <li><a href="#what-is-favicon">What Is a Favicon</a></li>
+          <li><a href="#sizes">Favicon Sizes for Every Platform</a></li>
+          <li><a href="#formats">favicon.ico vs PNG vs SVG</a></li>
+          <li><a href="#html">HTML Code (Copy &amp; Paste)</a></li>
+          <li><a href="#platforms">Platform Behavior Differences</a></li>
+          <li><a href="#how-to-make">How to Make a Favicon Online</a></li>
+          <li><a href="#design-tips">Favicon Design Tips</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ol>
+      </div>
+
+      <h2 id="what-is-favicon">What Is a Favicon?</h2>
+      <p>A <strong>favicon (favorites icon) is the small icon shown in browser tabs, the address bar, bookmarks, and history</strong>. It is your brand's smallest — and most frequently seen — representative in the browser. When a user has a dozen tabs open, a clear favicon helps them find your site instantly; a blurry or default one makes the site look untrustworthy.</p>
+      <p>The favicon dates back to Internet Explorer 5 in 1999: originally just "the icon shown when you bookmark a site," conventionally placed in the site root and named <code>favicon.ico</code>. Twenty-some years later, a favicon is really a <strong>collection of icon files</strong> for different devices and contexts — browser tabs, the iOS home screen, Android launcher icons, and PWA windows each have their own size requirements.</p>
+
+      <h2 id="sizes">Favicon Sizes for Every Platform</h2>
+      <p>Modern sites need far more than a single 16×16 icon. The industry-standard full set:</p>
+      <table>
+        <tr><th>File</th><th>Size</th><th>Used for</th></tr>
+        <tr><td><code>favicon.ico</code></td><td>16 / 32 / 48 px packed</td><td>Browser tabs, address bar, history (fallback)</td></tr>
+        <tr><td><code>favicon-16x16.png</code></td><td>16×16</td><td>Chrome / Firefox standard tab icon</td></tr>
+        <tr><td><code>favicon-32x32.png</code></td><td>32×32</td><td>Safari tabs, Retina displays</td></tr>
+        <tr><td><code>apple-touch-icon.png</code></td><td>180×180</td><td>iOS "Add to Home Screen" (Safari rounds the corners)</td></tr>
+        <tr><td><code>android-chrome-192x192.png</code></td><td>192×192</td><td>Android Chrome / PWA manifest</td></tr>
+        <tr><td><code>android-chrome-512x512.png</code></td><td>512×512</td><td>PWA splash screens, high-res contexts</td></tr>
+        <tr><td><code>favicon.svg</code></td><td>vector</td><td>Modern browsers (can follow dark mode)</td></tr>
+      </table>
+      <p>Minimum viable setup: <strong>a favicon.ico with 16/32px in the root + one 180×180 apple-touch-icon</strong>. That covers the vast majority of cases; the full table above is the perfectionist's version.</p>
+
+      <h2 id="formats">favicon.ico vs PNG vs SVG</h2>
+      <p>The three formats have different jobs — it's not a pick-one decision:</p>
+      <ul>
+        <li><strong>ICO</strong>: the compatibility king. Some older browsers, crawlers, and readers request only <code>/favicon.ico</code>, ignoring HTML. It's also the only favicon format that packs multiple sizes in one file.</li>
+        <li><strong>PNG</strong>: the modern workhorse. Small, transparent, declared at any size via <code>&lt;link rel="icon"&gt;</code>. iOS home-screen icons are PNG too.</li>
+        <li><strong>SVG</strong>: draw once, scale forever. Supports dark-mode switching via CSS media queries. Downside: Safari (including iOS) doesn't support it.</li>
+      </ul>
+      <p><strong>Recommended combo: ICO (root fallback) + PNG (per-size declarations) + SVG (progressive enhancement, declared last).</strong> Browsers pick the best match from your declarations.</p>
+
+      <h2 id="html">HTML Code (Copy &amp; Paste)</h2>
+      <p>Drop this into the <code>&lt;head&gt;</code> of every page (replace paths with your own when deploying):</p>
+      <pre><code>&lt;!-- Fallback: root favicon.ico (requested even undeclared) --&gt;
+&lt;link rel="icon" href="/favicon.ico" sizes="48x48"&gt;
+
+&lt;!-- PNG sizes --&gt;
+&lt;link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"&gt;
+&lt;link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"&gt;
+
+&lt;!-- iOS home-screen icon (avoid transparency; Safari fills it black) --&gt;
+&lt;link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"&gt;
+
+&lt;!-- SVG version (after PNG, as enhancement) --&gt;
+&lt;link rel="icon" type="image/svg+xml" href="/favicon.svg"&gt;
+
+&lt;!-- PWA manifest (with 192/512 icons) --&gt;
+&lt;link rel="manifest" href="/site.webmanifest"&gt;</code></pre>
+      <p>The minimal <code>site.webmanifest</code>:</p>
+      <pre><code>{
+  "name": "My Website",
+  "icons": [
+    { "src": "/android-chrome-192x192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/android-chrome-512x512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}</code></pre>
+
+      <h2 id="platforms">Platform Behavior Differences</h2>
+      <ul>
+        <li><strong>Chrome / Edge / Firefox</strong>: prefer files declared with <code>&lt;link rel="icon"&gt;</code>, matching <code>sizes</code> to device pixel density; fall back to <code>/favicon.ico</code> only when none exist.</li>
+        <li><strong>Safari (macOS)</strong>: limited SVG support; in practice PNG rules. A blurry pinned-tab icon usually means you're missing a 32×32 PNG.</li>
+        <li><strong>iOS Safari</strong>: "Add to Home Screen" reads <code>apple-touch-icon</code> (180×180 ideal) and rounds the corners itself — so the source should be <strong>full-bleed and opaque</strong>.</li>
+        <li><strong>Android Chrome</strong>: "Add to Home Screen" can install your site as a PWA, with icons taken from the manifest's 192/512 entries.</li>
+        <li><strong>Search engines</strong>: Google mobile results sometimes display the favicon directly — a crisp icon can lift click-through rates.</li>
+      </ul>
+
+      <h2 id="how-to-make">How to Make a Favicon Online</h2>
+      <p>We recommend the <a href="/favicon/">Favicon Generator</a> on this site — free, no sign-up, and it <strong>produces the entire favicon pack in one shot</strong> (multi-size .ico + per-size PNGs). Everything runs locally in your browser; images are never uploaded.</p>
+      <ol class="step-list">
+        <li><strong>Prepare a square logo</strong>: ideally 512×512 or larger PNG (transparent or solid background — bigger source, sharper output).</li>
+        <li><strong>Upload</strong>: open the generator and click or drag your image in; PNG / JPG / WebP / SVG are all supported.</li>
+        <li><strong>Pick sizes</strong>: common sizes are pre-checked; adjust to match your site's configuration.</li>
+        <li><strong>Generate &amp; deploy</strong>: download the pack, drop the files into your site root, and paste the HTML above into <code>&lt;head&gt;</code>.</li>
+      </ol>
+
+      <h2 id="design-tips">Favicon Design Tips</h2>
+      <ul>
+        <li><strong>Subtract</strong>: at 16×16 you have only a few hundred pixels. Use an initial, a single shape, or a simplified mark — never the full logo.</li>
+        <li><strong>High contrast</strong>: the icon must read against both light and dark tab bars; preview on both backgrounds.</li>
+        <li><strong>Use an outline</strong>: a light glyph with a dark outline "floats" on any background.</li>
+        <li><strong>Dark mode</strong>: provide an SVG version with <code>@media (prefers-color-scheme: dark)</code> switching — a nice 2026 touch.</li>
+        <li><strong>Avoid JPG</strong>: no alpha channel means white boxes at the edges; stick with PNG + ICO + SVG.</li>
+      </ul>
+
+      <h2 id="faq">FAQ</h2>
+      <div class="faq-item"><p class="faq-q">Q: What is the standard favicon size?</p><p class="faq-a">A: There isn't one. Minimum: favicon.ico (16/32px) + apple-touch-icon (180px). Full set adds 16/32 PNGs, 192/512 PWA icons, and an SVG.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: Why does the browser still show my old favicon after I changed it?</p><p class="faq-a">A: Favicons are aggressively cached by browsers and CDNs. Add a version query string (<code>?v=2</code>), rename the file, or hard-refresh (Ctrl+F5). In production, rename the file on every update.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: Must favicon.ico live in the root?</p><p class="faq-a">A: Strongly recommended. Many browsers and legacy tools request /favicon.ico directly, ignoring your HTML. PNG/SVG files can live anywhere if properly declared.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: Why should apple-touch-icon avoid transparency?</p><p class="faq-a">A: iOS fills transparent regions with solid black, turning a transparent logo into black blobs on the home screen. Make it full-bleed and opaque; let the system round the corners.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: Are online favicon generators safe?</p><p class="faq-a">A: It depends on the implementation. This site's generator computes everything client-side (Canvas + Blob) — you can verify in the network panel that no image request ever leaves your machine.</p></div>
+
+      <div class="cta-box">
+        <p class="cta-title">Generate Your Full Favicon Pack — Free</p>
+        <p class="cta-sub">Multi-size .ico + PNG in one click · Runs in your browser · Never uploaded</p>
+        <a class="cta-btn" href="/favicon/">Open the Favicon Generator →</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<div id="site-footer"></div>
+<script src="/assets/js/site.js"></script>
+</body>
+</html>
