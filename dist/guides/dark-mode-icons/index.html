@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>暗色图标设计指南：深色模式图标怎么做（含 favicon 适配） | cataito</title>
+<meta name="title-zh" content="暗色图标设计指南：深色模式图标怎么做（含 favicon 适配） | cataito">
+<meta name="title-en" content="Dark Mode Icon Design Guide: Icons for Dark Themes (incl. Favicons) | cataito">
+<meta name="description" content="深色模式时代，图标怎么做才好看？本文详解暗色图标设计原则（对比度、亮度、层级）、app 图标与 favicon 的深浅双变体做法、SVG favicon 跟随系统深色模式的写法，以及如何一键生成 Light/Dark 双主题图标。">
+<meta name="theme-color" content="#0e1016">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="cataito 工具箱">
+<meta property="og:title" content="暗色图标设计指南：深色模式图标怎么做">
+<meta property="og:description" content="暗色图标设计原则、app 图标与 favicon 的深浅双变体做法、SVG 跟随系统深色模式，一键生成双主题图标。">
+<meta property="og:url" content="https://tools.cataito.com/guides/dark-mode-icons/">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:locale:alternate" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="暗色图标设计指南">
+<meta name="twitter:description" content="深色模式图标设计原则与双变体生成。">
+<link rel="canonical" href="https://tools.cataito.com/guides/dark-mode-icons/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%236366f1'/%3E%3Crect x='8' y='8' width='7' height='7' rx='1.5' fill='white'/%3E%3Crect x='17' y='8' width='7' height='7' rx='1.5' fill='white' opacity='.55'/%3E%3Crect x='8' y='17' width='7' height='7' rx='1.5' fill='white' opacity='.55'/%3E%3Crect x='17' y='17' width='7' height='7' rx='1.5' fill='white' opacity='.3'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="/assets/css/site.css">
+<script>
+  (function () {
+    try {
+      var l = localStorage.getItem('cataito-lang');
+      document.documentElement.setAttribute('lang', (l === 'en') ? 'en' : 'zh-CN');
+      if (l === 'en') document.documentElement.classList.add('lang-en');
+    } catch (e) {}
+  })();
+</script>
+<style>
+  /* ============ 指南页排版（移动优先，无锁高，自然文档流） ============ */
+  .guide-wrap { max-width: 760px; margin: 0 auto; }
+  .guide-meta { font-size: 13px; color: var(--text-3); margin: 0 0 6px; }
+  .page-sub { margin-bottom: 10px; }
+  .article { font-size: 15px; line-height: 1.85; color: var(--text); }
+  .article h2 {
+    font-size: 21px; font-weight: 700; letter-spacing: -.3px;
+    margin: 40px 0 14px; padding-top: 10px; color: var(--text);
+  }
+  .article h3 { font-size: 16.5px; font-weight: 650; margin: 26px 0 10px; color: var(--text); }
+  .article p { margin: 0 0 14px; color: var(--text-2); }
+  .article strong { color: var(--text); font-weight: 650; }
+  .article a { color: var(--accent); text-decoration: none; }
+  .article a:hover { text-decoration: underline; }
+  .article ul, .article ol { margin: 0 0 16px; padding-left: 22px; color: var(--text-2); }
+  .article li { margin: 6px 0; }
+  .article code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 13px; background: var(--card-2); border: 1px solid var(--border);
+    border-radius: 5px; padding: 1px 6px; color: var(--text);
+  }
+  .article pre {
+    background: var(--card-2); border: 1px solid var(--border); border-radius: 10px;
+    padding: 14px 16px; margin: 14px 0 18px; overflow-x: auto;
+  }
+  .article pre code { background: none; border: none; padding: 0; font-size: 12.5px; line-height: 1.7; }
+  .article table {
+    width: 100%; border-collapse: collapse; margin: 18px 0 22px;
+    font-size: 13.5px; background: var(--card);
+    border: 1px solid var(--border); border-radius: 10px; overflow: hidden;
+  }
+  .article th, .article td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--border); }
+  .article th { background: var(--card-2); color: var(--text); font-weight: 650; white-space: nowrap; }
+  .article td { color: var(--text-2); }
+  .article tr:last-child td { border-bottom: none; }
+  .toc {
+    background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 16px 18px; margin: 20px 0 8px; box-shadow: var(--shadow-sm);
+  }
+  .toc-title { font-size: 13px; font-weight: 650; color: var(--text); margin: 0 0 10px; }
+  .toc ol { margin: 0; padding-left: 20px; font-size: 13.5px; }
+  .toc li { margin: 5px 0; }
+  .toc a { color: var(--text-2); text-decoration: none; }
+  .toc a:hover { color: var(--accent); }
+  .faq-item {
+    background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-sm);
+    padding: 14px 16px; margin: 10px 0; box-shadow: var(--shadow-sm);
+  }
+  .faq-q { font-size: 14.5px; font-weight: 650; color: var(--text); margin: 0 0 8px; }
+  .faq-a { font-size: 14px; color: var(--text-2); margin: 0; line-height: 1.75; }
+  .cta-box {
+    background: linear-gradient(135deg, var(--accent-soft), var(--accent-soft-2));
+    border: 1px solid var(--accent); border-radius: var(--radius);
+    padding: 20px 22px; margin: 34px 0 10px; text-align: center;
+  }
+  .cta-box .cta-title { font-size: 17px; font-weight: 700; color: var(--text); margin: 0 0 6px; }
+  .cta-box .cta-sub { font-size: 13.5px; color: var(--text-2); margin: 0 0 14px; }
+  .cta-btn {
+    display: inline-block; background: var(--accent); color: #fff; text-decoration: none;
+    font-size: 14px; font-weight: 600; padding: 11px 26px; border-radius: var(--radius-sm);
+    box-shadow: 0 6px 18px rgba(99,102,241,0.30); transition: background .15s;
+  }
+  .cta-btn:hover { background: var(--accent-hover); }
+  .step-list { counter-reset: step; list-style: none; padding-left: 0; }
+  .step-list li { position: relative; padding-left: 44px; margin: 14px 0; }
+  .step-list li::before {
+    counter-increment: step; content: counter(step);
+    position: absolute; left: 0; top: 1px;
+    width: 28px; height: 28px; border-radius: 999px;
+    background: var(--accent-soft); color: var(--accent);
+    font-weight: 700; font-size: 14px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  /* 明暗对比示意（固定的中性配色，不跟随站点主题，保证教学效果） */
+  .demo-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 16px 0 22px; }
+  .demo-tile {
+    border-radius: 12px; padding: 18px 16px; text-align: center;
+    border: 1px solid rgba(128,128,128,.25);
+  }
+  .demo-tile .demo-label { font-size: 12px; font-weight: 600; margin-bottom: 10px; }
+  .demo-light { background: #f2f3f7; }
+  .demo-light .demo-label { color: #5b5f6b; }
+  .demo-dark { background: #16181f; }
+  .demo-dark .demo-label { color: #9aa0ad; }
+  .demo-dot { width: 56px; height: 56px; border-radius: 14px; margin: 0 auto; display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: 800; }
+  .demo-good { box-shadow: 0 2px 10px rgba(0,0,0,.15); }
+  .demo-bad-1 { background: #c9cdd6; color: #ffffff; }
+  .demo-bad-2 { background: #2a2d38; color: #16181f; }
+  .demo-ok-light { background: #ffffff; color: #3b3f4a; }
+  .demo-ok-dark { background: #e8eaf0; color: #16181f; }
+  /* 双语块：默认中文，html.lang-en 时切换英文（两语言均在原生 HTML 中，可被索引） */
+  .lb-en { display: none; }
+  html.lang-en .lb-zh { display: none; }
+  html.lang-en .lb-en { display: block; }
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "暗色图标设计指南：深色模式图标怎么做",
+  "description": "详解暗色图标设计原则（对比度、亮度、层级）、app 图标与 favicon 的深浅双变体做法、SVG favicon 跟随系统深色模式的写法，以及如何一键生成 Light/Dark 双主题图标。",
+  "inLanguage": "zh-CN",
+  "datePublished": "2026-09-02",
+  "dateModified": "2026-09-02",
+  "author": { "@type": "Organization", "name": "cataito", "url": "https://tools.cataito.com/" },
+  "publisher": { "@type": "Organization", "name": "cataito 工具箱", "url": "https://tools.cataito.com/" },
+  "mainEntityOfPage": "https://tools.cataito.com/guides/dark-mode-icons/"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "深色模式下图标要重新设计吗？",
+      "acceptedAnswer": { "@type": "Answer", "text": "取决于图标类型。UI 内的线性图标建议做双变体（浅色模式深色描边、深色模式浅色描边）；品牌 app 图标和 favicon 通常一套通用，但需保证在明暗两种背景下都清晰可辨。" }
+    },
+    {
+      "@type": "Question",
+      "name": "深色模式图标的标准颜色是什么？",
+      "acceptedAnswer": { "@type": "Answer", "text": "没有唯一标准，通行做法：避免纯黑（#000），使用 #E8EAF0 左右的浅灰做前景；强调色可提亮 5%–10% 以补偿深色背景下色彩观感的饱和度下降。" }
+    },
+    {
+      "@type": "Question",
+      "name": "favicon 能跟随系统深色模式自动切换吗？",
+      "acceptedAnswer": { "@type": "Answer", "text": "可以。提供 SVG 版 favicon 并在其中使用 CSS 媒体查询 prefers-color-scheme，Chrome、Edge、Firefox 会跟随系统切换；Safari 对此支持有限，仍以 PNG/ICO 兜底。" }
+    },
+    {
+      "@type": "Question",
+      "name": "暗色 app 图标背景用什么颜色？",
+      "acceptedAnswer": { "@type": "Answer", "text": "推荐 #16181F 至 #1E212B 区间的深灰蓝，而非纯黑。纯黑在 OLED 屏上与系统黑色背景完全融合，图标会失去边界感；略带蓝调的深灰更有质感。" }
+    },
+    {
+      "@type": "Question",
+      "name": "一个 .ico 文件能同时存明暗两个版本吗？",
+      "acceptedAnswer": { "@type": "Answer", "text": "ICO 是多尺寸容器而非多主题容器，同一尺寸只能存一张图。明暗双变体应导出为两组文件，或用 SVG 媒体查询在一个文件内切换。" }
+    },
+    {
+      "@type": "Question",
+      "name": "如何快速生成 Light/Dark 双主题图标？",
+      "acceptedAnswer": { "@type": "Answer", "text": "使用 cataito 图标工坊（IconForge）的 Dark 变体功能：上传一张源图，勾选 Dark 变体即可一次导出浅色与深色两套完整图标（含各尺寸 ICO/PNG），全部在浏览器本地处理。" }
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "首页", "item": "https://tools.cataito.com/" },
+    { "@type": "ListItem", "position": 2, "name": "使用指南", "item": "https://tools.cataito.com/guides/" },
+    { "@type": "ListItem", "position": 3, "name": "暗色图标设计指南", "item": "https://tools.cataito.com/guides/dark-mode-icons/" }
+  ]
+}
+</script>
+</head>
+<body>
+<div id="site-header"></div>
+
+<main class="site-main">
+  <div class="guide-wrap">
+    <nav class="breadcrumb"><a href="/" data-i18n="crumb_home">首页</a><span class="sep">/</span><a href="/guides/" data-i18n="nav_guides">使用指南</a><span class="sep">/</span><span data-i18n="gd_dark_short">暗色图标设计指南</span></nav>
+    <p class="guide-meta"><span data-i18n="gd_published">发布于</span> 2026-09-02 · cataito</p>
+    <h1 class="page-h1" data-i18n="gd_dark_h1">暗色图标设计指南：深色模式图标怎么做</h1>
+    <p class="page-sub" data-i18n="gd_dark_sub">深色模式已是默认配置，而不是小众选项。本文讲清暗色图标的核心设计原则、app 图标与 favicon 的双变体策略、SVG 跟随系统深色模式的写法，以及一键生成 Light/Dark 双主题图标的方法。</p>
+
+    <!-- ================= 中文正文 ================= -->
+    <div class="article lb-zh">
+      <div class="toc">
+        <p class="toc-title">目录</p>
+        <ol>
+          <li><a href="#why-dark">为什么暗色图标值得单独设计</a></li>
+          <li><a href="#principles">暗色图标三大设计原则</a></li>
+          <li><a href="#app-icons">App 图标：深色底怎么做</a></li>
+          <li><a href="#ui-icons">UI 图标：双变体策略</a></li>
+          <li><a href="#favicon-dark">Favicon 跟随深色模式</a></li>
+          <li><a href="#generate">一键生成双主题图标</a></li>
+          <li><a href="#faq">常见问题</a></li>
+        </ol>
+      </div>
+
+      <h2 id="why-dark">为什么暗色图标值得单独设计</h2>
+      <p>2020 年起，iOS、Android、Windows、macOS 相继把系统级深色模式做成标配，大量用户常年开启。深色模式不只是「把背景换成黑色」——<strong>同一套图标在明暗两种背景下的可读性、层级感和情绪表达都会改变</strong>。直接复用浅色模式图标，常见三类翻车：</p>
+      <ul>
+        <li><strong>对比度崩塌</strong>：深灰图标放在深色背景上「隐身」，浅灰图标放在浅色背景上「发虚」；</li>
+        <li><strong>阴影失效</strong>：浅色模式靠阴影分层，深色背景下阴影几乎不可见，层级感丢失；</li>
+        <li><strong>色彩变脏</strong>：中低饱和色在深色底上观感发灰发闷，品牌色失去活力。</li>
+      </ul>
+      <p>先看一组直观对比——同一个「A」字形图标，在明暗两种底色上的好坏做法：</p>
+      <div class="demo-pair">
+        <div class="demo-tile demo-light">
+          <div class="demo-label">浅色背景</div>
+          <div class="demo-dot demo-bad-1">A</div>
+          <p style="font-size:12px;margin:10px 0 0;color:#8a8f9c;">✗ 白底白字，几乎看不见</p>
+        </div>
+        <div class="demo-tile demo-dark">
+          <div class="demo-label">深色背景</div>
+          <div class="demo-dot demo-bad-2">A</div>
+          <p style="font-size:12px;margin:10px 0 0;color:#9aa0ad;">✗ 黑底深灰字，同样隐身</p>
+        </div>
+      </div>
+      <div class="demo-pair">
+        <div class="demo-tile demo-light">
+          <div class="demo-label">浅色背景</div>
+          <div class="demo-dot demo-ok-light demo-good">A</div>
+          <p style="font-size:12px;margin:10px 0 0;color:#8a8f9c;">✓ 深色前景 + 阴影</p>
+        </div>
+        <div class="demo-tile demo-dark">
+          <div class="demo-label">深色背景</div>
+          <div class="demo-dot demo-ok-dark demo-good">A</div>
+          <p style="font-size:12px;margin:10px 0 0;color:#9aa0ad;">✓ 浅色前景 + 提亮</p>
+        </div>
+      </div>
+
+      <h2 id="principles">暗色图标三大设计原则</h2>
+      <h3>1. 对比度优先</h3>
+      <p>深色背景上的前景元素建议使用 <strong>#E8EAF0 一带的浅灰</strong>而非纯白——纯白在深底上过于刺眼，浅灰更柔和且有「层次」。反向同理：暗底不要用纯黑（#000），推荐 <strong>#16181F 至 #1E212B 的深灰蓝</strong>，在 OLED 上仍能保留图标边界。</p>
+      <h3>2. 用「亮度差」替代「阴影」分层</h3>
+      <p>深色模式里阴影基本失效，层级要靠<strong>表面亮度差</strong>表达：背景 #121419、卡片 #1A1D26、悬浮层 #22252F——越「浮」的元素越亮。图标内部同理，用亮度梯度而不是投影做立体感。</p>
+      <h3>3. 强调色提亮 5%–10%</h3>
+      <p>同一种品牌色，在深色底上观感会更暗更闷（人的视觉特性）。补偿做法是把强调色整体提亮一档：比如 #6366F1 在深色模式下可微调为 #7C7FF5。图标中大面积的品牌色都建议做这个校正。</p>
+
+      <h2 id="app-icons">App 图标：深色底怎么做</h2>
+      <p>品牌 app 图标（桌面图标）通常一套通用，关键是在明暗两种系统壁纸/启动器背景下都成立。近年大厂的通行做法是<strong>「深灰底 + 提亮前景」的双兼容设计</strong>：</p>
+      <table>
+        <tr><th>元素</th><th>浅色主题</th><th>深色主题</th></tr>
+        <tr><td>图标底色</td><td>白 / 品牌浅色</td><td>#16181F–#1E212B 深灰蓝</td></tr>
+        <tr><td>前景主形</td><td>深灰或品牌色</td><td>浅灰 #E8EAF0 或提亮后的品牌色</td></tr>
+        <tr><td>描边/细节</td><td>可省略</td><td>建议加 1px 亮色描边增强边界</td></tr>
+        <tr><td>投影</td><td>柔和黑色投影</td><td>基本无效，改用亮度差或亮色光晕</td></tr>
+      </table>
+      <p>Windows 11 与 Android 13+ 都支持按系统主题自动切换明暗两版 app 图标（分别通过 ICO 内多资源或自适应图标实现）；macOS 从 Big Sur 起也支持深色版图标。要做适配，前提是<strong>手里有明暗两套成品图</strong>——这正好是图标工坊 Dark 变体功能解决的问题（见下文）。</p>
+
+      <h2 id="ui-icons">UI 图标：双变体策略</h2>
+      <p>界面内的功能图标（设置、搜索、返回……）建议维护<strong>同一图元的两份描边配色</strong>：浅色模式用深色描边，深色模式用浅色描边。工程上不要画两套路径——SVG 里用 <code>currentColor</code> 继承文字颜色，或 CSS 变量控制描边色，一份图元自动适配两种主题：</p>
+      <pre><code>&lt;svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+     stroke-width="1.8" stroke-linecap="round"&gt;
+  &lt;circle cx="11" cy="11" r="7"/&gt;
+  &lt;path d="M20 20l-3.5-3.5"/&gt;
+&lt;/svg&gt;</code></pre>
+      <p>这样图标颜色永远与正文文字一致，深浅模式零成本切换。只有品牌图形（Logo、插画）才需要真正画两版。</p>
+
+      <h2 id="favicon-dark">Favicon 跟随深色模式</h2>
+      <p>浏览器标签栏同样有明暗两种配色。想让 favicon 跟随系统主题，提供 SVG 版并写入媒体查询：</p>
+      <pre><code>&lt;!-- favicon.svg --&gt;
+&lt;svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"&gt;
+  &lt;style&gt;
+    .bg { fill: #f2f3f7; }
+    .fg { fill: #3b3f4a; }
+    @media (prefers-color-scheme: dark) {
+      .bg { fill: #16181f; }
+      .fg { fill: #e8eaf0; }
+    }
+  &lt;/style&gt;
+  &lt;rect class="bg" width="32" height="32" rx="7"/&gt;
+  &lt;path class="fg" d="..."/&gt;
+&lt;/svg&gt;</code></pre>
+      <p>Chrome、Edge、Firefox 会跟随系统切换；Safari 对 SVG favicon 支持有限，所以<strong>PNG/ICO 兜底仍要保留</strong>，SVG 作为渐进增强声明在最后。别忘了 favicon.ico 与 apple-touch-icon 建议做成明暗都能读的中性配色。具体的 HTML 声明写法见<a href="/guides/favicon-guide/">《Favicon 完全指南》</a>。</p>
+
+      <h2 id="generate">一键生成双主题图标</h2>
+      <p>手动做明暗两套图标费时费力。本站 <a href="/icon-forge/">图标工坊 IconForge</a> 内置 <strong>Dark 变体</strong>功能，专为此设计：</p>
+      <ol class="step-list">
+        <li><strong>上传一张源图</strong>：任意方形 Logo（PNG/JPG/WebP/SVG 均可），工具自动做 1:1 纠偏。</li>
+        <li><strong>勾选 Dark 变体</strong>：工具会基于源图生成深色底版本——背景替换为深灰蓝、前景自动提亮，保证深色环境的可读性。</li>
+        <li><strong>选择输出尺寸</strong>：默认打包 16–256px 全部七档。</li>
+        <li><strong>导出两套成品</strong>：一次生成 Light + Dark 两套完整图标（.ico + 各尺寸 PNG），直接用于支持主题切换的平台。</li>
+      </ol>
+      <p>全部处理在浏览器本地完成，图片不上传服务器，商业 Logo 也能放心用。</p>
+
+      <h2 id="faq">常见问题</h2>
+      <div class="faq-item"><p class="faq-q">Q：深色模式下所有图标都要重做吗？</p><p class="faq-a">A：不必。功能性 UI 图标用 currentColor/CSS 变量即可自动适配；只有品牌图形（app 图标、Logo、插画）才值得做真正的双变体。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：暗色图标前景用纯白还是浅灰？</p><p class="faq-a">A：推荐浅灰（#E8EAF0 一带）。纯白在深底上对比过强、显得刺眼，浅灰观感更舒适且保留层次。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：暗色底为什么不用纯黑？</p><p class="faq-a">A：OLED 屏的系统背景常是纯黑，纯黑图标会与背景完全融合失去边界；#16181F 左右的深灰蓝既有「暗」的质感又保留轮廓。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：一个 .ico 能同时存明暗两版吗？</p><p class="faq-a">A：不能。ICO 是多尺寸容器，同一尺寸只能存一张图。双主题要导出两组文件，或改用 SVG 媒体查询在一个文件内切换。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：favicon 怎么跟随深色模式？</p><p class="faq-a">A：提供 SVG 版 favicon 并写入 <code>@media (prefers-color-scheme: dark)</code>，Chrome/Edge/Firebase 会自动切换；Safari 仍需 PNG/ICO 兜底。</p></div>
+
+      <div class="cta-box">
+        <p class="cta-title">一键生成 Light / Dark 双主题图标</p>
+        <p class="cta-sub">上传一张图 · 自动生成两套完整图标 · 纯浏览器本地处理</p>
+        <a class="cta-btn" href="/icon-forge/">打开图标工坊 IconForge →</a>
+      </div>
+    </div>
+
+    <!-- ================= English body ================= -->
+    <div class="article lb-en">
+      <div class="toc">
+        <p class="toc-title">Table of Contents</p>
+        <ol>
+          <li><a href="#why-dark">Why Dark Icons Deserve Their Own Design</a></li>
+          <li><a href="#principles">Three Core Principles</a></li>
+          <li><a href="#app-icons">App Icons: Dark Backgrounds Done Right</a></li>
+          <li><a href="#ui-icons">UI Icons: The Two-Variant Strategy</a></li>
+          <li><a href="#favicon-dark">Favicons That Follow Dark Mode</a></li>
+          <li><a href="#generate">Generate Dual-Theme Icons in One Click</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ol>
+      </div>
+
+      <h2 id="why-dark">Why Dark Icons Deserve Their Own Design</h2>
+      <p>Since 2020, iOS, Android, Windows, and macOS have all made system-wide dark mode standard, and many users keep it on permanently. Dark mode is not just "swap the background to black" — <strong>the same icon set reads differently on light and dark backgrounds</strong>, in legibility, hierarchy, and mood. Reusing light-mode icons verbatim causes three classic failures:</p>
+      <ul>
+        <li><strong>Contrast collapse</strong>: dark gray icons vanish on dark backgrounds; light gray ones wash out on light ones;</li>
+        <li><strong>Dead shadows</strong>: light mode relies on drop shadows for depth, which are nearly invisible on dark surfaces;</li>
+        <li><strong>Muddy colors</strong>: medium-saturation colors look dull and grayed-out on dark backgrounds, draining brand colors of energy.</li>
+      </ul>
+      <p>Here's a visual comparison — the same "A" glyph icon, done badly and well on both backgrounds:</p>
+      <div class="demo-pair">
+        <div class="demo-tile demo-light">
+          <div class="demo-label">Light background</div>
+          <div class="demo-dot demo-bad-1">A</div>
+          <p style="font-size:12px;margin:10px 0 0;color:#8a8f9c;">✗ White on white — nearly invisible</p>
+        </div>
+        <div class="demo-tile demo-dark">
+          <div class="demo-label">Dark background</div>
+          <div class="demo-dot demo-bad-2">A</div>
+          <p style="font-size:12px;margin:10px 0 0;color:#9aa0ad;">✗ Black on dark gray — also invisible</p>
+        </div>
+      </div>
+      <div class="demo-pair">
+        <div class="demo-tile demo-light">
+          <div class="demo-label">Light background</div>
+          <div class="demo-dot demo-ok-light demo-good">A</div>
+          <p style="font-size:12px;margin:10px 0 0;color:#8a8f9c;">✓ Dark foreground + shadow</p>
+        </div>
+        <div class="demo-tile demo-dark">
+          <div class="demo-label">Dark background</div>
+          <div class="demo-dot demo-ok-dark demo-good">A</div>
+          <p style="font-size:12px;margin:10px 0 0;color:#9aa0ad;">✓ Light foreground + brightening</p>
+        </div>
+      </div>
+
+      <h2 id="principles">Three Core Principles</h2>
+      <h3>1. Contrast first</h3>
+      <p>On dark backgrounds, use <strong>light gray around #E8EAF0</strong> for foregrounds rather than pure white — pure white glares against dark surfaces, while light gray feels softer and layered. The reverse holds too: avoid pure black (#000) for dark fills; <strong>#16181F to #1E212B dark gray-blue</strong> keeps icon boundaries even on OLED screens.</p>
+      <h3>2. Replace shadows with luminance differences</h3>
+      <p>Shadows barely register in dark mode. Express hierarchy through <strong>surface brightness</strong> instead: background #121419, card #1A1D26, floating layer #22252F — the more "elevated," the brighter. Inside icons, use luminance gradients rather than drop shadows for depth.</p>
+      <h3>3. Brighten accent colors by 5–10%</h3>
+      <p>The same brand color looks darker and duller on a dark background (a quirk of human vision). Compensate by brightening the accent a notch: for example, #6366F1 can shift to #7C7FF5 in dark mode. Any brand color covering large icon areas deserves this correction.</p>
+
+      <h2 id="app-icons">App Icons: Dark Backgrounds Done Right</h2>
+      <p>Brand app icons usually ship as one universal set — the key is that it must work on both light and dark wallpapers. The modern convention is a <strong>"dark gray base + brightened foreground" design that works everywhere</strong>:</p>
+      <table>
+        <tr><th>Element</th><th>Light theme</th><th>Dark theme</th></tr>
+        <tr><td>Icon base</td><td>White / light brand color</td><td>#16181F–#1E212B dark gray-blue</td></tr>
+        <tr><td>Foreground glyph</td><td>Dark gray or brand color</td><td>Light gray #E8EAF0 or brightened brand color</td></tr>
+        <tr><td>Outline/detail</td><td>Optional</td><td>1px light outline recommended for edge definition</td></tr>
+        <tr><td>Drop shadow</td><td>Soft black shadow</td><td>Ineffective — use luminance or a light glow</td></tr>
+      </table>
+      <p>Windows 11 and Android 13+ can auto-switch between light and dark app icons based on system theme (via ICO resources or adaptive icons); macOS has supported dark icons since Big Sur. Adapting requires <strong>having both finished variants in hand</strong> — exactly what Icon Forge's Dark variant feature solves (below).</p>
+
+      <h2 id="ui-icons">UI Icons: The Two-Variant Strategy</h2>
+      <p>For in-interface functional icons (settings, search, back...), maintain <strong>one glyph with two stroke colors</strong>: dark strokes for light mode, light strokes for dark mode. Don't draw two sets of paths — use <code>currentColor</code> in SVG or CSS variables, and one glyph adapts to both themes automatically:</p>
+      <pre><code>&lt;svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+     stroke-width="1.8" stroke-linecap="round"&gt;
+  &lt;circle cx="11" cy="11" r="7"/&gt;
+  &lt;path d="M20 20l-3.5-3.5"/&gt;
+&lt;/svg&gt;</code></pre>
+      <p>The icon color always matches body text — zero-cost theme switching. Only brand graphics (logos, illustrations) genuinely need two drawn versions.</p>
+
+      <h2 id="favicon-dark">Favicons That Follow Dark Mode</h2>
+      <p>Browser tab bars come in light and dark variants too. To make your favicon follow the system theme, provide an SVG version with a media query:</p>
+      <pre><code>&lt;!-- favicon.svg --&gt;
+&lt;svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"&gt;
+  &lt;style&gt;
+    .bg { fill: #f2f3f7; }
+    .fg { fill: #3b3f4a; }
+    @media (prefers-color-scheme: dark) {
+      .bg { fill: #16181f; }
+      .fg { fill: #e8eaf0; }
+    }
+  &lt;/style&gt;
+  &lt;rect class="bg" width="32" height="32" rx="7"/&gt;
+  &lt;path class="fg" d="..."/&gt;
+&lt;/svg&gt;</code></pre>
+      <p>Chrome, Edge, and Firefox follow the system setting; Safari's SVG favicon support is limited, so <strong>keep the PNG/ICO fallbacks</strong> and declare the SVG last as progressive enhancement. The favicon.ico and apple-touch-icon should use neutral colors readable on both. See the <a href="/guides/favicon-guide/">Complete Favicon Guide</a> for full HTML declarations.</p>
+
+      <h2 id="generate">Generate Dual-Theme Icons in One Click</h2>
+      <p>Hand-crafting two complete icon sets is tedious. <a href="/icon-forge/">Icon Forge</a> on this site has a built-in <strong>Dark variant</strong> feature built exactly for this:</p>
+      <ol class="step-list">
+        <li><strong>Upload one source image</strong>: any square logo (PNG/JPG/WebP/SVG); the tool auto-corrects to 1:1.</li>
+        <li><strong>Check the Dark variant option</strong>: the tool generates a dark version — deep gray-blue background, automatically brightened foreground, guaranteed readable in dark environments.</li>
+        <li><strong>Pick output sizes</strong>: all seven (16–256px) by default.</li>
+        <li><strong>Export two sets</strong>: get Light + Dark complete icon sets (.ico + per-size PNGs) in one run, ready for platforms that support theme switching.</li>
+      </ol>
+      <p>Everything runs locally in your browser; images are never uploaded — safe for commercial logos.</p>
+
+      <h2 id="faq">FAQ</h2>
+      <div class="faq-item"><p class="faq-q">Q: Do all icons need a dark-mode redesign?</p><p class="faq-a">A: No. Functional UI icons adapt automatically via currentColor/CSS variables; only brand graphics (app icons, logos, illustrations) are worth true dual variants.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: Pure white or light gray for dark-mode foregrounds?</p><p class="faq-a">A: Light gray (around #E8EAF0). Pure white is over-contrasted and glaring on dark surfaces; light gray is more comfortable and keeps depth.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: Why not pure black for dark bases?</p><p class="faq-a">A: OLED system backgrounds are often pure black — a pure black icon merges with them and loses its boundary. #16181F-ish dark gray-blue keeps the dark look while preserving the outline.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: Can one .ico hold both light and dark versions?</p><p class="faq-a">A: No. ICO is a multi-size container — one image per size. Dual themes mean two files, or one SVG with media queries.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: How do favicons follow dark mode?</p><p class="faq-a">A: Provide an SVG favicon with <code>@media (prefers-color-scheme: dark)</code>; Chrome/Edge/Firefox switch automatically. Safari still needs PNG/ICO fallbacks.</p></div>
+
+      <div class="cta-box">
+        <p class="cta-title">Generate Light / Dark Icon Sets in One Click</p>
+        <p class="cta-sub">One upload · Two complete sets · Runs in your browser</p>
+        <a class="cta-btn" href="/icon-forge/">Open Icon Forge →</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<div id="site-footer"></div>
+<script src="/assets/js/site.js"></script>
+</body>
+</html>

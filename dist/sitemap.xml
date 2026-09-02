@@ -49,4 +49,12 @@
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
+  <url>
+    <loc>https://tools.cataito.com/guides/dark-mode-icons/</loc>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://tools.cataito.com/guides/dark-mode-icons/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tools.cataito.com/guides/dark-mode-icons/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tools.cataito.com/guides/dark-mode-icons/"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
 </urlset>

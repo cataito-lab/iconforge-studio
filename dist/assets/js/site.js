@@ -135,6 +135,10 @@
     gd_fav_h1:          { zh: 'Favicon 完全指南：尺寸规范、HTML 写法与在线制作', en: 'The Complete Favicon Guide: Sizes, HTML Code & How to Make One' },
     gd_fav_sub:         { zh: '一文搞定网站小图标：什么是 favicon、全平台尺寸规范、favicon.ico 与 PNG/SVG 的取舍、可直接复制的 HTML 声明代码，以及如何免费在线生成 favicon 包。', en: 'Everything about website favicons: what they are, sizes for every platform, favicon.ico vs PNG vs SVG, copy-paste HTML code, and how to generate a favicon pack for free.' },
     gd_fav_card_desc:   { zh: '全平台 favicon 尺寸规范（16–512px）、favicon.ico 与 PNG/SVG 的取舍、可直接复制的 HTML 声明代码，以及免费在线生成 favicon 包。', en: 'Favicon sizes for every platform (16–512px), favicon.ico vs PNG vs SVG, copy-paste HTML code, and a free online favicon pack generator.' },
+    gd_dark_short:      { zh: '暗色图标设计指南', en: 'Dark Mode Icon Design Guide' },
+    gd_dark_h1:         { zh: '暗色图标设计指南：深色模式图标怎么做', en: 'Dark Mode Icon Design Guide: Icons for Dark Themes' },
+    gd_dark_sub:        { zh: '深色模式已是默认配置，而不是小众选项。本文讲清暗色图标的核心设计原则、app 图标与 favicon 的双变体策略、SVG 跟随系统深色模式的写法，以及一键生成 Light/Dark 双主题图标的方法。', en: 'Dark mode is now the default, not a niche option. Core principles of dark icon design, dual-variant strategies for app icons and favicons, SVG media queries, and how to generate Light/Dark icon sets in one click.' },
+    gd_dark_card_desc:  { zh: '深色模式图标怎么做：对比度、亮度分层、强调色提亮三大原则，app 图标与 favicon 的双变体策略，以及一键生成 Light/Dark 双主题图标。', en: 'How to design icons for dark mode: contrast, luminance layering, and accent brightening, plus dual-variant strategies and one-click Light/Dark generation.' },
 
     /* 通用 */
     theme_light:    { zh: '亮色', en: 'Light' },
