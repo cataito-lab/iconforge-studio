@@ -172,6 +172,10 @@
     gd_color_h1:        { zh: '配色原理指南：色轮与互补/类似/三角/单色配色方案怎么用', en: 'Color Theory Guide: Color Wheel & Complementary/Analogous/Triadic/Monochromatic Schemes' },
     gd_color_sub:       { zh: '配色是设计里回报率最高的基本功。本文讲清色轮的三个基本属性、互补/类似/三角/分裂互补/单色五种经典方案、60-30-10 比例法则，以及如何免费在线从一张图提取主色并生成协调配色——纯浏览器本地处理。', en: 'Color is the highest-ROI fundamental in design. The color wheel, five classic schemes, the 60-30-10 rule, and how to extract dominant colors from an image and build harmonious palettes for free — right in your browser.' },
     gd_color_card_desc: { zh: '色轮三属性、互补/类似/三角/分裂互补/单色五种配色方案、60-30-10 法则，以及免费在线提取主色生成协调配色。', en: 'Color wheel basics, five classic schemes, the 60-30-10 rule, and free online dominant-color extraction for harmonious palettes.' },
+    gd_appicon_short:   { zh: 'App 图标尺寸速查', en: 'App Icon Sizes Cheat Sheet' },
+    gd_appicon_h1:      { zh: 'App 图标尺寸全平台速查：iOS / Android / App Store / Google Play / Windows / macOS', en: 'App Icon Sizes Cheat Sheet: iOS / Android / App Store / Google Play / Windows / macOS' },
+    gd_appicon_sub:     { zh: '提交一个 App 要准备十几二十个图标尺寸，很容易漏。这份速查表按平台列清 iOS 与 App Store、Android 自适应图标与 Google Play、Windows ICO、macOS icns、PWA 图标的具体要求，并给出一次生成全部尺寸的做法——纯浏览器本地处理。', en: 'Shipping an app means twenty-odd icon sizes — easy to miss one. This cheat sheet lists iOS & App Store, Android adaptive icons & Google Play, Windows ICO, macOS icns, and PWA icon specs, plus how to generate them all at once — right in your browser.' },
+    gd_appicon_card_desc: { zh: 'iOS 主屏与 App Store 1024、Android 自适应图标 108dp 与 Google Play 512、Windows ICO、macOS icns、PWA 图标的尺寸规范与一次生成方法。', en: 'iOS home screen and App Store 1024, Android adaptive icons at 108dp and Google Play 512, Windows ICO, macOS icns, PWA icons — and how to generate them all at once.' },
 
     /* 通用 */
     theme_light:    { zh: '亮色', en: 'Light' },

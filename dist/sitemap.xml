@@ -97,4 +97,12 @@
     <xhtml:link rel="alternate" hreflang="zh" href="https://tools.cataito.com/guides/color-guide/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://tools.cataito.com/guides/color-guide/"/>
   </url>
+  <url>
+    <loc>https://tools.cataito.com/guides/app-icon-sizes/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tools.cataito.com/guides/app-icon-sizes/"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://tools.cataito.com/guides/app-icon-sizes/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tools.cataito.com/guides/app-icon-sizes/"/>
+  </url>
 </urlset>
