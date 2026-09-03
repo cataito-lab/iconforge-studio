@@ -16,6 +16,9 @@
     footer_rights:  { zh: '© 2026 cataito. 保留所有权利。', en: '© 2026 cataito. All rights reserved.' },
     footer_sitemap: { zh: '站点地图', en: 'Sitemap' },
     footer_source:  { zh: '开源仓库', en: 'Source' },
+    footer_about:    { zh: '关于', en: 'About' },
+    footer_privacy:  { zh: '隐私政策', en: 'Privacy' },
+    footer_contact:  { zh: '联系我们', en: 'Contact' },
 
     /* 首页 */
     home_title:     { zh: '免费在线工具箱', en: 'Free Online Tools' },
@@ -422,6 +425,9 @@
       '<div class="site-footer__inner">' +
         '<div data-i18n="footer_tagline">完全免费、纯前端、隐私优先的工具集合。</div>' +
         '<div class="site-footer__links">' +
+          '<a href="/about/" data-i18n="footer_about">关于</a>' +
+          '<a href="/privacy/" data-i18n="footer_privacy">隐私政策</a>' +
+          '<a href="/contact/" data-i18n="footer_contact">联系我们</a>' +
           '<a href="/sitemap.xml" data-i18n="footer_sitemap">站点地图</a>' +
           '<a href="https://github.com/cataito-lab/iconforge-studio" target="_blank" rel="noopener" data-i18n="footer_source">开源仓库</a>' +
           '<span>© ' + y + ' cataito</span>' +
@@ -456,6 +462,16 @@
     }
     update();
     document.addEventListener('cataito-theme-change', update);
+  }
+
+  /* og:image 兜底注入：对已含静态 og:image 的页面（首页/信任页）不重复，
+     其余页面（工具页/指南页）补一张社交分享图，提升分享卡片体验 */
+  function bindOgImage() {
+    if (document.querySelector('meta[property="og:image"]')) return;
+    var u = 'https://tools.cataito.com/assets/img/og-image.png';
+    var og = document.createElement('meta'); og.setAttribute('property', 'og:image'); og.content = u;
+    var tw = document.createElement('meta'); tw.setAttribute('name', 'twitter:image'); tw.content = u;
+    document.head.appendChild(og); document.head.appendChild(tw);
   }
 
   /* :has() 降级兜底
@@ -496,6 +512,7 @@
     renderFooter();
     bindLangSwitch();
     bindFavicon();
+    bindOgImage();
     setLang(getLang());
     initHasFallback();
   }

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>页面未找到 — 404 | cataito</title>
+<meta name="description" content="抱歉，你访问的页面不存在或已被移动。返回 cataito 工具箱首页继续使用我们的免费工具。">
+<meta name="theme-color" content="#fbfbfd">
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="/assets/css/site.css">
+<script src="/assets/js/theme-init.js"></script>
+<script>
+  (function () {
+    try {
+      var l = localStorage.getItem('cataito-lang');
+      document.documentElement.setAttribute('lang', (l === 'en') ? 'en' : 'zh-CN');
+      if (l === 'en') document.documentElement.classList.add('lang-en');
+    } catch (e) {}
+  })();
+</script>
+<style>
+  .nf-wrap { max-width: 560px; margin: 0 auto; text-align: center; padding: 40px 20px; }
+  .nf-code { font-size: 64px; font-weight: 800; letter-spacing: -2px; color: var(--accent); margin: 0; line-height: 1; }
+  .nf-h { font-size: 22px; font-weight: 700; margin: 14px 0 8px; color: var(--text); }
+  .nf-p { font-size: 14px; color: var(--text-2); margin: 0 0 22px; line-height: 1.7; }
+  .nf-links { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+  .nf-btn { display: inline-block; padding: 10px 20px; border-radius: var(--radius-sm); font-size: 14px; font-weight: 600; text-decoration: none; }
+  .nf-btn.primary { background: var(--accent); color: #fff; box-shadow: 0 6px 18px rgba(99,102,241,0.30); }
+  .nf-btn.primary:hover { background: var(--accent-hover); }
+  .nf-btn.ghost { background: var(--card); color: var(--text); border: 1px solid var(--border); }
+  .nf-btn.ghost:hover { border-color: var(--accent); color: var(--accent); }
+</style>
+</head>
+<body>
+<div id="site-header"></div>
+<main class="site-main">
+  <div class="nf-wrap">
+    <p class="nf-code">404</p>
+    <div class="lb-zh">
+      <h1 class="nf-h">页面走丢了</h1>
+      <p class="nf-p">你访问的页面不存在，或已被移动。别担心，下面的入口可以带你回到正轨。</p>
+    </div>
+    <div class="lb-en">
+      <h1 class="nf-h">Page not found</h1>
+      <p class="nf-p">The page you're looking for doesn't exist or has moved. No worries—the links below will get you back on track.</p>
+    </div>
+    <div class="nf-links">
+      <a class="nf-btn primary" href="/">cataito 首页</a>
+      <a class="nf-btn ghost" href="/icon-forge/">图标工坊</a>
+      <a class="nf-btn ghost" href="/favicon/">Favicon 生成</a>
+      <a class="nf-btn ghost" href="/compress/">图片压缩</a>
+      <a class="nf-btn ghost" href="/palette/">配色工具</a>
+    </div>
+  </div>
+</main>
+<div id="site-footer"></div>
+<script src="/assets/js/site.js" defer></script>
+</body>
+</html>

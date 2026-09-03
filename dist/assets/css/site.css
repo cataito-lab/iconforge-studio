@@ -560,6 +560,11 @@ html.dark .theme-switch .ico-sun { display: none; }
 .t-faq-q { font-size: 13.5px; font-weight: 600; color: var(--text); margin: 0 0 6px; }
 .t-faq-a { font-size: 13px; color: var(--text-2); margin: 0; line-height: 1.75; }
 
+/* 双语块：默认中文，html.lang-en 时切换英文（两语言均在原生 HTML 中，可被索引） */
+.lb-en { display: none; }
+html.lang-en .lb-zh { display: none; }
+html.lang-en .lb-en { display: block; }
+
 /* 相关指南链接 */
 .t-guide-links { display: grid; grid-template-columns: 1fr; gap: 10px; margin: 0; }
 .t-guide-link {
