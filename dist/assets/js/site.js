@@ -382,9 +382,10 @@
     }
     el.innerHTML =
       '<div class="site-header__inner">' +
-        '<a class="brand" href="/" data-i18n-html="brand_html">' +
-          '<span class="brand__mark">' + MARK + '</span>' +
-          '<span class="brand__name">cataito<span class="brand__sub" data-i18n="brand_sub">免费工具箱</span></span>' +
+        '<a class="brand" href="/" aria-label="cataito">' +
+          '<img class="brand__logo brand__logo--dark" src="/assets/logo/cataito-logo-dark.svg" alt="cataito" width="124" height="22">' +
+          '<img class="brand__logo brand__logo--light" src="/assets/logo/cataito-logo-light.svg" alt="cataito" width="124" height="22">' +
+          '<span class="brand__tag" data-i18n="brand_sub">免费工具箱</span>' +
         '</a>' +
         '<nav class="nav">' +
           '<a href="/" class="' + (active('/') ? 'active' : '') + '" data-i18n="nav_home">首页</a>' +
@@ -436,6 +437,27 @@
     }
   }
 
+  /* favicon 跟随主题两版切换（亮模式黑描边 / 暗模式白描边） */
+  function bindFavicon() {
+    function set(href) {
+      var l = document.querySelector('link[data-cataito-fav]');
+      if (!l) {
+        l = document.createElement('link');
+        l.rel = 'icon';
+        l.type = 'image/svg+xml';
+        l.setAttribute('data-cataito-fav', '1');
+        document.head.appendChild(l);
+      }
+      l.href = href;
+    }
+    function update() {
+      var theme = (window.CATAITO_THEME && window.CATAITO_THEME.get) ? window.CATAITO_THEME.get() : 'light';
+      set(theme === 'dark' ? '/assets/logo/cataito-logo-light.svg' : '/assets/logo/cataito-logo-dark.svg');
+    }
+    update();
+    document.addEventListener('cataito-theme-change', update);
+  }
+
   /* :has() 降级兜底
      选中态主要依赖 CSS :has()，Firefox 121 以下完全看不到选中反馈。
      这里统一给所有 .t-chip / .t-seg-item 补 .checked 类（CSS 里已并列支持）。
@@ -473,6 +495,7 @@
     renderHeader();
     renderFooter();
     bindLangSwitch();
+    bindFavicon();
     setLang(getLang());
     initHasFallback();
   }
