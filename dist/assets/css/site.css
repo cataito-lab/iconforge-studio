@@ -463,5 +463,95 @@ html.dark .theme-switch .ico-sun { display: none; }
 @keyframes t-spin { to { transform: rotate(360deg); } }
 .t-spin { animation: t-spin 1s linear infinite; }
 
+/* ---------- 内容板块（工具页底部：如何使用 / 常见问题 / 相关指南） ----------
+   目的有二：给纯交互的工具页补可索引正文（避免 thin content），
+   并形成 工具页 → 指南页 的反向内链（此前为 0 条，权重单向流失）。 */
+.t-prose {
+  max-width: 760px;
+  margin: 26px auto 0;
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--text-2);
+}
+.t-prose > *:first-child { margin-top: 0; }
+.t-prose h2 {
+  font-size: 17px;
+  font-weight: 650;
+  letter-spacing: -.2px;
+  color: var(--text);
+  margin: 30px 0 12px;
+}
+.t-prose h2:first-child { margin-top: 0; }
+.t-prose p { margin: 0 0 12px; }
+.t-prose strong { color: var(--text); font-weight: 600; }
+.t-prose a { color: var(--accent); text-decoration: none; }
+.t-prose a:hover { text-decoration: underline; }
+
+/* 编号步骤 */
+.t-steps { counter-reset: tstep; list-style: none; margin: 0 0 18px; padding: 0; }
+.t-steps li { position: relative; padding-left: 40px; margin: 12px 0; }
+.t-steps li::before {
+  counter-increment: tstep;
+  content: counter(tstep);
+  position: absolute;
+  left: 0;
+  top: 2px;
+  width: 26px;
+  height: 26px;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 12.5px;
+  font-weight: 650;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 常见问题 */
+.t-faq { margin: 0 0 18px; }
+.t-faq-item {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 13px 15px;
+  margin: 8px 0;
+}
+.t-faq-q { font-size: 13.5px; font-weight: 600; color: var(--text); margin: 0 0 6px; }
+.t-faq-a { font-size: 13px; color: var(--text-2); margin: 0; line-height: 1.75; }
+
+/* 相关指南链接 */
+.t-guide-links { display: grid; grid-template-columns: 1fr; gap: 10px; margin: 0; }
+.t-guide-link {
+  display: block;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 13px 15px;
+  text-decoration: none;
+  transition: border-color .15s, background .15s;
+}
+.t-guide-link:hover { border-color: var(--accent); background: var(--accent-soft-2); }
+.t-guide-link:hover .t-guide-link-title { color: var(--accent); }
+.t-guide-link-title {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--text);
+  margin: 0 0 3px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.t-guide-link-title::after {
+  content: '';
+  width: 13px;
+  height: 13px;
+  flex: none;
+  background: currentColor;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14M13 6l6 6-6 6'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14M13 6l6 6-6 6'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+.t-guide-link-desc { font-size: 12px; color: var(--text-3); margin: 0; line-height: 1.6; }; }
+
 /* ---------- :has() 降级（Firefox 121 以下看不到选中态） ---------- */
 /* 由 site.js 的 initHasFallback 统一加 .checked 类兜底 */

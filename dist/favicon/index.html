@@ -73,6 +73,43 @@
       <p class="t-note" data-i18n="fv_note">全部在浏览器本地完成，图片不会上传。</p>
     </div>
   </section>
+
+  <section class="t-prose">
+    <h2 data-i18n="fv_how_h">怎么用</h2>
+    <ol class="t-steps">
+      <li data-i18n-html="fv_how_1"><strong>上传一张图</strong>：PNG / JPG / WebP / SVG 都可以，建议用正方形、主体居中的版本。</li>
+      <li data-i18n-html="fv_how_2"><strong>勾选尺寸</strong>：默认已选中全平台常用档位（16 至 512px），可按需增减。</li>
+      <li data-i18n-html="fv_how_3"><strong>生成并下载</strong>：点击生成，得到打包好的 favicon 套件，解压后按说明放进网站根目录。</li>
+    </ol>
+
+    <h2 data-i18n="fv_faq_h">常见问题</h2>
+    <div class="t-faq">
+      <div class="t-faq-item">
+        <p class="t-faq-q" data-i18n="fv_faq_1_q">生成的文件要放在哪里？</p>
+        <p class="t-faq-a" data-i18n="fv_faq_1_a">通常放进网站根目录（与 index.html 同级），浏览器会自动请求 /favicon.ico。PNG 版本则需在 HTML 的 head 里显式声明，写法见下方指南。</p>
+      </div>
+      <div class="t-faq-item">
+        <p class="t-faq-q" data-i18n="fv_faq_2_q">favicon.ico 和 PNG favicon 有什么区别？</p>
+        <p class="t-faq-a" data-i18n="fv_faq_2_a">ICO 是老牌通用格式，兼容性最好，还能在一个文件里塞多个尺寸；PNG 体积更小、支持透明，是现代浏览器的首选。稳妥做法是两者都提供。</p>
+      </div>
+      <div class="t-faq-item">
+        <p class="t-faq-q" data-i18n="fv_faq_3_q">为什么改了 favicon 但浏览器还显示旧的？</p>
+        <p class="t-faq-a" data-i18n="fv_faq_3_a">浏览器会强缓存 favicon。强制刷新（Ctrl/Cmd + Shift + R）通常能解决；站点若用了 CDN，还需要清一次 CDN 缓存。</p>
+      </div>
+    </div>
+
+    <h2 data-i18n="related_guides">相关指南</h2>
+    <div class="t-guide-links">
+      <a class="t-guide-link" href="/guides/favicon-guide/">
+        <p class="t-guide-link-title" data-i18n="gd_fav_short">Favicon 完全指南</p>
+        <p class="t-guide-link-desc" data-i18n="gd_fav_card_desc">全平台尺寸规范、favicon.ico 与 PNG/SVG 的取舍、可直接复制的 HTML 声明代码。</p>
+      </a>
+      <a class="t-guide-link" href="/guides/dark-mode-icons/">
+        <p class="t-guide-link-title" data-i18n="gd_dark_short">暗色图标设计指南</p>
+        <p class="t-guide-link-desc" data-i18n="gd_dark_card_desc">深色模式图标怎么做：对比度、亮度分层、强调色提亮三大原则与双变体策略。</p>
+      </a>
+    </div>
+  </section>
 </main>
 
 <div id="site-footer"></div>

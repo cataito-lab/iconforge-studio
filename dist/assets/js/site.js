@@ -181,6 +181,51 @@
     cp_orig:          { zh: '原图', en: 'Original' },
     cp_new:           { zh: '压缩后', en: 'Compressed' },
 
+    /* ---- 工具页底部内容板块（补可索引正文 + 工具→指南反向内链） ---- */
+    related_guides: { zh: '相关指南', en: 'Related guides' },
+
+    cp_how_h:  { zh: '怎么用', en: 'How to use' },
+    cp_how_1:  { zh: '<strong>批量上传</strong>：点击或拖入图片，一次最多 20 张，JPG / PNG / WebP 都可以。', en: '<strong>Batch upload</strong>: click or drag in images, up to 20 at a time — JPG / PNG / WebP all supported.' },
+    cp_how_2:  { zh: '<strong>调整参数</strong>：质量默认 80（推荐 70–85）；格式选「智能」由工具自动择小；最长边按用途选择。', en: '<strong>Tune settings</strong>: quality defaults to 80 (70–85 recommended); pick "Smart" format and let the tool choose the smallest; set the max edge by use case.' },
+    cp_how_3:  { zh: '<strong>核对结果</strong>：每行显示压缩前后体积与节省比例，含透明的图片会自动保留透明通道。', en: '<strong>Review results</strong>: each row shows before/after size and savings; transparent images keep their alpha channel automatically.' },
+    cp_how_4:  { zh: '<strong>下载</strong>：单张逐个下载，或一键打包全部为 ZIP。', en: '<strong>Download</strong>: grab files one by one, or export everything as a single ZIP.' },
+    cp_faq_h:  { zh: '常见问题', en: 'FAQ' },
+    cp_faq_1_q: { zh: '图片会被上传到服务器吗？', en: 'Are my images uploaded to a server?' },
+    cp_faq_1_a: { zh: '不会。全部处理在浏览器本地完成（Canvas 编码），图片不经过网络，商业素材和隐私截图都可以放心用。', en: 'No. Everything runs locally in your browser (Canvas encoding) — images never touch the network, safe for commercial assets and private screenshots.' },
+    cp_faq_2_q: { zh: '为什么有的图片压缩后反而变大了？', en: 'Why did some images get bigger after compressing?' },
+    cp_faq_2_a: { zh: '本身已是高度优化的文件（例如原本就是 WebP）再编码可能更大。工具会自动检测并保留原图，不会让你下载更差的版本。', en: 'Files that are already highly optimized (native WebP, for example) can re-encode larger. The tool detects this and keeps the original — you never download a worse version.' },
+    cp_faq_3_q: { zh: '质量该设多少？', en: 'What quality setting should I use?' },
+    cp_faq_3_a: { zh: '网页展示推荐 70–85：低于 60 容易出现块状伪影，高于 90 体积涨得快但肉眼几乎看不出差别。人物特写可调高，缩略图可更低。', en: 'For web display, 70–85: below 60 risks blocky artifacts; above 90 grows files fast with no visible gain. Portraits can go higher, thumbnails lower.' },
+    cp_faq_4_q: { zh: '透明背景会丢失吗？', en: 'Will transparency be lost?' },
+    cp_faq_4_a: { zh: '不会。工具会先检测图片是否含透明通道，含透明时输出 WebP 或 PNG 保留 alpha，不会转成会变白底的 JPEG。', en: 'No. The tool checks for an alpha channel first and outputs WebP or PNG to preserve it — it never converts to JPEG, which would flatten to white.' },
+
+    fv_how_h:  { zh: '怎么用', en: 'How to use' },
+    fv_how_1:  { zh: '<strong>上传一张图</strong>：PNG / JPG / WebP / SVG 都可以，建议用正方形、主体居中的版本。', en: '<strong>Upload an image</strong>: PNG / JPG / WebP / SVG all work; a square, centered version gives the best result.' },
+    fv_how_2:  { zh: '<strong>勾选尺寸</strong>：默认已选中全平台常用档位（16 至 512px），可按需增减。', en: '<strong>Pick sizes</strong>: the common cross-platform range (16 to 512px) is preselected — add or remove as needed.' },
+    fv_how_3:  { zh: '<strong>生成并下载</strong>：点击生成，得到打包好的 favicon 套件，解压后按说明放进网站根目录。', en: '<strong>Generate and download</strong>: click generate to get a packed favicon set, then drop the files into your site root as described in the guide.' },
+    fv_faq_h:  { zh: '常见问题', en: 'FAQ' },
+    fv_faq_1_q: { zh: '生成的文件要放在哪里？', en: 'Where do the generated files go?' },
+    fv_faq_1_a: { zh: '通常放进网站根目录（与 index.html 同级），浏览器会自动请求 /favicon.ico。PNG 版本则需在 HTML 的 head 里显式声明，写法见下方指南。', en: 'Usually in your site root (alongside index.html) — browsers request /favicon.ico automatically. PNG variants need explicit declarations in the HTML head; see the guide below.' },
+    fv_faq_2_q: { zh: 'favicon.ico 和 PNG favicon 有什么区别？', en: "What's the difference between favicon.ico and PNG favicons?" },
+    fv_faq_2_a: { zh: 'ICO 是老牌通用格式，兼容性最好，还能在一个文件里塞多个尺寸；PNG 体积更小、支持透明，是现代浏览器的首选。稳妥做法是两者都提供。', en: 'ICO is the legacy universal format with the broadest support and can pack multiple sizes in one file; PNG is smaller and supports transparency, preferred by modern browsers. Safest bet: provide both.' },
+    fv_faq_3_q: { zh: '为什么改了 favicon 但浏览器还显示旧的？', en: 'Why does my browser still show the old favicon?' },
+    fv_faq_3_a: { zh: '浏览器会强缓存 favicon。强制刷新（Ctrl/Cmd + Shift + R）通常能解决；站点若用了 CDN，还需要清一次 CDN 缓存。', en: 'Browsers cache favicons aggressively. A hard refresh (Ctrl/Cmd + Shift + R) usually fixes it; with a CDN in front, purge the CDN cache too.' },
+
+    if_how_h:  { zh: '怎么用', en: 'How to use' },
+    if_how_1:  { zh: '<strong>上传主图标</strong>：点击或拖入一张 Logo（PNG/JPG/WebP/SVG 均可），工具自动做 1:1 纠偏，非正方形也不会变形。', en: '<strong>Upload your main icon</strong>: click or drag in a logo (PNG/JPG/WebP/SVG); the tool auto-corrects to 1:1, so non-square sources never distort.' },
+    if_how_2:  { zh: '<strong>可选暗色版</strong>：若有单独的深色版本，上传到 Dark 变体；不上传则复用 Light 版。', en: '<strong>Optional dark variant</strong>: if you have a separate dark version, upload it as the Dark variant; otherwise the Light one is reused.' },
+    if_how_3:  { zh: '<strong>选择尺寸与格式</strong>：默认勾选 16–256px 全部档位，可输出 ICO（Windows）与多尺寸 PNG。', en: '<strong>Choose sizes and formats</strong>: all 16–256px steps are preselected; output ICO (Windows) plus per-size PNGs.' },
+    if_how_4:  { zh: '<strong>生成并下载</strong>：一键打包为 ZIP，支持单文件夹、Light/Dark 分类目录或自定义顶层目录。', en: '<strong>Generate and download</strong>: one click packs a ZIP — flat folder, Light/Dark split, or a custom top-level directory.' },
+    if_faq_h:  { zh: '常见问题', en: 'FAQ' },
+    if_faq_1_q: { zh: '.ico 和 .png 图标有什么区别？', en: "What's the difference between .ico and .png icons?" },
+    if_faq_1_a: { zh: 'ICO 是 Windows 的图标容器格式，一个文件可包含多个尺寸，系统按需要自动取用；PNG 是单一尺寸的图像文件，通用性更强。做 Windows 应用图标必须提供 ICO，网页端用 PNG 即可。', en: 'ICO is the Windows icon container: one file can hold multiple sizes, and the system picks the right one. PNG is a single-size image with broader general use. Windows app icons require ICO; PNG is enough for the web.' },
+    if_faq_2_q: { zh: '非正方形的 Logo 会被拉伸吗？', en: 'Will a non-square logo get stretched?' },
+    if_faq_2_a: { zh: '不会。默认「等比居中」模式会把图像缩放到目标尺寸内并居中，四周留透明或背景色；若确实需要铺满，可切换到「强行铺满」，但可能形变。', en: 'No. The default "fit and center" mode scales the image inside the target size and centers it with transparent or background padding. Switch to "fill" if you truly need edge-to-edge — at the risk of distortion.' },
+    if_faq_3_q: { zh: '一个 ICO 里能同时放明暗两个版本吗？', en: 'Can one ICO hold both light and dark versions?' },
+    if_faq_3_a: { zh: '不能。ICO 是多尺寸容器，同一尺寸只能存一张图。明暗双主题请导出两组文件，或改用带媒体查询的 SVG 在一个文件内切换。', en: "No. ICO is a multi-size container — one image per size. For dual themes, export two sets, or use an SVG with media queries to switch inside one file." },
+    if_faq_4_q: { zh: '图片会被上传到服务器吗？', en: 'Are my images uploaded to a server?' },
+    if_faq_4_a: { zh: '不会。全部处理在浏览器本地完成，图片不经过网络，商业 Logo 也能放心使用。', en: 'No. Everything runs locally in your browser — images never touch the network, safe even for commercial logos.' },
+
     /* 语言按钮（显示“切换到”的目标语言） */
     lang_to_en:     { zh: 'EN', en: '中' }
   };

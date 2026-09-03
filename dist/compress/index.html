@@ -106,6 +106,44 @@
 
     <p class="t-note" data-i18n="cp_note">JPEG/WebP 为有损压缩；含透明通道的图片会自动保留透明（输出 WebP/PNG）。</p>
   </section>
+
+  <section class="t-prose">
+    <h2 data-i18n="cp_how_h">怎么用</h2>
+    <ol class="t-steps">
+      <li data-i18n-html="cp_how_1"><strong>批量上传</strong>：点击或拖入图片，一次最多 20 张，JPG / PNG / WebP 都可以。</li>
+      <li data-i18n-html="cp_how_2"><strong>调整参数</strong>：质量默认 80（推荐 70–85）；格式选「智能」由工具自动择小；最长边按用途选择。</li>
+      <li data-i18n-html="cp_how_3"><strong>核对结果</strong>：每行显示压缩前后体积与节省比例，含透明的图片会自动保留透明通道。</li>
+      <li data-i18n-html="cp_how_4"><strong>下载</strong>：单张逐个下载，或一键打包全部为 ZIP。</li>
+    </ol>
+
+    <h2 data-i18n="cp_faq_h">常见问题</h2>
+    <div class="t-faq">
+      <div class="t-faq-item">
+        <p class="t-faq-q" data-i18n="cp_faq_1_q">图片会被上传到服务器吗？</p>
+        <p class="t-faq-a" data-i18n="cp_faq_1_a">不会。全部处理在浏览器本地完成（Canvas 编码），图片不经过网络，商业素材和隐私截图都可以放心用。</p>
+      </div>
+      <div class="t-faq-item">
+        <p class="t-faq-q" data-i18n="cp_faq_2_q">为什么有的图片压缩后反而变大了？</p>
+        <p class="t-faq-a" data-i18n="cp_faq_2_a">本身已是高度优化的文件（例如原本就是 WebP）再编码可能更大。工具会自动检测并保留原图，不会让你下载更差的版本。</p>
+      </div>
+      <div class="t-faq-item">
+        <p class="t-faq-q" data-i18n="cp_faq_3_q">质量该设多少？</p>
+        <p class="t-faq-a" data-i18n="cp_faq_3_a">网页展示推荐 70–85：低于 60 容易出现块状伪影，高于 90 体积涨得快但肉眼几乎看不出差别。人物特写可调高，缩略图可更低。</p>
+      </div>
+      <div class="t-faq-item">
+        <p class="t-faq-q" data-i18n="cp_faq_4_q">透明背景会丢失吗？</p>
+        <p class="t-faq-a" data-i18n="cp_faq_4_a">不会。工具会先检测图片是否含透明通道，含透明时输出 WebP 或 PNG 保留 alpha，不会转成会变白底的 JPEG。</p>
+      </div>
+    </div>
+
+    <h2 data-i18n="related_guides">相关指南</h2>
+    <div class="t-guide-links">
+      <a class="t-guide-link" href="/guides/image-compression-guide/">
+        <p class="t-guide-link-title" data-i18n="gd_comp_short">图片压缩指南</p>
+        <p class="t-guide-link-desc" data-i18n="gd_comp_card_desc">JPG、PNG、WebP 三种格式怎么选、质量参数怎么调、最长边限制的技巧。</p>
+      </a>
+    </div>
+  </section>
 </main>
 
 <div id="site-footer"></div>
