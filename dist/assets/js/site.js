@@ -20,6 +20,13 @@
     footer_privacy:  { zh: '隐私政策', en: 'Privacy' },
     footer_contact:  { zh: '联系我们', en: 'Contact' },
 
+    /* 404 页按钮 */
+    nf_btn_home:       { zh: 'cataito 首页', en: 'cataito Home' },
+    nf_btn_iconforge:  { zh: '图标工坊', en: 'Icon Forge' },
+    nf_btn_favicon:    { zh: 'Favicon 生成', en: 'Favicon' },
+    nf_btn_compress:   { zh: '图片压缩', en: 'Image Compressor' },
+    nf_btn_palette:    { zh: '配色工具', en: 'Color Palette' },
+
     /* 首页 */
     home_title:     { zh: '免费在线工具箱', en: 'Free Online Tools' },
     home_sub:       { zh: '100% 免费、无需注册、在你的浏览器本地运行，图片与数据绝不上传服务器。', en: '100% free, no sign-up, runs entirely in your browser. Your files never leave your device.' },
