@@ -37,6 +37,7 @@
   "@type": "WebSite",
   "name": "cataito 免费工具箱",
   "alternateName": "cataito Free Tools",
+  "description": "cataito 免费工具箱：纯前端、无需注册、本地处理的在线工具集合。含图标工坊 IconForge、Favicon 生成器、图片压缩、配色工具，图片与数据绝不上传服务器。",
   "url": "https://tools.cataito.com/",
   "inLanguage": ["zh-CN", "en"],
   "potentialAction": { "@type": "SearchAction", "target": "https://tools.cataito.com/", "query-input": "required name=search_term_string" }
@@ -52,6 +53,40 @@
     { "@type": "ListItem", "position": 2, "item": { "@type": "SoftwareApplication", "name": "Favicon Generator", "applicationCategory": "DesignApplication", "operatingSystem": "Any", "url": "https://tools.cataito.com/favicon/", "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" } } },
     { "@type": "ListItem", "position": 3, "item": { "@type": "SoftwareApplication", "name": "Image Compressor", "applicationCategory": "UtilityApplication", "operatingSystem": "Any", "url": "https://tools.cataito.com/compress/", "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" } } },
     { "@type": "ListItem", "position": 4, "item": { "@type": "SoftwareApplication", "name": "Color Palette Generator", "applicationCategory": "DesignApplication", "operatingSystem": "Any", "url": "https://tools.cataito.com/palette/", "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" } } }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "cataito",
+  "alternateName": "cataito 免费工具箱",
+  "url": "https://tools.cataito.com/",
+  "description": "cataito 是一个 100% 免费、隐私优先的在线工具箱，专注于图标与图片处理。所有工具均为纯前端实现，图片在浏览器本地处理，绝不上传服务器。",
+  "sameAs": [ "https://github.com/cataito-lab/iconforge-studio" ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "cataito 是免费的吗？",
+      "acceptedAnswer": { "@type": "Answer", "text": "是的。cataito 全部工具 100% 免费、无需注册，所有处理都在你的浏览器本地完成，图片与数据绝不上传服务器。" }
+    },
+    {
+      "@type": "Question",
+      "name": "我的图片会被上传到服务器吗？",
+      "acceptedAnswer": { "@type": "Answer", "text": "不会。所有工具基于浏览器本地运算（Canvas / Web API），文件不经过网络，商业素材和隐私截图都能放心使用。" }
+    },
+    {
+      "@type": "Question",
+      "name": "目前提供哪些工具？",
+      "acceptedAnswer": { "@type": "Answer", "text": "目前提供图标工坊 IconForge、Favicon 生成器、图片压缩、配色 / 调色板四类工具，均为纯前端实现，后续还会持续增加。" }
+    }
   ]
 }
 </script>
@@ -111,6 +146,54 @@
       <div class="tool-card__foot"><span class="tool-card__go" data-i18n="use_tool">使用工具 →</span></div>
     </a>
   </div>
+
+  <!-- 关于 cataito（纯静态正文，提升无 JS 可索引内容） -->
+  <section class="home-about">
+    <h2 class="section-head" data-i18n="about_h">关于 cataito</h2>
+    <div class="t-prose" data-i18n-html="about_body">
+      <p>cataito 是一个 100% 免费、隐私优先的在线工具箱，专注于图标与图片处理。所有工具均为纯前端实现——图片在你的浏览器本地完成处理，绝不上传服务器，因此你可以放心处理商业素材与隐私截图。无需注册、无需安装，打开即用。</p>
+      <p>我们相信好工具应当零门槛：没有弹窗广告，不收集你的文件，也不强制登录。无论是开发者、设计师，还是偶尔需要做个图标的普通用户，都能在这里快速完成工作。</p>
+    </div>
+
+    <h2 class="section-head" data-i18n="feat_h">核心特性</h2>
+    <div class="feat-grid">
+      <div class="feat">
+        <h3 class="feat__title" data-i18n="feat_privacy_h">隐私优先</h3>
+        <p class="feat__desc" data-i18n="feat_privacy_d">纯浏览器本地处理，文件不经过网络，商业素材也能放心用。</p>
+      </div>
+      <div class="feat">
+        <h3 class="feat__title" data-i18n="feat_free_h">完全免费</h3>
+        <p class="feat__desc" data-i18n="feat_free_d">所有工具 100% 免费，无需注册，没有隐藏收费。</p>
+      </div>
+      <div class="feat">
+        <h3 class="feat__title" data-i18n="feat_instant_h">打开即用</h3>
+        <p class="feat__desc" data-i18n="feat_instant_d">无需安装，支持 PNG / JPG / WebP / SVG 等主流格式。</p>
+      </div>
+      <div class="feat">
+        <h3 class="feat__title" data-i18n="feat_theme_h">双主题</h3>
+        <p class="feat__desc" data-i18n="feat_theme_d">亮色 / 暗色自动跟随系统，长时间使用不刺眼。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 首页 FAQ（同时对应 FAQPage 结构化数据） -->
+  <section class="home-faq">
+    <h2 class="section-head" data-i18n="faq_h">常见问题</h2>
+    <div class="faq-list">
+      <div class="faq-item">
+        <h3 class="faq-q" data-i18n="hf_faq_1_q">cataito 是免费的吗？</h3>
+        <p class="faq-a" data-i18n="hf_faq_1_a">是的。cataito 全部工具 100% 免费、无需注册，所有处理都在你的浏览器本地完成，图片与数据绝不上传服务器。</p>
+      </div>
+      <div class="faq-item">
+        <h3 class="faq-q" data-i18n="hf_faq_2_q">我的图片会被上传到服务器吗？</h3>
+        <p class="faq-a" data-i18n="hf_faq_2_a">不会。所有工具基于浏览器本地运算（Canvas / Web API），文件不经过网络，商业素材和隐私截图都能放心使用。</p>
+      </div>
+      <div class="faq-item">
+        <h3 class="faq-q" data-i18n="hf_faq_3_q">目前提供哪些工具？</h3>
+        <p class="faq-a" data-i18n="hf_faq_3_a">目前提供图标工坊 IconForge、Favicon 生成器、图片压缩、配色 / 调色板四类工具，均为纯前端实现，后续还会持续增加。</p>
+      </div>
+    </div>
+  </section>
 </main>
 <div id="site-footer"></div>
 <script src="/assets/js/site.js" defer></script>

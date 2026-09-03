@@ -1,0 +1,26 @@
+# cataito 免费工具箱
+
+cataito（tools.cataito.com）是一个 100% 免费、隐私优先的在线工具箱，专注于图标与图片处理。所有工具均为纯前端实现，文件在浏览器本地处理，绝不上传服务器，无需注册、无需安装。
+
+## 工具
+- 图标工坊 IconForge — 上传 Logo，一键导出多尺寸 ICO / PNG / favicon（Light & Dark 双主题）：https://tools.cataito.com/icon-forge/
+- Favicon 生成器 — 将任意图片生成多尺寸 .ico / .png favicon 包：https://tools.cataito.com/favicon/
+- 图片压缩 — 在线压缩 PNG / JPG / WebP，体积更小、画质可控：https://tools.cataito.com/compress/
+- 配色 / 调色板 — 从图片提取配色，或生成协调的调色板方案：https://tools.cataito.com/palette/
+
+## 使用指南
+- ICO 文件完全指南：https://tools.cataito.com/guides/ico-file-guide/
+- Favicon 完全指南：https://tools.cataito.com/guides/favicon-guide/
+- 暗色图标设计指南：https://tools.cataito.com/guides/dark-mode-icons/
+- 图片压缩指南：https://tools.cataito.com/guides/image-compression-guide/
+
+## 核心特性
+- 隐私优先：纯浏览器本地处理，文件不经过网络。
+- 完全免费：所有工具 100% 免费，无需注册。
+- 打开即用：无需安装，支持 PNG / JPG / WebP / SVG。
+- 双主题：亮色 / 暗色自动跟随系统。
+
+## 开源
+- GitHub：https://github.com/cataito-lab/iconforge-studio
+
+> 本文件供 AI 代理快速理解本站结构与能力（llms.txt）。

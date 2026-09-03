@@ -29,6 +29,27 @@
     home_tool_palette:       { zh: '配色 / 调色板', en: 'Color Palette' },
     home_tool_palette_desc:  { zh: '从图片提取配色，或生成协调的调色板方案。', en: 'Extract colors from an image or generate a harmonious palette.' },
 
+    /* 首页：关于 / 特性 / FAQ */
+    about_h:        { zh: '关于 cataito', en: 'About cataito' },
+    about_body:     { zh: '<p>cataito 是一个 100% 免费、隐私优先的在线工具箱，专注于图标与图片处理。所有工具均为纯前端实现——图片在你的浏览器本地完成处理，绝不上传服务器，因此你可以放心处理商业素材与隐私截图。无需注册、无需安装，打开即用。</p><p>我们相信好工具应当零门槛：没有弹窗广告，不收集你的文件，也不强制登录。无论是开发者、设计师，还是偶尔需要做个图标的普通用户，都能在这里快速完成工作。</p>',
+                      en: '<p>cataito is a 100% free, privacy-first online toolbox focused on icons and images. Every tool is client-side — your images are processed in your browser and never uploaded, so you can safely handle commercial assets and private screenshots. No sign-up, no install; just open and use.</p><p>We believe good tools should have zero friction: no pop-up ads, no file collection, no forced login. Whether you are a developer, a designer, or someone who just needs an icon now and then, you can get the job done here quickly.</p>' },
+    feat_h:         { zh: '核心特性', en: 'Key features' },
+    feat_privacy_h: { zh: '隐私优先', en: 'Privacy first' },
+    feat_privacy_d: { zh: '纯浏览器本地处理，文件不经过网络，商业素材也能放心用。', en: 'Everything runs locally in your browser; files never touch the network — safe even for commercial assets.' },
+    feat_free_h:    { zh: '完全免费', en: 'Completely free' },
+    feat_free_d:    { zh: '所有工具 100% 免费，无需注册，没有隐藏收费。', en: 'All tools are 100% free, no sign-up, no hidden fees.' },
+    feat_instant_h: { zh: '打开即用', en: 'Open and use' },
+    feat_instant_d: { zh: '无需安装，支持 PNG / JPG / WebP / SVG 等主流格式。', en: 'No install needed; supports mainstream formats like PNG / JPG / WebP / SVG.' },
+    feat_theme_h:   { zh: '双主题', en: 'Dual theme' },
+    feat_theme_d:   { zh: '亮色 / 暗色自动跟随系统，长时间使用不刺眼。', en: 'Light / Dark follows your system automatically, easy on the eyes for long sessions.' },
+    faq_h:          { zh: '常见问题', en: 'FAQ' },
+    hf_faq_1_q:     { zh: 'cataito 是免费的吗？', en: 'Is cataito free?' },
+    hf_faq_1_a:     { zh: '是的。cataito 全部工具 100% 免费、无需注册，所有处理都在你的浏览器本地完成，图片与数据绝不上传服务器。', en: 'Yes. Every cataito tool is 100% free with no sign-up; all processing happens locally in your browser, and your images and data are never uploaded.' },
+    hf_faq_2_q:     { zh: '我的图片会被上传到服务器吗？', en: 'Are my images uploaded to a server?' },
+    hf_faq_2_a:     { zh: '不会。所有工具基于浏览器本地运算（Canvas / Web API），文件不经过网络，商业素材和隐私截图都能放心使用。', en: 'No. All tools run on in-browser computation (Canvas / Web API); files never cross the network, so commercial assets and private screenshots are safe to use.' },
+    hf_faq_3_q:     { zh: '目前提供哪些工具？', en: 'Which tools are available?' },
+    hf_faq_3_a:     { zh: '目前提供图标工坊 IconForge、Favicon 生成器、图片压缩、配色 / 调色板四类工具，均为纯前端实现，后续还会持续增加。', en: 'Currently four tools: Icon Forge, Favicon Generator, Image Compressor, and Color Palette — all client-side, with more on the way.' },
+
     /* IconForge */
     if_name:              { zh: '图标工坊 IconForge', en: 'Icon Forge' },
     if_desc:              { zh: '上传 Logo，一键导出多尺寸 ICO / PNG / favicon（Light & Dark 双主题）。', en: 'Upload a logo, export multi-size ICO / PNG / favicon with Light & Dark themes.' },
