@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WebP 格式指南：比 JPEG/PNG 更小、何时用、怎么转 | cataito</title>
+<meta name="title-zh" content="WebP 格式指南：比 JPEG/PNG 更小、何时用、怎么转 | cataito">
+<meta name="title-en" content="WebP Format Guide: Smaller than JPEG/PNG, When to Use, How to Convert | cataito">
+<meta name="description" content="WebP 是谷歌推出的现代图片格式，同等画质下体积通常比 JPEG/PNG 小 25–35%。本文讲清 WebP 是什么、为什么更小、哪些场景该用、浏览器兼容性，以及如何免费在线把图片转成 WebP——纯浏览器本地处理。">
+<meta name="theme-color" content="#fbfbfd">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="cataito 工具箱">
+<meta property="og:title" content="WebP 格式指南：比 JPEG/PNG 更小、何时用、怎么转">
+<meta property="og:description" content="WebP 是什么、为什么比 JPEG/PNG 更小、何时该用、浏览器兼容性，以及如何免费在线转 WebP。">
+<meta property="og:url" content="https://tools.cataito.com/guides/webp-guide/">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:locale:alternate" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="WebP 格式指南">
+<meta name="twitter:description" content="WebP 是什么、为什么更小、何时用、怎么转 WebP。">
+<link rel="canonical" href="https://tools.cataito.com/guides/webp-guide/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%236366f1'/%3E%3Crect x='8' y='8' width='7' height='7' rx='1.5' fill='white'/%3E%3Crect x='17' y='8' width='7' height='7' rx='1.5' fill='white' opacity='.55'/%3E%3Crect x='8' y='17' width='7' height='7' rx='1.5' fill='white' opacity='.55'/%3E%3Crect x='17' y='17' width='7' height='7' rx='1.5' fill='white' opacity='.3'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="/assets/css/site.css">
+<script src="/assets/js/theme-init.js"></script>
+<script>
+  (function () {
+    try {
+      var l = localStorage.getItem('cataito-lang');
+      document.documentElement.setAttribute('lang', (l === 'en') ? 'en' : 'zh-CN');
+      if (l === 'en') document.documentElement.classList.add('lang-en');
+    } catch (e) {}
+  })();
+</script>
+<style>
+  /* ============ 指南页排版（与其他指南页保持一致） ============ */
+  .guide-wrap { max-width: 760px; margin: 0 auto; }
+  .guide-meta { font-size: 13px; color: var(--text-3); margin: 0 0 6px; }
+  .page-sub { margin-bottom: 10px; }
+  .article { font-size: 15px; line-height: 1.85; color: var(--text); }
+  .article h2 {
+    font-size: 21px; font-weight: 700; letter-spacing: -.3px;
+    margin: 40px 0 14px; padding-top: 10px; color: var(--text);
+  }
+  .article h3 { font-size: 16.5px; font-weight: 650; margin: 26px 0 10px; color: var(--text); }
+  .article p { margin: 0 0 14px; color: var(--text-2); }
+  .article strong { color: var(--text); font-weight: 650; }
+  .article a { color: var(--accent); text-decoration: none; }
+  .article a:hover { text-decoration: underline; }
+  .article ul, .article ol { margin: 0 0 16px; padding-left: 22px; color: var(--text-2); }
+  .article li { margin: 6px 0; }
+  .article code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 13px; background: var(--card-2); border: 1px solid var(--border);
+    border-radius: 5px; padding: 1px 6px; color: var(--text);
+  }
+  .article pre {
+    background: var(--card-2); border: 1px solid var(--border); border-radius: 10px;
+    padding: 14px 16px; margin: 14px 0 18px; overflow-x: auto;
+  }
+  .article pre code { background: none; border: none; padding: 0; font-size: 12.5px; line-height: 1.7; }
+  .article table {
+    width: 100%; border-collapse: collapse; margin: 18px 0 22px;
+    font-size: 13.5px; background: var(--card);
+    border: 1px solid var(--border); border-radius: 10px; overflow: hidden;
+  }
+  .article th, .article td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--border); }
+  .article th { background: var(--card-2); color: var(--text); font-weight: 650; white-space: nowrap; }
+  .article td { color: var(--text-2); }
+  .article tr:last-child td { border-bottom: none; }
+  .toc {
+    background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 16px 18px; margin: 20px 0 8px; box-shadow: var(--shadow-sm);
+  }
+  .toc-title { font-size: 13px; font-weight: 650; color: var(--text); margin: 0 0 10px; }
+  .toc ol { margin: 0; padding-left: 20px; font-size: 13.5px; }
+  .toc li { margin: 5px 0; }
+  .toc a { color: var(--text-2); text-decoration: none; }
+  .toc a:hover { color: var(--accent); }
+  .faq-item {
+    background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-sm);
+    padding: 14px 16px; margin: 10px 0; box-shadow: var(--shadow-sm);
+  }
+  .faq-q { font-size: 14.5px; font-weight: 650; color: var(--text); margin: 0 0 8px; }
+  .faq-a { font-size: 14px; color: var(--text-2); margin: 0; line-height: 1.75; }
+  .cta-box {
+    background: linear-gradient(135deg, var(--accent-soft), var(--accent-soft-2));
+    border: 1px solid var(--accent); border-radius: var(--radius);
+    padding: 20px 22px; margin: 34px 0 10px; text-align: center;
+  }
+  .cta-box .cta-title { font-size: 17px; font-weight: 700; color: var(--text); margin: 0 0 6px; }
+  .cta-box .cta-sub { font-size: 13.5px; color: var(--text-2); margin: 0 0 14px; }
+  .cta-btn {
+    display: inline-block; background: var(--accent); color: #fff; text-decoration: none;
+    font-size: 14px; font-weight: 600; padding: 11px 26px; border-radius: var(--radius-sm);
+    box-shadow: 0 6px 18px rgba(99,102,241,0.30); transition: background .15s;
+  }
+  .cta-btn:hover { background: var(--accent-hover); }
+  /* 修复：.article a 的特异度(0,1,1)会压过 .cta-btn(0,1,0) 的 color:#fff，
+     导致按钮紫底紫字在亮/暗模式下都不可读。用更高特异度夺回白色文字。 */
+  .article a.cta-btn, .article .cta-btn { color: #fff; text-decoration: none; }
+  .article a.cta-btn:hover { color: #fff; text-decoration: none; background: var(--accent-hover); }
+  .step-list { counter-reset: step; list-style: none; padding-left: 0; }
+  .step-list li { position: relative; padding-left: 44px; margin: 14px 0; }
+  .step-list li::before {
+    counter-increment: step; content: counter(step);
+    position: absolute; left: 0; top: 1px;
+    width: 28px; height: 28px; border-radius: 999px;
+    background: var(--accent-soft); color: var(--accent);
+    font-weight: 700; font-size: 14px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  /* 双语块：默认中文，html.lang-en 时切换英文（两语言均在原生 HTML 中，可被索引） */
+  .lb-en { display: none; }
+  html.lang-en .lb-zh { display: none; }
+  html.lang-en .lb-en { display: block; }
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "WebP 格式指南：比 JPEG/PNG 更小、何时用、怎么转",
+  "description": "详解 WebP 是什么、为什么比 JPEG/PNG 更小、哪些场景该用、浏览器兼容性，以及如何免费在线把图片转成 WebP。",
+  "inLanguage": "zh-CN",
+  "datePublished": "2026-09-03",
+  "dateModified": "2026-09-03",
+  "author": { "@type": "Organization", "name": "cataito", "url": "https://tools.cataito.com/" },
+  "publisher": { "@type": "Organization", "name": "cataito 工具箱", "url": "https://tools.cataito.com/" },
+  "mainEntityOfPage": "https://tools.cataito.com/guides/webp-guide/"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "WebP 比 JPEG/PNG 小多少？",
+      "acceptedAnswer": { "@type": "Answer", "text": "在同等主观画质下，WebP 通常比 JPEG 小 25–35%（谷歌官方数据），比 PNG 的压缩优势更明显——尤其是带透明通道的图，转 WebP 后往往只有原来的几分之一。" }
+    },
+    {
+      "@type": "Question",
+      "name": "WebP 支持透明通道吗？",
+      "acceptedAnswer": { "@type": "Answer", "text": "支持。WebP 的有损和无损模式都支持 alpha 透明通道，而 JPEG 完全不支持透明。需要透明又想更小体积时，WebP 是 PNG 的现代替代。" }
+    },
+    {
+      "@type": "Question",
+      "name": "哪些浏览器支持 WebP？",
+      "acceptedAnswer": { "@type": "Answer", "text": "现代浏览器已全部支持：Chrome、Edge、Firefox、Safari 14 及以上版本。唯一不再支持的是早已淘汰的 Internet Explorer。针对老环境可用 picture 元素做优雅降级，先给 WebP、不支持时回退 JPEG/PNG。" }
+    },
+    {
+      "@type": "Question",
+      "name": "把图片转成 WebP 会损失画质吗？",
+      "acceptedAnswer": { "@type": "Answer", "text": "有损模式在高质量档位下肉眼几乎无法分辨差异；无损 WebP 则不改变任何像素，与原图像素级一致。和 JPEG 一样，质量调得越低体积越小、画质损失越明显。" }
+    },
+    {
+      "@type": "Question",
+      "name": "在线把图片转成 WebP 安全吗？",
+      "acceptedAnswer": { "@type": "Answer", "text": "取决于工具实现。本站转换全程在浏览器本地完成（Canvas + Blob），图片不经过网络上传，商业图片和隐私截图都可以放心处理。" }
+    },
+    {
+      "@type": "Question",
+      "name": "WebP 对网站速度和 SEO 有帮助吗？",
+      "acceptedAnswer": { "@type": "Answer", "text": "有。图片通常占网页体积的大头，换成 WebP 能显著缩短加载时间，而 Core Web Vitals（LCP）是 Google 排名信号之一。配合 picture 降级与懒加载效果更好。" }
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "首页", "item": "https://tools.cataito.com/" },
+    { "@type": "ListItem", "position": 2, "name": "使用指南", "item": "https://tools.cataito.com/guides/" },
+    { "@type": "ListItem", "position": 3, "name": "WebP 格式指南", "item": "https://tools.cataito.com/guides/webp-guide/" }
+  ]
+}
+</script>
+</head>
+<body>
+<div id="site-header"></div>
+
+<main class="site-main">
+  <div class="guide-wrap">
+    <nav class="breadcrumb"><a href="/" data-i18n="crumb_home">首页</a><span class="sep">/</span><a href="/guides/" data-i18n="nav_guides">使用指南</a><span class="sep">/</span><span data-i18n="gd_webp_short">WebP 格式指南</span></nav>
+    <p class="guide-meta"><span data-i18n="gd_published">发布于</span> 2026-09-03 · cataito</p>
+    <h1 class="page-h1" data-i18n="gd_webp_h1">WebP 格式指南：比 JPEG/PNG 更小、何时用、怎么转</h1>
+    <p class="page-sub" data-i18n="gd_webp_sub">WebP 是谷歌推出的现代图片格式，同等画质下体积通常比 JPEG/PNG 小 25–35%。本文讲清 WebP 是什么、为什么更小、哪些场景该用、浏览器兼容性，以及如何免费在线把图片转成 WebP——纯浏览器本地处理。</p>
+
+    <!-- ================= 中文正文 ================= -->
+    <div class="article lb-zh">
+      <div class="toc">
+        <p class="toc-title">目录</p>
+        <ol>
+          <li><a href="#what">什么是 WebP</a></li>
+          <li><a href="#why">为什么比 JPEG/PNG 更小</a></li>
+          <li><a href="#compare">WebP vs JPEG vs PNG</a></li>
+          <li><a href="#when">什么时候该用 WebP</a></li>
+          <li><a href="#support">浏览器兼容性</a></li>
+          <li><a href="#howto">怎么把图片转成 WebP</a></li>
+          <li><a href="#faq">常见问题</a></li>
+        </ol>
+      </div>
+
+      <h2 id="what">什么是 WebP</h2>
+      <p>WebP 是谷歌在 2010 年推出的一种<strong>现代图片格式</strong>，基于 VP8/VP9 视频编码的思路做图像压缩。它同时支持<strong>有损和无损压缩</strong>，也支持<strong>透明通道（alpha）</strong>和动画，可以说是 JPEG、PNG、GIF 三者的「全能替代」。十年来浏览器支持已非常完善，如今是网站上优化图片体积的默认首选格式。</p>
+
+      <h2 id="why">为什么比 JPEG/PNG 更小</h2>
+      <p>同等主观画质下，WebP 通常比 JPEG 小 <strong>25–35%</strong>（谷歌官方测试数据），比 PNG 的优势更明显。原因在于它的<strong>预测编码（predictive coding）</strong>：利用相邻像素块的相似性来编码差异，而不是像老格式那样逐块独立压缩。</p>
+      <ul>
+        <li>对<strong>照片类</strong>内容，有损 WebP 在同样「看着差不多」的档位下体积更小；</li>
+        <li>对<strong>带透明的图</strong>（Logo、图标、UI），WebP 无损 + alpha 往往只有同质量 PNG 的几分之一大小。</li>
+      </ul>
+      <p>实测：一张 900×900 的透明 PNG（约 491 KB）转成无损 WebP 后约 <strong>5.6 KB（−99%）</strong>；一张 1600×1200 的照片转有损 WebP 后也可降到原 JPEG 的约 60–75%。</p>
+
+      <h2 id="compare">WebP vs JPEG vs PNG</h2>
+      <p>三种格式没有绝对优劣，只有「用对场景」：</p>
+      <table>
+        <tr><th>格式</th><th>压缩</th><th>透明</th><th>最适合</th></tr>
+        <tr><td>JPEG</td><td>有损</td><td>不支持</td><td>照片、不透明截图与 Banner（无透明需求）</td></tr>
+        <tr><td>PNG</td><td>无损</td><td>支持</td><td>需要透明且要求像素级保真的 Logo、图标</td></tr>
+        <tr><td>WebP</td><td>有损/无损均可</td><td>支持</td><td>两者的现代替代——同画质体积更小，优先用于新项目</td></tr>
+      </table>
+
+      <h2 id="when">什么时候该用 WebP</h2>
+      <p><strong>推荐用 WebP 的场景：</strong></p>
+      <ul>
+        <li>网站图片（文章配图、商品图、Banner）——这是优化加载速度最直接的一招；</li>
+        <li>需要透明但又想比 PNG 更小的图标、Logo；</li>
+        <li>移动端图片——更小的体积直接省流量、提速度。</li>
+      </ul>
+      <p><strong>暂时不必强转的情况：</strong></p>
+      <ul>
+        <li>必须支持早已淘汰的 <strong>Internet Explorer</strong>（连微软都已停止支持）；</li>
+        <li>源文件本身已经是高度优化的 WebP——再转没有收益；</li>
+        <li>对个别老系统/软件有严格格式要求的场景，保留 JPEG/PNG 更稳妥。</li>
+      </ul>
+
+      <h2 id="support">浏览器兼容性</h2>
+      <p>现代浏览器已全部支持 WebP：<strong>Chrome、Edge、Firefox、Safari 14 及以上</strong>都没问题。唯一不再支持的是 Internet Explorer。</p>
+      <p>针对需要兼容老环境的项目，推荐用 <strong><code>&lt;picture&gt;</code> 元素做优雅降级</strong>：先给 WebP，浏览器不支持时自动回退到 JPEG/PNG，两全其美：</p>
+      <pre><code>&lt;picture&gt;
+  &lt;source srcset="image.webp" type="image/webp"&gt;
+  &lt;img src="image.jpg" alt="..."&gt;
+&lt;/picture&gt;</code></pre>
+
+      <h2 id="howto">怎么把图片转成 WebP</h2>
+      <p>本站 <a href="/compress/">图片压缩工具</a> 全程在浏览器本地完成，图片不上传服务器，选「WebP」或「智能」即可：</p>
+      <ol class="step-list">
+        <li><strong>批量上传</strong>：点击或拖入图片，一次最多 20 张，JPG / PNG / WebP 都可以。</li>
+        <li><strong>选格式</strong>：输出格式选「WebP（更小）」，或选「智能」让工具自动挑最小的候选格式。</li>
+        <li><strong>调质量</strong>：默认 80 即可；无损需求可调高，缩略图可更低。</li>
+        <li><strong>下载</strong>：单张点击下载，或一键打包全部为 ZIP。</li>
+      </ol>
+      <p>含透明的图会自动保留 alpha 输出 WebP，不会变成白底。如果某张图转 WebP 后反而更大（本就高度优化），工具会<strong>诚实保留原图</strong>。</p>
+
+      <h2 id="faq">常见问题</h2>
+      <div class="faq-item"><p class="faq-q">Q：WebP 比 JPEG/PNG 小多少？</p><p class="faq-a">A：在同等主观画质下，WebP 通常比 JPEG 小 25–35%（谷歌官方数据），比 PNG 的压缩优势更明显——尤其是带透明通道的图，转 WebP 后往往只有原来的几分之一。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：WebP 支持透明通道吗？</p><p class="faq-a">A：支持。WebP 的有损和无损模式都支持 alpha 透明通道，而 JPEG 完全不支持透明。需要透明又想更小体积时，WebP 是 PNG 的现代替代。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：哪些浏览器支持 WebP？</p><p class="faq-a">A：现代浏览器已全部支持：Chrome、Edge、Firefox、Safari 14 及以上版本。唯一不再支持的是早已淘汰的 Internet Explorer。针对老环境可用 picture 元素做优雅降级，先给 WebP、不支持时回退 JPEG/PNG。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：把图片转成 WebP 会损失画质吗？</p><p class="faq-a">A：有损模式在高质量档位下肉眼几乎无法分辨差异；无损 WebP 则不改变任何像素，与原图像素级一致。和 JPEG 一样，质量调得越低体积越小、画质损失越明显。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：在线把图片转成 WebP 安全吗？</p><p class="faq-a">A：取决于工具实现。本站转换全程在浏览器本地完成（Canvas + Blob），图片不经过网络上传，商业图片和隐私截图都可以放心处理。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：WebP 对网站速度和 SEO 有帮助吗？</p><p class="faq-a">A：有。图片通常占网页体积的大头，换成 WebP 能显著缩短加载时间，而 Core Web Vitals（LCP）是 Google 排名信号之一。配合 picture 降级与懒加载效果更好。</p></div>
+
+      <div class="cta-box">
+        <p class="cta-title">免费在线把图片转成 WebP</p>
+        <p class="cta-sub">一次 20 张 · 选 WebP 或智能 · 透明自动保留 · 纯浏览器本地处理</p>
+        <a class="cta-btn" href="/compress/">打开图片压缩工具 →</a>
+      </div>
+    </div>
+
+    <!-- ================= English body ================= -->
+    <div class="article lb-en">
+      <div class="toc">
+        <p class="toc-title">Table of Contents</p>
+        <ol>
+          <li><a href="#what">What Is WebP</a></li>
+          <li><a href="#why">Why It Is Smaller Than JPEG/PNG</a></li>
+          <li><a href="#compare">WebP vs JPEG vs PNG</a></li>
+          <li><a href="#when">When to Use WebP</a></li>
+          <li><a href="#support">Browser Support</a></li>
+          <li><a href="#howto">How to Convert Images to WebP</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ol>
+      </div>
+
+      <h2 id="what">What Is WebP</h2>
+      <p>WebP is a <strong>modern image format</strong> introduced by Google in 2010, using predictive coding derived from VP8/VP9 video compression. It supports <strong>both lossy and lossless compression</strong>, as well as <strong>transparency (alpha)</strong> and animation — making it an all-in-one successor to JPEG, PNG, and GIF. Browser support is now excellent, and it is the default first choice for optimizing images on the web.</p>
+
+      <h2 id="why">Why It Is Smaller Than JPEG/PNG</h2>
+      <p>At equal perceived quality, WebP is typically <strong>25–35% smaller</strong> than JPEG (Google's own tests) and even further ahead of PNG. The reason is its <strong>predictive coding</strong>: it encodes differences using the similarity between neighboring pixel blocks, instead of compressing each block independently like older formats.</p>
+      <ul>
+        <li>For <strong>photographic content</strong>, lossy WebP achieves smaller files at the same "looks about the same" setting;</li>
+        <li>For <strong>transparent images</strong> (logos, icons, UI), lossless WebP with alpha is often a fraction of an equivalent-quality PNG.</li>
+      </ul>
+      <p>Real measurements: a 900×900 transparent PNG (about 491 KB) becomes about <strong>5.6 KB (−99%)</strong> as lossless WebP; a 1600×1200 photo can drop to roughly 60–75% of its JPEG size as lossy WebP.</p>
+
+      <h2 id="compare">WebP vs JPEG vs PNG</h2>
+      <p>No format is absolutely better — only right for the job:</p>
+      <table>
+        <tr><th>Format</th><th>Compression</th><th>Transparency</th><th>Best for</th></tr>
+        <tr><td>JPEG</td><td>Lossy</td><td>No</td><td>Photos, opaque screenshots &amp; banners (no transparency needed)</td></tr>
+        <tr><td>PNG</td><td>Lossless</td><td>Yes</td><td>Transparent logos/icons where pixel-perfect fidelity matters</td></tr>
+        <tr><td>WebP</td><td>Lossy or lossless</td><td>Yes</td><td>Modern replacement for both — smaller at equal quality, prefer for new projects</td></tr>
+      </table>
+
+      <h2 id="when">When to Use WebP</h2>
+      <p><strong>Reach for WebP when:</strong></p>
+      <ul>
+        <li>Images on a website (article hero, product shots, banners) — the most direct win for load speed;</li>
+        <li>Transparent icons/logos where you want smaller files than PNG;</li>
+        <li>Mobile images — smaller bytes mean less data and faster loads.</li>
+      </ul>
+      <p><strong>Hold off when:</strong></p>
+      <ul>
+        <li>You must support the long-dead <strong>Internet Explorer</strong> (even Microsoft has dropped it);</li>
+        <li>The source is already a highly-optimized WebP — re-encoding gains nothing;</li>
+        <li>A specific legacy system/tool strictly requires JPEG/PNG.</li>
+      </ul>
+
+      <h2 id="support">Browser Support</h2>
+      <p>All modern browsers support WebP: <strong>Chrome, Edge, Firefox, and Safari 14+</strong>. The only one left out is Internet Explorer.</p>
+      <p>For projects that must support older environments, use the <strong><code>&lt;picture&gt;</code> element for graceful degradation</strong>: serve WebP first and automatically fall back to JPEG/PNG where unsupported:</p>
+      <pre><code>&lt;picture&gt;
+  &lt;source srcset="image.webp" type="image/webp"&gt;
+  &lt;img src="image.jpg" alt="..."&gt;
+&lt;/picture&gt;</code></pre>
+
+      <h2 id="howto">How to Convert Images to WebP</h2>
+      <p>This site's <a href="/compress/">Image Compressor</a> runs entirely in your browser — images are never uploaded. Pick "WebP" or "Smart":</p>
+      <ol class="step-list">
+        <li><strong>Batch upload</strong>: click or drag in up to 20 images at once — JPG / PNG / WebP all supported.</li>
+        <li><strong>Choose format</strong>: set output to "WebP (smaller)", or "Smart" to let the tool pick the smallest candidate automatically.</li>
+        <li><strong>Tune quality</strong>: 80 is a fine default; raise it for lossless needs, lower it for thumbnails.</li>
+        <li><strong>Download</strong>: grab individual files or export everything as one ZIP.</li>
+      </ol>
+      <p>Transparent images keep their alpha as WebP (no white box). If a file would grow after conversion (already optimized), the tool <strong>honestly keeps the original</strong>.</p>
+
+      <h2 id="faq">FAQ</h2>
+      <div class="faq-item"><p class="faq-q">Q: How much smaller is WebP than JPEG/PNG?</p><p class="faq-a">A: At equal perceived quality, WebP is typically 25–35% smaller than JPEG (Google's own data), and even more ahead of PNG — especially for transparent images, which often shrink to a fraction of the original.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: Does WebP support transparency?</p><p class="faq-a">A: Yes. Both lossy and lossless WebP support an alpha channel, while JPEG has no transparency at all. When you need transparency but want smaller files, WebP is the modern replacement for PNG.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: Which browsers support WebP?</p><p class="faq-a">A: All modern browsers do: Chrome, Edge, Firefox, and Safari 14+. The only one left out is the long-dead Internet Explorer. For older environments, use the picture element to gracefully fall back to JPEG/PNG.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: Does converting to WebP lose quality?</p><p class="faq-a">A: Lossy WebP at high quality settings is essentially indistinguishable; lossless WebP changes no pixels at all, matching the original exactly. Like JPEG, lower quality means smaller files and more visible loss.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: Is converting to WebP online safe?</p><p class="faq-a">A: Depends on the tool. This site processes everything locally in the browser (Canvas + Blob) — images never touch the network, safe for commercial and private images alike.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: Does WebP help site speed and SEO?</p><p class="faq-a">A: Yes. Images are usually the bulk of a page's weight; switching to WebP cuts load times significantly, and Core Web Vitals (LCP) is a Google ranking signal. Pair with picture fallback and lazy loading for best results.</p></div>
+
+      <div class="cta-box">
+        <p class="cta-title">Convert Images to WebP — Free</p>
+        <p class="cta-sub">20 at a time · Pick WebP or Smart · Transparency preserved · Runs in your browser</p>
+        <a class="cta-btn" href="/compress/">Open Image Compressor →</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<div id="site-footer"></div>
+<script src="/assets/js/site.js" defer></script>
+</body>
+</html>

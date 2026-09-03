@@ -164,6 +164,10 @@
     gd_comp_h1:         { zh: '图片压缩指南：JPG、PNG、WebP 怎么选与怎么压得最小', en: 'Image Compression Guide: JPEG vs PNG vs WebP & How to Shrink Images' },
     gd_comp_sub:        { zh: '图片往往是网页里最占流量的资源。本文讲清三种主流格式的取舍、有损与无损的区别、质量参数怎么选、尺寸限制的技巧，以及如何免费在线批量压缩图片——纯浏览器本地处理。', en: 'Images are often the heaviest resource on a page. Format trade-offs, lossy vs lossless, quality settings, max-edge tricks, and how to batch-compress images for free — right in your browser.' },
     gd_comp_card_desc:  { zh: 'JPG、PNG、WebP 三种格式怎么选、质量参数怎么调、最长边限制的技巧，以及免费在线批量压缩图片（透明自动保留）。', en: 'Choosing between JPEG/PNG/WebP, quality settings, max-edge limits, and free online batch compression with transparency preserved.' },
+    gd_webp_short:      { zh: 'WebP 格式指南', en: 'WebP Format Guide' },
+    gd_webp_h1:         { zh: 'WebP 格式指南：比 JPEG/PNG 更小、何时用、怎么转', en: 'WebP Format Guide: Smaller than JPEG/PNG, When to Use, How to Convert' },
+    gd_webp_sub:        { zh: 'WebP 是谷歌推出的现代图片格式，同等画质下体积通常比 JPEG/PNG 小 25–35%。本文讲清 WebP 是什么、为什么更小、哪些场景该用、浏览器兼容性，以及如何免费在线把图片转成 WebP——纯浏览器本地处理。', en: 'WebP is a modern image format from Google, typically 25–35% smaller than JPEG/PNG at equal quality. This guide covers what WebP is, why it is smaller, when to use it, browser support, and how to convert images to WebP for free — entirely in your browser.' },
+    gd_webp_card_desc:  { zh: 'WebP 是什么、为什么比 JPEG/PNG 更小、何时该用、浏览器兼容性，以及如何免费在线转 WebP（透明自动保留）。', en: 'What WebP is, why it beats JPEG/PNG on size, when to use it, browser support, and free online WebP conversion with transparency preserved.' },
 
     /* 通用 */
     theme_light:    { zh: '亮色', en: 'Light' },
