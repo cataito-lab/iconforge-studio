@@ -215,7 +215,8 @@ html.dark .theme-switch .ico-sun { display: none; }
 }
 .site-footer a { color: var(--text-2); text-decoration: none; }
 .site-footer a:hover { color: var(--accent); }
-.site-footer__links { display: flex; gap: 16px; }
+.site-footer__links { display: flex; gap: 16px; flex-wrap: wrap; }
+.site-footer__links a { white-space: nowrap; }
 
 /* h1 用于 SEO，视觉上作为页面标题 */
 .page-h1 { font-size: 26px; font-weight: 700; letter-spacing: -.4px; margin: 4px 0 6px; color: var(--text); }
@@ -230,6 +231,8 @@ html.dark .theme-switch .ico-sun { display: none; }
   .hero__title { font-size: 27px; }
   .nav { display: none; }
   .brand__name small { display: none; }
+  .site-footer__inner { flex-direction: column; align-items: flex-start; gap: 10px; padding: 18px 16px; }
+  .site-footer__links { gap: 8px 14px; flex-wrap: wrap; }
 }
 
 /* ============================================================
