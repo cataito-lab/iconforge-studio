@@ -63,15 +63,20 @@ dist/
 | `.t-list` / `.t-row` / `.t-thumb` / `.t-badge` | 结果行列表 | `.t-bar` / `.t-bar-stats` | 汇总操作条 |
 | `.t-toast` | 消息提示（`.warn` `.error`） | `.t-modal` / `.t-progress` | 进度弹窗 |
 | `.t-empty` / `.t-note` / `.t-callout` | 空状态 / 备注 / 提示条 | | |
+| `.t-prose` | 底部内容板块容器 | `.t-steps` | 编号步骤列表 |
+| `.t-faq` / `.t-faq-item` / `.t-faq-q` / `.t-faq-a` | 常见问题 | `.t-guide-links` / `.t-guide-link` | 相关指南链接卡 |
 
 页面内只允许写**本工具专属**的样式（如 IconForge 的预览舞台、Favicon 的预览缩略图）。
+
+> **每个工具页底部都应带 `.t-prose` 内容板块**（如何使用 + 常见问题 + 相关指南）。原因：纯交互页面可索引正文太少会被判为 thin content，且工具页 → 指南页的反向内链是站内权重回流的关键路径。
 
 ### 新增工具五步
 1. 新建 `dist/<tool>/index.html`，挂 `theme-init.js` + `site.js` + `site.css`
 2. 页面骨架：`<div id="site-header">` → `<main class="site-main">`（含 `.t-head`）→ 内容区（`.t-flow` 单列或 `.t-split` 双列）→ `<div id="site-footer">`
-3. `site.js` 词典加 `home_tool_<name>` 等词条，导航注入处加入口
-4. 首页卡片转正（去 `is-soon`）+ JSON-LD 加 SoftwareApplication 条目 + `sitemap.xml` 加 URL（priority ~0.9 + hreflang 三连）
-5. 测试（方法见 HANDOVER.md）→ commit → push
+3. 底部加 `.t-prose` 内容板块（如何使用 / 常见问题 / 相关指南），词条进 `site.js` 词典；**含内嵌标签的文案必须用 `data-i18n-html`**
+4. `site.js` 词典加 `home_tool_<name>` 等词条，导航注入处加入口
+5. 首页卡片转正（去 `is-soon`）+ JSON-LD 加 SoftwareApplication 条目 + `sitemap.xml` 加 URL（priority ~0.9 + hreflang 三连）
+6. 测试（方法见 HANDOVER.md）→ commit → push
 
 ## 本地预览
 直接用浏览器打开 `dist/index.html` 即可。如需本地服务器：
