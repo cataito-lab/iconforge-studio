@@ -1,6 +1,6 @@
 # Cataito Tools（tools.cataito.com）
 
-纯前端、零依赖、完全本地运行的在线工具站。已上线三大工具 + 中英双语 SEO 指南，全部图像处理在浏览器本地完成，**文件不会上传到任何服务器**。
+纯前端、零依赖、完全本地运行的在线工具站。已上线四大工具 + 中英双语 SEO 指南，全部图像处理在浏览器本地完成，**文件不会上传到任何服务器**。
 
 - 线上地址：<https://tools.cataito.com>
 - 仓库：<https://github.com/cataito-lab/iconforge-studio>（Cloudflare Pages 连接此仓库自动部署）
@@ -13,6 +13,7 @@
 | IconForge 图标工坊 | `/icon-forge/` | Logo → ICO / 多尺寸 PNG，Light/Dark 双变体，ZIP 打包（自实现 ZIP：查表法 CRC32 + UTF-8 文件名 + 固定时间戳；文件名净化防路径穿越） |
 | Favicon 生成器 | `/favicon/` | 一键生成全平台 favicon 套件 |
 | 图片压缩 | `/compress/` | 批量压缩 JPG/PNG/WebP（上限 20 张），智能格式选择（auto：透明走 WebP/PNG、不透明比 JPEG vs WebP 择小）、质量滑块 30–95、最长边限制、ZIP 批量下载；压缩结果反而更大时诚实保留原图 |
+| 配色 / 调色板 | `/palette/` | 上传图片用中位切分法提取主色，生成互补/类似/三角/单色方案，支持复制全部 HEX、导出 CSS 变量、下载 PNG 色卡；所有计算在浏览器本地完成 |
 
 另有四篇 SEO 内容支柱：`/guides/`（ICO 完全指南、Favicon 完全指南、暗色图标设计指南、图片压缩指南，中英双语）。
 
@@ -24,6 +25,7 @@ dist/
   icon-forge/index.html   # 工具一：图标工坊
   favicon/index.html      # 工具二：Favicon 生成器
   compress/index.html     # 工具三：图片压缩
+  palette/index.html      # 工具四：配色 / 调色板
   guides/                 # SEO 指南（含中英 hreflang）
   assets/css/site.css     # 共享外壳样式 + 全站设计令牌（:root / html.dark）
   assets/js/site.js       # 共享外壳逻辑（导航注入 / 中英双语 / 页脚 / 主题按钮）
@@ -70,7 +72,7 @@ dist/
 
 > **每个工具页底部都应带 `.t-prose` 内容板块**（如何使用 + 常见问题 + 相关指南）。原因：纯交互页面可索引正文太少会被判为 thin content，且工具页 → 指南页的反向内链是站内权重回流的关键路径。
 
-### 新增工具五步
+### 新增工具六步
 1. 新建 `dist/<tool>/index.html`，挂 `theme-init.js` + `site.js` + `site.css`
 2. 页面骨架：`<div id="site-header">` → `<main class="site-main">`（含 `.t-head`）→ 内容区（`.t-flow` 单列或 `.t-split` 双列）→ `<div id="site-footer">`
 3. 底部加 `.t-prose` 内容板块（如何使用 / 常见问题 / 相关指南），词条进 `site.js` 词典；**含内嵌标签的文案必须用 `data-i18n-html`**

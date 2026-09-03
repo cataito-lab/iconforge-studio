@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>配色工具 — 在线提取图片主色、生成调色板 | cataito</title>
+<meta name="title-zh" content="配色工具 — 在线提取图片主色、生成调色板 | cataito">
+<meta name="title-en" content="Color Palette Generator — Extract Colors from an Image Online | cataito">
+<meta name="description" content="免费在线配色工具：上传图片自动提取主色调，一键生成互补色、类似色、三角配色方案，支持复制 HEX/RGB、导出 CSS 变量与 PNG 色卡。纯浏览器本地处理，图片不上传。">
+<meta name="theme-color" content="#fbfbfd">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="cataito 工具箱">
+<meta property="og:title" content="配色工具 — 在线提取图片主色、生成调色板">
+<meta property="og:description" content="上传图片自动提取主色，一键生成协调配色方案，支持复制色值与导出。">
+<meta property="og:url" content="https://tools.cataito.com/palette/">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:locale:alternate" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="配色工具">
+<meta name="twitter:description" content="在线提取图片主色、生成调色板，纯本地处理。">
+<link rel="icon" href="/assets/img/icon.svg">
+<link rel="canonical" href="https://tools.cataito.com/palette/">
+<link rel="stylesheet" href="/assets/css/site.css">
+<script src="/assets/js/theme-init.js"></script>
+<script>
+  (function () {
+    try {
+      var l = localStorage.getItem('cataito-lang');
+      document.documentElement.setAttribute('lang', (l === 'en') ? 'en' : 'zh-CN');
+    } catch (e) {}
+  })();
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Color Palette Generator",
+  "alternateName": "配色工具",
+  "applicationCategory": "DesignApplication",
+  "operatingSystem": "Any",
+  "url": "https://tools.cataito.com/palette/",
+  "inLanguage": ["zh-CN", "en"],
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "description": "免费在线配色工具：上传图片自动提取主色调，生成互补色、类似色、三角配色方案，支持复制 HEX/RGB、导出 CSS 变量与 PNG 色卡。"
+}
+</script>
+<style>
+  /* 本页专属规则；通用组件（卡片/上传区/字段/分段控件/按钮/Toast/内容板块）
+     已统一复用 /assets/css/site.css 的 .t-* 共享组件层 */
+  .pl-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(132px, 1fr)); gap: 10px; }
+  .pl-swatch {
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: var(--card);
+    padding: 0;
+    overflow: hidden;
+    cursor: pointer;
+    text-align: left;
+    font: inherit;
+    color: inherit;
+    transition: border-color .15s, transform .08s;
+  }
+  .pl-swatch:hover { border-color: var(--accent); }
+  .pl-swatch:active { transform: scale(.985); }
+  .pl-chip { display: block; height: 62px; background: var(--c); }
+  .pl-info { padding: 8px 10px 10px; }
+  .pl-hex {
+    display: block;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--text);
+  }
+  .pl-rgb {
+    display: block;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 11px;
+    color: var(--text-3);
+    margin-top: 2px;
+  }
+  .pl-share { font-size: 10.5px; color: var(--text-3); margin-top: 4px; }
+  .pl-copied { position: relative; }
+  .pl-copied::after {
+    content: attr(data-copied);
+    position: absolute;
+    inset: 0;
+    background: color-mix(in srgb, var(--accent) 88%, transparent);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+</style>
+</head>
+<body>
+<div id="site-header"></div>
+<main class="site-main">
+  <nav class="breadcrumb"><a href="/" data-i18n="crumb_home">首页</a><span class="sep">/</span><span data-i18n="pl_name">配色工具</span></nav>
+  <h1 class="page-h1" data-i18n="pl_name">配色工具</h1>
+  <p class="page-sub" data-i18n="pl_desc">上传图片自动提取主色调，一键生成协调的配色方案，复制色值或导出 CSS 变量。纯浏览器本地处理。</p>
+
+  <section class="t-card t-flow">
+    <div id="pl-dropzone" class="t-drop" tabindex="0">
+      <input type="file" id="pl-file" accept="image/*" hidden>
+      <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4m0 0L7 9m5-5l5 5"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
+      <span class="t-drop-title" data-i18n="pl_upload">点击或拖入图片</span>
+      <span class="t-drop-hint" data-i18n="pl_dz_hint">PNG / JPG / WebP / SVG · 全程本地处理，不上传</span>
+    </div>
+
+    <div class="t-block">
+      <div class="t-field">
+        <div class="t-label" data-i18n="pl_count">提取颜色数</div>
+        <div class="t-seg" id="pl-count">
+          <label class="t-seg-item"><input type="radio" name="pl-count" value="4"><span>4</span></label>
+          <label class="t-seg-item"><input type="radio" name="pl-count" value="6" checked><span>6</span></label>
+          <label class="t-seg-item"><input type="radio" name="pl-count" value="8"><span>8</span></label>
+          <label class="t-seg-item"><input type="radio" name="pl-count" value="10"><span>10</span></label>
+        </div>
+      </div>
+
+      <div class="t-field">
+        <div class="t-label" data-i18n="pl_scheme">配色方案</div>
+        <div class="t-seg" id="pl-scheme">
+          <label class="t-seg-item"><input type="radio" name="pl-scheme" value="none" checked><span data-i18n="pl_scheme_none">仅主色</span></label>
+          <label class="t-seg-item"><input type="radio" name="pl-scheme" value="complementary"><span data-i18n="pl_scheme_comp">互补色</span></label>
+          <label class="t-seg-item"><input type="radio" name="pl-scheme" value="analogous"><span data-i18n="pl_scheme_analog">类似色</span></label>
+          <label class="t-seg-item"><input type="radio" name="pl-scheme" value="triadic"><span data-i18n="pl_scheme_tri">三角配色</span></label>
+          <label class="t-seg-item"><input type="radio" name="pl-scheme" value="monochrome"><span data-i18n="pl_scheme_mono">单色阶</span></label>
+        </div>
+        <div class="t-hint" data-i18n="pl_scheme_hint">配色方案基于图片主色生成，适合延展品牌色或做 UI 配色。</div>
+      </div>
+    </div>
+
+    <div id="pl-grid" class="pl-grid"></div>
+    <p id="pl-empty" class="t-empty" data-i18n="pl_empty">还没有图片，上传一张看看它的主色调。</p>
+
+    <div id="pl-bar" class="t-bar" hidden>
+      <div class="t-bar-stats" id="pl-bar-stats"></div>
+      <div class="t-bar-actions">
+        <button type="button" class="t-btn" id="pl-copy-hex" data-i18n="pl_copy_hex">复制全部 HEX</button>
+        <button type="button" class="t-btn" id="pl-copy-css" data-i18n="pl_copy_css">复制 CSS 变量</button>
+        <button type="button" class="t-btn primary" id="pl-png" data-i18n="pl_download_png">下载色卡 PNG</button>
+      </div>
+    </div>
+
+    <p class="t-note" data-i18n="pl_note">颜色由中位切分法（median cut）从图片像素统计得出，占比越高越靠前；点击任意色块即可复制色值。</p>
+  </section>
+
+  <section class="t-prose">
+    <h2 data-i18n="pl_how_h">怎么用</h2>
+    <ol class="t-steps">
+      <li data-i18n-html="pl_how_1"><strong>上传一张图</strong>：照片、插画、品牌 Logo 都可以，工具会统计像素分布。</li>
+      <li data-i18n-html="pl_how_2"><strong>设定数量</strong>：选择提取 4 到 10 个主色，数量越多层次越细腻。</li>
+      <li data-i18n-html="pl_how_3"><strong>选配色方案</strong>：在提取的主色之外，可基于主色生成互补、类似、三角或单色阶方案。</li>
+      <li data-i18n-html="pl_how_4"><strong>导出使用</strong>：点击色块复制单个色值，或一键复制全部 HEX、CSS 变量，也可下载 PNG 色卡。</li>
+    </ol>
+
+    <h2 data-i18n="pl_faq_h">常见问题</h2>
+    <div class="t-faq">
+      <div class="t-faq-item">
+        <p class="t-faq-q" data-i18n="pl_faq_1_q">主色是怎么算出来的？</p>
+        <p class="t-faq-a" data-i18n="pl_faq_1_a">用中位切分法（median cut）：把图片缩放到小尺寸后统计所有像素，反复沿颜色跨度最大的通道切分，直到得到指定数量的色组，每组取平均色作为代表色，再按像素占比排序。</p>
+      </div>
+      <div class="t-faq-item">
+        <p class="t-faq-q" data-i18n="pl_faq_2_q">图片会被上传到服务器吗？</p>
+        <p class="t-faq-a" data-i18n="pl_faq_2_a">不会。取色在浏览器本地通过 Canvas 完成，图片不经过网络，商业素材和未发布的品牌图都能放心用。</p>
+      </div>
+      <div class="t-faq-item">
+        <p class="t-faq-q" data-i18n="pl_faq_3_q">互补色、类似色、三角配色有什么区别？</p>
+        <p class="t-faq-a" data-i18n="pl_faq_3_a">互补色取色轮上相对 180° 的颜色，对比强烈适合强调；类似色取相邻 30° 左右，柔和统一；三角配色取相隔 120° 的三色，丰富而平衡；单色阶只改明度与饱和度，最安全不出错。</p>
+      </div>
+      <div class="t-faq-item">
+        <p class="t-faq-q" data-i18n="pl_faq_4_q">提取的颜色可以直接做品牌色吗？</p>
+        <p class="t-faq-a" data-i18n="pl_faq_4_a">建议以它为起点再手动微调：算法提取的是统计意义上的平均色，通常会略微发灰，实际使用时可适度提高饱和度，并在深浅背景下各验证一次对比度。</p>
+      </div>
+    </div>
+
+    <h2 data-i18n="related_guides">相关指南</h2>
+    <div class="t-guide-links">
+      <a class="t-guide-link" href="/guides/dark-mode-icons/">
+        <p class="t-guide-link-title" data-i18n="gd_dark_short">暗色图标设计指南</p>
+        <p class="t-guide-link-desc" data-i18n="gd_dark_card_desc">深色模式图标怎么做：对比度、亮度分层、强调色提亮三大原则与双变体策略。</p>
+      </a>
+      <a class="t-guide-link" href="/guides/image-compression-guide/">
+        <p class="t-guide-link-title" data-i18n="gd_comp_short">图片压缩指南</p>
+        <p class="t-guide-link-desc" data-i18n="gd_comp_card_desc">JPG、PNG、WebP 三种格式怎么选、质量参数怎么调、最长边限制的技巧。</p>
+      </a>
+    </div>
+  </section>
+</main>
+
+<div id="site-footer"></div>
+<div id="pl-toast" class="t-toast">
+  <span class="t-toast-ic">
+    <svg class="ic-ok" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+    <svg class="ic-err" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+  </span>
+  <span class="t-toast-title"></span>
+</div>
+
+<script src="/assets/js/site.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  var state = { img: null, colors: [], name: '' };
+  var toastTimer = null;
+
+  function t(key, vars) {
+    try { return window.CATAITO_I18N.t(key, vars); } catch (e) { return key; }
+  }
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+  function clamp(v, a, b) { return v < a ? a : (v > b ? b : v); }
+
+  /* ---------- 颜色工具 ---------- */
+  function toHex(r, g, b) {
+    return '#' + [r, g, b].map(function (v) {
+      return ('0' + clamp(Math.round(v), 0, 255).toString(16)).slice(-2);
+    }).join('').toUpperCase();
+  }
+  function rgbToHsl(r, g, b) {
+    r /= 255; g /= 255; b /= 255;
+    var max = Math.max(r, g, b), min = Math.min(r, g, b);
+    var h = 0, s = 0, l = (max + min) / 2;
+    if (max !== min) {
+      var d = max - min;
+      s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+      if (max === r) h = ((g - b) / d + (g < b ? 6 : 0));
+      else if (max === g) h = ((b - r) / d + 2);
+      else h = ((r - g) / d + 4);
+      h /= 6;
+    }
+    return [h * 360, s * 100, l * 100];
+  }
+  function hslToRgb(h, s, l) {
+    h = (((h % 360) + 360) % 360) / 360;
+    s = clamp(s, 0, 100) / 100;
+    l = clamp(l, 0, 100) / 100;
+    if (s === 0) { var v = Math.round(l * 255); return [v, v, v]; }
+    var q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+    var p = 2 * l - q;
+    function f(t) {
+      if (t < 0) t += 1;
+      if (t > 1) t -= 1;
+      if (t < 1 / 6) return p + (q - p) * 6 * t;
+      if (t < 1 / 2) return q;
+      if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
+      return p;
+    }
+    return [Math.round(f(h + 1 / 3) * 255), Math.round(f(h) * 255), Math.round(f(h - 1 / 3) * 255)];
+  }
+
+  /* ---------- 中位切分法提取主色 ---------- */
+  function samplePixels(img, maxEdge) {
+    var w = img.naturalWidth || img.width;
+    var h = img.naturalHeight || img.height;
+    var scale = Math.min(1, maxEdge / Math.max(w, h));
+    var cw = Math.max(1, Math.round(w * scale));
+    var ch = Math.max(1, Math.round(h * scale));
+    var c = document.createElement('canvas');
+    c.width = cw; c.height = ch;
+    var ctx = c.getContext('2d', { willReadFrequently: true });
+    ctx.drawImage(img, 0, 0, cw, ch);
+    var data;
+    try { data = ctx.getImageData(0, 0, cw, ch).data; }
+    catch (e) { return []; }
+    var px = [];
+    for (var i = 0; i < data.length; i += 4) {
+      if (data[i + 3] < 125) continue;
+      px.push([data[i], data[i + 1], data[i + 2]]);
+    }
+    return px;
+  }
+
+  function channelRange(box) {
+    var lo = [255, 255, 255], hi = [0, 0, 0];
+    for (var i = 0; i < box.length; i++) {
+      for (var c = 0; c < 3; c++) {
+        if (box[i][c] < lo[c]) lo[c] = box[i][c];
+        if (box[i][c] > hi[c]) hi[c] = box[i][c];
+      }
+    }
+    return [hi[0] - lo[0], hi[1] - lo[1], hi[2] - lo[2]];
+  }
+  function boxAverage(box) {
+    if (!box.length) return null;
+    var r = 0, g = 0, b = 0;
+    for (var i = 0; i < box.length; i++) { r += box[i][0]; g += box[i][1]; b += box[i][2]; }
+    return { rgb: [Math.round(r / box.length), Math.round(g / box.length), Math.round(b / box.length)], count: box.length };
+  }
+  function medianCut(px, count) {
+    if (!px.length) return [];
+    var boxes = [px];
+    while (boxes.length < count) {
+      var bi = -1, bestScore = -1;
+      for (var i = 0; i < boxes.length; i++) {
+        if (boxes[i].length < 2) continue;
+        var r = channelRange(boxes[i]);
+        var score = Math.max(r[0], r[1], r[2]) * boxes[i].length;
+        if (score > bestScore) { bestScore = score; bi = i; }
+      }
+      if (bi < 0) break;
+      var box = boxes[bi];
+      var rr = channelRange(box);
+      var ch = rr.indexOf(Math.max(rr[0], rr[1], rr[2]));
+      box.sort(function (a, b) { return a[ch] - b[ch]; });
+      var mid = box.length >> 1;
+      boxes.splice(bi, 1, box.slice(0, mid), box.slice(mid));
+    }
+    var out = [];
+    for (var k = 0; k < boxes.length; k++) {
+      var avg = boxAverage(boxes[k]);
+      if (avg) out.push(avg);
+    }
+    out.sort(function (a, b) { return b.count - a.count; });
+    return out;
+  }
+
+  /* ---------- 配色方案 ---------- */
+  function buildScheme(base, mode, count) {
+    var hsl = rgbToHsl(base[0], base[1], base[2]);
+    var h = hsl[0], s = hsl[1], l = hsl[2];
+    var s2 = clamp(Math.max(s, 42), 0, 100);
+    var l2 = clamp(l < 18 ? 46 : (l > 82 ? 62 : l), 0, 100);
+    var offsets = [];
+    if (mode === 'complementary') offsets = [0, 180];
+    else if (mode === 'analogous') offsets = [-32, 0, 32];
+    else if (mode === 'triadic') offsets = [0, 120, 240];
+    else if (mode === 'monochrome') offsets = [0];
+    else return [];
+
+    var out = [];
+    if (mode === 'monochrome') {
+      var steps = Math.max(3, count);
+      for (var i = 0; i < steps; i++) {
+        var ll = clamp(22 + i * (66 / Math.max(1, steps - 1)), 0, 100);
+        out.push({ rgb: hslToRgb(h, s2, ll), share: 0 });
+      }
+      return out;
+    }
+    for (var j = 0; j < offsets.length; j++) {
+      out.push({ rgb: hslToRgb(h + offsets[j], s2, l2), share: 0 });
+      if (mode === 'complementary') {
+        out.push({ rgb: hslToRgb(h + offsets[j], clamp(s2 * 0.55, 0, 100), clamp(l2 + 22, 0, 100)), share: 0 });
+      } else if (mode !== 'triadic') {
+        out.push({ rgb: hslToRgb(h + offsets[j], clamp(s2 * 0.6, 0, 100), clamp(l2 + 20, 0, 100)), share: 0 });
+      }
+    }
+    return out;
+  }
+
+  /* ---------- 渲染 ---------- */
+  function getCount() {
+    var el = document.querySelector('#pl-count input:checked');
+    return el ? parseInt(el.value, 10) : 6;
+  }
+  function getScheme() {
+    var el = document.querySelector('#pl-scheme input:checked');
+    return el ? el.value : 'none';
+  }
+
+  function render() {
+    var grid = document.getElementById('pl-grid');
+    var bar = document.getElementById('pl-bar');
+    var empty = document.getElementById('pl-empty');
+    var stats = document.getElementById('pl-bar-stats');
+
+    if (!state.colors.length) {
+      grid.innerHTML = '';
+      bar.hidden = true;
+      empty.hidden = false;
+      return;
+    }
+    empty.hidden = true;
+    bar.hidden = false;
+
+    var total = 0;
+    for (var i = 0; i < state.colors.length; i++) total += state.colors[i].share || 0;
+    if (!total) total = state.colors.length;
+
+    var html = '';
+    for (var k = 0; k < state.colors.length; k++) {
+      var c = state.colors[k];
+      var hex = toHex(c.rgb[0], c.rgb[1], c.rgb[2]);
+      var share = c.share ? Math.round(c.share / total * 100) : 0;
+      html += '<button type="button" class="pl-swatch" data-hex="' + hex + '" data-i18n-title="pl_copy_hint">' +
+        '<span class="pl-chip" style="--c:' + hex + '"></span>' +
+        '<span class="pl-info">' +
+          '<span class="pl-hex">' + hex + '</span>' +
+          '<span class="pl-rgb">' + c.rgb[0] + ', ' + c.rgb[1] + ', ' + c.rgb[2] + '</span>' +
+          (share ? '<span class="pl-share">' + share + '%</span>' : '') +
+        '</span>' +
+      '</button>';
+    }
+    grid.innerHTML = html;
+    stats.textContent = t('pl_stats', { n: state.colors.length });
+  }
+
+  function recompute() {
+    if (!state.img) return;
+    var px = samplePixels(state.img, 220);
+    if (!px.length) {
+      state.colors = [];
+      render();
+      showToast(t('pl_toast_read_fail'), true);
+      return;
+    }
+    var mode = getScheme();
+    if (mode === 'none') {
+      var groups = medianCut(px, getCount());
+      state.colors = groups.map(function (g) { return { rgb: g.rgb, share: g.count }; });
+    } else {
+      var seed = medianCut(px, 6);
+      if (!seed.length) { state.colors = []; render(); return; }
+      state.colors = buildScheme(seed[0].rgb, mode, getCount());
+    }
+    render();
+  }
+
+  /* ---------- 交互 ---------- */
+  function showToast(msg, isErr) {
+    var el = document.getElementById('pl-toast');
+    el.querySelector('.t-toast-title').textContent = msg;
+    el.classList.toggle('error', !!isErr);
+    el.classList.add('show');
+    if (toastTimer) clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { el.classList.remove('show'); }, 2200);
+  }
+
+  function copyText(text, okMsg) {
+    function fallback() {
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      ta.setAttribute('readonly', '');
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      var done = false;
+      try { done = document.execCommand('copy'); } catch (e) {}
+      document.body.removeChild(ta);
+      showToast(done ? okMsg : t('pl_toast_copy_fail'), !done);
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function () { showToast(okMsg); }, fallback);
+    } else {
+      fallback();
+    }
+  }
+
+  function currentHexList() {
+    return state.colors.map(function (c) { return toHex(c.rgb[0], c.rgb[1], c.rgb[2]); });
+  }
+
+  function loadFile(file) {
+    if (!file) return;
+    if (!/^image\//.test(file.type)) {
+      showToast(t('pl_toast_type'), true);
+      return;
+    }
+    var url = URL.createObjectURL(file);
+    var img = new Image();
+    img.onload = function () {
+      state.img = img;
+      state.name = file.name || 'palette';
+      recompute();
+      showToast(t('pl_toast_done', { n: state.colors.length }));
+    };
+    img.onerror = function () {
+      URL.revokeObjectURL(url);
+      showToast(t('pl_toast_load_fail'), true);
+    };
+    img.src = url;
+  }
+
+  function downloadPng() {
+    var list = currentHexList();
+    if (!list.length) return;
+    var cw = 180, chh = 150, pad = 0;
+    var c = document.createElement('canvas');
+    c.width = Math.max(320, cw * list.length);
+    c.height = chh + 46;
+    var x = c.getContext('2d');
+    x.fillStyle = '#ffffff';
+    x.fillRect(0, 0, c.width, c.height);
+    var seg = c.width / list.length;
+    for (var i = 0; i < list.length; i++) {
+      x.fillStyle = list[i];
+      x.fillRect(i * seg, 0, seg + 1, chh);
+      x.fillStyle = '#3b3f4a';
+      x.font = '600 15px ui-monospace, Menlo, Consolas, monospace';
+      x.textAlign = 'center';
+      x.fillText(list[i], i * seg + seg / 2, chh + 30);
+    }
+    c.toBlob(function (blob) {
+      if (!blob) { showToast(t('pl_toast_png_fail'), true); return; }
+      var a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'palette.png';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(function () { URL.revokeObjectURL(a.href); }, 4000);
+      showToast(t('pl_toast_png'));
+    }, 'image/png');
+  }
+
+  function bind() {
+    var dz = document.getElementById('pl-dropzone');
+    var input = document.getElementById('pl-file');
+
+    dz.addEventListener('click', function () { input.click(); });
+    dz.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); input.click(); }
+    });
+    input.addEventListener('change', function () {
+      if (input.files && input.files[0]) loadFile(input.files[0]);
+    });
+    ['dragenter', 'dragover'].forEach(function (evt) {
+      dz.addEventListener(evt, function (e) { e.preventDefault(); dz.classList.add('is-over'); });
+    });
+    ['dragleave', 'drop'].forEach(function (evt) {
+      dz.addEventListener(evt, function (e) { e.preventDefault(); dz.classList.remove('is-over'); });
+    });
+    dz.addEventListener('drop', function (e) {
+      var f = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
+      if (f) loadFile(f);
+    });
+
+    document.getElementById('pl-count').addEventListener('change', recompute);
+    document.getElementById('pl-scheme').addEventListener('change', recompute);
+
+    document.getElementById('pl-grid').addEventListener('click', function (e) {
+      var sw = e.target.closest ? e.target.closest('.pl-swatch') : null;
+      if (!sw) return;
+      var hex = sw.getAttribute('data-hex');
+      copyText(hex, t('pl_toast_copied', { c: hex }));
+    });
+
+    document.getElementById('pl-copy-hex').addEventListener('click', function () {
+      copyText(currentHexList().join('\n'), t('pl_toast_copied_all'));
+    });
+    document.getElementById('pl-copy-css').addEventListener('click', function () {
+      var list = currentHexList();
+      var css = ':root {\n' + list.map(function (h, i) {
+        return '  --color-' + (i + 1) + ': ' + h + ';';
+      }).join('\n') + '\n}';
+      copyText(css, t('pl_toast_copied_css'));
+    });
+    document.getElementById('pl-png').addEventListener('click', downloadPng);
+
+    document.addEventListener('cataito-lang-change', function () { render(); });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', bind);
+  } else {
+    bind();
+  }
+  render();
+})();
+</script>
+</body>
+</html>

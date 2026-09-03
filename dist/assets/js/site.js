@@ -226,6 +226,51 @@
     if_faq_4_q: { zh: '图片会被上传到服务器吗？', en: 'Are my images uploaded to a server?' },
     if_faq_4_a: { zh: '不会。全部处理在浏览器本地完成，图片不经过网络，商业 Logo 也能放心使用。', en: 'No. Everything runs locally in your browser — images never touch the network, safe even for commercial logos.' },
 
+    /* 工具四：配色 / 调色板 */
+    pl_name:         { zh: '配色工具', en: 'Color Palette Generator' },
+    pl_desc:         { zh: '上传图片自动提取主色调，一键生成协调的配色方案，复制色值或导出 CSS 变量。纯浏览器本地处理。', en: 'Upload an image to extract its dominant colors, generate harmonious schemes, copy values or export CSS variables. Runs entirely in your browser.' },
+    pl_upload:       { zh: '点击或拖入图片', en: 'Click or drop an image' },
+    pl_dz_hint:      { zh: 'PNG / JPG / WebP / SVG · 全程本地处理，不上传', en: 'PNG / JPG / WebP / SVG · processed locally, never uploaded' },
+    pl_count:        { zh: '提取颜色数', en: 'Number of colors' },
+    pl_scheme:       { zh: '配色方案', en: 'Color scheme' },
+    pl_scheme_none:  { zh: '仅主色', en: 'Dominant only' },
+    pl_scheme_comp:  { zh: '互补色', en: 'Complementary' },
+    pl_scheme_analog:{ zh: '类似色', en: 'Analogous' },
+    pl_scheme_tri:   { zh: '三角配色', en: 'Triadic' },
+    pl_scheme_mono:  { zh: '单色阶', en: 'Monochrome' },
+    pl_scheme_hint:  { zh: '配色方案基于图片主色生成，适合延展品牌色或做 UI 配色。', en: 'Schemes are derived from the dominant color — handy for extending a brand color or building a UI palette.' },
+    pl_empty:        { zh: '还没有图片，上传一张看看它的主色调。', en: 'No image yet — upload one to see its dominant colors.' },
+    pl_copy_hex:     { zh: '复制全部 HEX', en: 'Copy all HEX' },
+    pl_copy_css:     { zh: '复制 CSS 变量', en: 'Copy CSS variables' },
+    pl_download_png: { zh: '下载色卡 PNG', en: 'Download swatch PNG' },
+    pl_note:         { zh: '颜色由中位切分法（median cut）从图片像素统计得出，占比越高越靠前；点击任意色块即可复制色值。', en: 'Colors come from median-cut quantization of the image pixels, ordered by share; click any swatch to copy its value.' },
+    pl_stats:        { zh: '共 ${n} 个颜色', en: '${n} colors' },
+    pl_copy_hint:    { zh: '点击复制色值', en: 'Click to copy' },
+    pl_how_h:        { zh: '怎么用', en: 'How to use' },
+    pl_how_1:        { zh: '<strong>上传一张图</strong>：照片、插画、品牌 Logo 都可以，工具会统计像素分布。', en: '<strong>Upload an image</strong>: photos, illustrations, brand logos — the tool analyzes the pixel distribution.' },
+    pl_how_2:        { zh: '<strong>设定数量</strong>：选择提取 4 到 10 个主色，数量越多层次越细腻。', en: '<strong>Pick a count</strong>: extract 4 to 10 dominant colors — more colors means finer gradation.' },
+    pl_how_3:        { zh: '<strong>选配色方案</strong>：在提取的主色之外，可基于主色生成互补、类似、三角或单色阶方案。', en: '<strong>Choose a scheme</strong>: beyond the raw colors, generate complementary, analogous, triadic or monochrome sets from the dominant color.' },
+    pl_how_4:        { zh: '<strong>导出使用</strong>：点击色块复制单个色值，或一键复制全部 HEX、CSS 变量，也可下载 PNG 色卡。', en: '<strong>Export</strong>: click a swatch to copy one value, or copy all HEX / CSS variables at once and download a PNG swatch card.' },
+    pl_faq_h:        { zh: '常见问题', en: 'FAQ' },
+    pl_faq_1_q:      { zh: '主色是怎么算出来的？', en: 'How are the dominant colors calculated?' },
+    pl_faq_1_a:      { zh: '用中位切分法（median cut）：把图片缩放到小尺寸后统计所有像素，反复沿颜色跨度最大的通道切分，直到得到指定数量的色组，每组取平均色作为代表色，再按像素占比排序。', en: 'Using median cut: the image is scaled down and all pixels are counted, then repeatedly split along the widest color channel until the requested number of buckets is reached. Each bucket averages to a representative color, then results are sorted by pixel share.' },
+    pl_faq_2_q:      { zh: '图片会被上传到服务器吗？', en: 'Are my images uploaded to a server?' },
+    pl_faq_2_a:      { zh: '不会。取色在浏览器本地通过 Canvas 完成，图片不经过网络，商业素材和未发布的品牌图都能放心用。', en: 'No. Extraction happens locally via Canvas — images never touch the network, safe for commercial assets and unreleased brand work.' },
+    pl_faq_3_q:      { zh: '互补色、类似色、三角配色有什么区别？', en: "What's the difference between complementary, analogous and triadic?" },
+    pl_faq_3_a:      { zh: '互补色取色轮上相对 180° 的颜色，对比强烈适合强调；类似色取相邻 30° 左右，柔和统一；三角配色取相隔 120° 的三色，丰富而平衡；单色阶只改明度与饱和度，最安全不出错。', en: 'Complementary sits 180° opposite on the wheel — high contrast, good for emphasis. Analogous takes neighbors about 30° apart — soft and unified. Triadic uses three colors 120° apart — rich yet balanced. Monochrome varies only lightness and saturation — the safest choice.' },
+    pl_faq_4_q:      { zh: '提取的颜色可以直接做品牌色吗？', en: 'Can I use the extracted colors as brand colors directly?' },
+    pl_faq_4_a:      { zh: '建议以它为起点再手动微调：算法提取的是统计意义上的平均色，通常会略微发灰，实际使用时可适度提高饱和度，并在深浅背景下各验证一次对比度。', en: 'Treat them as a starting point: the algorithm produces statistical averages that tend to look slightly desaturated. Bump saturation a little and check contrast on both light and dark backgrounds.' },
+    pl_toast_type:      { zh: '请上传图片文件', en: 'Please upload an image file' },
+    pl_toast_done:      { zh: '已提取 ${n} 个颜色', en: 'Extracted ${n} colors' },
+    pl_toast_load_fail: { zh: '图片读取失败，换一张试试', en: 'Could not read that image — try another' },
+    pl_toast_read_fail: { zh: '无法读取像素，请换一张图片', en: 'Could not read pixels — try another image' },
+    pl_toast_copied:    { zh: '已复制 ${c}', en: 'Copied ${c}' },
+    pl_toast_copied_all:{ zh: '已复制全部色值', en: 'All color values copied' },
+    pl_toast_copied_css:{ zh: '已复制 CSS 变量', en: 'CSS variables copied' },
+    pl_toast_png:       { zh: '色卡 PNG 已开始下载', en: 'Swatch PNG download started' },
+    pl_toast_png_fail:  { zh: '色卡生成失败，请重试', en: 'Failed to generate swatch — please retry' },
+    pl_toast_copy_fail: { zh: '复制失败，请手动选择复制', en: 'Copy failed — please copy manually' },
+
     /* 语言按钮（显示“切换到”的目标语言） */
     lang_to_en:     { zh: 'EN', en: '中' }
   };
@@ -313,6 +358,7 @@
           '<a href="/icon-forge/" class="' + (active('/icon-forge/') ? 'active' : '') + '" data-i18n="if_name">图标工坊 IconForge</a>' +
           '<a href="/favicon/" class="' + (active('/favicon/') ? 'active' : '') + '" data-i18n="fv_name">Favicon 生成器</a>' +
           '<a href="/compress/" class="' + (active('/compress/') ? 'active' : '') + '" data-i18n="cp_name">图片压缩</a>' +
+          '<a href="/palette/" class="' + (active('/palette/') ? 'active' : '') + '" data-i18n="pl_name">配色工具</a>' +
           '<a href="/guides/" class="' + (active('/guides/') ? 'active' : '') + '" data-i18n="nav_guides">使用指南</a>' +
         '</nav>' +
         '<div class="header-actions">' +
