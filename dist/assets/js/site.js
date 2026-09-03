@@ -168,6 +168,10 @@
     gd_webp_h1:         { zh: 'WebP 格式指南：比 JPEG/PNG 更小、何时用、怎么转', en: 'WebP Format Guide: Smaller than JPEG/PNG, When to Use, How to Convert' },
     gd_webp_sub:        { zh: 'WebP 是谷歌推出的现代图片格式，同等画质下体积通常比 JPEG/PNG 小 25–35%。本文讲清 WebP 是什么、为什么更小、哪些场景该用、浏览器兼容性，以及如何免费在线把图片转成 WebP——纯浏览器本地处理。', en: 'WebP is a modern image format from Google, typically 25–35% smaller than JPEG/PNG at equal quality. This guide covers what WebP is, why it is smaller, when to use it, browser support, and how to convert images to WebP for free — entirely in your browser.' },
     gd_webp_card_desc:  { zh: 'WebP 是什么、为什么比 JPEG/PNG 更小、何时该用、浏览器兼容性，以及如何免费在线转 WebP（透明自动保留）。', en: 'What WebP is, why it beats JPEG/PNG on size, when to use it, browser support, and free online WebP conversion with transparency preserved.' },
+    gd_color_short:     { zh: '配色原理指南', en: 'Color Theory Guide' },
+    gd_color_h1:        { zh: '配色原理指南：色轮与互补/类似/三角/单色配色方案怎么用', en: 'Color Theory Guide: Color Wheel & Complementary/Analogous/Triadic/Monochromatic Schemes' },
+    gd_color_sub:       { zh: '配色是设计里回报率最高的基本功。本文讲清色轮的三个基本属性、互补/类似/三角/分裂互补/单色五种经典方案、60-30-10 比例法则，以及如何免费在线从一张图提取主色并生成协调配色——纯浏览器本地处理。', en: 'Color is the highest-ROI fundamental in design. The color wheel, five classic schemes, the 60-30-10 rule, and how to extract dominant colors from an image and build harmonious palettes for free — right in your browser.' },
+    gd_color_card_desc: { zh: '色轮三属性、互补/类似/三角/分裂互补/单色五种配色方案、60-30-10 法则，以及免费在线提取主色生成协调配色。', en: 'Color wheel basics, five classic schemes, the 60-30-10 rule, and free online dominant-color extraction for harmonious palettes.' },
 
     /* 通用 */
     theme_light:    { zh: '亮色', en: 'Light' },
