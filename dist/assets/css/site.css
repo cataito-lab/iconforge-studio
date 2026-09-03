@@ -306,6 +306,7 @@ html.dark .theme-switch .ico-sun { display: none; }
 
 /* ---------- 芯片（多选尺寸 / 开关） ---------- */
 .t-chips { display: grid; grid-template-columns: repeat(auto-fill, minmax(56px, 1fr)); gap: 8px; }
+.t-field > .t-chips { margin-bottom: 12px; }
 .t-chip {
   position: relative; display: flex; align-items: center; justify-content: center;
   height: 36px; padding: 0 6px;
