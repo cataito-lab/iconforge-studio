@@ -200,8 +200,9 @@
   <span class="t-toast-title"></span>
 </div>
 
-<script src="/assets/js/site.js"></script>
+<script src="/assets/js/site.js" defer></script>
 <script>
+document.addEventListener('DOMContentLoaded', function () {
 (function () {
   'use strict';
 
@@ -565,6 +566,7 @@
   }
   render();
 })();
+});
 </script>
 </body>
 </html>

@@ -75,7 +75,8 @@ dist/
 > **每个工具页底部都应带 `.t-prose` 内容板块**（如何使用 + 常见问题 + 相关指南）。原因：纯交互页面可索引正文太少会被判为 thin content，且工具页 → 指南页的反向内链是站内权重回流的关键路径。
 
 ### 新增工具六步
-1. 新建 `dist/<tool>/index.html`，挂 `theme-init.js` + `site.js` + `site.css`
+1. 新建 `dist/<tool>/index.html`，挂 `theme-init.js`（`<head>` 同步 + `site.js` 标 `defer`）
+   - ⚠️ `site.js` 后的内联页面脚本若顶层用到 `t()` / `window.CATAITO_I18N`（如 `render()`、`updateXxx()`），必须整体包进 `document.addEventListener('DOMContentLoaded', …)`，否则 `defer` 后内联脚本先于 `site.js` 执行、翻译会渲染成原始 i18n key。详见 HANDOVER.md 铁律 10。
 2. 页面骨架：`<div id="site-header">` → `<main class="site-main">`（含 `.t-head`）→ 内容区（`.t-flow` 单列或 `.t-split` 双列）→ `<div id="site-footer">`
 3. 底部加 `.t-prose` 内容板块（如何使用 / 常见问题 / 相关指南），词条进 `site.js` 词典；**含内嵌标签的文案必须用 `data-i18n-html`**
 4. `site.js` 词典加 `home_tool_<name>` 等词条，导航注入处加入口

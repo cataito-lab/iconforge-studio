@@ -155,8 +155,9 @@
   <span class="t-toast-title"></span>
 </div>
 
-<script src="/assets/js/site.js"></script>
+<script src="/assets/js/site.js" defer></script>
 <script>
+document.addEventListener('DOMContentLoaded', function () {
 (function () {
   'use strict';
   var t = function (k, vars) { return (window.CATAITO_I18N && window.CATAITO_I18N.t) ? window.CATAITO_I18N.t(k, vars) : k; };
@@ -547,6 +548,7 @@
     if (v) v.textContent = document.getElementById('cp-quality').value;
   });
 })();
+});
 </script>
 
 <style>
