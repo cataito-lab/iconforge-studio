@@ -235,6 +235,7 @@ html.dark .theme-switch .ico-sun { display: none; }
 /* 卡片内区块（用于分组标题 + 内容） */
 .t-block + .t-block { margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--border); }
 .t-drop + .t-block { margin-top: 20px; }
+.t-card + .t-block { margin-top: 20px; }
 .t-card > .group + .group { margin-top: 16px; }
 .t-card > .group + .t-block { margin-top: 20px; }
 .t-card > .t-block + .group { margin-top: 16px; }
