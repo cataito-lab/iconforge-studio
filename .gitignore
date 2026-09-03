@@ -15,3 +15,10 @@ Thumbs.db
 
 # ===== 内部交接文档（严禁入库 / 上传 GitHub） =====
 HANDOVER.md
+
+# ===== 本地测试产物（CDP 验证用的 chrome profile，非项目文件） =====
+_cfp/
+_cprofile/
+_cprofile2/
+_cprofile3/
+_cog/
