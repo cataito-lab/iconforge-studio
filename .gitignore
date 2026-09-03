@@ -12,3 +12,6 @@ target/
 Thumbs.db
 *.log
 .audit-tmp/
+
+# ===== 内部交接文档（严禁入库 / 上传 GitHub） =====
+HANDOVER.md
