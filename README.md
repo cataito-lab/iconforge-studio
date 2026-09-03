@@ -14,7 +14,7 @@
 | Favicon 生成器 | `/favicon/` | 一键生成全平台 favicon 套件 |
 | 图片压缩 | `/compress/` | 批量压缩 JPG/PNG/WebP（上限 20 张），智能格式选择（auto：透明走 WebP/PNG、不透明比 JPEG vs WebP 择小）、质量滑块 30–95、最长边限制、ZIP 批量下载；压缩结果反而更大时诚实保留原图 |
 
-另有三篇 SEO 内容支柱：`/guides/`（ICO 完全指南、Favicon 完全指南、暗色图标设计指南，中英双语）。
+另有四篇 SEO 内容支柱：`/guides/`（ICO 完全指南、Favicon 完全指南、暗色图标设计指南、图片压缩指南，中英双语）。
 
 ## 站点结构
 `dist/` 既是部署产物，也是站点源码（纯静态、零构建、零依赖）：

@@ -139,6 +139,10 @@
     gd_dark_h1:         { zh: '暗色图标设计指南：深色模式图标怎么做', en: 'Dark Mode Icon Design Guide: Icons for Dark Themes' },
     gd_dark_sub:        { zh: '深色模式已是默认配置，而不是小众选项。本文讲清暗色图标的核心设计原则、app 图标与 favicon 的双变体策略、SVG 跟随系统深色模式的写法，以及一键生成 Light/Dark 双主题图标的方法。', en: 'Dark mode is now the default, not a niche option. Core principles of dark icon design, dual-variant strategies for app icons and favicons, SVG media queries, and how to generate Light/Dark icon sets in one click.' },
     gd_dark_card_desc:  { zh: '深色模式图标怎么做：对比度、亮度分层、强调色提亮三大原则，app 图标与 favicon 的双变体策略，以及一键生成 Light/Dark 双主题图标。', en: 'How to design icons for dark mode: contrast, luminance layering, and accent brightening, plus dual-variant strategies and one-click Light/Dark generation.' },
+    gd_comp_short:      { zh: '图片压缩指南', en: 'Image Compression Guide' },
+    gd_comp_h1:         { zh: '图片压缩指南：JPG、PNG、WebP 怎么选与怎么压得最小', en: 'Image Compression Guide: JPEG vs PNG vs WebP & How to Shrink Images' },
+    gd_comp_sub:        { zh: '图片往往是网页里最占流量的资源。本文讲清三种主流格式的取舍、有损与无损的区别、质量参数怎么选、尺寸限制的技巧，以及如何免费在线批量压缩图片——纯浏览器本地处理。', en: 'Images are often the heaviest resource on a page. Format trade-offs, lossy vs lossless, quality settings, max-edge tricks, and how to batch-compress images for free — right in your browser.' },
+    gd_comp_card_desc:  { zh: 'JPG、PNG、WebP 三种格式怎么选、质量参数怎么调、最长边限制的技巧，以及免费在线批量压缩图片（透明自动保留）。', en: 'Choosing between JPEG/PNG/WebP, quality settings, max-edge limits, and free online batch compression with transparency preserved.' },
 
     /* 通用 */
     theme_light:    { zh: '亮色', en: 'Light' },

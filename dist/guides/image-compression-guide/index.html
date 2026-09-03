@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>图片压缩指南：JPG、PNG、WebP 怎么选与怎么压得最小 | cataito</title>
+<meta name="title-zh" content="图片压缩指南：JPG、PNG、WebP 怎么选与怎么压得最小 | cataito">
+<meta name="title-en" content="Image Compression Guide: JPEG vs PNG vs WebP & How to Shrink Images | cataito">
+<meta name="description" content="图片为什么压得小却依然清晰？本文讲清 JPEG、PNG、WebP 三种格式的取舍、有损与无损的区别、质量参数怎么选、最长边限制的技巧，以及如何免费在线批量压缩图片——纯浏览器本地处理。">
+<meta name="theme-color" content="#fbfbfd">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="cataito 工具箱">
+<meta property="og:title" content="图片压缩指南：JPG、PNG、WebP 怎么选与怎么压得最小">
+<meta property="og:description" content="三种图片格式的取舍、有损与无损的区别、质量参数怎么选，免费在线批量压缩图片。">
+<meta property="og:url" content="https://tools.cataito.com/guides/image-compression-guide/">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:locale:alternate" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="图片压缩指南">
+<meta name="twitter:description" content="JPG/PNG/WebP 怎么选、质量参数怎么调、免费在线批量压缩。">
+<link rel="canonical" href="https://tools.cataito.com/guides/image-compression-guide/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%236366f1'/%3E%3Crect x='8' y='8' width='7' height='7' rx='1.5' fill='white'/%3E%3Crect x='17' y='8' width='7' height='7' rx='1.5' fill='white' opacity='.55'/%3E%3Crect x='8' y='17' width='7' height='7' rx='1.5' fill='white' opacity='.55'/%3E%3Crect x='17' y='17' width='7' height='7' rx='1.5' fill='white' opacity='.3'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="/assets/css/site.css">
+<script src="/assets/js/theme-init.js"></script>
+<script>
+  (function () {
+    try {
+      var l = localStorage.getItem('cataito-lang');
+      document.documentElement.setAttribute('lang', (l === 'en') ? 'en' : 'zh-CN');
+      if (l === 'en') document.documentElement.classList.add('lang-en');
+    } catch (e) {}
+  })();
+</script>
+<style>
+  /* ============ 指南页排版（与其他指南页保持一致） ============ */
+  .guide-wrap { max-width: 760px; margin: 0 auto; }
+  .guide-meta { font-size: 13px; color: var(--text-3); margin: 0 0 6px; }
+  .page-sub { margin-bottom: 10px; }
+  .article { font-size: 15px; line-height: 1.85; color: var(--text); }
+  .article h2 {
+    font-size: 21px; font-weight: 700; letter-spacing: -.3px;
+    margin: 40px 0 14px; padding-top: 10px; color: var(--text);
+  }
+  .article h3 { font-size: 16.5px; font-weight: 650; margin: 26px 0 10px; color: var(--text); }
+  .article p { margin: 0 0 14px; color: var(--text-2); }
+  .article strong { color: var(--text); font-weight: 650; }
+  .article a { color: var(--accent); text-decoration: none; }
+  .article a:hover { text-decoration: underline; }
+  .article ul, .article ol { margin: 0 0 16px; padding-left: 22px; color: var(--text-2); }
+  .article li { margin: 6px 0; }
+  .article code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 13px; background: var(--card-2); border: 1px solid var(--border);
+    border-radius: 5px; padding: 1px 6px; color: var(--text);
+  }
+  .article pre {
+    background: var(--card-2); border: 1px solid var(--border); border-radius: 10px;
+    padding: 14px 16px; margin: 14px 0 18px; overflow-x: auto;
+  }
+  .article pre code { background: none; border: none; padding: 0; font-size: 12.5px; line-height: 1.7; }
+  .article table {
+    width: 100%; border-collapse: collapse; margin: 18px 0 22px;
+    font-size: 13.5px; background: var(--card);
+    border: 1px solid var(--border); border-radius: 10px; overflow: hidden;
+  }
+  .article th, .article td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--border); }
+  .article th { background: var(--card-2); color: var(--text); font-weight: 650; white-space: nowrap; }
+  .article td { color: var(--text-2); }
+  .article tr:last-child td { border-bottom: none; }
+  .toc {
+    background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 16px 18px; margin: 20px 0 8px; box-shadow: var(--shadow-sm);
+  }
+  .toc-title { font-size: 13px; font-weight: 650; color: var(--text); margin: 0 0 10px; }
+  .toc ol { margin: 0; padding-left: 20px; font-size: 13.5px; }
+  .toc li { margin: 5px 0; }
+  .toc a { color: var(--text-2); text-decoration: none; }
+  .toc a:hover { color: var(--accent); }
+  .faq-item {
+    background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-sm);
+    padding: 14px 16px; margin: 10px 0; box-shadow: var(--shadow-sm);
+  }
+  .faq-q { font-size: 14.5px; font-weight: 650; color: var(--text); margin: 0 0 8px; }
+  .faq-a { font-size: 14px; color: var(--text-2); margin: 0; line-height: 1.75; }
+  .cta-box {
+    background: linear-gradient(135deg, var(--accent-soft), var(--accent-soft-2));
+    border: 1px solid var(--accent); border-radius: var(--radius);
+    padding: 20px 22px; margin: 34px 0 10px; text-align: center;
+  }
+  .cta-box .cta-title { font-size: 17px; font-weight: 700; color: var(--text); margin: 0 0 6px; }
+  .cta-box .cta-sub { font-size: 13.5px; color: var(--text-2); margin: 0 0 14px; }
+  .cta-btn {
+    display: inline-block; background: var(--accent); color: #fff; text-decoration: none;
+    font-size: 14px; font-weight: 600; padding: 11px 26px; border-radius: var(--radius-sm);
+    box-shadow: 0 6px 18px rgba(99,102,241,0.30); transition: background .15s;
+  }
+  .cta-btn:hover { background: var(--accent-hover); }
+  /* 修复：.article a 的特异度(0,1,1)会压过 .cta-btn(0,1,0) 的 color:#fff，
+     导致按钮紫底紫字在亮/暗模式下都不可读。用更高特异度夺回白色文字。 */
+  .article a.cta-btn, .article .cta-btn { color: #fff; text-decoration: none; }
+  .article a.cta-btn:hover { color: #fff; text-decoration: none; background: var(--accent-hover); }
+  .step-list { counter-reset: step; list-style: none; padding-left: 0; }
+  .step-list li { position: relative; padding-left: 44px; margin: 14px 0; }
+  .step-list li::before {
+    counter-increment: step; content: counter(step);
+    position: absolute; left: 0; top: 1px;
+    width: 28px; height: 28px; border-radius: 999px;
+    background: var(--accent-soft); color: var(--accent);
+    font-weight: 700; font-size: 14px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  /* 双语块：默认中文，html.lang-en 时切换英文（两语言均在原生 HTML 中，可被索引） */
+  .lb-en { display: none; }
+  html.lang-en .lb-zh { display: none; }
+  html.lang-en .lb-en { display: block; }
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "图片压缩指南：JPG、PNG、WebP 怎么选与怎么压得最小",
+  "description": "详解 JPEG、PNG、WebP 三种格式的取舍、有损与无损的区别、质量参数怎么选、最长边限制的技巧，以及如何免费在线批量压缩图片。",
+  "inLanguage": "zh-CN",
+  "datePublished": "2026-09-03",
+  "dateModified": "2026-09-03",
+  "author": { "@type": "Organization", "name": "cataito", "url": "https://tools.cataito.com/" },
+  "publisher": { "@type": "Organization", "name": "cataito 工具箱", "url": "https://tools.cataito.com/" },
+  "mainEntityOfPage": "https://tools.cataito.com/guides/image-compression-guide/"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "JPG、PNG、WebP 到底该选哪个？",
+      "acceptedAnswer": { "@type": "Answer", "text": "经验法则：照片和不透明的截图选 JPEG 或 WebP（有损、体积小）；需要透明通道的logo、图标选 WebP 或 PNG；同一张图不确定时，两种都压一次取更小的——本站图片压缩工具的智能模式就是自动这样做的。" }
+    },
+    {
+      "@type": "Question",
+      "name": "图片质量设多少合适？",
+      "acceptedAnswer": { "@type": "Answer", "text": "Web 展示通常 70–85 是性价比最高的区间：低于 60 容易出现明显块状伪影，高于 90 体积增长很快但肉眼几乎看不出差别。重要的人物特写可适当调高，缩略图和背景图可以更低。" }
+    },
+    {
+      "@type": "Question",
+      "name": "压缩会让图片变模糊吗？",
+      "acceptedAnswer": { "@type": "Answer", "text": "有损压缩（JPEG/WebP）在高质量档位下肉眼几乎无法分辨差异；无损 PNG 压缩不改变任何像素。另外，缩小最长边（如 2560px 降到 1920px）会减少像素总量，用于网页展示通常无损观感但体积显著下降。" }
+    },
+    {
+      "@type": "Question",
+      "name": "为什么有的图片压缩后反而变大了？",
+      "acceptedAnswer": { "@type": "Answer", "text": "已经是高度优化过的图片（如本身导出为 WebP/优化的 PNG），再压缩得到的数据可能比原文件更大。遇到这种情况应保留原图——本站压缩工具会自动检测并在压缩无收益时保留原文件。" }
+    },
+    {
+      "@type": "Question",
+      "name": "在线压缩图片安全吗？会被上传到服务器吗？",
+      "acceptedAnswer": { "@type": "Answer", "text": "取决于工具实现。本站图片压缩工具全部在浏览器本地完成（Canvas + Blob），图片不经过网络上传，商业图片和隐私截图都可以放心处理。" }
+    },
+    {
+      "@type": "Question",
+      "name": "图片压缩对网站 SEO 有帮助吗？",
+      "acceptedAnswer": { "@type": "Answer", "text": "有。图片通常是网页中最大的资源，压缩与正确选格式能显著缩短加载时间，Core Web Vitals（LCP）是 Google 排名信号之一；配合 width/height 属性和懒加载效果更好。" }
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "首页", "item": "https://tools.cataito.com/" },
+    { "@type": "ListItem", "position": 2, "name": "使用指南", "item": "https://tools.cataito.com/guides/" },
+    { "@type": "ListItem", "position": 3, "name": "图片压缩指南", "item": "https://tools.cataito.com/guides/image-compression-guide/" }
+  ]
+}
+</script>
+</head>
+<body>
+<div id="site-header"></div>
+
+<main class="site-main">
+  <div class="guide-wrap">
+    <nav class="breadcrumb"><a href="/" data-i18n="crumb_home">首页</a><span class="sep">/</span><a href="/guides/" data-i18n="nav_guides">使用指南</a><span class="sep">/</span><span data-i18n="gd_comp_short">图片压缩指南</span></nav>
+    <p class="guide-meta"><span data-i18n="gd_published">发布于</span> 2026-09-03 · cataito</p>
+    <h1 class="page-h1" data-i18n="gd_comp_h1">图片压缩指南：JPG、PNG、WebP 怎么选与怎么压得最小</h1>
+    <p class="page-sub" data-i18n="gd_comp_sub">图片往往是网页里最占流量的资源。本文讲清三种主流格式的取舍、有损与无损的区别、质量参数怎么选、尺寸限制的技巧，以及如何免费在线批量压缩图片——纯浏览器本地处理。</p>
+
+    <!-- ================= 中文正文 ================= -->
+    <div class="article lb-zh">
+      <div class="toc">
+        <p class="toc-title">目录</p>
+        <ol>
+          <li><a href="#why">为什么图片压缩值得做</a></li>
+          <li><a href="#formats">JPG、PNG、WebP 怎么选</a></li>
+          <li><a href="#quality">质量参数：压的是什么</a></li>
+          <li><a href="#resize">最长边限制：比压质量更见效</a></li>
+          <li><a href="#howto">批量压缩实操步骤</a></li>
+          <li><a href="#faq">常见问题</a></li>
+        </ol>
+      </div>
+
+      <h2 id="why">为什么图片压缩值得做</h2>
+      <p>对多数网页而言，<strong>图片贡献了页面体积的一半以上</strong>。手机端一张没压缩的原图照片动辄 3–8 MB，而同样观感压完往往只要 200–500 KB。更小的图片意味着：</p>
+      <ul>
+        <li><strong>加载更快</strong>：首屏大图直接影响 LCP（最大内容绘制），这是 Google Core Web Vitals 的核心指标之一，也是排名信号；</li>
+        <li><strong>省流量</strong>：对移动端用户和按流量计费的场景更友好；</li>
+        <li><strong>跳出率更低</strong>：加载每慢 1 秒，流失的用户都在增加。</li>
+      </ul>
+      <p>实际测量：一张 1600×1200 的照片（约 64 KB JPEG 源）用智能模式压缩后可降到 <strong>约 14 KB（−78%）</strong>；一张 900×900 的透明 PNG（约 491 KB）转 WebP 后只有 <strong>约 5.6 KB（−99%）</strong>。</p>
+
+      <h2 id="formats">JPG、PNG、WebP 怎么选</h2>
+      <p>三种格式没有绝对优劣，只有「用对场景」：</p>
+      <table>
+        <tr><th>格式</th><th>压缩方式</th><th>透明通道</th><th>最适合</th></tr>
+        <tr><td>JPEG</td><td>有损</td><td>不支持</td><td>照片、不透明的截图与Banner</td></tr>
+        <tr><td>PNG</td><td>无损</td><td>支持</td><td>需要透明的Logo、图标、UI素材</td></tr>
+        <tr><td>WebP</td><td>有损/无损均可</td><td>支持</td><td>两者的现代替代，同画质体积更小</td></tr>
+      </table>
+      <p>三条经验法则：</p>
+      <ul>
+        <li><strong>有透明 → WebP 或 PNG</strong>：JPEG 根本不支持透明通道，硬转会变白底；</li>
+        <li><strong>不透明 → JPEG 或 WebP</strong>：两种都压一次取更小的（WebP 在低质量档通常更小，高质量档 JPEG 有时反超）；</li>
+        <li><strong>拿不准 → 交给智能模式</strong>：本站压缩工具会先检测图片是否含透明通道，再自动在候选格式中选输出最小的那个。</li>
+      </ul>
+
+      <h2 id="quality">质量参数：压的是什么</h2>
+      <p>JPEG 和有损 WebP 的「质量」控制的是<strong>丢弃多少肉眼不敏感的信息</strong>。规律是：</p>
+      <ul>
+        <li><strong>90–100</strong>：肉眼与原图几乎无差别，但体积收益也最小，容易出现「压了反而更大」；</li>
+        <li><strong>70–85</strong>：网页展示的黄金区间——体积大幅下降，画质损失肉眼基本不可辨；</li>
+        <li><strong>30–60</strong>：体积激进，适合缩略图、背景虚化区域，人物特写慎用（容易出现块状伪影）。</li>
+      </ul>
+      <p>本站压缩工具默认质量 80，就是这个区间的中间值。压完记得放大到 100% 看一眼细节——<strong>每个项目的图片内容不同，值得花 10 秒确认</strong>。</p>
+
+      <h2 id="resize">最长边限制：比压质量更见效</h2>
+      <p>一张手机原片动辄 4000×3000，但网页展示区域通常不超过 1920px 宽。<strong>把最长边从 4000 降到 1920，像素总量直接砍掉 77%</strong>，比任何质量参数都狠——而且网页上的观感几乎没有差别。</p>
+      <p>建议档位：博客配图/新闻图用 <strong>1920px</strong>；内容区配图 <strong>1280px</strong> 足够；缩略图场景 <strong>800px</strong>。原图尺寸本来就小的（如 600px 宽的小图），保持「原始尺寸」即可，不要放大。</p>
+
+      <h2 id="howto">批量压缩实操步骤</h2>
+      <p>本站 <a href="/compress/">图片压缩工具</a> 全程在浏览器本地完成，图片不上传服务器：</p>
+      <ol class="step-list">
+        <li><strong>批量上传</strong>：点击或拖入图片，一次最多 20 张，JPG / PNG / WebP 都可以。</li>
+        <li><strong>调参数</strong>：质量保持 80（或按需 70–85）；格式选「智能」；最长边按用途选 1920 / 1280。</li>
+        <li><strong>核对结果</strong>：每张图会显示压缩前后体积和节省百分比；含透明的图自动走 WebP/PNG 保留透明。</li>
+        <li><strong>下载</strong>：单张点击下载，或一键打包全部为 ZIP。</li>
+      </ol>
+      <p>一个贴心的细节：如果某张图压缩后反而变大（本身已是高度优化的文件），工具会<strong>诚实保留原图</strong>并在列表中标注，不会让你下载一张更差更大的「压缩版」。</p>
+
+      <h2 id="faq">常见问题</h2>
+      <div class="faq-item"><p class="faq-q">Q：JPG、PNG、WebP 到底该选哪个？</p><p class="faq-a">A：经验法则——照片和不透明截图选 JPEG 或 WebP；需要透明的 Logo、图标选 WebP 或 PNG；不确定就两种都压一次取更小的，本站工具的智能模式就是自动这样做的。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：图片质量设多少合适？</p><p class="faq-a">A：Web 展示通常 70–85 性价比最高：低于 60 容易出现块状伪影，高于 90 体积涨得快但肉眼几乎看不出差别。人物特写可调高，缩略图可更低。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：压缩会让图片变模糊吗？</p><p class="faq-a">A：有损压缩在高质量档位下肉眼几乎无法分辨；无损 PNG 不改变任何像素。缩小最长边会减少像素总量，用于网页展示通常无损观感。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：为什么有的图压缩后反而变大了？</p><p class="faq-a">A：已是高度优化的图片（如本身就是 WebP），再压得到的数据可能比原文件更大。这种情况应保留原图——本站工具会自动检测并诚实保留。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：在线压缩图片安全吗？</p><p class="faq-a">A：取决于工具。本站全部在浏览器本地处理（Canvas + Blob），图片不经过网络上传，商业图片和隐私截图都放心。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：图片压缩对 SEO 有帮助吗？</p><p class="faq-a">A：有。图片通常是网页最大的资源，压缩能显著缩短加载时间；Core Web Vitals（LCP）是 Google 排名信号之一。配合 width/height 属性和懒加载效果更好。</p></div>
+
+      <div class="cta-box">
+        <p class="cta-title">免费在线批量压缩图片</p>
+        <p class="cta-sub">一次 20 张 · 智能选格式 · 透明自动保留 · 纯浏览器本地处理</p>
+        <a class="cta-btn" href="/compress/">打开图片压缩工具 →</a>
+      </div>
+    </div>
+
+    <!-- ================= English body ================= -->
+    <div class="article lb-en">
+      <div class="toc">
+        <p class="toc-title">Table of Contents</p>
+        <ol>
+          <li><a href="#why">Why Image Compression Is Worth It</a></li>
+          <li><a href="#formats">JPEG vs PNG vs WebP: How to Choose</a></li>
+          <li><a href="#quality">What the Quality Slider Actually Does</a></li>
+          <li><a href="#resize">Max-Edge Limits: More Effective Than Quality</a></li>
+          <li><a href="#howto">Batch Compression Step by Step</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ol>
+      </div>
+
+      <h2 id="why">Why Image Compression Is Worth It</h2>
+      <p>For most web pages, <strong>images account for more than half of the total page weight</strong>. An uncompressed phone photo is easily 3–8 MB, while the same visual quality can often fit in 200–500 KB. Smaller images mean:</p>
+      <ul>
+        <li><strong>Faster loading</strong>: hero images directly affect LCP (Largest Contentful Paint), a core Core Web Vitals metric and a Google ranking signal;</li>
+        <li><strong>Less data</strong>: friendlier to mobile users and metered connections;</li>
+        <li><strong>Lower bounce</strong>: every extra second of loading costs you visitors.</li>
+      </ul>
+      <p>Real measurements: a 1600×1200 photo (about 64 KB JPEG source) drops to <strong>about 14 KB (−78%)</strong> in smart mode; a 900×900 transparent PNG (about 491 KB) becomes <strong>about 5.6 KB (−99%)</strong> as WebP.</p>
+
+      <h2 id="formats">JPEG vs PNG vs WebP: How to Choose</h2>
+      <p>No format is absolutely better — only right for the job:</p>
+      <table>
+        <tr><th>Format</th><th>Compression</th><th>Transparency</th><th>Best for</th></tr>
+        <tr><td>JPEG</td><td>Lossy</td><td>No</td><td>Photos, opaque screenshots &amp; banners</td></tr>
+        <tr><td>PNG</td><td>Lossless</td><td>Yes</td><td>Transparent logos, icons, UI assets</td></tr>
+        <tr><td>WebP</td><td>Lossy or lossless</td><td>Yes</td><td>Modern replacement for both — smaller at equal quality</td></tr>
+      </table>
+      <p>Three rules of thumb:</p>
+      <ul>
+        <li><strong>Needs transparency → WebP or PNG</strong>: JPEG doesn't support alpha at all — converting will give you a white box;</li>
+        <li><strong>Opaque → JPEG or WebP</strong>: compress as both and keep the smaller one (WebP usually wins at lower quality; JPEG sometimes wins at high quality);</li>
+        <li><strong>Unsure → use smart mode</strong>: this site's compressor detects alpha first, then automatically picks whichever candidate format produces the smallest file.</li>
+      </ul>
+
+      <h2 id="quality">What the Quality Slider Actually Controls</h2>
+      <p>JPEG and lossy WebP "quality" determines <strong>how much visually-insensitive information gets discarded</strong>. The pattern:</p>
+      <ul>
+        <li><strong>90–100</strong>: visually indistinguishable from the original, but savings are minimal — sometimes the "compressed" file is even larger;</li>
+        <li><strong>70–85</strong>: the sweet spot for web display — big size reduction with differences that are essentially invisible;</li>
+        <li><strong>30–60</strong>: aggressive — fine for thumbnails and blurred backgrounds; risky for portraits (visible blocky artifacts).</li>
+      </ul>
+      <p>This site's compressor defaults to 80, right in the middle of the sweet spot. After compressing, zoom to 100% and check the details — <strong>every project's content is different, and 10 seconds of verification is worth it</strong>.</p>
+
+      <h2 id="resize">Max-Edge Limits: More Effective Than Quality</h2>
+      <p>A phone original is often 4000×3000, but web layouts rarely display wider than 1920px. <strong>Reducing the longest edge from 4000 to 1920 cuts total pixels by 77%</strong> — more effective than any quality setting, with virtually no visible difference on a web page.</p>
+      <p>Suggested limits: blog/news images <strong>1920px</strong>; in-content images <strong>1280px</strong>; thumbnails <strong>800px</strong>. If the source is already small (say 600px wide), keep "original size" — never upscale.</p>
+
+      <h2 id="howto">Batch Compression Step by Step</h2>
+      <p>This site's <a href="/compress/">Image Compressor</a> runs entirely in your browser — images are never uploaded:</p>
+      <ol class="step-list">
+        <li><strong>Batch upload</strong>: click or drag in up to 20 images at once — JPG / PNG / WebP all supported.</li>
+        <li><strong>Tune settings</strong>: keep quality at 80 (or 70–85 as needed); format on "Smart"; max edge 1920 / 1280 by use case.</li>
+        <li><strong>Review results</strong>: each row shows before/after sizes and savings; transparent images automatically go WebP/PNG with alpha preserved.</li>
+        <li><strong>Download</strong>: grab individual files or export everything as one ZIP.</li>
+      </ol>
+      <p>A thoughtful detail: if a file would grow rather than shrink (already highly optimized), the tool <strong>honestly keeps the original</strong> and labels it in the list — you never download a worse, larger "compressed" copy.</p>
+
+      <h2 id="faq">FAQ</h2>
+      <div class="faq-item"><p class="faq-q">Q: JPEG, PNG, or WebP — which should I pick?</p><p class="faq-a">A: Rule of thumb — photos and opaque screenshots: JPEG or WebP; transparent logos and icons: WebP or PNG; unsure: compress as both and keep the smaller, which is exactly what smart mode does automatically.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: What quality setting should I use?</p><p class="faq-a">A: For web display, 70–85 offers the best trade-off: below 60 risks blocky artifacts; above 90 grows files fast with no visible gain. Portraits can go higher; thumbnails lower.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: Will compression make images blurry?</p><p class="faq-a">A: Lossy compression at high quality settings is essentially indistinguishable; lossless PNG changes no pixels at all. Reducing the max edge drops total pixels but is usually visually lossless for web use.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: Why did some images get bigger after compressing?</p><p class="faq-a">A: Already-optimized files (e.g., native WebP) may re-encode larger. Keep the original in that case — this tool detects it and honestly keeps the original.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: Is online image compression safe?</p><p class="faq-a">A: Depends on the tool. This site processes everything locally in the browser (Canvas + Blob) — images never touch the network, safe for commercial and private images alike.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: Does image compression help SEO?</p><p class="faq-a">A: Yes. Images are usually a page's biggest resource; compressing them cuts load times significantly, and Core Web Vitals (LCP) is a Google ranking signal. Pair with width/height attributes and lazy loading.</p></div>
+
+      <div class="cta-box">
+        <p class="cta-title">Batch-Compress Images Online — Free</p>
+        <p class="cta-sub">20 at a time · Smart format pick · Transparency preserved · Runs in your browser</p>
+        <a class="cta-btn" href="/compress/">Open Image Compressor →</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<div id="site-footer"></div>
+<script src="/assets/js/site.js"></script>
+</body>
+</html>
