@@ -7,7 +7,7 @@
 <meta name="title-zh" content="图片压缩指南：JPG、PNG、WebP 怎么选与怎么压得最小 | cataito">
 <meta name="title-en" content="Image Compression Guide: JPEG vs PNG vs WebP & How to Shrink Images | cataito">
 <meta name="description" content="图片为什么压得小却依然清晰？本文讲清 JPEG、PNG、WebP 三种格式的取舍、有损与无损的区别、质量参数怎么选、最长边限制的技巧，以及如何免费在线批量压缩图片——纯浏览器本地处理。">
-<meta name="theme-color" content="#fafaf9">
+<meta name="theme-color" content="#f6f3ec">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="cataito 工具箱">
 <meta property="og:title" content="图片压缩指南：JPG、PNG、WebP 怎么选与怎么压得最小">
@@ -33,13 +33,13 @@
 </script>
 <style>
   /* ============ 指南页排版（与其他指南页保持一致） ============ */
-  .guide-wrap { max-width: 760px; margin: 0 auto; }
+  .guide-wrap { max-width: 760px; margin: 0; }
   .guide-meta { font-size: 13px; color: var(--text-3); margin: 0 0 6px; }
   .page-sub { margin-bottom: 10px; }
   .article { font-size: 15px; line-height: 1.85; color: var(--text); }
   .article h2 {
     font-size: 21px; font-weight: 700; letter-spacing: -.3px;
-    margin: 40px 0 14px; padding-top: 10px; color: var(--text);
+    margin: 44px 0 14px; padding-top: 16px; border-top: 1px solid var(--border); color: var(--text);
   }
   .article h3 { font-size: 16.5px; font-weight: 650; margin: 26px 0 10px; color: var(--text); }
   .article p { margin: 0 0 14px; color: var(--text-2); }
@@ -51,17 +51,17 @@
   .article code {
     font-family: var(--font-mono);
     font-size: 13px; background: var(--card-2); border: 1px solid var(--border);
-    border-radius: 5px; padding: 1px 6px; color: var(--text);
+    border-radius: 3px; padding: 1px 6px; color: var(--text);
   }
   .article pre {
-    background: var(--card-2); border: 1px solid var(--border); border-radius: 10px;
+    background: var(--card-2); border: 1px solid var(--border); border-radius: var(--radius-sm);
     padding: 14px 16px; margin: 14px 0 18px; overflow-x: auto;
   }
   .article pre code { background: none; border: none; padding: 0; font-size: 12.5px; line-height: 1.7; }
   .article table {
     width: 100%; border-collapse: collapse; margin: 18px 0 22px;
     font-size: 13.5px; background: var(--card);
-    border: 1px solid var(--border); border-radius: 10px; overflow: hidden;
+    border: 1px solid var(--border); border-radius: var(--radius-sm); overflow: hidden;
   }
   .article th, .article td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--border); }
   .article th { background: var(--card-2); color: var(--text); font-weight: 650; white-space: nowrap; }

@@ -7,7 +7,7 @@
 <meta name="title-zh" content="ICO 文件完全指南：什么是 .ico、尺寸规范与在线制作方法 | cataito">
 <meta name="title-en" content="The Complete Guide to ICO Files: What They Are & How to Create Them | cataito">
 <meta name="description" content="什么是 ICO 文件？本文详解 .ico 格式原理、Windows 图标尺寸规范（16–256px）、ICO 与 PNG 的区别，以及如何免费在线制作多尺寸 ICO 图标——纯浏览器本地处理，无需上传服务器。">
-<meta name="theme-color" content="#fafaf9">
+<meta name="theme-color" content="#f6f3ec">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="cataito 工具箱">
 <meta property="og:title" content="ICO 文件完全指南：什么是 .ico、尺寸规范与在线制作方法">
@@ -33,13 +33,13 @@
 </script>
 <style>
   /* ============ 指南页排版（移动优先，无锁高，自然文档流） ============ */
-  .guide-wrap { max-width: 760px; margin: 0 auto; }
+  .guide-wrap { max-width: 760px; margin: 0; }
   .guide-meta { font-size: 13px; color: var(--text-3); margin: 0 0 6px; }
   .page-sub { margin-bottom: 10px; }
   .article { font-size: 15px; line-height: 1.85; color: var(--text); }
   .article h2 {
     font-size: 21px; font-weight: 700; letter-spacing: -.3px;
-    margin: 40px 0 14px; padding-top: 10px; color: var(--text);
+    margin: 44px 0 14px; padding-top: 16px; border-top: 1px solid var(--border); color: var(--text);
   }
   .article h3 { font-size: 16.5px; font-weight: 650; margin: 26px 0 10px; color: var(--text); }
   .article p { margin: 0 0 14px; color: var(--text-2); }
@@ -51,12 +51,12 @@
   .article code {
     font-family: var(--font-mono);
     font-size: 13px; background: var(--card-2); border: 1px solid var(--border);
-    border-radius: 5px; padding: 1px 6px; color: var(--text);
+    border-radius: 3px; padding: 1px 6px; color: var(--text);
   }
   .article table {
     width: 100%; border-collapse: collapse; margin: 18px 0 22px;
     font-size: 13.5px; background: var(--card);
-    border: 1px solid var(--border); border-radius: 10px; overflow: hidden;
+    border: 1px solid var(--border); border-radius: var(--radius-sm); overflow: hidden;
   }
   .article th, .article td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--border); }
   .article th { background: var(--card-2); color: var(--text); font-weight: 650; white-space: nowrap; }

@@ -7,7 +7,7 @@
 <meta name="title-zh" content="使用指南 | cataito 工具箱">
 <meta name="title-en" content="Guides | cataito Tools">
 <meta name="description" content="cataito 工具箱使用指南：ICO 图标文件格式详解、favicon 最佳实践等，帮你把工具用对、用好。">
-<meta name="theme-color" content="#fafaf9">
+<meta name="theme-color" content="#f6f3ec">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="cataito 工具箱">
 <meta property="og:title" content="使用指南 | cataito 工具箱">
@@ -31,15 +31,17 @@
 <style>
   .guide-card {
     display: flex; flex-direction: column; gap: 8px;
-    background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
-    padding: 20px 22px; box-shadow: var(--shadow-sm); text-decoration: none;
-    transition: border-color .18s ease, transform .18s ease, box-shadow .18s ease;
+    background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-sm);
+    padding: 20px 22px; text-decoration: none;
+    transition: background .15s ease, box-shadow .15s ease;
   }
-  .guide-card:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: var(--shadow-md); }
+  .guide-card:hover { background: var(--accent-soft-2); box-shadow: inset 3px 0 0 var(--accent); }
   .guide-card__tag {
-    font-size: 12px; font-weight: 600; color: var(--accent);
-    background: var(--accent-soft); border-radius: 6px; padding: 2px 8px;
-    align-self: flex-start; letter-spacing: .3px;
+    font-family: var(--font-mono);
+    font-size: 11px; font-weight: 600; color: var(--accent);
+    border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
+    border-radius: var(--radius-sm); padding: 2px 8px;
+    align-self: flex-start; letter-spacing: .04em;
   }
   .guide-card__title { font-size: 17px; font-weight: 650; color: var(--text); margin: 0; }
   .guide-card__desc { font-size: 13.5px; color: var(--text-2); margin: 0; line-height: 1.6; }

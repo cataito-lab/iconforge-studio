@@ -7,7 +7,7 @@
 <meta name="title-zh" content="暗色图标设计指南：深色模式图标怎么做（含 favicon 适配） | cataito">
 <meta name="title-en" content="Dark Mode Icon Design Guide: Icons for Dark Themes (incl. Favicons) | cataito">
 <meta name="description" content="深色模式时代，图标怎么做才好看？本文详解暗色图标设计原则（对比度、亮度、层级）、app 图标与 favicon 的深浅双变体做法、SVG favicon 跟随系统深色模式的写法，以及如何一键生成 Light/Dark 双主题图标。">
-<meta name="theme-color" content="#fafaf9">
+<meta name="theme-color" content="#f6f3ec">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="cataito 工具箱">
 <meta property="og:title" content="暗色图标设计指南：深色模式图标怎么做">
@@ -33,13 +33,13 @@
 </script>
 <style>
   /* ============ 指南页排版（移动优先，无锁高，自然文档流） ============ */
-  .guide-wrap { max-width: 760px; margin: 0 auto; }
+  .guide-wrap { max-width: 760px; margin: 0; }
   .guide-meta { font-size: 13px; color: var(--text-3); margin: 0 0 6px; }
   .page-sub { margin-bottom: 10px; }
   .article { font-size: 15px; line-height: 1.85; color: var(--text); }
   .article h2 {
     font-size: 21px; font-weight: 700; letter-spacing: -.3px;
-    margin: 40px 0 14px; padding-top: 10px; color: var(--text);
+    margin: 44px 0 14px; padding-top: 16px; border-top: 1px solid var(--border); color: var(--text);
   }
   .article h3 { font-size: 16.5px; font-weight: 650; margin: 26px 0 10px; color: var(--text); }
   .article p { margin: 0 0 14px; color: var(--text-2); }
@@ -51,17 +51,17 @@
   .article code {
     font-family: var(--font-mono);
     font-size: 13px; background: var(--card-2); border: 1px solid var(--border);
-    border-radius: 5px; padding: 1px 6px; color: var(--text);
+    border-radius: 3px; padding: 1px 6px; color: var(--text);
   }
   .article pre {
-    background: var(--card-2); border: 1px solid var(--border); border-radius: 10px;
+    background: var(--card-2); border: 1px solid var(--border); border-radius: var(--radius-sm);
     padding: 14px 16px; margin: 14px 0 18px; overflow-x: auto;
   }
   .article pre code { background: none; border: none; padding: 0; font-size: 12.5px; line-height: 1.7; }
   .article table {
     width: 100%; border-collapse: collapse; margin: 18px 0 22px;
     font-size: 13.5px; background: var(--card);
-    border: 1px solid var(--border); border-radius: 10px; overflow: hidden;
+    border: 1px solid var(--border); border-radius: var(--radius-sm); overflow: hidden;
   }
   .article th, .article td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--border); }
   .article th { background: var(--card-2); color: var(--text); font-weight: 650; white-space: nowrap; }
