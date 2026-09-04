@@ -46,6 +46,38 @@ dist/
 - API：`window.CATAITO_THEME.{get,set,toggle}`；变更派发 `cataito-theme-change` 事件
 - 颜色令牌统一在 `site.css` 的 `:root` / `html.dark` 定义（含 `color-scheme` 声明），**工具页不得内嵌自定义颜色令牌**（IconForge 曾因此导致 favicon 页引用未定义变量的 bug）
 
+### 设计令牌（`site.css` `:root` / `html.dark`）
+
+2026-09-04 UI 精修后，令牌层从纯色彩扩展为完整的设计体系（色彩 + 间距 + 字号 + 字体 + 行高 + 圆角 + 阴影）：
+
+**色彩令牌**
+
+| 令牌 | 亮色 | 暗色 | 用途 |
+| --- | --- | --- | --- |
+| `--bg` | `#fafaf9` | `#101014` | 页面底色（暖白纸感 / 深空黑） |
+| `--bg-canvas` | `#f4f3f0` | `#0b0b0f` | Canvas 工作区底色 |
+| `--card` / `--card-2` | `#fff` / `#f6f5f2` | `#1a1c22` / `#202229` | 卡片 / 次级卡片底色 |
+| `--border` | `#e8e7e3` | `#2a2d36` | 边框（暖灰 / 冷灰） |
+| `--text` / `--text-2` / `--text-3` | `#26262c` / `#62656e` / `#989ba6` | `#eceef2` / `#a9aebc` / `#737a89` | 主/次/弱文字 |
+| `--accent` / `--accent-hover` | `#6d6ae8` / `#5a57d6` | `#8b88f0` / `#7b78ea` | 低饱和靛蓝主色 |
+| `--accent-soft` / `--accent-soft-2` | `rgba(109,106,232,.10)` / `.05` | `rgba(139,136,240,.15)` / `.07` | 主色透明底（hover/soft bg） |
+| `--accent-glow` | `rgba(109,106,232,.26)` | `rgba(139,136,240,.24)` | 主按钮投影光晕（替代硬编码 rgba） |
+| `--danger` / `--success` / `--warning` | `#e0564f` / `#2aa484` / `#d97706` | `#ef7b74` / `#43bd9a` / `#e8a23d` | 语义色（`--warning` 为 2026-09-04 新增，收编 `#f59e0b`） |
+| `--checker` | `#eae9e5` | `rgba(255,255,255,.07)` | 透明棋盘格底色 |
+
+**体系令牌（2026-09-04 新增）**
+
+| 令牌 | 值 | 用途 |
+| --- | --- | --- |
+| `--radius` / `--radius-sm` | `14px` / `10px` | 统一圆角（原 13/9px） |
+| `--sp-1` ~ `--sp-8` | `4/8/12/16/20/24/32/48px` | 间距刻度（替代散落的硬编码 px） |
+| `--fs-xs` ~ `--fs-xl` | `12/13.5/15/17/22px` | 字号刻度 |
+| `--lh-body` | `1.7` | 正文行高（原 1.6） |
+| `--font-mono` | `ui-monospace, SFMono-Regular, Menlo, Consolas, ...` | 等宽字体栈（收编各页重复定义） |
+| `--shadow-sm` / `--shadow-md` | 轻阴影 | 更轻更暖（降低不透明度） |
+
+> **铁律**：所有页面严禁出现硬编码颜色值（如 `#6366f1`、`#18181b`、`#f59e0b`）或硬编码等宽字体栈——一律通过令牌引用。2026-09-04 已全站清零，新页面/新组件请保持。
+
 ### 国际化（中/英）
 - 词条放 `site.js` 的 `t()` 词典；HTML 用 `data-i18n` 属性标记
 - 动态文本监听 `cataito-lang-change` 事件刷新；URL 支持 `?lang=en`
@@ -64,7 +96,7 @@ dist/
 | `.t-btn`（`.primary` `.block`） | 按钮 | `.t-icon-btn`（`.danger`） | 方形图标按钮 |
 | `.t-list` / `.t-row` / `.t-thumb` / `.t-badge` | 结果行列表 | `.t-bar` / `.t-bar-stats` | 汇总操作条 |
 | `.t-toast` | 消息提示（`.warn` `.error`） | `.t-modal` / `.t-progress` | 进度弹窗 |
-| `.t-empty` / `.t-note` / `.t-callout` | 空状态 / 备注 / 提示条 | | |
+| `.t-empty` / `.t-note` / `.t-callout` | 空状态 / 备注 / 提示条 | `.t-checker` | 透明棋盘格背景工具类 |
 | `.t-prose` | 底部内容板块容器 | `.t-steps` | 编号步骤列表 |
 | `.t-faq` / `.t-faq-item` / `.t-faq-q` / `.t-faq-a` | 常见问题 | `.t-guide-links` / `.t-guide-link` | 相关指南链接卡 |
 
