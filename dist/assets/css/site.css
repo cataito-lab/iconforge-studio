@@ -343,6 +343,8 @@ html.dark .theme-switch .ico-sun { display: none; }
 .t-flow { max-width: 760px; }
 /* 双列（icon-forge 等需要常驻预览的工具）：左工作区 + 右侧设置栏 */
 .t-split { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 24px; align-items: start; }
+/* 工作区卡片顶部 2px 粗规则线——把首页目录行的结构语言延伸进工具工作区 */
+.t-split > .t-card { border-top: 2px solid var(--text); }
 @media (max-width: 900px) {
   .t-split { grid-template-columns: 1fr; }
 }
