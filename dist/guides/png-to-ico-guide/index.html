@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PNG 转 ICO 完全指南：免费在线转换（支持多尺寸） | cataito</title>
+<meta name="title-zh" content="PNG 转 ICO 完全指南：免费在线转换（支持多尺寸） | cataito">
+<meta name="title-en" content="PNG to ICO Guide: Free Online Conversion (Multi-Size) | cataito">
+<meta name="description" content="怎么把 PNG 转成 ICO？本文讲清 ICO 是什么、什么时候需要转、三种转换方法（在线工具 / 桌面软件 / 命令行），以及尺寸、透明度等注意事项——免费在线转换，纯浏览器本地处理。">
+<meta name="theme-color" content="#f6f3ec">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="cataito 工具箱">
+<meta property="og:title" content="PNG 转 ICO 完全指南：免费在线转换（支持多尺寸）">
+<meta property="og:description" content="ICO 是什么、什么时候需要 PNG 转 ICO、三种转换方法，以及尺寸与透明度注意事项。">
+<meta property="og:url" content="https://tools.cataito.com/guides/png-to-ico-guide/">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:locale:alternate" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="PNG 转 ICO 完全指南">
+<meta name="twitter:description" content="三种 PNG 转 ICO 方法，多尺寸与透明度完整说明。">
+<link rel="canonical" href="https://tools.cataito.com/guides/png-to-ico-guide/">
+<link rel="icon" href="/assets/img/icon.svg">
+<link rel="stylesheet" href="/assets/css/site.css">
+<script src="/assets/js/theme-init.js"></script>
+<script>
+  (function () {
+    try {
+      var l = localStorage.getItem('cataito-lang');
+      document.documentElement.setAttribute('lang', (l === 'en') ? 'en' : 'zh-CN');
+      if (l === 'en') document.documentElement.classList.add('lang-en');
+    } catch (e) {}
+  })();
+</script>
+<style>
+  /* ============ 指南页排版（与其他指南页保持一致） ============ */
+  .guide-wrap { max-width: 760px; margin: 0; }
+  .guide-meta { font-size: 13px; color: var(--text-3); margin: 0 0 6px; }
+  .page-sub { margin-bottom: 10px; }
+  .article { font-size: 15px; line-height: 1.85; color: var(--text); }
+  .article h2 {
+    font-size: 21px; font-weight: 700; letter-spacing: -.3px;
+    margin: 44px 0 14px; padding-top: 16px; border-top: 1px solid var(--border); color: var(--text);
+  }
+  .article h3 { font-size: 16.5px; font-weight: 650; margin: 26px 0 10px; color: var(--text); }
+  .article p { margin: 0 0 14px; color: var(--text-2); }
+  .article strong { color: var(--text); font-weight: 650; }
+  .article a { color: var(--accent); text-decoration: none; }
+  .article a:hover { text-decoration: underline; }
+  .article ul, .article ol { margin: 0 0 16px; padding-left: 22px; color: var(--text-2); }
+  .article li { margin: 6px 0; }
+  .article code {
+    font-family: var(--font-mono);
+    font-size: 13px; background: var(--card-2); border: 1px solid var(--border);
+    border-radius: 3px; padding: 1px 6px; color: var(--text);
+  }
+  .article pre {
+    background: var(--card-2); border: 1px solid var(--border); border-radius: var(--radius-sm);
+    padding: 14px 16px; margin: 14px 0 18px; overflow-x: auto;
+  }
+  .article pre code { background: none; border: none; padding: 0; font-size: 12.5px; line-height: 1.7; }
+  .article table {
+    width: 100%; border-collapse: collapse; margin: 18px 0 22px;
+    font-size: 13.5px; background: var(--card);
+    border: 1px solid var(--border); border-radius: var(--radius-sm); overflow: hidden;
+  }
+  .article th, .article td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--border); }
+  .article th { background: var(--card-2); color: var(--text); font-weight: 650; white-space: nowrap; }
+  .article td { color: var(--text-2); }
+  .article tr:last-child td { border-bottom: none; }
+  .toc {
+    background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 16px 18px; margin: 20px 0 8px; box-shadow: var(--shadow-sm);
+  }
+  .toc-title { font-size: 13px; font-weight: 650; color: var(--text); margin: 0 0 10px; }
+  .toc ol { margin: 0; padding-left: 20px; font-size: 13.5px; }
+  .toc li { margin: 5px 0; }
+  .toc a { color: var(--text-2); text-decoration: none; }
+  .toc a:hover { color: var(--accent); }
+  /* FAQ 卡片样式由 site.css 的 .faq-item / .t-faq-* 统一提供 */
+  .cta-box {
+    background: linear-gradient(135deg, var(--accent-soft), var(--accent-soft-2));
+    border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent); border-radius: var(--radius);
+    padding: 20px 22px; margin: 34px 0 10px; text-align: center;
+  }
+  .cta-box .cta-title { font-size: 17px; font-weight: 700; color: var(--text); margin: 0 0 6px; }
+  .cta-box .cta-sub { font-size: 13.5px; color: var(--text-2); margin: 0 0 14px; }
+  .cta-btn {
+    display: inline-block; background: var(--accent); color: #fff; text-decoration: none;
+    font-size: 14px; font-weight: 600; padding: 11px 26px; border-radius: var(--radius-sm);
+    box-shadow: 0 6px 18px var(--accent-glow); transition: background .15s;
+  }
+  .cta-btn:hover { background: var(--accent-hover); }
+  /* 修复：.article a 的特异度(0,1,1)会压过 .cta-btn(0,1,0) 的 color:#fff，
+     导致按钮底字同色在亮/暗模式下都不可读。用更高特异度夺回白色文字。 */
+  .article a.cta-btn, .article .cta-btn { color: #fff; text-decoration: none; }
+  .article a.cta-btn:hover { color: #fff; text-decoration: none; background: var(--accent-hover); }
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "PNG 转 ICO 完全指南：免费在线转换（支持多尺寸）",
+  "description": "详解 ICO 是什么、什么时候需要把 PNG 转成 ICO、在线工具/桌面软件/命令行三种转换方法，以及尺寸与透明度注意事项。",
+  "inLanguage": "zh-CN",
+  "datePublished": "2026-09-05",
+  "dateModified": "2026-09-05",
+  "author": { "@type": "Organization", "name": "cataito", "url": "https://tools.cataito.com/" },
+  "publisher": { "@type": "Organization", "name": "cataito 工具箱", "url": "https://tools.cataito.com/" },
+  "mainEntityOfPage": "https://tools.cataito.com/guides/png-to-ico-guide/"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "ICO 和 PNG 有什么区别？",
+      "acceptedAnswer": { "@type": "Answer", "text": "PNG 是普通图片格式，一个文件只有一张图；ICO 是 Windows 的图标容器格式，一个文件里可以打包多个尺寸（16/32/48/256px 等），系统会按场景自动选用最合适的一档。做网站 favicon 或 Windows 应用图标时需要 ICO。" }
+    },
+    {
+      "@type": "Question",
+      "name": "可以直接把 .png 改名成 .ico 吗？",
+      "acceptedAnswer": { "@type": "Answer", "text": "不可以。ICO 是有独立文件头和多图结构的容器格式，仅改扩展名不会改变文件的实际结构，多数场景会显示异常或无法识别。必须用工具真正转换一次。" }
+    },
+    {
+      "@type": "Question",
+      "name": "ICO 文件最大支持多少尺寸？",
+      "acceptedAnswer": { "@type": "Answer", "text": "ICO 规范的单张最大尺寸是 256×256 像素。转换工具应把 256px 及以下各档写入 ICO 容器；源图超过 256px 时会先缩到 256 再打包。更大的需求属于应用图标领域（如 macOS icns、PWA 512px），应使用对应格式。" }
+    },
+    {
+      "@type": "Question",
+      "name": "网站 favicon.ico 应该包含哪些尺寸？",
+      "acceptedAnswer": { "@type": "Answer", "text": "传统建议包含 16、32、48 三档：16px 用于浏览器标签页，32px 用于任务栏/桌面小图标，48px 用于桌面视图。现代浏览器也可以配合 PNG/SVG 声明使用，但一个含 16/32/48 的 ICO 仍是兼容性最稳的底座。" }
+    },
+    {
+      "@type": "Question",
+      "name": "PNG 转 ICO 会丢失透明背景吗？",
+      "acceptedAnswer": { "@type": "Answer", "text": "不会。ICO 完整支持 alpha 透明通道，只要源 PNG 带透明、转换时保留即可。本站转换全程在浏览器本地完成，透明通道原样写入。" }
+    },
+    {
+      "@type": "Question",
+      "name": "如何验证 ICO 文件里包含哪些尺寸？",
+      "acceptedAnswer": { "@type": "Answer", "text": "最简单的方法是用浏览器直接打开该 ICO 文件（显示的是最大一档）；想看完整尺寸列表可以用 Windows 的 Resource Hacker 或本站图标工具重新载入检查。转换时选择多尺寸输出，生成后建议抽查 16px 档是否清晰。" }
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "首页", "item": "https://tools.cataito.com/" },
+    { "@type": "ListItem", "position": 2, "name": "使用指南", "item": "https://tools.cataito.com/guides/" },
+    { "@type": "ListItem", "position": 3, "name": "PNG 转 ICO 指南", "item": "https://tools.cataito.com/guides/png-to-ico-guide/" }
+  ]
+}
+</script>
+</head>
+<body>
+<div id="site-header"></div>
+
+<main class="site-main">
+  <div class="guide-wrap">
+    <nav class="breadcrumb"><a href="/" data-i18n="crumb_home">首页</a><span class="sep">/</span><a href="/guides/" data-i18n="nav_guides">使用指南</a><span class="sep">/</span><span data-i18n="gd_pti_short">PNG 转 ICO 指南</span></nav>
+    <p class="guide-meta"><span data-i18n="gd_published">发布于</span> 2026-09-05 · cataito</p>
+    <h1 class="page-h1" data-i18n="gd_pti_h1">PNG 转 ICO 完全指南：免费在线转换（支持多尺寸）</h1>
+    <p class="page-sub" data-i18n="gd_pti_sub">手上有 PNG 的 Logo，想做成 Windows 能用的 .ico 图标？本文讲清 ICO 是什么、什么时候需要转、在线工具 / 桌面软件 / 命令行三种转换方法，以及尺寸上限、透明保留等注意事项——推荐方案免费且纯浏览器本地处理。</p>
+
+    <!-- ================= 中文正文 ================= -->
+    <div class="article lb-zh">
+      <div class="toc">
+        <p class="toc-title">目录</p>
+        <ol>
+          <li><a href="#what">什么是 ICO 文件</a></li>
+          <li><a href="#why">什么时候需要把 PNG 转成 ICO</a></li>
+          <li><a href="#methods">三种转换方法</a></li>
+          <li><a href="#tips">转换注意事项</a></li>
+          <li><a href="#compare">PNG vs ICO</a></li>
+          <li><a href="#faq">常见问题</a></li>
+        </ol>
+      </div>
+
+      <h2 id="what">什么是 ICO 文件</h2>
+      <p>ICO 是 <strong>Windows 的图标容器格式</strong>。和 PNG「一个文件一张图」不同，一个 ICO 文件里可以<strong>同时打包多个尺寸</strong>（16 / 32 / 48 / 64 / 128 / 256px 等），系统和浏览器按显示场景自动挑选最合适的一档：标签页用 16px，任务栏用 32px，桌面用 48px 或更大。关于 ICO 的历史与内部结构，见<a href="/guides/ico-file-guide/">ICO 文件完全指南</a>。</p>
+      <p>PNG 则是通用图片格式：无损、支持透明，但一个文件只有一张图，也不含「多尺寸目录」这一层概念。所以「用 PNG 做图标素材、用 ICO 做图标交付」是最常见的工作流——这就需要一个转换步骤。</p>
+
+      <h2 id="why">什么时候需要把 PNG 转成 ICO</h2>
+      <ul>
+        <li><strong>网站 favicon</strong>：浏览器默认请求网站根目录的 <code>/favicon.ico</code>，一个含 16/32/48px 的 ICO 是兼容性最稳的方案；</li>
+        <li><strong>Windows 桌面/应用图标</strong>：快捷方式、文件夹、自研软件的图标都要求 .ico；</li>
+        <li><strong>开源项目发布</strong>：多数桌面软件的 Windows 发行包（含便携版）默认带 .ico。</li>
+      </ul>
+      <p>反过来，macOS 用 icns、网页高清场景用 PNG/SVG 声明——不需要 ICO。各平台尺寸速查见<a href="/guides/app-icon-sizes/">App 图标尺寸指南</a>。</p>
+
+      <h2 id="methods">三种转换方法</h2>
+
+      <h3>方法一：在线转换（推荐，免费且本地处理）</h3>
+      <p>用本站 <a href="/icon-forge/">图标工坊 IconForge</a>，全程在浏览器本地完成，图片不上传服务器，一次打包多尺寸：</p>
+      <ol class="t-steps">
+        <li><strong>上传 PNG</strong>：点击或拖入 Logo 图片，建议用 256×256 以上的正方形透明 PNG。</li>
+        <li><strong>选尺寸</strong>：在「尺寸」分组勾选需要的档位（做 favicon 勾 16/32/48，做应用图标建议全选到 256）。</li>
+        <li><strong>导出</strong>：格式勾选 ICO，点击「生成图标资源包」，下载包含多尺寸 ICO 的压缩包。</li>
+        <li><strong>部署</strong>：把 .ico 放到网站根目录，或在 HTML 里用 <code>&lt;link rel="icon"&gt;</code> 声明（写法见 <a href="/guides/favicon-guide/">Favicon 完全指南</a>）。</li>
+      </ol>
+
+      <h3>方法二：桌面软件</h3>
+      <p>GIMP（免费）可以「文件 → 导出为 → logo.ico」，导出时勾选压缩多尺寸；XnView / IrfanView 等看图工具也带 ICO 导出。适合离线环境或需要批量处理的场景，缺点是要装软件、多尺寸勾选位置各不相同。</p>
+
+      <h3>方法三：命令行（ImageMagick）</h3>
+      <p>装了 ImageMagick 的话，一条命令从 PNG 生成含多尺寸的 ICO：</p>
+      <pre><code>magick logo.png -define icon:auto-resize=256,128,64,48,32,16 logo.ico</code></pre>
+      <p><code>icon:auto-resize</code> 会自动从大到小逐档缩放打包。适合写进构建脚本做自动化；只想偶尔转一个文件的话，在线工具更快。</p>
+
+      <h2 id="tips">转换注意事项</h2>
+      <ul>
+        <li><strong>256px 是上限</strong>：ICO 规范单张最大 256×256。源图更大的（比如 1024px）会先缩到 256 再打包，画质不受影响，但别指望 ICO 里塞进 512px——那是 PWA/macOS 图标的领域；</li>
+        <li><strong>源图用正方形</strong>：非正方形会被强制加白边或拉伸变形，转换前先在画布里居中裁成 1:1；</li>
+        <li><strong>透明会保留</strong>：ICO 支持 alpha 通道，带透明的 PNG 转出来依然是透明底，不会变白块；</li>
+        <li><strong>多尺寸别偷懒</strong>：只打包一张 256px 的 ICO 在标签页上会糊（浏览器自己缩到 16px 效果很差），务必包含 16/32 小尺寸档；</li>
+        <li><strong>16px 是玄学</strong>：极小尺寸下复杂 Logo 必然糊，专业做法是为 16px 单独画一个简化版——本站图标工坊支持 Light/Dark 双主题分别出图，配合的就是这类场景。</li>
+      </ul>
+
+      <h2 id="compare">PNG vs ICO</h2>
+      <table>
+        <tr><th>维度</th><th>PNG</th><th>ICO</th></tr>
+        <tr><td>文件内容</td><td>一张图</td><td>一个容器，打包多张不同尺寸</td></tr>
+        <tr><td>尺寸上限</td><td>无实际限制</td><td>单张最大 256×256</td></tr>
+        <tr><td>透明支持</td><td>支持（alpha）</td><td>支持（alpha）</td></tr>
+        <tr><td>系统自动选档</td><td>做不到</td><td>按场景挑 16/32/48/256</td></tr>
+        <tr><td>最适合</td><td>素材、网页高清图</td><td>Windows favicon、桌面/应用图标</td></tr>
+      </table>
+      <p>一句话：<strong>PNG 是素材，ICO 是交付物</strong>。设计稿存 PNG，发布给 Windows 和 favicon 用 ICO。</p>
+
+      <h2 id="faq">常见问题</h2>
+      <div class="faq-item"><p class="faq-q">Q：ICO 和 PNG 有什么区别？</p><p class="faq-a">A：PNG 是普通图片格式，一个文件只有一张图；ICO 是 Windows 的图标容器格式，一个文件里可以打包多个尺寸（16/32/48/256px 等），系统按场景自动选用最合适的一档。做网站 favicon 或 Windows 应用图标时需要 ICO。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：可以直接把 .png 改名成 .ico 吗？</p><p class="faq-a">A：不可以。ICO 是有独立文件头和多图结构的容器格式，仅改扩展名不会改变文件的实际结构，多数场景会显示异常或无法识别。必须用工具真正转换一次。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：ICO 文件最大支持多少尺寸？</p><p class="faq-a">A：ICO 规范的单张最大尺寸是 256×256 像素。转换工具应把 256px 及以下各档写入容器；源图超过 256px 时会先缩到 256 再打包。更大的需求属于应用图标领域（macOS icns、PWA 512px），应使用对应格式。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：网站 favicon.ico 应该包含哪些尺寸？</p><p class="faq-a">A：传统建议包含 16、32、48 三档：16px 用于浏览器标签页，32px 用于任务栏/桌面小图标，48px 用于桌面视图。现代浏览器也可以配合 PNG/SVG 声明使用，但一个含 16/32/48 的 ICO 仍是兼容性最稳的底座。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：PNG 转 ICO 会丢失透明背景吗？</p><p class="faq-a">A：不会。ICO 完整支持 alpha 透明通道，只要源 PNG 带透明、转换时保留即可。本站转换全程在浏览器本地完成，透明通道原样写入。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：如何验证 ICO 文件里包含哪些尺寸？</p><p class="faq-a">A：最简单是用浏览器直接打开该 ICO（显示最大一档）；想看完整尺寸列表可以用 Windows 的 Resource Hacker，或用本站图标工具重新载入检查。生成后建议重点抽查 16px 档是否清晰。</p></div>
+
+      <div class="cta-box">
+        <p class="cta-title">免费在线把 PNG 转成多尺寸 ICO</p>
+        <p class="cta-sub">Light/Dark 双主题 · 透明保留 · 一次打包全部尺寸 · 纯浏览器本地处理</p>
+        <a class="cta-btn" href="/icon-forge/">打开图标工坊 →</a>
+      </div>
+    </div>
+
+    <!-- ================= English body ================= -->
+    <div class="article lb-en">
+      <div class="toc">
+        <p class="toc-title">Table of Contents</p>
+        <ol>
+          <li><a href="#what">What Is an ICO File</a></li>
+          <li><a href="#why">When You Need PNG → ICO</a></li>
+          <li><a href="#methods">Three Ways to Convert</a></li>
+          <li><a href="#tips">Things to Watch Out For</a></li>
+          <li><a href="#compare">PNG vs ICO</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ol>
+      </div>
+
+      <h2 id="what">What Is an ICO File</h2>
+      <p>ICO is <strong>Windows' icon container format</strong>. Unlike PNG — one file, one image — a single ICO can <strong>pack multiple sizes</strong> (16 / 32 / 48 / 64 / 128 / 256px) into one file, and the system picks the best fit per context: 16px for browser tabs, 32px for the taskbar, 48px+ for desktop. For the format's history and internals, see the <a href="/guides/ico-file-guide/">complete ICO file guide</a>.</p>
+      <p>PNG is the general-purpose format: lossless, transparent, but always a single image with no "size directory". So the common workflow is "PNG as source material, ICO as deliverable" — which needs a conversion step.</p>
+
+      <h2 id="why">When You Need PNG → ICO</h2>
+      <ul>
+        <li><strong>Website favicon</strong>: browsers request <code>/favicon.ico</code> from the site root by default; an ICO containing 16/32/48px is the most compatible option;</li>
+        <li><strong>Windows desktop/app icons</strong>: shortcuts, folders, and your own software all expect .ico;</li>
+        <li><strong>Open-source releases</strong>: most Windows distributions (including portable) ship with an .ico.</li>
+      </ul>
+      <p>Conversely, macOS uses icns and high-DPI web contexts prefer PNG/SVG declarations — no ICO needed. See the <a href="/guides/app-icon-sizes/">app icon sizes guide</a> for a cross-platform cheat sheet.</p>
+
+      <h2 id="methods">Three Ways to Convert</h2>
+
+      <h3>Option 1: Online Converter (Recommended — Free &amp; Local)</h3>
+      <p>Use this site's <a href="/icon-forge/">Icon Forge</a> — everything runs in your browser, images never leave your device, and it packs all sizes in one go:</p>
+      <ol class="t-steps">
+        <li><strong>Upload the PNG</strong>: click or drop your logo — ideally a square transparent PNG at 256×256 or larger.</li>
+        <li><strong>Pick sizes</strong>: in the "Sizes" group check what you need (16/32/48 for a favicon; everything up to 256 for app icons).</li>
+        <li><strong>Export</strong>: check ICO under Format, hit "Generate icon pack", and download the ZIP containing the multi-size .ico.</li>
+        <li><strong>Deploy</strong>: place the .ico in your site root, or declare it via <code>&lt;link rel="icon"&gt;</code> (snippets in the <a href="/guides/favicon-guide/">Favicon guide</a>).</li>
+      </ol>
+
+      <h3>Option 2: Desktop Apps</h3>
+      <p>GIMP (free) exports via File → Export As → logo.ico with multi-size compression options; XnView / IrfanView can export ICO too. Great for offline or batch work — the cost is installing software and hunting for each app's size options.</p>
+
+      <h3>Option 3: Command Line (ImageMagick)</h3>
+      <p>With ImageMagick installed, one line produces a multi-size ICO from a PNG:</p>
+      <pre><code>magick logo.png -define icon:auto-resize=256,128,64,48,32,16 logo.ico</code></pre>
+      <p><code>icon:auto-resize</code> scales and packs each size automatically. Best for build scripts and automation; for a one-off file, an online tool is faster.</p>
+
+      <h2 id="tips">Things to Watch Out For</h2>
+      <ul>
+        <li><strong>256px is the ceiling</strong>: the ICO spec allows up to 256×256 per image. Larger sources (say 1024px) get scaled to 256 first — fine quality-wise, but don't expect 512px inside an ICO; that's PWA/macOS territory;</li>
+        <li><strong>Start square</strong>: non-square images get padded or stretched — center-crop to 1:1 before converting;</li>
+        <li><strong>Transparency survives</strong>: ICO supports alpha; a transparent PNG stays transparent (no white box);</li>
+        <li><strong>Don't skip small sizes</strong>: an ICO containing only 256px looks mushy in a 16px tab (browsers downscale badly). Always include 16/32;</li>
+        <li><strong>16px is a dark art</strong>: complex logos inevitably blur at that size; professionals draw a simplified mark for it. Icon Forge supports separate Light/Dark variants for exactly these cases.</li>
+      </ul>
+
+      <h2 id="compare">PNG vs ICO</h2>
+      <table>
+        <tr><th>Aspect</th><th>PNG</th><th>ICO</th></tr>
+        <tr><td>Contents</td><td>One image</td><td>A container holding multiple sizes</td></tr>
+        <tr><td>Size ceiling</td><td>No practical limit</td><td>256×256 per image</td></tr>
+        <tr><td>Transparency</td><td>Yes (alpha)</td><td>Yes (alpha)</td></tr>
+        <tr><td>Auto size picking</td><td>No</td><td>System picks 16/32/48/256 per context</td></tr>
+        <tr><td>Best for</td><td>Source assets, web images</td><td>Windows favicons, desktop/app icons</td></tr>
+      </table>
+      <p>In one line: <strong>PNG is the asset, ICO is the deliverable</strong>. Keep designs in PNG; ship ICO to Windows and favicons.</p>
+
+      <h2 id="faq">FAQ</h2>
+      <div class="faq-item"><p class="faq-q">Q: What's the difference between ICO and PNG?</p><p class="faq-a">A: PNG is a plain image format — one file, one image. ICO is Windows' icon container: one file can hold multiple sizes (16/32/48/256px), and the system picks the right one per context. You need ICO for favicons and Windows app icons.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: Can I just rename .png to .ico?</p><p class="faq-a">A: No. ICO is a container format with its own header and multi-image structure; renaming the extension doesn't change the file structure, and most consumers will misread or reject it. Use a real converter.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: What's the maximum size inside an ICO?</p><p class="faq-a">A: 256×256 per image, per the spec. Converters should pack sizes up to 256 and downscale anything larger first. Bigger targets (macOS icns, PWA 512px) belong to other formats.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: Which sizes should favicon.ico contain?</p><p class="faq-a">A: Traditionally 16, 32, and 48: 16px for browser tabs, 32px for taskbar/small desktop, 48px for desktop views. Modern browsers also accept PNG/SVG declarations, but a 16/32/48 ICO remains the most compatible baseline.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: Does PNG → ICO lose transparency?</p><p class="faq-a">A: No. ICO fully supports the alpha channel. As long as the source PNG is transparent and the converter preserves it, the result stays transparent. This site's conversion runs locally and writes alpha through untouched.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: How do I check which sizes an ICO contains?</p><p class="faq-a">A: Easiest: open the ICO in a browser (it shows the largest image). For the full list use Resource Hacker on Windows, or reload it in this site's icon tool. After generating, always spot-check the 16px variant for clarity.</p></div>
+
+      <div class="cta-box">
+        <p class="cta-title">Convert PNG to Multi-Size ICO — Free</p>
+        <p class="cta-sub">Light/Dark variants · Transparency preserved · All sizes in one pack · Runs in your browser</p>
+        <a class="cta-btn" href="/icon-forge/">Open Icon Forge →</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<div id="site-footer"></div>
+<script src="/assets/js/site.js" defer></script>
+</body>
+</html>

@@ -59,13 +59,17 @@ html.dark body::before { opacity: .07; }
 ::selection { background: var(--accent); color: #fff; }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
-/* ---------- 顶栏：平实纸面 + 发丝线，不做玻璃拟态 ---------- */
-.site-header {
+/* ---------- 顶栏：平实纸面 + 发丝线，不做玻璃拟态 ----------
+   注意：site.js 的 renderHeader 只注入 #site-header 容器与 .site-header__inner，
+   不存在 .site-header 类——吸顶样式必须写在 #site-header 上（与页脚 #site-footer 同理）。 */
+#site-header {
   position: sticky;
   top: 0;
   z-index: 50;
   background: var(--bg);
   border-bottom: 1px solid var(--border);
+  /* CLS 修复：页头由 site.js 注入，提前预留高度避免首屏内容下移 */
+  min-height: 64px;
 }
 .site-header__inner {
   max-width: 1080px;

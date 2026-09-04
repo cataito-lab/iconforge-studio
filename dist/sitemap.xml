@@ -114,6 +114,22 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://tools.cataito.com/guides/png-to-ico-guide/</loc>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://tools.cataito.com/guides/png-to-ico-guide/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tools.cataito.com/guides/png-to-ico-guide/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tools.cataito.com/guides/png-to-ico-guide/"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://tools.cataito.com/guides/favicon-not-showing-guide/</loc>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://tools.cataito.com/guides/favicon-not-showing-guide/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tools.cataito.com/guides/favicon-not-showing-guide/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tools.cataito.com/guides/favicon-not-showing-guide/"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://tools.cataito.com/guides/color-guide/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>

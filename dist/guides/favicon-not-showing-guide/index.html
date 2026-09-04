@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Favicon 不显示？8 个常见原因与排查步骤 | cataito</title>
+<meta name="title-zh" content="Favicon 不显示？8 个常见原因与排查步骤 | cataito">
+<meta name="title-en" content="Favicon Not Showing? 8 Common Causes and Fixes | cataito">
+<meta name="description" content="换了 favicon 网站还是显示旧图标？本文给出 60 秒快速自检、8 个常见原因（缓存/路径/声明/格式等）、开发者工具系统排查法，以及可直接复制的正确 HTML 写法。">
+<meta name="theme-color" content="#f6f3ec">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="cataito 工具箱">
+<meta property="og:title" content="Favicon 不显示？8 个常见原因与排查步骤">
+<meta property="og:description" content="60 秒快速自检、8 个常见原因、开发者工具排查法与正确的 favicon HTML 写法。">
+<meta property="og:url" content="https://tools.cataito.com/guides/favicon-not-showing-guide/">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:locale:alternate" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Favicon 不显示排查指南">
+<meta name="twitter:description" content="8 个常见原因、开发者工具排查法与正确的 favicon 写法。">
+<link rel="canonical" href="https://tools.cataito.com/guides/favicon-not-showing-guide/">
+<link rel="icon" href="/assets/img/icon.svg">
+<link rel="stylesheet" href="/assets/css/site.css">
+<script src="/assets/js/theme-init.js"></script>
+<script>
+  (function () {
+    try {
+      var l = localStorage.getItem('cataito-lang');
+      document.documentElement.setAttribute('lang', (l === 'en') ? 'en' : 'zh-CN');
+      if (l === 'en') document.documentElement.classList.add('lang-en');
+    } catch (e) {}
+  })();
+</script>
+<style>
+  /* ============ 指南页排版（与其他指南页保持一致） ============ */
+  .guide-wrap { max-width: 760px; margin: 0; }
+  .guide-meta { font-size: 13px; color: var(--text-3); margin: 0 0 6px; }
+  .page-sub { margin-bottom: 10px; }
+  .article { font-size: 15px; line-height: 1.85; color: var(--text); }
+  .article h2 {
+    font-size: 21px; font-weight: 700; letter-spacing: -.3px;
+    margin: 44px 0 14px; padding-top: 16px; border-top: 1px solid var(--border); color: var(--text);
+  }
+  .article h3 { font-size: 16.5px; font-weight: 650; margin: 26px 0 10px; color: var(--text); }
+  .article p { margin: 0 0 14px; color: var(--text-2); }
+  .article strong { color: var(--text); font-weight: 650; }
+  .article a { color: var(--accent); text-decoration: none; }
+  .article a:hover { text-decoration: underline; }
+  .article ul, .article ol { margin: 0 0 16px; padding-left: 22px; color: var(--text-2); }
+  .article li { margin: 6px 0; }
+  .article code {
+    font-family: var(--font-mono);
+    font-size: 13px; background: var(--card-2); border: 1px solid var(--border);
+    border-radius: 3px; padding: 1px 6px; color: var(--text);
+  }
+  .article pre {
+    background: var(--card-2); border: 1px solid var(--border); border-radius: var(--radius-sm);
+    padding: 14px 16px; margin: 14px 0 18px; overflow-x: auto;
+  }
+  .article pre code { background: none; border: none; padding: 0; font-size: 12.5px; line-height: 1.7; }
+  .article table {
+    width: 100%; border-collapse: collapse; margin: 18px 0 22px;
+    font-size: 13.5px; background: var(--card);
+    border: 1px solid var(--border); border-radius: var(--radius-sm); overflow: hidden;
+  }
+  .article th, .article td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--border); }
+  .article th { background: var(--card-2); color: var(--text); font-weight: 650; white-space: nowrap; }
+  .article td { color: var(--text-2); }
+  .article tr:last-child td { border-bottom: none; }
+  .toc {
+    background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 16px 18px; margin: 20px 0 8px; box-shadow: var(--shadow-sm);
+  }
+  .toc-title { font-size: 13px; font-weight: 650; color: var(--text); margin: 0 0 10px; }
+  .toc ol { margin: 0; padding-left: 20px; font-size: 13.5px; }
+  .toc li { margin: 5px 0; }
+  .toc a { color: var(--text-2); text-decoration: none; }
+  .toc a:hover { color: var(--accent); }
+  /* FAQ 卡片样式由 site.css 的 .faq-item / .t-faq-* 统一提供 */
+  .cta-box {
+    background: linear-gradient(135deg, var(--accent-soft), var(--accent-soft-2));
+    border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent); border-radius: var(--radius);
+    padding: 20px 22px; margin: 34px 0 10px; text-align: center;
+  }
+  .cta-box .cta-title { font-size: 17px; font-weight: 700; color: var(--text); margin: 0 0 6px; }
+  .cta-box .cta-sub { font-size: 13.5px; color: var(--text-2); margin: 0 0 14px; }
+  .cta-btn {
+    display: inline-block; background: var(--accent); color: #fff; text-decoration: none;
+    font-size: 14px; font-weight: 600; padding: 11px 26px; border-radius: var(--radius-sm);
+    box-shadow: 0 6px 18px var(--accent-glow); transition: background .15s;
+  }
+  .cta-btn:hover { background: var(--accent-hover); }
+  /* 修复：.article a 的特异度(0,1,1)会压过 .cta-btn(0,1,0) 的 color:#fff，
+     导致按钮底字同色在亮/暗模式下都不可读。用更高特异度夺回白色文字。 */
+  .article a.cta-btn, .article .cta-btn { color: #fff; text-decoration: none; }
+  .article a.cta-btn:hover { color: #fff; text-decoration: none; background: var(--accent-hover); }
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Favicon 不显示？8 个常见原因与排查步骤",
+  "description": "换了 favicon 还是显示旧图标？60 秒快速自检、8 个常见原因（缓存/路径/声明/格式）、开发者工具系统排查法与正确的 HTML 写法。",
+  "inLanguage": "zh-CN",
+  "datePublished": "2026-09-05",
+  "dateModified": "2026-09-05",
+  "author": { "@type": "Organization", "name": "cataito", "url": "https://tools.cataito.com/" },
+  "publisher": { "@type": "Organization", "name": "cataito 工具箱", "url": "https://tools.cataito.com/" },
+  "mainEntityOfPage": "https://tools.cataito.com/guides/favicon-not-showing-guide/"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "为什么换了 favicon 之后还是显示旧的？",
+      "acceptedAnswer": { "@type": "Answer", "text": "几乎都是缓存问题，且不止一层：浏览器本地图标缓存、HTTP 缓存、CDN 缓存。依次试：强制刷新（Ctrl+F5）、无痕窗口、直接访问 favicon 文件 URL 看是否为新图；仍不行就给引用加版本参数（如 /favicon.ico?v=2）并清理 CDN 缓存。" }
+    },
+    {
+      "@type": "Question",
+      "name": "favicon.ico 必须放在网站根目录吗？",
+      "acceptedAnswer": { "@type": "Answer", "text": "不是必须，但放根目录是历史约定——即使页面没有声明，浏览器也会自动请求 /favicon.ico。放在其他目录或使用其他文件名时，必须在 HTML 里用 link rel=\"icon\" 显式声明。" }
+    },
+    {
+      "@type": "Question",
+      "name": "ICO、PNG、SVG favicon 应该用哪个？",
+      "acceptedAnswer": { "@type": "Answer", "text": "推荐组合：一个含 16/32/48px 的 .ico 放根目录兜底（老浏览器与默认请求），再加 PNG/SVG 的 link 声明给现代浏览器高清显示。大部分生成器可以一次性输出整套。" }
+    },
+    {
+      "@type": "Question",
+      "name": "本地预览正常，部署后看不到新 favicon？",
+      "acceptedAnswer": { "@type": "Answer", "text": "按顺序查：文件是否真的部署成功（直接访问线上 favicon URL）；服务器文件名大小写是否一致（Linux 服务器 Favicon.ico 与 favicon.ico 是两个文件）；CDN 是否缓存了旧版（清缓存或加版本参数）。" }
+    },
+    {
+      "@type": "Question",
+      "name": "浏览器多久会重新抓取一次 favicon？",
+      "acceptedAnswer": { "@type": "Answer", "text": "没有固定周期——favicon 缓存非常顽固，可能保留数周。可靠的做法是更换文件名或加版本参数强制失效，而不是等浏览器自己更新。" }
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "首页", "item": "https://tools.cataito.com/" },
+    { "@type": "ListItem", "position": 2, "name": "使用指南", "item": "https://tools.cataito.com/guides/" },
+    { "@type": "ListItem", "position": 3, "name": "Favicon 不显示排查", "item": "https://tools.cataito.com/guides/favicon-not-showing-guide/" }
+  ]
+}
+</script>
+</head>
+<body>
+<div id="site-header"></div>
+
+<main class="site-main">
+  <div class="guide-wrap">
+    <nav class="breadcrumb"><a href="/" data-i18n="crumb_home">首页</a><span class="sep">/</span><a href="/guides/" data-i18n="nav_guides">使用指南</a><span class="sep">/</span><span data-i18n="gd_ffix_short">Favicon 不显示排查</span></nav>
+    <p class="guide-meta"><span data-i18n="gd_published">发布于</span> 2026-09-05 · cataito</p>
+    <h1 class="page-h1" data-i18n="gd_ffix_h1">Favicon 不显示？8 个常见原因与排查步骤</h1>
+    <p class="page-sub" data-i18n="gd_ffix_sub">明明换了 favicon，浏览器标签页却还是旧图标，或者干脆是空白地球？这是站长最常遇到也最迷惑的问题之一。本文给你 60 秒快速自检、按命中率排序的 8 个原因、用开发者工具的系统排查法，以及可直接复制的正确 HTML 写法。</p>
+
+    <!-- ================= 中文正文 ================= -->
+    <div class="article lb-zh">
+      <div class="toc">
+        <p class="toc-title">目录</p>
+        <ol>
+          <li><a href="#quickcheck">60 秒快速自检</a></li>
+          <li><a href="#causes">8 个常见原因</a></li>
+          <li><a href="#steps">用开发者工具系统排查</a></li>
+          <li><a href="#html">正确的 favicon 声明写法</a></li>
+          <li><a href="#faq">常见问题</a></li>
+        </ol>
+      </div>
+
+      <h2 id="quickcheck">60 秒快速自检</h2>
+      <p>先做这四步，大部分案例当场解决：</p>
+      <ul>
+        <li><strong>强制刷新</strong>：<code>Ctrl+F5</code>（Mac 为 <code>Cmd+Shift+R</code>），绕过缓存重新拉取页面与图标；</li>
+        <li><strong>开无痕窗口</strong>访问网站——无痕模式缓存是干净的，如果无痕里显示正常，就是本机缓存问题；</li>
+        <li><strong>直接访问图标文件</strong>：地址栏输入 <code>你的域名/favicon.ico</code>，能看到新图说明文件已部署，问题在缓存；看到 404 说明路径/部署有问题；</li>
+        <li><strong>换个浏览器</strong>再开一次——不同浏览器缓存策略不同，可以快速区分「全站问题」和「本机问题」。</li>
+      </ul>
+
+      <h2 id="causes">8 个常见原因（按命中率排序）</h2>
+
+      <h3>1. 缓存——占比最高</h3>
+      <p>favicon 的缓存异常顽固：浏览器会把它单独缓存几周，与普通图片缓存策略不同。<strong>解法</strong>：强刷 + 无痕验证；发布新版时给引用加版本参数（如 <code>/favicon.ico?v=2</code>）是最可靠的强制更新手段。</p>
+
+      <h3>2. 路径错误</h3>
+      <p>声明写成 <code>src="images/favicon.ico"</code> 但文件实际不在该目录；或站点部署在子路径（如 <code>example.com/blog/</code>）却用了根相对路径。相对路径以<strong>当前页面 URL</strong> 为基准解析，建议一律用根相对（<code>/favicon.ico</code>）或绝对 URL。</p>
+
+      <h3>3. HTML 里根本没有声明</h3>
+      <p>文件放对位置时（根目录 <code>/favicon.ico</code>），不声明也能被大多数浏览器请求到；但只要文件名不是默认的 <code>favicon.ico</code>、或放在子目录，就必须声明。<strong>最稳的做法是无条件声明</strong>，写法见下文。</p>
+
+      <h3>4. 文件本身不合规</h3>
+      <ul>
+        <li>把 PNG 直接改后缀成 .ico（容器结构不对，浏览器可能拒绝）；</li>
+        <li>ICO 里只有一张 256px 大图，缺 16px 档——标签页强制缩小后模糊得几乎看不见，用户以为「没显示」；</li>
+        <li>SVG favicon 写了 <code>type="image/svg+xml"</code> 但文件实际不是 SVG。</li>
+      </ul>
+      <p>用 <a href="/favicon/">Favicon 生成器</a>重新输出一套合规的多尺寸文件即可。</p>
+
+      <h3>5. 大小写不匹配</h3>
+      <p>Windows/macOS 文件系统不区分大小写，本地预览一切正常；部署到 Linux 服务器后 <code>Favicon.ico</code> 和 <code>favicon.ico</code> 是两个文件——直接 404。这是「本地好好的，上线就没了」的头号原因。</p>
+
+      <h3>6. CDN / 反向代理缓存</h3>
+      <p>Cloudflare、CDN 节点可能缓存了旧图标。在 CDN 控制台 Purge 该文件（或全站缓存），并配合版本参数双保险。</p>
+
+      <h3>7. head 结构错误</h3>
+      <p><code>&lt;link&gt;</code> 标签必须出现在 <code>&lt;head&gt;</code> 内。常见的翻车：link 标签被写在了 body 里、head 提前被闭合、或模板渲染时标签被转义成纯文本。用「查看网页源代码」确认声明真的以 HTML 标签形式存在。</p>
+
+      <h3>8. 浏览器扩展或本地数据</h3>
+      <p>少数隐私类扩展会拦截图标请求；书签/快捷方式里存的旧图标也要单独刷新。前 7 条都排除后，再用另一台设备验证一次。</p>
+
+      <h2 id="steps">用开发者工具系统排查</h2>
+      <p>快速自检没解决，就上 <strong>F12 开发者工具</strong>，两分钟定位问题在哪一层：</p>
+      <ol class="t-steps">
+        <li><strong>打开 Network 面板</strong>：按 <code>F12</code> → 切到 Network（网络）标签 → 勾选「Disable cache」；</li>
+        <li><strong>刷新页面</strong>，在过滤框输入 <code>favicon</code>（或 .ico），找到图标请求；</li>
+        <li><strong>看状态码</strong>：<code>200</code> = 请求成功（问题在内容或浏览器缓存）；<code>404</code> = 路径/大小写/部署问题；请求根本不存在 = HTML 没声明或结构错误；</li>
+        <li><strong>看响应内容</strong>：点开该请求 → Response/预览，确认返回的就是新图；</li>
+        <li><strong>看实际生效的声明</strong>：在 Elements 面板搜 <code>rel="icon"</code>，核对其 href 指向与你的预期一致。</li>
+      </ol>
+      <p>状态码 200 且内容正确但标签页仍旧图？那就是最顽固的本机图标缓存——换设备或等缓存过期，不影响其他访客。</p>
+
+      <h2 id="html">正确的 favicon 声明写法</h2>
+      <p>现代兼容性最全的一套声明（放进 <code>&lt;head&gt;</code>）：</p>
+      <pre><code>&lt;!-- 兜底：老浏览器与默认请求 --&gt;
+&lt;link rel="icon" href="/favicon.ico" sizes="32x32"&gt;
+&lt;!-- 现代浏览器：高清 PNG --&gt;
+&lt;link rel="icon" href="/icon-192.png" type="image/png" sizes="192x192"&gt;
+&lt;!-- iOS 桌面图标 --&gt;
+&lt;link rel="apple-touch-icon" href="/apple-touch-icon.png"&gt;</code></pre>
+      <p>要点：<strong>路径用根相对</strong>（以 <code>/</code> 开头），避免随页面路径变化；ICO 兜底文件包含 16/32/48 多尺寸；全平台尺寸清单见<a href="/guides/favicon-guide/">Favicon 完全指南</a>。需要生成这一整套文件，用 <a href="/favicon/">Favicon 生成器</a>上传一张图即可。</p>
+
+      <h2 id="faq">常见问题</h2>
+      <div class="faq-item"><p class="faq-q">Q：为什么换了 favicon 之后还是显示旧的？</p><p class="faq-a">A：几乎都是缓存问题，且不止一层：浏览器本地图标缓存、HTTP 缓存、CDN 缓存。依次试：强制刷新（Ctrl+F5）、无痕窗口、直接访问 favicon 文件 URL 看是否为新图；仍不行就给引用加版本参数（如 /favicon.ico?v=2）并清理 CDN 缓存。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：favicon.ico 必须放在网站根目录吗？</p><p class="faq-a">A：不是必须，但放根目录是历史约定——即使页面没有声明，浏览器也会自动请求 /favicon.ico。放在其他目录或使用其他文件名时，必须在 HTML 里用 link rel="icon" 显式声明。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：ICO、PNG、SVG favicon 应该用哪个？</p><p class="faq-a">A：推荐组合：一个含 16/32/48px 的 .ico 放根目录兜底（老浏览器与默认请求），再加 PNG/SVG 的 link 声明给现代浏览器高清显示。大部分生成器可以一次性输出整套。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：本地预览正常，部署后看不到新 favicon？</p><p class="faq-a">A：按顺序查：文件是否真的部署成功（直接访问线上 favicon URL）；服务器文件名大小写是否一致（Linux 服务器 Favicon.ico 与 favicon.ico 是两个文件）；CDN 是否缓存了旧版（清缓存或加版本参数）。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：浏览器多久会重新抓取一次 favicon？</p><p class="faq-a">A：没有固定周期——favicon 缓存非常顽固，可能保留数周。可靠的做法是更换文件名或加版本参数强制失效，而不是等浏览器自己更新。</p></div>
+
+      <div class="cta-box">
+        <p class="cta-title">一次性生成全套合规 Favicon</p>
+        <p class="cta-sub">ICO / 多尺寸 PNG 一包带走 · 透明保留 · 纯浏览器本地处理</p>
+        <a class="cta-btn" href="/favicon/">打开 Favicon 生成器 →</a>
+      </div>
+    </div>
+
+    <!-- ================= English body ================= -->
+    <div class="article lb-en">
+      <div class="toc">
+        <p class="toc-title">Table of Contents</p>
+        <ol>
+          <li><a href="#quickcheck">The 60-Second Check</a></li>
+          <li><a href="#causes">8 Common Causes</a></li>
+          <li><a href="#steps">Diagnose with DevTools</a></li>
+          <li><a href="#html">Correct Favicon Markup</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ol>
+      </div>
+
+      <h2 id="quickcheck">The 60-Second Check</h2>
+      <p>Do these four steps first — they resolve most cases on the spot:</p>
+      <ul>
+        <li><strong>Hard refresh</strong>: <code>Ctrl+F5</code> (Mac: <code>Cmd+Shift+R</code>) to bypass cache for the page and its icon;</li>
+        <li><strong>Open an incognito window</strong> — incognito has a clean cache. If the icon shows correctly there, it's a local cache problem;</li>
+        <li><strong>Visit the icon file directly</strong>: type <code>yourdomain.com/favicon.ico</code> in the address bar. Seeing the new image means the file is deployed and the issue is cache; a 404 means path/deployment;</li>
+        <li><strong>Try another browser</strong> — different caches help you quickly split "site-wide problem" from "this machine's problem".</li>
+      </ul>
+
+      <h2 id="causes">8 Common Causes (Ranked by Hit Rate)</h2>
+
+      <h3>1. Cache — by far the most common</h3>
+      <p>Favicon caching is bizarrely stubborn: browsers cache it separately from regular images, sometimes for weeks. <strong>Fix</strong>: hard refresh + incognito test; on release, bump a version query (<code>/favicon.ico?v=2</code>) — the most reliable forced update.</p>
+
+      <h3>2. Wrong path</h3>
+      <p>The declaration says <code>src="images/favicon.ico"</code> but the file isn't there; or the site lives under a sub-path (<code>example.com/blog/</code>) while a root-relative path is used. Relative paths resolve against the <strong>current page URL</strong> — prefer root-relative (<code>/favicon.ico</code>) or absolute URLs.</p>
+
+      <h3>3. No declaration at all</h3>
+      <p>If the file sits at the root as <code>/favicon.ico</code>, most browsers will find it even undeclared. But any other filename or subdirectory requires a <code>link rel="icon"</code> declaration. <strong>Best practice: always declare it</strong> — snippet below.</p>
+
+      <h3>4. Broken file itself</h3>
+      <ul>
+        <li>A PNG renamed to .ico (wrong container structure — browsers may reject it);</li>
+        <li>An ICO containing only one 256px image with no 16px entry — forced downscale in the tab makes it a blur users read as "missing";</li>
+        <li>An SVG favicon declared with <code>type="image/svg+xml"</code> that isn't actually SVG.</li>
+      </ul>
+      <p>Regenerate a compliant multi-size set with the <a href="/favicon/">Favicon Generator</a>.</p>
+
+      <h3>5. Case mismatch</h3>
+      <p>Windows/macOS filesystems are case-insensitive, so local preview works fine; on a Linux server <code>Favicon.ico</code> and <code>favicon.ico</code> are different files — instant 404. This is the #1 cause of "works locally, gone in production".</p>
+
+      <h3>6. CDN / reverse-proxy cache</h3>
+      <p>Cloudflare or CDN nodes may hold the old icon. Purge the file (or everything) from the CDN console, and pair it with the version-parameter trick.</p>
+
+      <h3>7. Malformed head</h3>
+      <p><code>&lt;link&gt;</code> tags must live inside <code>&lt;head&gt;</code>. Classic failures: the link sits in the body, the head closes early, or a template escapes the tag into plain text. Use "View page source" to confirm the declaration exists as real HTML.</p>
+
+      <h3>8. Extensions or local data</h3>
+      <p>Some privacy extensions block icon requests; bookmarks/home-screen shortcuts keep their own stale copies. After ruling out 1–7, verify once from another device.</p>
+
+      <h2 id="steps">Diagnose with DevTools</h2>
+      <p>If the quick check didn't crack it, open <strong>DevTools (F12)</strong> — two minutes to find the broken layer:</p>
+      <ol class="t-steps">
+        <li><strong>Network panel</strong>: press <code>F12</code> → Network tab → check "Disable cache";</li>
+        <li><strong>Reload</strong>, filter requests by <code>favicon</code> (or .ico), and find the icon request;</li>
+        <li><strong>Read the status code</strong>: <code>200</code> = served fine (problem is content or browser cache); <code>404</code> = path/case/deployment; no request at all = missing or malformed declaration;</li>
+        <li><strong>Check the response</strong>: open the request → Response/Preview, confirm it's the new image;</li>
+        <li><strong>Check the live declaration</strong>: in Elements, search <code>rel="icon"</code> and confirm the href matches expectations.</li>
+      </ol>
+      <p>Status 200 with correct content but the tab still shows the old icon? That's the most stubborn local icon cache — try another device or wait it out; other visitors aren't affected.</p>
+
+      <h2 id="html">Correct Favicon Markup</h2>
+      <p>The most complete modern set (inside <code>&lt;head&gt;</code>):</p>
+      <pre><code>&lt;!-- Fallback: legacy browsers &amp; default requests --&gt;
+&lt;link rel="icon" href="/favicon.ico" sizes="32x32"&gt;
+&lt;!-- Modern browsers: hi-dpi PNG --&gt;
+&lt;link rel="icon" href="/icon-192.png" type="image/png" sizes="192x192"&gt;
+&lt;!-- iOS home-screen icon --&gt;
+&lt;link rel="apple-touch-icon" href="/apple-touch-icon.png"&gt;</code></pre>
+      <p>Key points: use <strong>root-relative paths</strong> (starting with <code>/</code>) so they don't shift with page URLs; the fallback ICO should carry 16/32/48; the full cross-platform size list lives in the <a href="/guides/favicon-guide/">Favicon guide</a>. To generate the whole set from one image, use the <a href="/favicon/">Favicon Generator</a>.</p>
+
+      <h2 id="faq">FAQ</h2>
+      <div class="faq-item"><p class="faq-q">Q: Why does the old favicon still show after I replaced it?</p><p class="faq-a">A: Almost always cache — and multiple layers of it: the browser's local icon cache, HTTP cache, and CDN cache. In order: hard refresh (Ctrl+F5), incognito window, visit the favicon file URL directly to see if it's the new one; if not, add a version query (/favicon.ico?v=2) and purge the CDN.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: Does favicon.ico have to be in the site root?</p><p class="faq-a">A: Not required, but root placement is a long-standing convention — browsers request /favicon.ico automatically even without a declaration. Any other location or filename needs an explicit link rel="icon" declaration.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: ICO, PNG, or SVG favicon — which one?</p><p class="faq-a">A: Combine them: a .ico with 16/32/48px at the root as the fallback (legacy browsers and default requests), plus PNG/SVG link declarations for hi-dpi rendering in modern browsers. Most generators output the whole set at once.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: Works locally, missing after deployment?</p><p class="faq-a">A: Check in order: the file actually deployed (visit the live favicon URL directly); filename case matches (on Linux Favicon.ico and favicon.ico are different files); the CDN isn't serving a stale copy (purge or add a version query).</p></div>
+      <div class="faq-item"><p class="faq-q">Q: How often do browsers re-fetch favicons?</p><p class="faq-a">A: There's no fixed schedule — favicon cache is famously sticky and can last weeks. The reliable approach is a new filename or a version query to force invalidation, rather than waiting for browsers to refresh on their own.</p></div>
+
+      <div class="cta-box">
+        <p class="cta-title">Generate a Compliant Favicon Set in One Go</p>
+        <p class="cta-sub">ICO + multi-size PNG in one pack · Transparency preserved · Runs in your browser</p>
+        <a class="cta-btn" href="/favicon/">Open Favicon Generator →</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<div id="site-footer"></div>
+<script src="/assets/js/site.js" defer></script>
+</body>
+</html>
