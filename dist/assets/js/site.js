@@ -1,5 +1,5 @@
 /* ============================================================
-   cataito 工具箱 · 共享外壳脚本
+   CATAITO 工具箱 · 共享外壳脚本
    - 注入顶栏（导航 + 语言切换）与页脚
    - 中英双语切换（localStorage 持久化）
    - 元素加 data-i18n="key" 即自动翻译；data-i18n-html 支持内嵌标签
@@ -21,7 +21,7 @@
     footer_contact:  { zh: '联系我们', en: 'Contact' },
 
     /* 404 页按钮 */
-    nf_btn_home:       { zh: 'cataito 首页', en: 'cataito Home' },
+    nf_btn_home:       { zh: 'CATAITO 首页', en: 'CATAITO Home' },
     nf_btn_iconforge:  { zh: '图标工坊', en: 'Icon Forge' },
     nf_btn_favicon:    { zh: 'Favicon 生成', en: 'Favicon' },
     nf_btn_compress:   { zh: '图片压缩', en: 'Image Compressor' },
@@ -40,9 +40,9 @@
     home_tool_palette_desc:  { zh: '从图片提取配色，或生成协调的调色板方案。', en: 'Extract colors from an image or generate a harmonious palette.' },
 
     /* 首页：关于 / 特性 / FAQ */
-    about_h:        { zh: '关于 cataito', en: 'About cataito' },
-    about_body:     { zh: '<p>cataito 是一个 100% 免费、隐私优先的在线工具箱，专注于图标与图片处理。所有工具均为纯前端实现——图片在你的浏览器本地完成处理，绝不上传服务器，因此你可以放心处理商业素材与隐私截图。无需注册、无需安装，打开即用。</p><p>我们相信好工具应当零门槛：没有弹窗广告，不收集你的文件，也不强制登录。无论是开发者、设计师，还是偶尔需要做个图标的普通用户，都能在这里快速完成工作。</p>',
-                      en: '<p>cataito is a 100% free, privacy-first online toolbox focused on icons and images. Every tool is client-side — your images are processed in your browser and never uploaded, so you can safely handle commercial assets and private screenshots. No sign-up, no install; just open and use.</p><p>We believe good tools should have zero friction: no pop-up ads, no file collection, no forced login. Whether you are a developer, a designer, or someone who just needs an icon now and then, you can get the job done here quickly.</p>' },
+    about_h:        { zh: '关于 CATAITO', en: 'About CATAITO' },
+    about_body:     { zh: '<p>CATAITO 是一个 100% 免费、隐私优先的在线工具箱，专注于图标与图片处理。所有工具均为纯前端实现——图片在你的浏览器本地完成处理，绝不上传服务器，因此你可以放心处理商业素材与隐私截图。无需注册、无需安装，打开即用。</p><p>我们相信好工具应当零门槛：没有弹窗广告，不收集你的文件，也不强制登录。无论是开发者、设计师，还是偶尔需要做个图标的普通用户，都能在这里快速完成工作。</p>',
+                      en: '<p>CATAITO is a 100% free, privacy-first online toolbox focused on icons and images. Every tool is client-side — your images are processed in your browser and never uploaded, so you can safely handle commercial assets and private screenshots. No sign-up, no install; just open and use.</p><p>We believe good tools should have zero friction: no pop-up ads, no file collection, no forced login. Whether you are a developer, a designer, or someone who just needs an icon now and then, you can get the job done here quickly.</p>' },
     feat_h:         { zh: '核心特性', en: 'Key features' },
     feat_privacy_h: { zh: '隐私优先', en: 'Privacy first' },
     feat_privacy_d: { zh: '纯浏览器本地处理，文件不经过网络，商业素材也能放心用。', en: 'Everything runs locally in your browser; files never touch the network — safe even for commercial assets.' },
@@ -53,8 +53,8 @@
     feat_theme_h:   { zh: '双主题', en: 'Dual theme' },
     feat_theme_d:   { zh: '亮色 / 暗色自动跟随系统，长时间使用不刺眼。', en: 'Light / Dark follows your system automatically, easy on the eyes for long sessions.' },
     faq_h:          { zh: '常见问题', en: 'FAQ' },
-    hf_faq_1_q:     { zh: 'cataito 是免费的吗？', en: 'Is cataito free?' },
-    hf_faq_1_a:     { zh: '是的。cataito 全部工具 100% 免费、无需注册，所有处理都在你的浏览器本地完成，图片与数据绝不上传服务器。', en: 'Yes. Every cataito tool is 100% free with no sign-up; all processing happens locally in your browser, and your images and data are never uploaded.' },
+    hf_faq_1_q:     { zh: 'CATAITO 是免费的吗？', en: 'Is CATAITO free?' },
+    hf_faq_1_a:     { zh: '是的。CATAITO 全部工具 100% 免费、无需注册，所有处理都在你的浏览器本地完成，图片与数据绝不上传服务器。', en: 'Yes. Every CATAITO tool is 100% free with no sign-up; all processing happens locally in your browser, and your images and data are never uploaded.' },
     hf_faq_2_q:     { zh: '我的图片会被上传到服务器吗？', en: 'Are my images uploaded to a server?' },
     hf_faq_2_a:     { zh: '不会。所有工具基于浏览器本地运算（Canvas / Web API），文件不经过网络，商业素材和隐私截图都能放心使用。', en: 'No. All tools run on in-browser computation (Canvas / Web API); files never cross the network, so commercial assets and private screenshots are safe to use.' },
     hf_faq_3_q:     { zh: '目前提供哪些工具？', en: 'Which tools are available?' },
@@ -400,9 +400,9 @@
     }
     el.innerHTML =
       '<div class="site-header__inner">' +
-        '<a class="brand" href="/" aria-label="cataito">' +
-          '<img class="brand__logo brand__logo--dark" src="/assets/logo/cataito-logo-dark.svg" alt="cataito" width="124" height="22">' +
-          '<img class="brand__logo brand__logo--light" src="/assets/logo/cataito-logo-light.svg" alt="cataito" width="124" height="22">' +
+        '<a class="brand" href="/" aria-label="CATAITO">' +
+          '<img class="brand__logo brand__logo--dark" src="/assets/logo/cataito-logo-dark.svg" alt="CATAITO" width="124" height="22">' +
+          '<img class="brand__logo brand__logo--light" src="/assets/logo/cataito-logo-light.svg" alt="CATAITO" width="124" height="22">' +
           '<span class="brand__tag" data-i18n="brand_sub">免费工具箱</span>' +
         '</a>' +
         '<nav class="nav">' +
@@ -445,7 +445,7 @@
           '<a href="/contact/" data-i18n="footer_contact">联系我们</a>' +
           '<a href="/sitemap.xml" data-i18n="footer_sitemap">站点地图</a>' +
           '<a href="https://github.com/cataito-lab/iconforge-studio" target="_blank" rel="noopener" data-i18n="footer_source">开源仓库</a>' +
-          '<span>© ' + y + ' cataito</span>' +
+          '<span>© ' + y + ' CATAITO</span>' +
         '</div>' +
       '</div>';
   }
