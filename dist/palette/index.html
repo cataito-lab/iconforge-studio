@@ -7,7 +7,7 @@
 <meta name="title-zh" content="配色工具 — 在线提取图片主色、生成调色板 | cataito">
 <meta name="title-en" content="Color Palette Generator — Extract Colors from an Image Online | cataito">
 <meta name="description" content="免费在线配色工具：上传图片自动提取主色调，一键生成互补色、类似色、三角配色方案，支持复制 HEX/RGB、导出 CSS 变量与 PNG 色卡。纯浏览器本地处理，图片不上传。">
-<meta name="theme-color" content="#fbfbfd">
+<meta name="theme-color" content="#fafaf9">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="cataito 工具箱">
 <meta property="og:title" content="配色工具 — 在线提取图片主色、生成调色板">
@@ -66,19 +66,19 @@
   .pl-info { padding: 8px 10px 10px; }
   .pl-hex {
     display: block;
-    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-family: var(--font-mono);
     font-size: 12.5px;
     font-weight: 600;
     color: var(--text);
   }
   .pl-rgb {
     display: block;
-    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-    font-size: 11px;
+    font-family: var(--font-mono);
+    font-size: 12px;
     color: var(--text-3);
     margin-top: 2px;
   }
-  .pl-share { font-size: 10.5px; color: var(--text-3); margin-top: 4px; }
+  .pl-share { font-size: 12px; color: var(--text-3); margin-top: 4px; }
   .pl-copied { position: relative; }
   .pl-copied::after {
     content: attr(data-copied);
@@ -97,9 +97,11 @@
 <body>
 <div id="site-header"></div>
 <main class="site-main">
-  <nav class="breadcrumb"><a href="/" data-i18n="crumb_home">首页</a><span class="sep">/</span><span data-i18n="pl_name">配色工具</span></nav>
-  <h1 class="page-h1" data-i18n="pl_name">配色工具</h1>
-  <p class="page-sub" data-i18n="pl_desc">上传图片自动提取主色调，一键生成协调的配色方案，复制色值或导出 CSS 变量。纯浏览器本地处理。</p>
+  <div class="t-head">
+    <nav class="breadcrumb"><a href="/" data-i18n="crumb_home">首页</a><span class="sep">/</span><span data-i18n="pl_name">配色工具</span></nav>
+    <h1 class="page-h1" data-i18n="pl_name">配色工具</h1>
+    <p class="page-sub" data-i18n="pl_desc">上传图片自动提取主色调，一键生成协调的配色方案，复制色值或导出 CSS 变量。纯浏览器本地处理。</p>
+  </div>
 
   <section class="t-card t-flow">
     <div id="pl-dropzone" class="t-drop" tabindex="0">

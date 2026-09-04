@@ -26,7 +26,7 @@
     var h = document.documentElement;
     if (theme === 'dark') h.classList.add('dark'); else h.classList.remove('dark');
     var meta = document.querySelector('meta[name="theme-color"]');
-    if (meta) meta.setAttribute('content', theme === 'dark' ? '#0e1016' : '#fbfbfd');
+    if (meta) meta.setAttribute('content', theme === 'dark' ? '#101014' : '#fafaf9');
   }
   function fire() {
     try {

@@ -7,7 +7,7 @@
 <meta name="title-zh" content="图片压缩 — 免费在线批量压缩 JPG/PNG/WebP | cataito">
 <meta name="title-en" content="Image Compressor — Free Online JPG/PNG/WebP Compression | cataito">
 <meta name="description" content="免费在线图片压缩：批量压缩 JPG / PNG / WebP，自由调节质量与尺寸，一键打包 ZIP 下载。纯浏览器本地处理，图片绝不上传服务器。">
-<meta name="theme-color" content="#fbfbfd">
+<meta name="theme-color" content="#fafaf9">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="cataito 工具箱">
 <meta property="og:title" content="图片压缩 — 免费在线批量压缩">
@@ -48,9 +48,11 @@
 <body>
 <div id="site-header"></div>
 <main class="site-main">
-  <nav class="breadcrumb"><a href="/" data-i18n="crumb_home">首页</a><span class="sep">/</span><span data-i18n="cp_name">图片压缩</span></nav>
-  <h1 class="page-h1" data-i18n="cp_name">图片压缩</h1>
-  <p class="page-sub" data-i18n="cp_desc">在线压缩 JPG / PNG / WebP：自由调质量、控尺寸，一键批量打包下载。纯浏览器本地处理。</p>
+  <div class="t-head">
+    <nav class="breadcrumb"><a href="/" data-i18n="crumb_home">首页</a><span class="sep">/</span><span data-i18n="cp_name">图片压缩</span></nav>
+    <h1 class="page-h1" data-i18n="cp_name">图片压缩</h1>
+    <p class="page-sub" data-i18n="cp_desc">在线压缩 JPG / PNG / WebP：自由调质量、控尺寸，一键批量打包下载。纯浏览器本地处理。</p>
+  </div>
 
   <section class="t-card t-flow">
     <div id="cp-dropzone" class="t-drop" tabindex="0">
@@ -313,7 +315,7 @@ document.addEventListener('DOMContentLoaded', function () {
       ? '<span class="t-badge muted">' + esc(t('cp_grew')) + '</span>'
       : '<span class="t-badge">-' + saved + '%</span>';
     row.innerHTML =
-      '<div class="t-thumb"><img src="' + item.url + '" alt=""></div>' +
+      '<div class="t-thumb t-checker"><img src="' + item.url + '" alt=""></div>' +
       '<div class="t-row-main">' +
         '<div class="t-row-name" title="' + esc(item.file.name) + '">' + esc(item.file.name) + '</div>' +
         '<div class="t-row-meta">' +
@@ -561,9 +563,7 @@ document.addEventListener('DOMContentLoaded', function () {
   .cp-row-actions { display: flex; gap: 6px; flex: none; }
   body.cp-busy .t-row { opacity: .55; }
   .t-row-meta strong { color: var(--text-2); font-variant-numeric: tabular-nums; }
-  .t-thumb {
-    background: conic-gradient(var(--checker) 90deg, transparent 0 180deg, var(--checker) 0 270deg, transparent 0) 0 0 / 13px 13px;
-  }
+  /* 缩略图透明底统一用 site.css 的 .t-checker，不再覆盖 .t-thumb 背景 */
   @media (max-width: 560px) {
     .t-bar { flex-direction: column; align-items: stretch; }
     .t-bar-actions { width: 100%; }

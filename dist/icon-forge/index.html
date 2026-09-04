@@ -7,7 +7,7 @@
 <meta name="title-zh" content="图标工坊 IconForge — 免费多主题应用图标生成器 | cataito">
 <meta name="title-en" content="Icon Forge — Free Multi-Theme App Icon Generator | cataito">
 <meta name="description" content="免费在线图标生成器：上传 Logo，一键导出 Windows ICO、macOS 风格多尺寸 PNG 与 favicon。支持 Light/Dark 双主题、透明保护与自动去背景，全程在本机浏览器本地处理，图片不上传服务器。">
-<meta name="theme-color" content="#fbfbfd">
+<meta name="theme-color" content="#fafaf9">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="cataito 工具箱">
 <meta property="og:title" content="图标工坊 IconForge — 免费多主题应用图标生成器">
@@ -19,7 +19,7 @@
 <meta name="twitter:title" content="图标工坊 IconForge">
 <meta name="twitter:description" content="免费多主题应用图标生成器，纯本地处理。">
 <link rel="canonical" href="https://tools.cataito.com/icon-forge/">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%236366f1'/%3E%3Crect x='8' y='8' width='7' height='7' rx='1.5' fill='white'/%3E%3Crect x='17' y='8' width='7' height='7' rx='1.5' fill='white' opacity='.55'/%3E%3Crect x='8' y='17' width='7' height='7' rx='1.5' fill='white' opacity='.55'/%3E%3Crect x='17' y='17' width='7' height='7' rx='1.5' fill='white' opacity='.3'/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%236d6ae8'/%3E%3Crect x='8' y='8' width='7' height='7' rx='1.5' fill='white'/%3E%3Crect x='17' y='8' width='7' height='7' rx='1.5' fill='white' opacity='.55'/%3E%3Crect x='8' y='17' width='7' height='7' rx='1.5' fill='white' opacity='.55'/%3E%3Crect x='17' y='17' width='7' height='7' rx='1.5' fill='white' opacity='.3'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="/assets/css/site.css">
 <script src="/assets/js/theme-init.js"></script>
 <style>
@@ -38,11 +38,11 @@
   .theme-card {
     background: var(--card); border: 1px solid var(--border);
     border-radius: var(--radius); box-shadow: var(--shadow-sm);
-    padding: 16px; display: flex; flex-direction: column; gap: 12px;
+    padding: 20px; display: flex; flex-direction: column; gap: 12px;
   }
   .theme-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
   .uh-title { font-size: 12.5px; font-weight: 600; color: var(--text); }
-  .uh-tag { font-size: 11px; color: var(--text-3); }
+  .uh-tag { font-size: 12px; color: var(--text-3); }
   .uh-tag.accent-text { color: var(--accent); }
   .theme-body { display: flex; flex-direction: column; gap: 12px; }
 
@@ -52,20 +52,12 @@
     box-shadow: var(--shadow-md); display: flex; align-items: center; justify-content: center;
     padding: 10px; overflow: hidden; border: 1px solid var(--border);
   }
-  .preview-stage.light {
-    background-color: var(--card);
-    background-image:
-      linear-gradient(45deg, var(--checker) 25%, transparent 25%),
-      linear-gradient(-45deg, var(--checker) 25%, transparent 25%),
-      linear-gradient(45deg, transparent 75%, var(--checker) 75%),
-      linear-gradient(-45deg, transparent 75%, var(--checker) 75%);
-    background-size: 16px 16px;
-    background-position: 0 0, 0 8px, 8px -8px, -8px 0;
-  }
-  .preview-stage.dark { background: #18181b; }
+  .preview-stage.light { background-color: var(--card); }
+  /* 暗色预览台模拟暗色桌面底，不随站点主题变化 */
+  .preview-stage.dark { background: #1a1c22; }
   .preview-stage img { max-width: 100%; max-height: 100%; object-fit: contain; }
   .preview-stage.fill img { object-fit: fill; }
-  .preview-stage .ph { font-size: 11px; color: var(--text-3); text-align: center; }
+  .preview-stage .ph { font-size: 12px; color: var(--text-3); text-align: center; }
   .theme-stage-wrap { display: flex; align-items: center; justify-content: center; padding: 8px 0; }
 
   /* ---------- 折叠分组（设置面板） ---------- */
@@ -83,13 +75,13 @@
   .group.collapsed .group-body { grid-template-rows: 0fr; }
   .group-body-inner { overflow: hidden; display: flex; flex-direction: column; gap: 16px; margin-top: 16px; min-height: 0; }
   .group-title { font-size: 15px; font-weight: 650; color: var(--text); letter-spacing: -.1px; display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
-  .group-meta { font-size: 11px; font-weight: 500; color: var(--text-3); }
+  .group-meta { font-size: 12px; font-weight: 500; color: var(--text-3); }
   .group-actions { display: flex; gap: 12px; }
 
   /* ---------- 工作区底部说明 ---------- */
   .mid-foot {
     display: flex; align-items: center; justify-content: space-between; gap: 12px;
-    font-size: 11px; color: var(--text-3);
+    font-size: 12px; color: var(--text-3);
     padding-top: 12px; border-top: 1px solid var(--border);
   }
 </style>
@@ -153,7 +145,7 @@
               </span>
             </div>
             <div class="theme-stage-wrap">
-              <div class="preview-stage light">
+              <div class="preview-stage light t-checker">
                 <img id="render-preview-light" src="" alt="" style="display:none">
                 <div id="placeholder-preview-light" class="ph" data-i18n="if_no_preview">暂无预览</div>
               </div>

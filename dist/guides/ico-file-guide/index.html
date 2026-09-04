@@ -7,7 +7,7 @@
 <meta name="title-zh" content="ICO 文件完全指南：什么是 .ico、尺寸规范与在线制作方法 | cataito">
 <meta name="title-en" content="The Complete Guide to ICO Files: What They Are & How to Create Them | cataito">
 <meta name="description" content="什么是 ICO 文件？本文详解 .ico 格式原理、Windows 图标尺寸规范（16–256px）、ICO 与 PNG 的区别，以及如何免费在线制作多尺寸 ICO 图标——纯浏览器本地处理，无需上传服务器。">
-<meta name="theme-color" content="#fbfbfd">
+<meta name="theme-color" content="#fafaf9">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="cataito 工具箱">
 <meta property="og:title" content="ICO 文件完全指南：什么是 .ico、尺寸规范与在线制作方法">
@@ -49,7 +49,7 @@
   .article ul, .article ol { margin: 0 0 16px; padding-left: 22px; color: var(--text-2); }
   .article li { margin: 6px 0; }
   .article code {
-    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-family: var(--font-mono);
     font-size: 13px; background: var(--card-2); border: 1px solid var(--border);
     border-radius: 5px; padding: 1px 6px; color: var(--text);
   }
@@ -71,15 +71,10 @@
   .toc li { margin: 5px 0; }
   .toc a { color: var(--text-2); text-decoration: none; }
   .toc a:hover { color: var(--accent); }
-  .faq-item {
-    background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-sm);
-    padding: 14px 16px; margin: 10px 0; box-shadow: var(--shadow-sm);
-  }
-  .faq-q { font-size: 14.5px; font-weight: 650; color: var(--text); margin: 0 0 8px; }
-  .faq-a { font-size: 14px; color: var(--text-2); margin: 0; line-height: 1.75; }
+  /* FAQ 卡片样式由 site.css 的 .faq-item / .t-faq-* 统一提供 */
   .cta-box {
     background: linear-gradient(135deg, var(--accent-soft), var(--accent-soft-2));
-    border: 1px solid var(--accent); border-radius: var(--radius);
+    border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent); border-radius: var(--radius);
     padding: 20px 22px; margin: 34px 0 10px; text-align: center;
   }
   .cta-box .cta-title { font-size: 17px; font-weight: 700; color: var(--text); margin: 0 0 6px; }
@@ -87,27 +82,13 @@
   .cta-btn {
     display: inline-block; background: var(--accent); color: #fff; text-decoration: none;
     font-size: 14px; font-weight: 600; padding: 11px 26px; border-radius: var(--radius-sm);
-    box-shadow: 0 6px 18px rgba(99,102,241,0.30); transition: background .15s;
+    box-shadow: 0 6px 18px var(--accent-glow); transition: background .15s;
   }
   .cta-btn:hover { background: var(--accent-hover); }
   /* 修复：.article a 的特异度(0,1,1)会压过 .cta-btn(0,1,0) 的 color:#fff，
      导致按钮紫底紫字在亮/暗模式下都不可读。用更高特异度夺回白色文字。 */
   .article a.cta-btn, .article .cta-btn { color: #fff; text-decoration: none; }
   .article a.cta-btn:hover { color: #fff; text-decoration: none; background: var(--accent-hover); }
-  .step-list { counter-reset: step; list-style: none; padding-left: 0; }
-  .step-list li { position: relative; padding-left: 44px; margin: 14px 0; }
-  .step-list li::before {
-    counter-increment: step; content: counter(step);
-    position: absolute; left: 0; top: 1px;
-    width: 28px; height: 28px; border-radius: 999px;
-    background: var(--accent-soft); color: var(--accent);
-    font-weight: 700; font-size: 14px;
-    display: flex; align-items: center; justify-content: center;
-  }
-  /* 双语块：默认中文，html.lang-en 时切换英文（两语言均在原生 HTML 中，可被索引） */
-  .lb-en { display: none; }
-  html.lang-en .lb-zh { display: none; }
-  html.lang-en .lb-en { display: block; }
 </style>
 <script type="application/ld+json">
 {
@@ -240,7 +221,7 @@
 
       <h2 id="how-to-make">如何在线制作 ICO 文件</h2>
       <p>推荐使用本站的 <a href="/icon-forge/">图标工坊 IconForge</a>——免费、无需注册，且<strong>全部处理在你的浏览器本地完成，图片不会上传到任何服务器</strong>，适合处理未公开的 Logo 与商业素材。</p>
-      <ol class="step-list">
+      <ol class="t-steps">
         <li><strong>准备一张正方形 Logo 图</strong>：建议 PNG 格式带透明背景，分辨率不小于 256×256（源图越大越清晰）。</li>
         <li><strong>打开图标工坊，上传图片</strong>：点击或拖入上传框即可，工具会自动做 1:1 比例纠偏，防止变形。</li>
         <li><strong>按需调整设置</strong>：选择输出尺寸（默认全选 7 档）、是否需要 Dark 变体、透明保护或自动去背景等。</li>
@@ -330,7 +311,7 @@
 
       <h2 id="how-to-make">How to Create an ICO File Online</h2>
       <p>We recommend <a href="/icon-forge/">Icon Forge</a> on this site — free, no sign-up, and <strong>everything runs locally in your browser; your images are never uploaded to any server</strong>, which matters for unreleased logos and commercial assets.</p>
-      <ol class="step-list">
+      <ol class="t-steps">
         <li><strong>Prepare a square logo</strong>: PNG with transparency, at least 256×256 (the larger the source, the sharper the output).</li>
         <li><strong>Open Icon Forge and upload</strong>: click or drag the image in; the tool auto-corrects the 1:1 ratio to prevent distortion.</li>
         <li><strong>Adjust settings</strong>: pick output sizes (all 7 by default), optional Dark variant, transparency padding or background removal.</li>

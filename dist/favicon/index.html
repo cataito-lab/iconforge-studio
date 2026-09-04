@@ -7,7 +7,7 @@
 <meta name="title-zh" content="Favicon 生成器 — 免费多尺寸图标包 | cataito">
 <meta name="title-en" content="Favicon Generator — Free Multi-Size Icon Pack | cataito">
 <meta name="description" content="免费在线 Favicon 生成器：上传任意图片，一键生成多尺寸 .ico 与 .png 图标包。纯浏览器本地处理，图片不上传服务器。">
-<meta name="theme-color" content="#fbfbfd">
+<meta name="theme-color" content="#fafaf9">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="cataito 工具箱">
 <meta property="og:title" content="Favicon 生成器 — 免费多尺寸图标包">
@@ -48,9 +48,11 @@
 <body>
 <div id="site-header"></div>
 <main class="site-main">
-  <nav class="breadcrumb"><a href="/" data-i18n="crumb_home">首页</a><span class="sep">/</span><span data-i18n="fv_name">Favicon 生成器</span></nav>
-  <h1 class="page-h1" data-i18n="fv_name">Favicon 生成器</h1>
-  <p class="page-sub" data-i18n="fv_desc">将任意图片生成多尺寸 .ico / .png favicon 包。</p>
+  <div class="t-head">
+    <nav class="breadcrumb"><a href="/" data-i18n="crumb_home">首页</a><span class="sep">/</span><span data-i18n="fv_name">Favicon 生成器</span></nav>
+    <h1 class="page-h1" data-i18n="fv_name">Favicon 生成器</h1>
+    <p class="page-sub" data-i18n="fv_desc">将任意图片生成多尺寸 .ico / .png favicon 包。</p>
+  </div>
 
   <section class="t-card t-flow">
     <div id="fv-dropzone" class="t-drop" tabindex="0">
@@ -59,7 +61,7 @@
       <span class="t-drop-title" data-i18n="fv_upload">上传图片</span>
       <span class="t-drop-hint" data-i18n="fv_dz_hint">PNG / JPG / WebP / SVG · 点击或拖入</span>
       <div class="fv-preview-wrap" id="fv-preview" hidden>
-        <img id="fv-preview-img" alt="preview">
+        <img id="fv-preview-img" alt="preview" class="t-checker">
         <button type="button" class="fv-clear" id="fv-clear" aria-label="remove">&times;</button>
       </div>
     </div>
@@ -335,7 +337,6 @@ document.addEventListener('DOMContentLoaded', function () {
   .fv-preview-wrap { position: relative; margin-top: 12px; }
   .fv-preview-wrap img {
     width: 120px; height: 120px; border-radius: 12px; border: 1px solid var(--border);
-    background: conic-gradient(var(--checker) 90deg, transparent 0 180deg, var(--checker) 0 270deg, transparent 0) 0 0 / 18px 18px;
   }
   .fv-clear {
     position: absolute; top: -8px; right: -8px; width: 24px; height: 24px;

@@ -380,7 +380,7 @@
   }
   window.CATAITO_I18N = { t: t, getLang: getLang, setLang: setLang, apply: applyI18n };
 
-  var MARK = '<svg width="18" height="18" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="7" fill="#fff"/><rect x="8" y="8" width="7" height="7" rx="1.5" fill="#6366f1"/><rect x="17" y="8" width="7" height="7" rx="1.5" fill="#6366f1" opacity=".55"/><rect x="8" y="17" width="7" height="7" rx="1.5" fill="#6366f1" opacity=".55"/><rect x="17" y="17" width="7" height="7" rx="1.5" fill="#6366f1" opacity=".3"/></svg>';
+  var MARK = '<svg width="18" height="18" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="7" fill="#fff"/><rect x="8" y="8" width="7" height="7" rx="1.5" fill="#6d6ae8"/><rect x="17" y="8" width="7" height="7" rx="1.5" fill="#6d6ae8" opacity=".55"/><rect x="8" y="17" width="7" height="7" rx="1.5" fill="#6d6ae8" opacity=".55"/><rect x="17" y="17" width="7" height="7" rx="1.5" fill="#6d6ae8" opacity=".3"/></svg>';
 
   function renderHeader() {
     var el = document.getElementById('site-header');

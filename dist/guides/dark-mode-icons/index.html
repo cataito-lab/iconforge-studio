@@ -7,7 +7,7 @@
 <meta name="title-zh" content="暗色图标设计指南：深色模式图标怎么做（含 favicon 适配） | cataito">
 <meta name="title-en" content="Dark Mode Icon Design Guide: Icons for Dark Themes (incl. Favicons) | cataito">
 <meta name="description" content="深色模式时代，图标怎么做才好看？本文详解暗色图标设计原则（对比度、亮度、层级）、app 图标与 favicon 的深浅双变体做法、SVG favicon 跟随系统深色模式的写法，以及如何一键生成 Light/Dark 双主题图标。">
-<meta name="theme-color" content="#fbfbfd">
+<meta name="theme-color" content="#fafaf9">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="cataito 工具箱">
 <meta property="og:title" content="暗色图标设计指南：深色模式图标怎么做">
@@ -49,7 +49,7 @@
   .article ul, .article ol { margin: 0 0 16px; padding-left: 22px; color: var(--text-2); }
   .article li { margin: 6px 0; }
   .article code {
-    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-family: var(--font-mono);
     font-size: 13px; background: var(--card-2); border: 1px solid var(--border);
     border-radius: 5px; padding: 1px 6px; color: var(--text);
   }
@@ -76,15 +76,10 @@
   .toc li { margin: 5px 0; }
   .toc a { color: var(--text-2); text-decoration: none; }
   .toc a:hover { color: var(--accent); }
-  .faq-item {
-    background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-sm);
-    padding: 14px 16px; margin: 10px 0; box-shadow: var(--shadow-sm);
-  }
-  .faq-q { font-size: 14.5px; font-weight: 650; color: var(--text); margin: 0 0 8px; }
-  .faq-a { font-size: 14px; color: var(--text-2); margin: 0; line-height: 1.75; }
+  /* FAQ 卡片样式由 site.css 的 .faq-item / .t-faq-* 统一提供 */
   .cta-box {
     background: linear-gradient(135deg, var(--accent-soft), var(--accent-soft-2));
-    border: 1px solid var(--accent); border-radius: var(--radius);
+    border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent); border-radius: var(--radius);
     padding: 20px 22px; margin: 34px 0 10px; text-align: center;
   }
   .cta-box .cta-title { font-size: 17px; font-weight: 700; color: var(--text); margin: 0 0 6px; }
@@ -92,23 +87,13 @@
   .cta-btn {
     display: inline-block; background: var(--accent); color: #fff; text-decoration: none;
     font-size: 14px; font-weight: 600; padding: 11px 26px; border-radius: var(--radius-sm);
-    box-shadow: 0 6px 18px rgba(99,102,241,0.30); transition: background .15s;
+    box-shadow: 0 6px 18px var(--accent-glow); transition: background .15s;
   }
   .cta-btn:hover { background: var(--accent-hover); }
   /* 修复：.article a 的特异度(0,1,1)会压过 .cta-btn(0,1,0) 的 color:#fff，
      导致按钮紫底紫字在亮/暗模式下都不可读。用更高特异度夺回白色文字。 */
   .article a.cta-btn, .article .cta-btn { color: #fff; text-decoration: none; }
   .article a.cta-btn:hover { color: #fff; text-decoration: none; background: var(--accent-hover); }
-  .step-list { counter-reset: step; list-style: none; padding-left: 0; }
-  .step-list li { position: relative; padding-left: 44px; margin: 14px 0; }
-  .step-list li::before {
-    counter-increment: step; content: counter(step);
-    position: absolute; left: 0; top: 1px;
-    width: 28px; height: 28px; border-radius: 999px;
-    background: var(--accent-soft); color: var(--accent);
-    font-weight: 700; font-size: 14px;
-    display: flex; align-items: center; justify-content: center;
-  }
   /* 明暗对比示意（固定的中性配色，不跟随站点主题，保证教学效果） */
   .demo-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 16px 0 22px; }
   .demo-tile {
@@ -126,10 +111,6 @@
   .demo-bad-2 { background: #2a2d38; color: #16181f; }
   .demo-ok-light { background: #ffffff; color: #3b3f4a; }
   .demo-ok-dark { background: #e8eaf0; color: #16181f; }
-  /* 双语块：默认中文，html.lang-en 时切换英文（两语言均在原生 HTML 中，可被索引） */
-  .lb-en { display: none; }
-  html.lang-en .lb-zh { display: none; }
-  html.lang-en .lb-en { display: block; }
 </style>
 <script type="application/ld+json">
 {
@@ -300,7 +281,7 @@
 
       <h2 id="generate">一键生成双主题图标</h2>
       <p>手动做明暗两套图标费时费力。本站 <a href="/icon-forge/">图标工坊 IconForge</a> 内置 <strong>Dark 变体</strong>功能，专为此设计：</p>
-      <ol class="step-list">
+      <ol class="t-steps">
         <li><strong>上传一张源图</strong>：任意方形 Logo（PNG/JPG/WebP/SVG 均可），工具自动做 1:1 纠偏。</li>
         <li><strong>勾选 Dark 变体</strong>：工具会基于源图生成深色底版本——背景替换为深灰蓝、前景自动提亮，保证深色环境的可读性。</li>
         <li><strong>选择输出尺寸</strong>：默认打包 16–256px 全部七档。</li>
@@ -417,7 +398,7 @@
 
       <h2 id="generate">Generate Dual-Theme Icons in One Click</h2>
       <p>Hand-crafting two complete icon sets is tedious. <a href="/icon-forge/">Icon Forge</a> on this site has a built-in <strong>Dark variant</strong> feature built exactly for this:</p>
-      <ol class="step-list">
+      <ol class="t-steps">
         <li><strong>Upload one source image</strong>: any square logo (PNG/JPG/WebP/SVG); the tool auto-corrects to 1:1.</li>
         <li><strong>Check the Dark variant option</strong>: the tool generates a dark version — deep gray-blue background, automatically brightened foreground, guaranteed readable in dark environments.</li>
         <li><strong>Pick output sizes</strong>: all seven (16–256px) by default.</li>
