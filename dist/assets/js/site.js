@@ -479,6 +479,17 @@
     document.addEventListener('cataito-theme-change', update);
   }
 
+  /* Cloudflare Web Analytics beacon：在此统一注入，全站页面一处生效。
+     token 仅用于标识数据归属（会明文出现在页面源码中，非密钥）。 */
+  function bindAnalytics() {
+    if (document.querySelector('script[data-cf-beacon]')) return;
+    var s = document.createElement('script');
+    s.type = 'module';
+    s.src = 'https://static.cloudflareinsights.com/beacon.min.js';
+    s.setAttribute('data-cf-beacon', '{"token": "337d3d9e01d7456f9a7c150c2728580b"}');
+    document.head.appendChild(s);
+  }
+
   /* og:image 兜底注入：对已含静态 og:image 的页面（首页/信任页）不重复，
      其余页面（工具页/指南页）补一张社交分享图，提升分享卡片体验 */
   function bindOgImage() {
@@ -528,6 +539,7 @@
     bindLangSwitch();
     bindFavicon();
     bindOgImage();
+    bindAnalytics();
     setLang(getLang());
     initHasFallback();
   }
