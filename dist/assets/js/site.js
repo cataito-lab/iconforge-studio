@@ -40,6 +40,12 @@
     home_tool_palette:       { zh: '配色 / 调色板', en: 'Color Palette' },
     home_tool_palette_desc:  { zh: '从图片提取配色，或生成协调的调色板方案。', en: 'Extract colors from an image or generate a harmonious palette.' },
 
+    /* 首页：实用指南区块 */
+    home_guides_h:      { zh: '实用指南', en: 'Practical guides' },
+    home_read_guide:    { zh: '阅读指南 →', en: 'Read guide →' },
+    home_guides_all:    { zh: '全部使用指南', en: 'All guides' },
+    home_guides_all_desc: { zh: '浏览全部 10 篇双语指南：格式原理、尺寸规范、排障排查与最佳实践。', en: 'Browse all 10 bilingual guides: formats, size specs, troubleshooting, and best practices.' },
+
     /* 首页：关于 / 特性 / FAQ */
     about_h:        { zh: '关于 CATAITO', en: 'About CATAITO' },
     about_body:     { zh: '<p>CATAITO 是一个 100% 免费、隐私优先的在线工具箱，专注于图标与图片处理。所有工具均为纯前端实现——图片在你的浏览器本地完成处理，绝不上传服务器，因此你可以放心处理商业素材与隐私截图。无需注册、无需安装，打开即用。</p><p>我们相信好工具应当零门槛：没有弹窗广告，不收集你的文件，也不强制登录。无论是开发者、设计师，还是偶尔需要做个图标的普通用户，都能在这里快速完成工作。</p>',
@@ -195,6 +201,10 @@
     gd_appicon_h1:      { zh: 'App 图标尺寸全平台速查：iOS / Android / App Store / Google Play / Windows / macOS', en: 'App Icon Sizes Cheat Sheet: iOS / Android / App Store / Google Play / Windows / macOS' },
     gd_appicon_sub:     { zh: '提交一个 App 要准备十几二十个图标尺寸，很容易漏。这份速查表按平台列清 iOS 与 App Store、Android 自适应图标与 Google Play、Windows ICO、macOS icns、PWA 图标的具体要求，并给出一次生成全部尺寸的做法——纯浏览器本地处理。', en: 'Shipping an app means twenty-odd icon sizes — easy to miss one. This cheat sheet lists iOS & App Store, Android adaptive icons & Google Play, Windows ICO, macOS icns, and PWA icon specs, plus how to generate them all at once — right in your browser.' },
     gd_appicon_card_desc: { zh: 'iOS 主屏与 App Store 1024、Android 自适应图标 108dp 与 Google Play 512、Windows ICO、macOS icns、PWA 图标的尺寸规范与一次生成方法。', en: 'iOS home screen and App Store 1024, Android adaptive icons at 108dp and Google Play 512, Windows ICO, macOS icns, PWA icons — and how to generate them all at once.' },
+    gd_alpha_short:     { zh: '透明背景图标指南', en: 'Transparent Icon Guide' },
+    gd_alpha_h1:        { zh: '透明背景图标指南：PNG / ICO 透明度正确做法', en: 'Transparent Icon Guide: Getting PNG / ICO Transparency Right' },
+    gd_alpha_sub:       { zh: '图标要放在各种底色上，透明背景是基本功。本文讲清 alpha 通道是怎么回事、为什么 JPEG 存不了透明、去背景的三种方法、白边 / iOS 补黑底等常见坑，以及转成 ICO 和 favicon 时如何把透明一路保留——推荐方案免费且纯浏览器本地处理。', en: 'Icons live on all kinds of backgrounds, so transparency is a fundamental. How the alpha channel works, why JPEG can\'t store it, three ways to remove a background, pitfalls like matte halos and iOS black fills, and how to carry transparency all the way into ICO and favicon conversion — the recommended way is free and runs entirely in your browser.' },
+    gd_alpha_card_desc: { zh: 'alpha 通道原理、去背景的三种方法、白边与 iOS 补黑底等常见坑，以及 ICO / favicon 转换时如何保留透明。', en: 'How the alpha channel works, three ways to remove a background, pitfalls like matte halos and iOS black fills, and keeping transparency through ICO / favicon conversion.' },
 
     /* 通用 */
     theme_light:    { zh: '亮色', en: 'Light' },

@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>透明背景图标指南：PNG / ICO 透明度正确做法 | CATAITO</title>
+<meta name="title-zh" content="透明背景图标指南：PNG / ICO 透明度正确做法 | CATAITO">
+<meta name="title-en" content="Transparent Icon Guide: Getting PNG / ICO Transparency Right | CATAITO">
+<meta name="description" content="怎么做一个真正透明背景的图标？本文讲清 alpha 通道原理、PNG 与 JPEG 的透明差异、去除背景的三种方法、白边与 iOS 补黑底等常见坑，以及转成 ICO / favicon 时如何保留透明——纯浏览器本地处理。">
+<meta name="theme-color" content="#f6f3ec">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="CATAITO 工具箱">
+<meta property="og:title" content="透明背景图标指南：PNG / ICO 透明度正确做法">
+<meta property="og:description" content="alpha 通道原理、去背景的三种方法、白边与 iOS 补黑底等常见坑，以及 ICO / favicon 转换时如何保留透明。">
+<meta property="og:url" content="https://tools.cataito.com/guides/transparent-icon-guide/">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:locale:alternate" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="透明背景图标指南">
+<meta name="twitter:description" content="去背景方法、透明常见坑与 ICO / favicon 转换完整说明。">
+<link rel="canonical" href="https://tools.cataito.com/guides/transparent-icon-guide/">
+<link rel="icon" href="/assets/img/icon.svg">
+<link rel="stylesheet" href="/assets/css/site.css">
+<script src="/assets/js/theme-init.js"></script>
+<script>
+  (function () {
+    try {
+      var l = localStorage.getItem('cataito-lang');
+      document.documentElement.setAttribute('lang', (l === 'en') ? 'en' : 'zh-CN');
+      if (l === 'en') document.documentElement.classList.add('lang-en');
+    } catch (e) {}
+  })();
+</script>
+<style>
+  /* ============ 指南页排版（与其他指南页保持一致） ============ */
+  .guide-wrap { max-width: 760px; margin: 0; }
+  .guide-meta { font-size: 13px; color: var(--text-3); margin: 0 0 6px; }
+  .page-sub { margin-bottom: 10px; }
+  .article { font-size: 15px; line-height: 1.85; color: var(--text); }
+  .article h2 {
+    font-size: 21px; font-weight: 700; letter-spacing: -.3px;
+    margin: 44px 0 14px; padding-top: 16px; border-top: 1px solid var(--border); color: var(--text);
+  }
+  .article h3 { font-size: 16.5px; font-weight: 650; margin: 26px 0 10px; color: var(--text); }
+  .article p { margin: 0 0 14px; color: var(--text-2); }
+  .article strong { color: var(--text); font-weight: 650; }
+  .article a { color: var(--accent); text-decoration: none; }
+  .article a:hover { text-decoration: underline; }
+  .article ul, .article ol { margin: 0 0 16px; padding-left: 22px; color: var(--text-2); }
+  .article li { margin: 6px 0; }
+  .article code {
+    font-family: var(--font-mono);
+    font-size: 13px; background: var(--card-2); border: 1px solid var(--border);
+    border-radius: 3px; padding: 1px 6px; color: var(--text);
+  }
+  .article pre {
+    background: var(--card-2); border: 1px solid var(--border); border-radius: var(--radius-sm);
+    padding: 14px 16px; margin: 14px 0 18px; overflow-x: auto;
+  }
+  .article pre code { background: none; border: none; padding: 0; font-size: 12.5px; line-height: 1.7; }
+  .article table {
+    width: 100%; border-collapse: collapse; margin: 18px 0 22px;
+    font-size: 13.5px; background: var(--card);
+    border: 1px solid var(--border); border-radius: var(--radius-sm); overflow: hidden;
+  }
+  .article th, .article td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--border); }
+  .article th { background: var(--card-2); color: var(--text); font-weight: 650; white-space: nowrap; }
+  .article td { color: var(--text-2); }
+  .article tr:last-child td { border-bottom: none; }
+  .toc {
+    background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 16px 18px; margin: 20px 0 8px; box-shadow: var(--shadow-sm);
+  }
+  .toc-title { font-size: 13px; font-weight: 650; color: var(--text); margin: 0 0 10px; }
+  .toc ol { margin: 0; padding-left: 20px; font-size: 13.5px; }
+  .toc li { margin: 5px 0; }
+  .toc a { color: var(--text-2); text-decoration: none; }
+  .toc a:hover { color: var(--accent); }
+  /* FAQ 卡片样式由 site.css 的 .faq-item / .t-faq-* 统一提供 */
+  .cta-box {
+    background: linear-gradient(135deg, var(--accent-soft), var(--accent-soft-2));
+    border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent); border-radius: var(--radius);
+    padding: 20px 22px; margin: 34px 0 10px; text-align: center;
+  }
+  .cta-box .cta-title { font-size: 17px; font-weight: 700; color: var(--text); margin: 0 0 6px; }
+  .cta-box .cta-sub { font-size: 13.5px; color: var(--text-2); margin: 0 0 14px; }
+  .cta-btn {
+    display: inline-block; background: var(--accent); color: #fff; text-decoration: none;
+    font-size: 14px; font-weight: 600; padding: 11px 26px; border-radius: var(--radius-sm);
+    box-shadow: 0 6px 18px var(--accent-glow); transition: background .15s;
+  }
+  .cta-btn:hover { background: var(--accent-hover); }
+  /* 修复：.article a 的特异度(0,1,1)会压过 .cta-btn(0,1,0) 的 color:#fff，
+     导致按钮底字同色在亮/暗模式下都不可读。用更高特异度夺回白色文字。 */
+  .article a.cta-btn, .article .cta-btn { color: #fff; text-decoration: none; }
+  .article a.cta-btn:hover { color: #fff; text-decoration: none; background: var(--accent-hover); }
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "透明背景图标指南：PNG / ICO 透明度正确做法",
+  "description": "详解 alpha 通道原理、PNG 与 JPEG 的透明差异、去除背景的三种方法、白边与 iOS 补黑底等常见坑，以及转成 ICO / favicon 时如何保留透明。",
+  "inLanguage": "zh-CN",
+  "datePublished": "2026-09-05",
+  "dateModified": "2026-09-05",
+  "author": { "@type": "Organization", "name": "CATAITO", "url": "https://tools.cataito.com/" },
+  "publisher": { "@type": "Organization", "name": "CATAITO 工具箱", "url": "https://tools.cataito.com/" },
+  "mainEntityOfPage": "https://tools.cataito.com/guides/transparent-icon-guide/"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "PNG 和 JPEG 哪个支持透明背景？",
+      "acceptedAnswer": { "@type": "Answer", "text": "PNG 支持：它每个像素带有 alpha 通道，可以记录 0–255 级的半透明。JPEG 完全不支持透明通道，保存为 JPEG 时透明区域会被填成底色（通常是白色），且 JPEG 的有损压缩会在边缘产生杂色。需要透明的图标一律用 PNG（或 WebP/GIF），绝不要存 JPEG。" }
+    },
+    {
+      "@type": "Question",
+      "name": "为什么我的透明 PNG 放到网页上还是白底？",
+      "acceptedAnswer": { "@type": "Answer", "text": "多数情况是「白色」被当成了「透明」：在白色画布上把背景涂成白色，看起来和透明一样，但像素仍是实心白。真透明在支持alpha 的编辑器里显示为灰白棋盘格。另外检查 CSS：容器或 body 的白色背景会盖在图片后面；还有旧版 IE6 曾把 PNG 半透明渲染成灰底，现代浏览器无此问题。" }
+    },
+    {
+      "@type": "Question",
+      "name": "ICO 格式支持透明背景吗？",
+      "acceptedAnswer": { "@type": "Answer", "text": "支持。ICO 容器内的每一张图都可以带 alpha 透明通道，只要源 PNG 是透明的、转换时保留 alpha，生成的 ICO 就是透明底。本站图标工坊全程在浏览器本地转换，透明通道原样写入，不会变成白块。" }
+    },
+    {
+      "@type": "Question",
+      "name": "iOS 和 App Store 图标可以使用透明背景吗？",
+      "acceptedAnswer": { "@type": "Answer", "text": "不可以。苹果明确要求 App 图标不透明：apple-touch-icon 若带透明，Safari 会自动补上黑色底；App Store 提交 1024px 图标带透明会被直接拒审。iOS 图标需要自己设计不透明的圆角方形底色，系统再对它做圆角裁切。" }
+    },
+    {
+      "@type": "Question",
+      "name": "怎么检查图片是不是真的透明？",
+      "acceptedAnswer": { "@type": "Answer", "text": "三个方法：把图放到深色/彩色背景上看边缘是否露出底色；在图像编辑器里看像素区域是否显示棋盘格；或用本站图标工坊上传预览——它的画布带透明棋盘格，透明的区域会直接显示为棋盘格而不是白色。" }
+    },
+    {
+      "@type": "Question",
+      "name": "有哪些免费去除图片背景的方法？",
+      "acceptedAnswer": { "@type": "Answer", "text": "三种常用途径：一是图像编辑器手动抠底，如 GIMP 的魔术棒选区后删除背景图层；二是如果源文件是 SVG 等矢量格式，直接导出时关闭背景层即可得到透明 PNG；三是 AI 一键去底工具，速度快但需要把图片上传到第三方服务器，敏感素材慎用。去底后保存为 PNG，再用本站工具转成 ICO / favicon。" }
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "首页", "item": "https://tools.cataito.com/" },
+    { "@type": "ListItem", "position": 2, "name": "使用指南", "item": "https://tools.cataito.com/guides/" },
+    { "@type": "ListItem", "position": 3, "name": "透明背景图标指南", "item": "https://tools.cataito.com/guides/transparent-icon-guide/" }
+  ]
+}
+</script>
+</head>
+<body>
+<div id="site-header"></div>
+
+<main class="site-main">
+  <div class="guide-wrap">
+    <nav class="breadcrumb"><a href="/" data-i18n="crumb_home">首页</a><span class="sep">/</span><a href="/guides/" data-i18n="nav_guides">使用指南</a><span class="sep">/</span><span data-i18n="gd_alpha_short">透明背景图标指南</span></nav>
+    <p class="guide-meta"><span data-i18n="gd_published">发布于</span> 2026-09-05 · CATAITO</p>
+    <h1 class="page-h1" data-i18n="gd_alpha_h1">透明背景图标指南：PNG / ICO 透明度正确做法</h1>
+    <p class="page-sub" data-i18n="gd_alpha_sub">图标要放在各种底色上，透明背景是基本功。本文讲清 alpha 通道是怎么回事、为什么 JPEG 存不了透明、去背景的三种方法、白边 / iOS 补黑底等常见坑，以及转成 ICO 和 favicon 时如何把透明一路保留——推荐方案免费且纯浏览器本地处理。</p>
+
+    <!-- ================= 中文正文 ================= -->
+    <div class="article lb-zh">
+      <div class="toc">
+        <p class="toc-title">目录</p>
+        <ol>
+          <li><a href="#what">什么是透明背景</a></li>
+          <li><a href="#why">什么时候需要透明</a></li>
+          <li><a href="#how">去除背景的三种方法</a></li>
+          <li><a href="#pitfalls">透明图标的常见坑</a></li>
+          <li><a href="#check">交付前自检清单</a></li>
+          <li><a href="#faq">常见问题</a></li>
+        </ol>
+      </div>
+
+      <h2 id="what">什么是透明背景</h2>
+      <p>「透明背景」指的是图像的 alpha 通道：<strong>每个像素除了 RGB 颜色值，还带一个 0–255 的透明度数值</strong>——0 是完全看不见，255 是完全实心，中间值是半透明（比如阴影、柔边）。你在图像编辑器里看到的<strong>灰白棋盘格</strong>，就是「这里没有像素、透过去看到下面」的约定画法，棋盘格本身并不存在于图片里。</p>
+      <p>常见格式对透明的支持差别很大：<strong>PNG、WebP、GIF、ICO 支持透明</strong>（PNG 与 WebP 还支持半透明渐变）；<strong>JPEG 完全不支持</strong>——透明区域在保存瞬间被填成底色，通常是白色，且这一步不可逆。所以「透明图标」的第一铁律是：<strong>素材一律保存为 PNG，绝不经过 JPEG</strong>。</p>
+
+      <h2 id="why">什么时候需要透明</h2>
+      <ul>
+        <li><strong>网站 favicon</strong>：浏览器标签页有亮色也有暗色主题，白底方块图标在暗色标签栏里会非常突兀，透明底 + 自适应前景才是正确做法；</li>
+        <li><strong>Windows 桌面与应用图标</strong>：ICO 支持完整 alpha，桌面图标不带透明会很生硬（见 <a href="/guides/ico-file-guide/">ICO 文件完全指南</a>）；</li>
+        <li><strong>UI 素材</strong>：按钮、状态栏、水印类图标要叠在各种组件上，只有透明底才能通用。</li>
+      </ul>
+      <p>有一个重要例外：<strong>iOS 与 App Store 图标不允许透明</strong>。apple-touch-icon 带透明会被 Safari 强制补黑底，App Store 的 1024px 图标带透明会直接拒审。iOS 图标要设计成不透明的方块底色，交给系统做圆角——各平台的差异速查见 <a href="/guides/app-icon-sizes/">App 图标尺寸速查</a>。</p>
+
+      <h2 id="how">去除背景的三种方法</h2>
+      <p>手上是一张白底 Logo，怎么把它变成透明 PNG？按可控性排序：</p>
+
+      <h3>方法一：图像编辑器手动抠底（最可控）</h3>
+      <p>GIMP（免费）的典型流程：图层解锁 → 魔术棒（或「按颜色选择」）点选背景 → <strong>选择 → 羽化 1–2px</strong> → Delete 删除 → 另存为 PNG。Photoshop 则推荐用「选择主体 / 移除背景」按钮配合图层蒙版，随时可回退。手动方式的优势是<strong>边缘完全由你控制</strong>，Logo 边缘有复杂细节（发丝、光晕）时只有这条路能做好。</p>
+
+      <h3>方法二：矢量源文件直接导出（最干净）</h3>
+      <p>如果 Logo 本来就是 SVG / AI 矢量稿，根本不需要「去底」——<strong>导出 PNG 时隐藏或删除背景图层</strong>，得到的就是无限清晰的透明 PNG。这是最推荐的工作流：矢量源文件应该是每个品牌的标配资产。</p>
+
+      <h3>方法三：AI 一键去底（最快，注意隐私）</h3>
+      <p>remove.bg 一类的在线服务几秒钟就能抠掉背景，批量处理效率极高。代价是<strong>图片要上传到第三方服务器</strong>——和本站「文件绝不上传」的原则相反。商业机密图、隐私截图请勿使用此类服务；普通宣传图则无妨。AI 抠图的边缘偶尔会过度羽化，交付前记得放大检查。</p>
+
+      <p>拿到透明 PNG 后，用本站 <a href="/icon-forge/">图标工坊 IconForge</a> 转成多尺寸 ICO / PNG（全程浏览器本地处理，透明原样保留）；只需要网页图标的话，<a href="/favicon/">Favicon 生成器</a> 一键出全套 favicon 包，声明写法见 <a href="/guides/favicon-guide/">Favicon 完全指南</a>。</p>
+
+      <h2 id="pitfalls">透明图标的常见坑</h2>
+      <ul>
+        <li><strong>白色 ≠ 透明</strong>：在白色画布上把背景「涂白」是最常见的伪透明。判断方法：真透明在编辑器里显示棋盘格；或者把图放到深色背景上看，白色会原形毕露；</li>
+        <li><strong>中途存成 JPEG</strong>：工作流里任何一步保存为 JPEG，透明就永久丢失（白底填入），后面再转 PNG 也回不来。素材链路全程 PNG / WebP / PSD / SVG；</li>
+        <li><strong>边缘白边（matte 光晕）</strong>：抠底羽化后的半透明像素里混着原背景色，放到深色底上会出现一圈白边。修法：抠底时用「去除白边 / defringe」，或把羽化边缘的像素向前景色偏移；</li>
+        <li><strong>iOS 补黑底</strong>：apple-touch-icon 带透明会被 Safari 填成黑色，不是 bug，是平台行为——给 iOS 单独出一版不透明图标；</li>
+        <li><strong>暗色模式下看不清</strong>：透明底 + 深色前景的图标，在暗色标签栏里直接隐形。favicon 建议做 Light/Dark 双变体，写法见 <a href="/guides/dark-mode-icons/">暗色图标设计指南</a>；</li>
+        <li><strong>半透明阴影被裁切</strong>：图标四周的投影/光晕属于 alpha 边缘，导出时画布太紧会被裁掉一半。导出前四周至少留 4–8px 的透明呼吸区。</li>
+      </ul>
+
+      <h2 id="check">交付前自检清单</h2>
+      <ol class="t-steps">
+        <li><strong>棋盘格确认</strong>：在编辑器里确认背景区域显示棋盘格，而不是白色；</li>
+        <li><strong>深浅双底测试</strong>：把图标分别放到纯白和纯黑（或品牌对比色）背景上，检查边缘白边/黑边和暗色可见性；</li>
+        <li><strong>放大 400% 看边缘</strong>：半过渡像素是干净的，还是带原背景色的光晕；</li>
+        <li><strong>缩到 16px 看小图</strong>：透明图标缩小后主体是否仍然清晰可辨；</li>
+        <li><strong>转换后复查</strong>：转成 ICO / favicon 后重新载入预览，确认透明在转换链路里没丢——本站工具的预览画布自带透明棋盘格，一眼可辨。</li>
+      </ol>
+      <p>PNG 素材转 Windows ICO 的完整流程（含 256px 上限、多尺寸打包）见 <a href="/guides/png-to-ico-guide/">PNG 转 ICO 指南</a>。</p>
+
+      <h2 id="faq">常见问题</h2>
+      <div class="faq-item"><p class="faq-q">Q：PNG 和 JPEG 哪个支持透明背景？</p><p class="faq-a">A：PNG 支持：它每个像素带有 alpha 通道，可以记录 0–255 级的半透明。JPEG 完全不支持透明通道，保存为 JPEG 时透明区域会被填成底色（通常是白色），且 JPEG 的有损压缩会在边缘产生杂色。需要透明的图标一律用 PNG（或 WebP/GIF），绝不要存 JPEG。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：为什么我的透明 PNG 放到网页上还是白底？</p><p class="faq-a">A：多数情况是「白色」被当成了「透明」：在白色画布上把背景涂成白色，看起来和透明一样，但像素仍是实心白。真透明在支持 alpha 的编辑器里显示为灰白棋盘格。另外检查 CSS：容器或 body 的白色背景会盖在图片后面；还有旧版 IE6 曾把 PNG 半透明渲染成灰底，现代浏览器无此问题。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：ICO 格式支持透明背景吗？</p><p class="faq-a">A：支持。ICO 容器内的每一张图都可以带 alpha 透明通道，只要源 PNG 是透明的、转换时保留 alpha，生成的 ICO 就是透明底。本站图标工坊全程在浏览器本地转换，透明通道原样写入，不会变成白块。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：iOS 和 App Store 图标可以使用透明背景吗？</p><p class="faq-a">A：不可以。苹果明确要求 App 图标不透明：apple-touch-icon 若带透明，Safari 会自动补上黑色底；App Store 提交 1024px 图标带透明会被直接拒审。iOS 图标需要自己设计不透明的圆角方形底色，系统再对它做圆角裁切。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：怎么检查图片是不是真的透明？</p><p class="faq-a">A：三个方法：把图放到深色/彩色背景上看边缘是否露出底色；在图像编辑器里看像素区域是否显示棋盘格；或用本站图标工坊上传预览——它的画布带透明棋盘格，透明的区域会直接显示为棋盘格而不是白色。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：有哪些免费去除图片背景的方法？</p><p class="faq-a">A：三种常用途径：一是图像编辑器手动抠底，如 GIMP 的魔术棒选区后删除背景图层；二是如果源文件是 SVG 等矢量格式，直接导出时关闭背景层即可得到透明 PNG；三是 AI 一键去底工具，速度快但需要把图片上传到第三方服务器，敏感素材慎用。去底后保存为 PNG，再用本站工具转成 ICO / favicon。</p></div>
+
+      <div class="cta-box">
+        <p class="cta-title">透明 PNG 一键转多尺寸 ICO / Favicon</p>
+        <p class="cta-sub">透明原样保留 · Light/Dark 双主题 · 预览画布自带棋盘格 · 纯浏览器本地处理</p>
+        <a class="cta-btn" href="/icon-forge/">打开图标工坊 →</a>
+      </div>
+    </div>
+
+    <!-- ================= English body ================= -->
+    <div class="article lb-en">
+      <div class="toc">
+        <p class="toc-title">Table of Contents</p>
+        <ol>
+          <li><a href="#what">What "Transparent" Actually Means</a></li>
+          <li><a href="#why">When You Need Transparency</a></li>
+          <li><a href="#how">Three Ways to Remove a Background</a></li>
+          <li><a href="#pitfalls">Common Transparency Pitfalls</a></li>
+          <li><a href="#check">Pre-Ship Checklist</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ol>
+      </div>
+
+      <h2 id="what">What "Transparent" Actually Means</h2>
+      <p>A transparent background is the alpha channel at work: <strong>every pixel carries an opacity value from 0–255 in addition to its RGB color</strong> — 0 is fully invisible, 255 fully solid, and everything between is semi-transparent (shadows, soft edges). The <strong>gray checkerboard</strong> you see in image editors is the conventional way of saying "no pixels here — you're seeing through to what's below". The checkerboard itself is never part of the image.</p>
+      <p>Format support varies wildly: <strong>PNG, WebP, GIF, and ICO support transparency</strong> (PNG and WebP including partial alpha gradients); <strong>JPEG does not support it at all</strong> — transparent areas are flattened to a fill color (usually white) at save time, irreversibly. So the first rule of transparent icons: <strong>keep assets as PNG and never let them touch JPEG</strong>.</p>
+
+      <h2 id="why">When You Need Transparency</h2>
+      <ul>
+        <li><strong>Website favicons</strong>: browser tabs come in light and dark themes — a white square icon looks jarring on a dark tab bar. Transparent background with an adaptive foreground is the right pattern;</li>
+        <li><strong>Windows desktop and app icons</strong>: ICO carries full alpha; desktop icons without transparency look flat (see the <a href="/guides/ico-file-guide/">complete ICO file guide</a>);</li>
+        <li><strong>UI assets</strong>: buttons, status bars, watermarks — icons that sit on top of other components only work when transparent.</li>
+      </ul>
+      <p>One important exception: <strong>iOS and App Store icons must not be transparent</strong>. Safari fills a transparent apple-touch-icon with black, and a transparent 1024px App Store icon gets rejected outright. Design an opaque square for iOS and let the system round the corners — see the <a href="/guides/app-icon-sizes/">app icon sizes cheat sheet</a> for the cross-platform picture.</p>
+
+      <h2 id="how">Three Ways to Remove a Background</h2>
+      <p>You have a white-background logo — how do you turn it into a transparent PNG? Ranked by control:</p>
+
+      <h3>Option 1: Manual Cutout in an Image Editor (Most Control)</h3>
+      <p>Typical GIMP (free) flow: unlock the layer → select the background with the Fuzzy Select (magic wand) or Select by Color → <strong>Select → Feather 1–2px</strong> → Delete → export as PNG. In Photoshop, use Select Subject / Remove Background with a layer mask so you can always step back. Manual work is the only way to nail <strong>intricate edges</strong> (hair, glows) properly.</p>
+
+      <h3>Option 2: Export from the Vector Source (Cleanest)</h3>
+      <p>If the logo exists as SVG / AI vector art, you never need to "remove" anything — <strong>hide or delete the background layer when exporting the PNG</strong> and you get infinitely crisp transparency. This is the recommended workflow: a vector source should be a standard brand asset.</p>
+
+      <h3>Option 3: AI Background Removal (Fastest — Mind Privacy)</h3>
+      <p>Services like remove.bg strip backgrounds in seconds and scale well for batches. The trade-off: <strong>your image gets uploaded to a third-party server</strong> — the opposite of this site's "files never leave your browser" principle. Don't use them for confidential material or private screenshots; ordinary marketing assets are fine. AI cutouts sometimes over-feather the edges, so zoom in before shipping.</p>
+
+      <p>Once you have a transparent PNG, convert it to multi-size ICO / PNG with this site's <a href="/icon-forge/">Icon Forge</a> (runs entirely in your browser, alpha untouched); for website icons only, the <a href="/favicon/">Favicon Generator</a> produces the full favicon set in one go — markup in the <a href="/guides/favicon-guide/">Favicon guide</a>.</p>
+
+      <h2 id="pitfalls">Common Transparency Pitfalls</h2>
+      <ul>
+        <li><strong>White is not transparent</strong>: painting the background white on a white canvas is the classic fake transparency. Check: real transparency shows a checkerboard in editors, or drop the image on a dark background and the white gives itself away;</li>
+        <li><strong>Saving as JPEG mid-workflow</strong>: one JPEG export anywhere in the chain flattens transparency permanently (white fill) — converting back to PNG won't recover it. Keep the pipeline PNG / WebP / PSD / SVG throughout;</li>
+        <li><strong>White edge halos (matte fringing)</strong>: semi-transparent pixels left by feathering still carry the old background color, showing as a light halo on dark surfaces. Fix with a "remove white matte / defringe" step, or shift feathered pixels toward the foreground color;</li>
+        <li><strong>iOS fills black</strong>: Safari paints transparent apple-touch-icons black — not a bug, platform behavior. Ship a separate opaque icon for iOS;</li>
+        <li><strong>Invisible in dark mode</strong>: a transparent icon with dark foreground disappears on a dark tab bar. Favicons deserve Light/Dark variants — markup in the <a href="/guides/dark-mode-icons/">Dark Mode Icon Design Guide</a>;</li>
+        <li><strong>Cropped soft shadows</strong>: drop shadows and glows live in the alpha edges; too-tight export canvases slice them. Leave at least 4–8px of transparent breathing room on all sides.</li>
+      </ul>
+
+      <h2 id="check">Pre-Ship Checklist</h2>
+      <ol class="t-steps">
+        <li><strong>Checkerboard check</strong>: confirm the background shows a checkerboard in your editor, not white;</li>
+        <li><strong>Light &amp; dark backdrop test</strong>: place the icon on pure white and pure black (or a contrasting brand color) — look for halos and dark-mode visibility;</li>
+        <li><strong>Zoom to 400% on edges</strong>: semi-transparent transitions should be clean, not tinted with the old background;</li>
+        <li><strong>Downscale to 16px</strong>: the subject should still read clearly at favicon size;</li>
+        <li><strong>Re-check after conversion</strong>: reload the generated ICO / favicon in a preview — this site's tools draw a transparent checkerboard canvas, so missing alpha is obvious at a glance.</li>
+      </ol>
+      <p>For the full PNG → Windows ICO workflow (256px ceiling, multi-size packing), see the <a href="/guides/png-to-ico-guide/">PNG to ICO guide</a>.</p>
+
+      <h2 id="faq">FAQ</h2>
+      <div class="faq-item"><p class="faq-q">Q: PNG and JPEG — which one supports transparent backgrounds?</p><p class="faq-a">A: PNG does: every pixel carries an alpha channel recording 0–255 levels of partial transparency. JPEG has no alpha at all — transparent areas are flattened to a fill color (usually white) at save time, and its lossy compression adds edge artifacts. Transparent icons should always be PNG (or WebP/GIF), never JPEG.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: Why does my "transparent" PNG still show a white box on my page?</p><p class="faq-a">A: Usually white was mistaken for transparent: painting the background white on a white canvas looks identical, but the pixels are still solid white. Real transparency shows the gray checkerboard in alpha-aware editors. Also check your CSS — a white container or body background sits behind the image. (Old IE6 rendered PNG alpha as gray; modern browsers don't.)</p></div>
+      <div class="faq-item"><p class="faq-q">Q: Does the ICO format support transparency?</p><p class="faq-a">A: Yes. Every image inside an ICO container can carry an alpha channel. As long as the source PNG is transparent and the converter preserves alpha, the ICO stays transparent. This site's Icon Forge runs entirely in your browser and writes alpha through untouched.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: Can iOS and App Store icons have transparent backgrounds?</p><p class="faq-a">A: No. Apple requires opaque app icons: Safari fills a transparent apple-touch-icon with black, and the 1024px App Store icon is rejected if it contains transparency. Design an opaque rounded-square fill for iOS and let the system apply the corner mask.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: How do I check whether an image is really transparent?</p><p class="faq-a">A: Three ways: put it on a dark or colored background and look for the old backdrop showing through; look for the checkerboard in an image editor; or upload it to this site's Icon Forge — its preview canvas draws a transparency checkerboard, so transparent areas show as checks, not white.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: What are free ways to remove an image background?</p><p class="faq-a">A: Three common routes: manual cutout in an image editor (e.g., GIMP's magic wand, then delete the background layer); exporting straight from a vector source like SVG with the background layer hidden; or AI one-click background removers — fast, but they upload your image to third-party servers, so keep sensitive material away. Save the result as PNG, then use this site's tools to produce ICO / favicon files.</p></div>
+
+      <div class="cta-box">
+        <p class="cta-title">Convert Transparent PNGs to ICO / Favicon — Free</p>
+        <p class="cta-sub">Alpha preserved · Light/Dark variants · Checkerboard preview canvas · Runs in your browser</p>
+        <a class="cta-btn" href="/icon-forge/">Open Icon Forge →</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<div id="site-footer"></div>
+<script src="/assets/js/site.js" defer></script>
+</body>
+</html>
