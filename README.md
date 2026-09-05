@@ -4,7 +4,6 @@
 
 - 线上地址：<https://tools.cataito.com>
 - 仓库：<https://github.com/cataito-lab/iconforge-studio>（Cloudflare Pages 连接此仓库自动部署）
-- 交接文档：[`HANDOVER.md`](./HANDOVER.md)（架构约定、开发流程、测试方法、待办——新会话必读）
 
 ## 已上线工具
 
