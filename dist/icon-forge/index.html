@@ -1085,6 +1085,18 @@ document.addEventListener('DOMContentLoaded', function () {
     updateStructureSummary();
     refreshSourceInfo();
   });
+
+  /* [修复] HTML 内联 on* 属性（onchange/onclick/oninput）在触发时只解析全局作用域，
+     以下函数定义在本 DOMContentLoaded 闭包内，必须显式挂到 window 才能被调用。
+     否则上传/折叠/生成全部静默失败（handleFileSelect is not defined）。 */
+  window.handleFileSelect = handleFileSelect;
+  window.updateFormatSummary = updateFormatSummary;
+  window.updatePaddingNote = updatePaddingNote;
+  window.updateStructureSummary = updateStructureSummary;
+  window.toggleCustomRoot = toggleCustomRoot;
+  window.startGeneration = startGeneration;
+  window.toggleAcc = toggleAcc;
+  window.toggleAllSizes = toggleAllSizes;
 });
 </script>
 </body>
