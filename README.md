@@ -14,6 +14,7 @@
 | 图片压缩 | `/compress/` | 批量压缩 JPG/PNG/WebP（上限 20 张），智能格式选择（auto：透明走 WebP/PNG、不透明比 JPEG vs WebP 择小）、质量滑块 30–95、最长边限制、ZIP 批量下载；压缩结果反而更大时诚实保留原图 |
 | 配色 / 调色板 | `/palette/` | 上传图片用中位切分法提取主色，生成互补/类似/三角/单色方案，支持复制全部 HEX、导出 CSS 变量、下载 PNG 色卡；所有计算在浏览器本地完成 |
 | 图片格式转换 | `/convert/` | PNG / JPEG / WebP 在线互转（≤20 张批量）：转 JPEG 透明自动铺白底并标记，转 WebP/PNG 保留透明；质量滑块（默认 90）+ 最长边缩放 + ZIP 批量下载 |
+| 图片裁剪与缩放 | `/resize/` | 批量居中裁切 1:1 / 4:3 / 16:9 / 9:16 + 按最长边等比缩放（≤20 张），默认保持原格式（GIF/BMP 出 PNG），转 JPEG 铺白底并标记，ZIP 批量下载 |
 
 另有十篇 SEO 使用指南（`/guides/`，中英双语）：ICO 文件完全指南、Favicon 完全指南、暗色图标设计指南、图片压缩指南、WebP 格式指南、配色原理指南、App 图标尺寸速查、PNG 转 ICO 指南、Favicon 不显示排查、透明背景图标指南。
 
@@ -27,6 +28,7 @@ dist/
   compress/index.html     # 工具三：图片压缩
   palette/index.html      # 工具四：配色 / 调色板
   convert/index.html      # 工具五：图片格式转换
+  resize/index.html       # 工具六：图片裁剪与缩放
   guides/                 # SEO 指南（含中英 hreflang）
   assets/css/site.css     # 共享外壳样式 + 全站设计令牌（:root / html.dark）
   assets/js/site.js       # 共享外壳逻辑（导航注入 / 中英双语 / 页脚 / 主题按钮）
