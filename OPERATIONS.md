@@ -35,12 +35,12 @@
 
 ## 五、内容清单与新增 checklist
 
-- 工具 4：`/icon-forge/`（ICO/PNG 图标）、`/favicon/`、`/compress/`（≤20 张批量）、`/palette/`
+- 工具 5：`/icon-forge/`（ICO/PNG 图标）、`/favicon/`、`/compress/`（≤20 张批量）、`/palette/`、`/convert/`（PNG/JPEG/WebP 互转，转 JPEG 铺白底、WebP/PNG 保透明）
 - 指南 10：ico-file-guide、favicon-guide、dark-mode-icons、image-compression-guide、webp-guide、color-guide、app-icon-sizes、png-to-ico-guide、favicon-not-showing-guide、transparent-icon-guide（均中英双语 `.lb-zh`/`.lb-en` 双块）
 - 信任页：about / privacy / contact + 404（noindex）
 
 **新增页面 checklist**：`sitemap.xml`（hreflang 三连 zh-CN/en/x-default + priority）→ `llms.txt` → guides 索引卡（如指南）→ `site.js` 词典（`gd_*` 键）→ 相关工具页反向内链 → `<title>` 双语 meta + JSON-LD。⚠️ 每新增一篇指南，首页「实用指南」区块（4 篇轮换 + 全部入口）与指南间互链网络也要同步评估（2026-09-05 B3 内链加固后建立的网络基线见 HANDOFF）。
-- sitemap 现共 19 URL（首页 + 4 工具 + about/privacy/contact + /guides/ + 10 指南）；首页有「实用指南」编号目录区块（4 篇支柱 + 全部入口）；guides 索引页收齐 10 卡。
+- sitemap 现共 20 URL（首页 + 5 工具 + about/privacy/contact + /guides/ + 10 指南）；首页有「实用指南」编号目录区块（4 篇支柱 + 全部入口）；guides 索引页收齐 10 卡。
 
 ## 六、数据与统计
 
