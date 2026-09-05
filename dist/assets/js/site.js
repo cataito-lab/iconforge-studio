@@ -13,6 +13,7 @@
     brand_sub:      { zh: '免费工具箱', en: 'FREE TOOLS' },
     free_badge:     { zh: '100% 免费 · 无需注册 · 浏览器本地处理', en: '100% Free · No sign-up · Runs in your browser' },
     footer_tagline: { zh: '完全免费、纯前端、隐私优先的工具集合。', en: 'Free, client-side, privacy-first tools.' },
+    footer_mother:  { zh: 'CATAITO.com 母站', en: 'CATAITO.com — Main Site' },
     footer_rights:  { zh: '© 2026 cataito. 保留所有权利。', en: '© 2026 cataito. All rights reserved.' },
     footer_sitemap: { zh: '站点地图', en: 'Sitemap' },
     footer_source:  { zh: '开源仓库', en: 'Source' },
@@ -440,6 +441,7 @@
       '<div class="site-footer__inner">' +
         '<div data-i18n="footer_tagline">完全免费、纯前端、隐私优先的工具集合。</div>' +
         '<div class="site-footer__links">' +
+          '<a href="https://cataito.com" target="_blank" rel="noopener" data-i18n="footer_mother">CATAITO.com 母站</a>' +
           '<a href="/about/" data-i18n="footer_about">关于</a>' +
           '<a href="/privacy/" data-i18n="footer_privacy">隐私政策</a>' +
           '<a href="/contact/" data-i18n="footer_contact">联系我们</a>' +

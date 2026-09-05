@@ -682,6 +682,27 @@ html.dark .theme-switch .ico-sun { display: none; }
 .t-faq-q::before { content: "Q. "; font-family: var(--font-mono); font-size: 12.5px; color: var(--accent); }
 .t-faq-a { font-size: 13.5px; color: var(--text-2); margin: 0; line-height: 1.75; }
 
+/* ---------- CTA 卡（品牌/工具导流，about 与指南页共用） ----------
+   注意：指南页内联样式里有同款副本（含 .article a 特异度覆盖），暂保留；
+   新页面请直接用这里的一套。 */
+.cta-box {
+  background: linear-gradient(135deg, var(--accent-soft), var(--accent-soft-2));
+  border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent);
+  border-radius: var(--radius);
+  padding: 20px 22px; margin: 34px 0 10px; text-align: center;
+}
+.cta-box .cta-title { font-size: 17px; font-weight: 700; color: var(--text); margin: 0 0 6px; }
+.cta-box .cta-sub { font-size: 13.5px; color: var(--text-2); margin: 0 0 14px; }
+.cta-btn {
+  display: inline-block; background: var(--accent); color: #fff; text-decoration: none;
+  font-size: 14px; font-weight: 600; padding: 11px 26px; border-radius: var(--radius-sm);
+  box-shadow: 0 6px 18px var(--accent-glow); transition: background .15s;
+}
+.cta-btn:hover { background: var(--accent-hover); }
+/* 特异度防护：.t-prose a（0,1,1）会压过 .cta-btn（0,1,0）的白色文字 */
+.t-prose a.cta-btn, .t-prose .cta-btn { color: #fff; text-decoration: none; }
+.t-prose a.cta-btn:hover { color: #fff; background: var(--accent-hover); }
+
 /* 双语块：默认中文，html.lang-en 时切换英文（两语言均在原生 HTML 中，可被索引） */
 .lb-en { display: none; }
 html.lang-en .lb-zh { display: none; }
