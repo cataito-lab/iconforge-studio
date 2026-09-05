@@ -39,6 +39,8 @@
     home_tool_compress_desc: { zh: '在线压缩 PNG / JPG / WebP，体积更小、画质可控。', en: 'Compress PNG / JPG / WebP online with smaller size and adjustable quality.' },
     home_tool_palette:       { zh: '配色 / 调色板', en: 'Color Palette' },
     home_tool_palette_desc:  { zh: '从图片提取配色，或生成协调的调色板方案。', en: 'Extract colors from an image or generate a harmonious palette.' },
+    home_tool_convert:       { zh: '格式转换', en: 'Image Converter' },
+    home_tool_convert_desc:  { zh: 'PNG / JPEG / WebP 在线互转，保留透明、可调质量，批量打包下载。', en: 'Convert PNG / JPEG / WebP online with transparency preserved, adjustable quality, and batch ZIP download.' },
 
     /* 首页：实用指南区块 */
     home_guides_h:      { zh: '实用指南', en: 'Practical guides' },
@@ -65,7 +67,7 @@
     hf_faq_2_q:     { zh: '我的图片会被上传到服务器吗？', en: 'Are my images uploaded to a server?' },
     hf_faq_2_a:     { zh: '不会。所有工具基于浏览器本地运算（Canvas / Web API），文件不经过网络，商业素材和隐私截图都能放心使用。', en: 'No. All tools run on in-browser computation (Canvas / Web API); files never cross the network, so commercial assets and private screenshots are safe to use.' },
     hf_faq_3_q:     { zh: '目前提供哪些工具？', en: 'Which tools are available?' },
-    hf_faq_3_a:     { zh: '目前提供图标工坊 IconForge、Favicon 生成器、图片压缩、配色 / 调色板四类工具，均为纯前端实现，后续还会持续增加。', en: 'Currently four tools: Icon Forge, Favicon Generator, Image Compressor, and Color Palette — all client-side, with more on the way.' },
+    hf_faq_3_a:     { zh: '目前提供图标工坊 IconForge、Favicon 生成器、图片压缩、配色 / 调色板、图片格式转换五类工具，均为纯前端实现，后续还会持续增加。', en: 'Currently five tools: Icon Forge, Favicon Generator, Image Compressor, Color Palette, and Image Converter — all client-side, with more on the way.' },
 
     /* IconForge */
     if_name:              { zh: '图标工坊 IconForge', en: 'Icon Forge' },
@@ -333,6 +335,46 @@
     pl_toast_png_fail:  { zh: '色卡生成失败，请重试', en: 'Failed to generate swatch — please retry' },
     pl_toast_copy_fail: { zh: '复制失败，请手动选择复制', en: 'Copy failed — please copy manually' },
 
+    /* 工具五：图片格式转换 */
+    cv_name:          { zh: '格式转换', en: 'Image Converter' },
+    cv_desc:          { zh: '在线转换图片格式：PNG / JPEG / WebP 互转，可调输出质量与尺寸，批量打包下载。纯浏览器本地处理。', en: 'Convert images online: PNG / JPEG / WebP, adjustable quality and size, batch download as ZIP. Runs entirely in your browser.' },
+    cv_upload:        { zh: '点击或拖入图片（可多选）', en: 'Click or drop images (multiple allowed)' },
+    cv_dz_hint:       { zh: 'PNG / JPG / WebP / GIF / BMP · 全程本地处理，不上传', en: 'PNG / JPG / WebP / GIF / BMP · 100% local, never uploaded' },
+    cv_format:        { zh: '目标格式', en: 'Target format' },
+    cv_quality:       { zh: '输出质量（仅 JPEG / WebP）', en: 'Output quality (JPEG / WebP only)' },
+    cv_quality_hint:  { zh: '仅影响 JPEG / WebP，PNG 为无损不受影响。转换默认 90，尽量保留画质。', en: 'Applies to JPEG / WebP only; PNG is lossless and unaffected. Defaults to 90 to preserve fidelity.' },
+    cv_maxedge:       { zh: '最长边限制（可选缩放）', en: 'Max edge (optional resize)' },
+    cv_edge_orig:     { zh: '原始尺寸', en: 'Original' },
+    cv_note:          { zh: '转 JPEG 时透明背景会自动铺白底（JPEG 不支持透明通道）；转 WebP / PNG 完整保留透明。', en: 'Converting to JPEG fills transparent areas with white (JPEG has no alpha); WebP / PNG preserve transparency fully.' },
+    cv_download_all:  { zh: '打包下载全部（ZIP）', en: 'Download all (ZIP)' },
+    cv_empty:         { zh: '还没有图片，先上传几张试试。', en: 'No images yet — drop some to start.' },
+    cv_bar_stats:     { zh: '已转换 ${n}/${total} 张 · ${orig} → ${out}', en: '${n}/${total} converted · ${orig} → ${out}' },
+    cv_flat:          { zh: '透明→白底', en: 'Alpha flattened' },
+    cv_dl:            { zh: '下载', en: 'Download' },
+    cv_remove:        { zh: '移除', en: 'Remove' },
+    cv_toast_type:    { zh: '请上传图片文件', en: 'Please upload image files' },
+    cv_toast_too_many:{ zh: '一次最多 ${n} 张，超出部分已忽略', en: 'Up to ${n} images at once; extras skipped' },
+    cv_toast_empty:   { zh: '请先添加图片', en: 'Please add images first' },
+    cv_toast_zip:     { zh: 'ZIP 已开始下载', en: 'ZIP download started' },
+    cv_add_more:      { zh: '继续添加', en: 'Add more' },
+    cv_clear_all:     { zh: '清空全部', en: 'Clear all' },
+    cv_orig:          { zh: '原图', en: 'Original' },
+    cv_new:           { zh: '转换后', en: 'Converted' },
+    cv_how_h:  { zh: '怎么用', en: 'How to use' },
+    cv_how_1:  { zh: '<strong>批量上传</strong>：点击或拖入图片，一次最多 20 张，浏览器能解码的格式（PNG / JPG / WebP / GIF / BMP）都可以。', en: '<strong>Batch upload</strong>: click or drag in images, up to 20 at a time — any format your browser can decode (PNG / JPG / WebP / GIF / BMP).' },
+    cv_how_2:  { zh: '<strong>选目标格式</strong>：PNG 无损保透明；JPEG 体积小但不支持透明（自动铺白底）；WebP 两者兼得。', en: '<strong>Pick the target format</strong>: PNG is lossless and keeps transparency; JPEG is compact but has no alpha (white fill applied); WebP gives you both.' },
+    cv_how_3:  { zh: '<strong>按需调整</strong>：质量滑块只影响 JPEG / WebP；最长边限制可顺带缩放，不需要就保持原始尺寸。', en: '<strong>Tune settings</strong>: the quality slider affects JPEG / WebP only; use the max-edge limit to resize along the way, or keep original dimensions.' },
+    cv_how_4:  { zh: '<strong>下载</strong>：单张逐个下载，或一键打包全部为 ZIP。', en: '<strong>Download</strong>: grab files one by one, or export everything as a single ZIP.' },
+    cv_faq_h:  { zh: '常见问题', en: 'FAQ' },
+    cv_faq_1_q: { zh: '图片会被上传到服务器吗？', en: 'Are my images uploaded to a server?' },
+    cv_faq_1_a: { zh: '不会。全部转换在浏览器本地完成（Canvas 编码），图片不经过网络，商业素材和隐私截图都可以放心用。', en: 'No. All conversion runs locally in your browser (Canvas encoding) — images never touch the network, safe for commercial assets and private screenshots.' },
+    cv_faq_2_q: { zh: '为什么转成 JPEG 后透明背景没了？', en: 'Why did transparency disappear after converting to JPEG?' },
+    cv_faq_2_a: { zh: 'JPEG 格式本身不支持透明通道，这是格式限制而不是工具问题。转换时工具会把透明区域铺成白色；需要保留透明请选 PNG 或 WebP。', en: "JPEG has no alpha channel — that's a format limit, not a tool bug. Transparent areas are filled with white; choose PNG or WebP to keep transparency." },
+    cv_faq_3_q: { zh: '支持哪些输入格式？', en: 'Which input formats are supported?' },
+    cv_faq_3_a: { zh: '浏览器能解码的位图都可以：PNG、JPEG、WebP、GIF、BMP。HEIC / HEIF 取决于浏览器（Chrome 与 Edge 不支持，Safari 部分支持），iPhone 照片建议先在系统里导出为 JPG。', en: 'Any bitmap your browser can decode: PNG, JPEG, WebP, GIF, BMP. HEIC/HEIF depends on the browser (not Chrome/Edge; partially Safari) — export iPhone photos as JPG first.' },
+    cv_faq_4_q: { zh: '转换后体积反而变大了？', en: 'The file got bigger after converting?' },
+    cv_faq_4_a: { zh: '有可能：比如 JPEG 转 PNG，无损格式保留了全部像素信息，体积上涨是正常的。格式转换的目标是「换格式」而不是「变小」——想压缩体积请用图片压缩工具。', en: "It can happen — JPEG to PNG, for example, preserves every pixel losslessly. Conversion is about changing formats, not shrinking; use the compressor when size matters." },
+
     /* 语言按钮（显示“切换到”的目标语言） */
     lang_to_en:     { zh: 'EN', en: '中' }
   };
@@ -422,6 +464,7 @@
           '<a href="/favicon/" class="' + (active('/favicon/') ? 'active' : '') + '" data-i18n="fv_name">Favicon 生成器</a>' +
           '<a href="/compress/" class="' + (active('/compress/') ? 'active' : '') + '" data-i18n="cp_name">图片压缩</a>' +
           '<a href="/palette/" class="' + (active('/palette/') ? 'active' : '') + '" data-i18n="pl_name">配色工具</a>' +
+          '<a href="/convert/" class="' + (active('/convert/') ? 'active' : '') + '" data-i18n="cv_name">格式转换</a>' +
           '<a href="/guides/" class="' + (active('/guides/') ? 'active' : '') + '" data-i18n="nav_guides">使用指南</a>' +
         '</nav>' +
         '<div class="header-actions">' +

@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>图片格式转换 — 免费在线 PNG/JPEG/WebP 互转 | CATAITO</title>
+<meta name="title-zh" content="图片格式转换 — 免费在线 PNG/JPEG/WebP 互转 | CATAITO">
+<meta name="title-en" content="Image Converter — Free Online PNG/JPEG/WebP Conversion | CATAITO">
+<meta name="description" content="免费在线图片格式转换：PNG / JPEG / WebP 互转，可调输出质量与尺寸，批量打包 ZIP 下载。转 JPEG 自动铺白底、转 WebP/PNG 保留透明。纯浏览器本地处理，图片绝不上传服务器。">
+<meta name="theme-color" content="#f6f3ec">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="CATAITO 工具箱">
+<meta property="og:title" content="图片格式转换 — 免费在线 PNG/JPEG/WebP 互转">
+<meta property="og:description" content="PNG/JPEG/WebP 互转，调质量、控尺寸，批量转换本地处理不上传。">
+<meta property="og:url" content="https://tools.cataito.com/convert/">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:locale:alternate" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="图片格式转换">
+<meta name="twitter:description" content="免费在线图片格式转换，纯本地处理。">
+<link rel="icon" href="/assets/img/icon.svg">
+<link rel="canonical" href="https://tools.cataito.com/convert/">
+<link rel="stylesheet" href="/assets/css/site.css">
+<script src="/assets/js/theme-init.js"></script>
+<script>
+  (function () {
+    try {
+      var l = localStorage.getItem('cataito-lang');
+      document.documentElement.setAttribute('lang', (l === 'en') ? 'en' : 'zh-CN');
+    } catch (e) {}
+  })();
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Image Converter",
+  "alternateName": "图片格式转换",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "Any",
+  "url": "https://tools.cataito.com/convert/",
+  "inLanguage": ["zh-CN", "en"],
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "description": "免费在线图片格式转换：PNG / JPEG / WebP 互转，可调质量与尺寸，纯本地处理。"
+}
+</script>
+</head>
+<body>
+<div id="site-header"></div>
+<main class="site-main">
+  <div class="t-head">
+    <nav class="breadcrumb"><a href="/" data-i18n="crumb_home">首页</a><span class="sep">/</span><span data-i18n="cv_name">格式转换</span></nav>
+    <h1 class="page-h1" data-i18n="cv_name">图片格式转换</h1>
+    <p class="page-sub" data-i18n="cv_desc">在线转换图片格式：PNG / JPEG / WebP 互转，可调输出质量与尺寸，批量打包下载。纯浏览器本地处理。</p>
+  </div>
+
+  <section class="t-card t-flow">
+    <div id="cv-dropzone" class="t-drop" tabindex="0">
+      <input type="file" id="cv-file" accept="image/*" multiple hidden>
+      <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h12V4H4z"/><path d="M8 16h12v-4H8z"/><path d="m14 8 3 4m-9 0 3 4" opacity=".5"/></svg>
+      <span class="t-drop-title" data-i18n="cv_upload">点击或拖入图片（可多选）</span>
+      <span class="t-drop-hint" data-i18n="cv_dz_hint">PNG / JPG / WebP / GIF / BMP · 全程本地处理，不上传</span>
+    </div>
+
+    <div class="t-block">
+      <div class="t-field">
+        <div class="t-label" data-i18n="cv_format">目标格式</div>
+        <div class="t-seg" id="cv-format">
+          <label class="t-seg-item"><input type="radio" name="cv-format" value="png" checked><span>PNG</span></label>
+          <label class="t-seg-item"><input type="radio" name="cv-format" value="jpeg"><span>JPEG</span></label>
+          <label class="t-seg-item"><input type="radio" name="cv-format" value="webp"><span>WebP</span></label>
+        </div>
+      </div>
+
+      <div class="t-field">
+        <div class="t-label">
+          <span data-i18n="cv_quality">输出质量（仅 JPEG / WebP）</span>
+          <span class="t-range-val" id="cv-quality-val">90</span>
+        </div>
+        <input type="range" id="cv-quality" min="30" max="100" step="1" value="90" class="t-range">
+        <div class="t-hint" data-i18n="cv_quality_hint">仅影响 JPEG / WebP，PNG 为无损不受影响。转换默认 90，尽量保留画质。</div>
+      </div>
+
+      <div class="t-field">
+        <div class="t-label" data-i18n="cv_maxedge">最长边限制（可选缩放）</div>
+        <div class="t-seg" id="cv-maxedge">
+          <label class="t-seg-item"><input type="radio" name="cv-edge" value="0" checked><span data-i18n="cv_edge_orig">原始尺寸</span></label>
+          <label class="t-seg-item"><input type="radio" name="cv-edge" value="2560"><span>2560px</span></label>
+          <label class="t-seg-item"><input type="radio" name="cv-edge" value="1920"><span>1920px</span></label>
+          <label class="t-seg-item"><input type="radio" name="cv-edge" value="1280"><span>1280px</span></label>
+          <label class="t-seg-item"><input type="radio" name="cv-edge" value="800"><span>800px</span></label>
+        </div>
+      </div>
+    </div>
+
+    <div id="cv-list" class="t-list"></div>
+    <p id="cv-empty" class="t-empty" data-i18n="cv_empty">还没有图片，先上传几张试试。</p>
+
+    <div id="cv-bar" class="t-bar" hidden>
+      <div class="t-bar-stats" id="cv-bar-stats"></div>
+      <div class="t-bar-actions">
+        <button type="button" class="t-btn" id="cv-add" data-i18n="cv_add_more">继续添加</button>
+        <button type="button" class="t-btn" id="cv-clear" data-i18n="cv_clear_all">清空全部</button>
+        <button type="button" class="t-btn primary" id="cv-zip" data-i18n="cv_download_all">打包下载全部（ZIP）</button>
+      </div>
+    </div>
+
+    <p class="t-note" data-i18n="cv_note">转 JPEG 时透明背景会自动铺白底（JPEG 不支持透明通道）；转 WebP / PNG 完整保留透明。</p>
+  </section>
+
+  <section class="t-prose">
+    <h2 data-i18n="cv_how_h">怎么用</h2>
+    <ol class="t-steps">
+      <li data-i18n-html="cv_how_1"><strong>批量上传</strong>：点击或拖入图片，一次最多 20 张，浏览器能解码的格式（PNG / JPG / WebP / GIF / BMP）都可以。</li>
+      <li data-i18n-html="cv_how_2"><strong>选目标格式</strong>：PNG 无损保透明；JPEG 体积小但不支持透明（自动铺白底）；WebP 两者兼得。</li>
+      <li data-i18n-html="cv_how_3"><strong>按需调整</strong>：质量滑块只影响 JPEG / WebP；最长边限制可顺带缩放，不需要就保持原始尺寸。</li>
+      <li data-i18n-html="cv_how_4"><strong>下载</strong>：单张逐个下载，或一键打包全部为 ZIP。</li>
+    </ol>
+
+    <h2 data-i18n="cv_faq_h">常见问题</h2>
+    <div class="t-faq">
+      <div class="t-faq-item">
+        <p class="t-faq-q" data-i18n="cv_faq_1_q">图片会被上传到服务器吗？</p>
+        <p class="t-faq-a" data-i18n="cv_faq_1_a">不会。全部转换在浏览器本地完成（Canvas 编码），图片不经过网络，商业素材和隐私截图都可以放心用。</p>
+      </div>
+      <div class="t-faq-item">
+        <p class="t-faq-q" data-i18n="cv_faq_2_q">为什么转成 JPEG 后透明背景没了？</p>
+        <p class="t-faq-a" data-i18n="cv_faq_2_a">JPEG 格式本身不支持透明通道，这是格式限制而不是工具问题。转换时工具会把透明区域铺成白色；需要保留透明请选 PNG 或 WebP。</p>
+      </div>
+      <div class="t-faq-item">
+        <p class="t-faq-q" data-i18n="cv_faq_3_q">支持哪些输入格式？</p>
+        <p class="t-faq-a" data-i18n="cv_faq_3_a">浏览器能解码的位图都可以：PNG、JPEG、WebP、GIF、BMP。HEIC / HEIF 取决于浏览器（Chrome 与 Edge 不支持，Safari 部分支持），iPhone 照片建议先在系统里导出为 JPG。</p>
+      </div>
+      <div class="t-faq-item">
+        <p class="t-faq-q" data-i18n="cv_faq_4_q">转换后体积反而变大了？</p>
+        <p class="t-faq-a" data-i18n="cv_faq_4_a">有可能：比如 JPEG 转 PNG，无损格式保留了全部像素信息，体积上涨是正常的。格式转换的目标是「换格式」而不是「变小」——想压缩体积请用图片压缩工具。</p>
+      </div>
+    </div>
+
+    <h2 data-i18n="related_guides">相关指南</h2>
+    <div class="t-guide-links">
+      <a class="t-guide-link" href="/guides/webp-guide/">
+        <p class="t-guide-link-title" data-i18n="gd_webp_short">WebP 格式指南</p>
+        <p class="t-guide-link-desc" data-i18n="gd_webp_card_desc">WebP 是什么、为什么比 JPEG/PNG 更小、何时该用、浏览器兼容性，以及如何免费在线转 WebP。</p>
+      </a>
+      <a class="t-guide-link" href="/guides/transparent-icon-guide/">
+        <p class="t-guide-link-title" data-i18n="gd_alpha_short">透明背景图标指南</p>
+        <p class="t-guide-link-desc" data-i18n="gd_alpha_card_desc">alpha 通道原理、去背景的三种方法、白边与 iOS 补黑底等常见坑，以及 ICO / favicon 转换时如何保留透明。</p>
+      </a>
+    </div>
+  </section>
+</main>
+
+<div id="site-footer"></div>
+<div id="cv-toast" class="t-toast">
+  <span class="t-toast-ic">
+    <svg class="ic-ok" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+    <svg class="ic-err" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+  </span>
+  <span class="t-toast-title"></span>
+</div>
+
+<script src="/assets/js/site.js" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+(function () {
+  'use strict';
+  var t = function (k, vars) { return (window.CATAITO_I18N && window.CATAITO_I18N.t) ? window.CATAITO_I18N.t(k, vars) : k; };
+  var MAX_FILES = 20;
+  var items = [];   /* { id, file, url, img, w, h, hasAlpha, outBlob, outName, flat } */
+  var seq = 0;
+  var running = false, pendingRerun = false;
+
+  /* ---------- 环境：WebP 编码支持检测 ---------- */
+  var webpOK = (function () {
+    var c = document.createElement('canvas'); c.width = c.height = 1;
+    return c.toDataURL('image/webp').indexOf('image/webp') === 5;
+  })();
+
+  /* ---------- 工具函数 ---------- */
+  function fmtSize(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  }
+  function canvasToBlob(canvas, type, quality) {
+    return new Promise(function (resolve) {
+      if (canvas.toBlob) {
+        canvas.toBlob(function (b) { resolve(b); }, type, quality);
+      } else {
+        var u = canvas.toDataURL(type, quality);
+        var bin = atob(u.split(',')[1]);
+        var bytes = new Uint8Array(bin.length);
+        for (var i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+        resolve(new Blob([bytes], { type: type }));
+      }
+    });
+  }
+  function loadFile(file) {
+    return new Promise(function (resolve, reject) {
+      var url = URL.createObjectURL(file);
+      var img = new Image();
+      img.onload = function () { resolve({ img: img, url: url }); };
+      img.onerror = function () { URL.revokeObjectURL(url); reject(); };
+      img.src = url;
+    });
+  }
+  function drawScaled(img, maxEdge, flatten) {
+    var w = img.naturalWidth || img.width, h = img.naturalHeight || img.height;
+    var scale = 1;
+    if (maxEdge > 0) {
+      var longest = Math.max(w, h);
+      if (longest > maxEdge) scale = maxEdge / longest;
+    }
+    var c = document.createElement('canvas');
+    c.width = Math.max(1, Math.round(w * scale));
+    c.height = Math.max(1, Math.round(h * scale));
+    var ctx = c.getContext('2d');
+    if (flatten) { ctx.fillStyle = '#ffffff'; ctx.fillRect(0, 0, c.width, c.height); }
+    ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = 'high';
+    ctx.drawImage(img, 0, 0, c.width, c.height);
+    return c;
+  }
+  function detectAlpha(img) {
+    /* 用 64px 小图采样检测透明通道，避免大图逐像素开销 */
+    var s = 64;
+    var c = document.createElement('canvas'); c.width = s; c.height = s;
+    var ctx = c.getContext('2d', { willReadFrequently: true });
+    ctx.drawImage(img, 0, 0, s, s);
+    try {
+      var d = ctx.getImageData(0, 0, s, s).data;
+      for (var i = 3; i < d.length; i += 4) { if (d[i] < 250) return true; }
+    } catch (e) { /* 跨域画布等异常时保守认为有透明 */ return true; }
+    return false;
+  }
+
+  /* ---------- 转换 ---------- */
+  function currentSettings() {
+    var fmt = (document.querySelector('input[name="cv-format"]:checked') || {}).value || 'png';
+    var edge = parseInt((document.querySelector('input[name="cv-edge"]:checked') || {}).value || '0', 10);
+    var q = parseInt(document.getElementById('cv-quality').value, 10) / 100;
+    return { fmt: fmt, edge: edge, q: q };
+  }
+
+  async function convertItem(item, s) {
+    var targets = {
+      png:  { type: 'image/png',  ext: 'png',  q: undefined },
+      jpeg: { type: 'image/jpeg', ext: 'jpg',  q: s.q },
+      webp: { type: 'image/webp', ext: 'webp', q: s.q }
+    };
+    var tgt = targets[s.fmt];
+    if (s.fmt === 'webp' && !webpOK) tgt = targets.jpeg; /* 老浏览器无 WebP 编码 → 回退 JPEG */
+    /* JPEG 不支持透明：透明区域铺白底，结果行标记告知 */
+    var flatten = (tgt.ext === 'jpg') && item.hasAlpha;
+    var canvas = drawScaled(item.img, s.edge, flatten);
+    var blob = await canvasToBlob(canvas, tgt.type, tgt.q);
+    var baseName = item.file.name.replace(/\.[^.]+$/, '');
+    var outName = baseName + '.' + tgt.ext;
+    if (outName === item.file.name) outName = baseName + '-converted.' + tgt.ext;
+    item.outBlob = blob;
+    item.outName = outName;
+    item.flat = flatten;
+  }
+
+  async function runAll() {
+    if (running) { pendingRerun = true; return; }
+    running = true;
+    document.body.classList.add('cv-busy');
+    var s = currentSettings();
+    for (var i = 0; i < items.length; i++) {
+      await convertItem(items[i], s);
+      renderRow(items[i]);
+    }
+    running = false;
+    document.body.classList.remove('cv-busy');
+    if (pendingRerun) { pendingRerun = false; runAll(); }
+    renderBar();
+  }
+  var rerunTimer = null;
+  function scheduleRerun() {
+    if (!items.length) return;
+    if (rerunTimer) clearTimeout(rerunTimer);
+    rerunTimer = setTimeout(runAll, 280);
+  }
+
+  /* ---------- 渲染 ---------- */
+  function renderRow(item) {
+    var row = document.getElementById('cv-row-' + item.id);
+    if (!row) return;
+    var outBytes = item.outBlob ? item.outBlob.size : 0;
+    var delta = item.outBlob ? Math.round((outBytes / item.file.size - 1) * 100) : 0;
+    var pct = Math.abs(delta);
+    var badge = '';
+    if (item.flat) badge += '<span class="t-badge muted">' + esc(t('cv_flat')) + '</span> ';
+    if (item.outBlob) {
+      badge += delta > 0
+        ? '<span class="t-badge muted">+' + pct + '%</span>'
+        : '<span class="t-badge">-' + pct + '%</span>';
+    }
+    row.innerHTML =
+      '<div class="t-thumb t-checker"><img src="' + item.url + '" alt=""></div>' +
+      '<div class="t-row-main">' +
+        '<div class="t-row-name" title="' + esc(item.file.name) + '">' + esc(item.file.name) +
+          (item.outName && item.outName !== item.file.name ? ' <span class="cv-outname">→ ' + esc(item.outName) + '</span>' : '') +
+        '</div>' +
+        '<div class="t-row-meta">' +
+          item.w + '×' + item.h + ' · ' +
+          '<span data-i18n="cv_orig">原图</span> ' + fmtSize(item.file.size) +
+          ' → <span data-i18n="cv_new">转换后</span> <strong>' + fmtSize(outBytes) + '</strong> ' +
+          badge +
+        '</div>' +
+      '</div>' +
+      '<div class="cv-row-actions">' +
+        '<button type="button" class="t-icon-btn" data-act="dl" data-i18n-title="cv_dl">' +
+          '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3"/><path d="m7 10 5 5 5-5"/><path d="M4 21h16"/></svg>' +
+        '</button>' +
+        '<button type="button" class="t-icon-btn danger" data-act="rm" data-i18n-title="cv_remove">' +
+          '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>' +
+        '</button>' +
+      '</div>';
+    if (window.CATAITO_I18N) window.CATAITO_I18N.apply();
+  }
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+  function renderList() {
+    var list = document.getElementById('cv-list');
+    list.innerHTML = '';
+    items.forEach(function (item) {
+      var row = document.createElement('div');
+      row.className = 't-row';
+      row.id = 'cv-row-' + item.id;
+      list.appendChild(row);
+      renderRow(item);
+    });
+    document.getElementById('cv-empty').style.display = items.length ? 'none' : '';
+    document.getElementById('cv-bar').hidden = !items.length;
+  }
+  function renderBar() {
+    if (!items.length) return;
+    var orig = 0, out = 0, done = 0;
+    items.forEach(function (it) {
+      orig += it.file.size;
+      if (it.outBlob) { out += it.outBlob.size; done++; }
+    });
+    var txt = t('cv_bar_stats', { n: done, total: items.length, orig: fmtSize(orig), out: fmtSize(out) });
+    document.getElementById('cv-bar-stats').textContent = txt;
+  }
+
+  /* ---------- 添加文件 ---------- */
+  function addFiles(fileList) {
+    var added = 0;
+    var files = Array.prototype.slice.call(fileList || []);
+    for (var i = 0; i < files.length; i++) {
+      var f = files[i];
+      if (!f.type || f.type.indexOf('image/') !== 0) { showToast(t('cv_toast_type'), true); continue; }
+      if (items.length >= MAX_FILES) { showToast(t('cv_toast_too_many', { n: MAX_FILES }), true); break; }
+      (function (file) {
+        var item = { id: ++seq, file: file, url: '', img: null, w: 0, h: 0, hasAlpha: false, outBlob: null, outName: '', flat: false };
+        items.push(item);
+        added++;
+        loadFile(file).then(function (r) {
+          item.img = r.img; item.url = r.url;
+          item.w = r.img.naturalWidth || r.img.width;
+          item.h = r.img.naturalHeight || r.img.height;
+          item.hasAlpha = detectAlpha(r.img);
+          renderRow(item);
+          renderBar();
+        }).catch(function () {
+          removeItem(item.id);
+          showToast(t('cv_toast_type'), true);
+        });
+      })(f);
+    }
+    if (added) { renderList(); scheduleRerun(); }
+  }
+  function removeItem(id) {
+    for (var i = 0; i < items.length; i++) {
+      if (items[i].id === id) {
+        if (items[i].url) URL.revokeObjectURL(items[i].url);
+        items.splice(i, 1);
+        break;
+      }
+    }
+    renderList(); renderBar();
+  }
+  function downloadBlob(blob, name) {
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = name;
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(function () { URL.revokeObjectURL(a.href); }, 4000);
+  }
+
+  /* ---------- ZIP（与 compress 同源的手工实现：CRC32 查表 + UTF-8 文件名 + 固定结构） ---------- */
+  var CRC_TABLE = null;
+  function getCrcTable() {
+    if (CRC_TABLE) return CRC_TABLE;
+    CRC_TABLE = new Uint32Array(256);
+    for (var i = 0; i < 256; i++) {
+      var c = i;
+      for (var k = 0; k < 8; k++) c = (c & 1) ? (0xEDB88320 ^ (c >>> 1)) : (c >>> 1);
+      CRC_TABLE[i] = c >>> 0;
+    }
+    return CRC_TABLE;
+  }
+  function crc32(buf) {
+    var table = getCrcTable();
+    var crc = 0xFFFFFFFF;
+    for (var i = 0; i < buf.length; i++) crc = table[(crc ^ buf[i]) & 0xFF] ^ (crc >>> 8);
+    return (crc ^ 0xFFFFFFFF) >>> 0;
+  }
+  function buildZip(files) {
+    var enc = new TextEncoder();
+    var chunks = [], central = [], offset = 0;
+    var now = new Date();
+    var dosTime = ((now.getHours() & 31) << 11) | ((now.getMinutes() & 63) << 5) | ((now.getSeconds() >> 1) & 31);
+    var dosDate = ((Math.max(0, now.getFullYear() - 1980) & 127) << 9) | (((now.getMonth() + 1) & 15) << 5) | (now.getDate() & 31);
+    for (var f = 0; f < files.length; f++) {
+      var nameBytes = enc.encode(files[f].name);
+      var data = files[f].data;
+      var crc = crc32(data);
+      var local = new DataView(new ArrayBuffer(30));
+      local.setUint32(0, 0x04034b50, true); local.setUint16(4, 20, true); local.setUint16(6, 0x0800, true);
+      local.setUint16(8, 0, true); local.setUint16(10, dosTime, true); local.setUint16(12, dosDate, true);
+      local.setUint32(14, crc, true); local.setUint32(18, data.length, true); local.setUint32(22, data.length, true);
+      local.setUint16(26, nameBytes.length, true); local.setUint16(28, 0, true);
+      chunks.push(new Uint8Array(local.buffer), nameBytes, data);
+      var cd = new DataView(new ArrayBuffer(46));
+      cd.setUint32(0, 0x02014b50, true); cd.setUint16(4, 20, true); cd.setUint16(6, 20, true); cd.setUint16(8, 0x0800, true);
+      cd.setUint16(10, 0, true); cd.setUint16(12, dosTime, true); cd.setUint16(14, dosDate, true);
+      cd.setUint32(16, crc, true); cd.setUint32(20, data.length, true); cd.setUint32(24, data.length, true);
+      cd.setUint16(28, nameBytes.length, true); cd.setUint16(30, 0, true); cd.setUint16(32, 0, true); cd.setUint16(34, 0, true); cd.setUint16(36, 0, true);
+      cd.setUint32(38, 0, true); cd.setUint32(42, offset, true);
+      central.push({ header: new Uint8Array(cd.buffer), name: nameBytes });
+      offset += 30 + nameBytes.length + data.length;
+    }
+    var centralStart = offset, centralSize = 0;
+    central.forEach(function (c) { chunks.push(c.header, c.name); centralSize += c.header.length + c.name.length; });
+    var end = new DataView(new ArrayBuffer(22));
+    end.setUint32(0, 0x06054b50, true); end.setUint16(4, 0, true); end.setUint16(6, 0, true);
+    end.setUint16(8, files.length, true); end.setUint16(10, files.length, true);
+    end.setUint32(12, centralSize, true); end.setUint32(16, centralStart, true); end.setUint16(20, 0, true);
+    chunks.push(new Uint8Array(end.buffer));
+    return new Blob(chunks, { type: 'application/zip' });
+  }
+  function blobToU8(blob) {
+    return blob.arrayBuffer ? blob.arrayBuffer().then(function (b) { return new Uint8Array(b); })
+      : new Promise(function (resolve) {
+          var r = new FileReader();
+          r.onload = function () { resolve(new Uint8Array(r.result)); };
+          r.readAsArrayBuffer(blob);
+        });
+  }
+  async function downloadZip() {
+    if (!items.length) { showToast(t('cv_toast_empty'), true); return; }
+    var files = [];
+    var used = {};
+    for (var i = 0; i < items.length; i++) {
+      var it = items[i];
+      if (!it.outBlob) continue;
+      var name = it.outName;
+      if (used[name]) name = name.replace(/(\.[^.]+)$/, '-' + (i + 1) + '$1');
+      used[name] = 1;
+      files.push({ name: name, data: await blobToU8(it.outBlob) });
+    }
+    if (!files.length) { showToast(t('cv_toast_empty'), true); return; }
+    downloadBlob(buildZip(files), 'converted-images.zip');
+    showToast(t('cv_toast_zip'));
+  }
+
+  /* ---------- Toast ---------- */
+  var toastTimer = null;
+  function showToast(msg, isErr) {
+    var el = document.getElementById('cv-toast');
+    el.querySelector('.t-toast-title').textContent = msg;
+    el.classList.toggle('error', !!isErr);
+    el.classList.add('show');
+    if (toastTimer) clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { el.classList.remove('show'); }, 2600);
+  }
+
+  /* ---------- 事件绑定 ---------- */
+  var dz = document.getElementById('cv-dropzone');
+  var fileInput = document.getElementById('cv-file');
+  dz.addEventListener('click', function () { fileInput.click(); });
+  dz.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fileInput.click(); } });
+  fileInput.addEventListener('change', function (e) { addFiles(e.target.files); fileInput.value = ''; });
+  ['dragenter', 'dragover'].forEach(function (ev) {
+    dz.addEventListener(ev, function (e) { e.preventDefault(); dz.classList.add('is-over'); });
+  });
+  ['dragleave', 'drop'].forEach(function (ev) {
+    dz.addEventListener(ev, function (e) { e.preventDefault(); dz.classList.remove('is-over'); });
+  });
+  dz.addEventListener('drop', function (e) {
+    var dt = e.dataTransfer;
+    if (dt && dt.files && dt.files.length) addFiles(dt.files);
+  });
+
+  var q = document.getElementById('cv-quality');
+  q.addEventListener('input', function () {
+    document.getElementById('cv-quality-val').textContent = q.value;
+  });
+  q.addEventListener('change', scheduleRerun);
+  ['change'].forEach(function (ev) {
+    document.getElementById('cv-format').addEventListener(ev, scheduleRerun);
+    document.getElementById('cv-maxedge').addEventListener(ev, scheduleRerun);
+  });
+
+  document.getElementById('cv-list').addEventListener('click', function (e) {
+    var btn = e.target.closest ? e.target.closest('.t-icon-btn') : null;
+    if (!btn) return;
+    var row = btn.closest('.t-row');
+    if (!row) return;
+    var id = parseInt(row.id.replace('cv-row-', ''), 10);
+    var act = btn.getAttribute('data-act');
+    if (act === 'rm') { removeItem(id); return; }
+    if (act === 'dl') {
+      for (var i = 0; i < items.length; i++) {
+        if (items[i].id === id && items[i].outBlob) {
+          downloadBlob(items[i].outBlob, items[i].outName);
+          return;
+        }
+      }
+    }
+  });
+  document.getElementById('cv-add').addEventListener('click', function () { fileInput.click(); });
+  document.getElementById('cv-clear').addEventListener('click', function () {
+    items.forEach(function (it) { if (it.url) URL.revokeObjectURL(it.url); });
+    items = [];
+    renderList();
+  });
+  document.getElementById('cv-zip').addEventListener('click', downloadZip);
+
+  /* 语言切换时刷新动态文本 */
+  document.addEventListener('cataito-lang-change', function () {
+    renderList();
+    renderBar();
+    var v = document.getElementById('cv-quality-val');
+    if (v) v.textContent = document.getElementById('cv-quality').value;
+  });
+})();
+});
+</script>
+
+<style>
+  /* 本页专属规则；通用组件（卡片/上传区/字段/分段控件/结果行/按钮/Toast）
+     已统一复用 /assets/css/site.css 的 .t-* 共享组件层 */
+  .cv-row-actions { display: flex; gap: 6px; flex: none; }
+  .cv-outname { font-family: var(--font-mono); font-size: 12px; color: var(--text-3); }
+  body.cv-busy .t-row { opacity: .55; }
+  .t-row-meta strong { color: var(--text-2); font-variant-numeric: tabular-nums; }
+  /* 缩略图透明底统一用 site.css 的 .t-checker，不再覆盖 .t-thumb 背景 */
+  @media (max-width: 560px) {
+    .t-bar { flex-direction: column; align-items: stretch; }
+    .t-bar-actions { width: 100%; }
+    .t-bar-actions .t-btn { flex: 1; }
+  }
+</style>
+</body>
+</html>
