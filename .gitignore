@@ -18,6 +18,11 @@ HANDOVER.md
 HANDOFF.md
 DECISIONS.md
 
+# ===== Agent 工具规约文件（内部规约，不推送） =====
+AGENTS.md
+CLAUDE.md
+.cursorrules
+
 # ===== 本地测试产物（CDP 验证用的 chrome profile，非项目文件） =====
 _cfp/
 _cprofile/
