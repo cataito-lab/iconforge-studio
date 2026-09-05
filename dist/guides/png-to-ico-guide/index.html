@@ -217,7 +217,7 @@
       <h2 id="tips">转换注意事项</h2>
       <ul>
         <li><strong>256px 是上限</strong>：ICO 规范单张最大 256×256。源图更大的（比如 1024px）会先缩到 256 再打包，画质不受影响，但别指望 ICO 里塞进 512px——那是 PWA/macOS 图标的领域；</li>
-        <li><strong>源图用正方形</strong>：非正方形会被强制加白边或拉伸变形，转换前先在画布里居中裁成 1:1；</li>
+        <li><strong>源图用正方形</strong>：非正方形会被强制加白边或拉伸变形，转换前先在画布里居中裁成 1:1——可以用 <a href="/resize/">图片裁剪与缩放工具</a> 批量居中裁切；</li>
         <li><strong>透明会保留</strong>：ICO 支持 alpha 通道，带透明的 PNG 转出来依然是透明底，不会变白块；</li>
         <li><strong>多尺寸别偷懒</strong>：只打包一张 256px 的 ICO 在标签页上会糊（浏览器自己缩到 16px 效果很差），务必包含 16/32 小尺寸档；</li>
         <li><strong>16px 是玄学</strong>：极小尺寸下复杂 Logo 必然糊，专业做法是为 16px 单独画一个简化版——本站图标工坊支持 Light/Dark 双主题分别出图，配合的就是这类场景。</li>
@@ -297,7 +297,7 @@
       <h2 id="tips">Things to Watch Out For</h2>
       <ul>
         <li><strong>256px is the ceiling</strong>: the ICO spec allows up to 256×256 per image. Larger sources (say 1024px) get scaled to 256 first — fine quality-wise, but don't expect 512px inside an ICO; that's PWA/macOS territory;</li>
-        <li><strong>Start square</strong>: non-square images get padded or stretched — center-crop to 1:1 before converting;</li>
+        <li><strong>Start square</strong>: non-square images get padded or stretched — center-crop to 1:1 before converting (the <a href="/resize/">Crop &amp; Resize tool</a> does this in batches);</li>
         <li><strong>Transparency survives</strong>: ICO supports alpha; a transparent PNG stays transparent (no white box);</li>
         <li><strong>Don't skip small sizes</strong>: an ICO containing only 256px looks mushy in a 16px tab (browsers downscale badly). Always include 16/32;</li>
         <li><strong>16px is a dark art</strong>: complex logos inevitably blur at that size; professionals draw a simplified mark for it. Icon Forge supports separate Light/Dark variants for exactly these cases.</li>

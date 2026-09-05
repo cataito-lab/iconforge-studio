@@ -57,7 +57,8 @@
     { "@type": "ListItem", "position": 2, "item": { "@type": "SoftwareApplication", "name": "Favicon Generator", "applicationCategory": "DesignApplication", "operatingSystem": "Any", "url": "https://tools.cataito.com/favicon/", "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" } } },
     { "@type": "ListItem", "position": 3, "item": { "@type": "SoftwareApplication", "name": "Image Compressor", "applicationCategory": "UtilityApplication", "operatingSystem": "Any", "url": "https://tools.cataito.com/compress/", "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" } } },
     { "@type": "ListItem", "position": 4, "item": { "@type": "SoftwareApplication", "name": "Color Palette Generator", "applicationCategory": "DesignApplication", "operatingSystem": "Any", "url": "https://tools.cataito.com/palette/", "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" } } },
-    { "@type": "ListItem", "position": 5, "item": { "@type": "SoftwareApplication", "name": "Image Converter", "applicationCategory": "UtilityApplication", "operatingSystem": "Any", "url": "https://tools.cataito.com/convert/", "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" } } }
+    { "@type": "ListItem", "position": 5, "item": { "@type": "SoftwareApplication", "name": "Image Converter", "applicationCategory": "UtilityApplication", "operatingSystem": "Any", "url": "https://tools.cataito.com/convert/", "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" } } },
+    { "@type": "ListItem", "position": 6, "item": { "@type": "SoftwareApplication", "name": "Image Resizer", "applicationCategory": "UtilityApplication", "operatingSystem": "Any", "url": "https://tools.cataito.com/resize/", "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" } } }
   ]
 }
 </script>
@@ -96,7 +97,7 @@
     {
       "@type": "Question",
       "name": "目前提供哪些工具？",
-      "acceptedAnswer": { "@type": "Answer", "text": "目前提供图标工坊 IconForge、Favicon 生成器、图片压缩、配色 / 调色板、图片格式转换五类工具，均为纯前端实现，后续还会持续增加。" }
+      "acceptedAnswer": { "@type": "Answer", "text": "目前提供图标工坊 IconForge、Favicon 生成器、图片压缩、配色 / 调色板、图片格式转换、图片裁剪与缩放六类工具，均为纯前端实现，后续还会持续增加。" }
     }
   ]
 }
@@ -165,6 +166,17 @@
         <h3 class="tool-card__name" data-i18n="home_tool_convert">格式转换</h3>
       </div>
       <p class="tool-card__desc" data-i18n="home_tool_convert_desc">PNG / JPEG / WebP 在线互转，保留透明、可调质量，批量打包下载。</p>
+      <div class="tool-card__foot"><span class="tool-card__go" data-i18n="use_tool">使用工具 →</span></div>
+    </a>
+
+    <a class="tool-card" href="/resize/">
+      <div class="tool-card__top">
+        <span class="tool-card__icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2v14a2 2 0 0 0 2 2h14"/><path d="M18 22V8a2 2 0 0 0-2-2H2"/></svg>
+        </span>
+        <h3 class="tool-card__name" data-i18n="home_tool_resize">裁剪 / 缩放</h3>
+      </div>
+      <p class="tool-card__desc" data-i18n="home_tool_resize_desc">批量居中裁切 1:1 / 16:9 等比例，按最长边缩放，保持原格式导出。</p>
       <div class="tool-card__foot"><span class="tool-card__go" data-i18n="use_tool">使用工具 →</span></div>
     </a>
   </div>
@@ -252,7 +264,7 @@
       </div>
       <div class="faq-item">
         <h3 class="faq-q" data-i18n="hf_faq_3_q">目前提供哪些工具？</h3>
-        <p class="faq-a" data-i18n="hf_faq_3_a">目前提供图标工坊 IconForge、Favicon 生成器、图片压缩、配色 / 调色板、图片格式转换五类工具，均为纯前端实现，后续还会持续增加。</p>
+        <p class="faq-a" data-i18n="hf_faq_3_a">目前提供图标工坊 IconForge、Favicon 生成器、图片压缩、配色 / 调色板、图片格式转换、图片裁剪与缩放六类工具，均为纯前端实现，后续还会持续增加。</p>
       </div>
     </div>
   </section>

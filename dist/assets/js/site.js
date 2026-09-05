@@ -41,6 +41,8 @@
     home_tool_palette_desc:  { zh: '从图片提取配色，或生成协调的调色板方案。', en: 'Extract colors from an image or generate a harmonious palette.' },
     home_tool_convert:       { zh: '格式转换', en: 'Image Converter' },
     home_tool_convert_desc:  { zh: 'PNG / JPEG / WebP 在线互转，保留透明、可调质量，批量打包下载。', en: 'Convert PNG / JPEG / WebP online with transparency preserved, adjustable quality, and batch ZIP download.' },
+    home_tool_resize:        { zh: '裁剪 / 缩放', en: 'Crop & Resize' },
+    home_tool_resize_desc:   { zh: '批量居中裁切 1:1 / 16:9 等比例，按最长边缩放，保持原格式导出。', en: 'Center-crop to 1:1 / 16:9 and more in batches, scale by max edge, export in the original format.' },
 
     /* 首页：实用指南区块 */
     home_guides_h:      { zh: '实用指南', en: 'Practical guides' },
@@ -67,7 +69,7 @@
     hf_faq_2_q:     { zh: '我的图片会被上传到服务器吗？', en: 'Are my images uploaded to a server?' },
     hf_faq_2_a:     { zh: '不会。所有工具基于浏览器本地运算（Canvas / Web API），文件不经过网络，商业素材和隐私截图都能放心使用。', en: 'No. All tools run on in-browser computation (Canvas / Web API); files never cross the network, so commercial assets and private screenshots are safe to use.' },
     hf_faq_3_q:     { zh: '目前提供哪些工具？', en: 'Which tools are available?' },
-    hf_faq_3_a:     { zh: '目前提供图标工坊 IconForge、Favicon 生成器、图片压缩、配色 / 调色板、图片格式转换五类工具，均为纯前端实现，后续还会持续增加。', en: 'Currently five tools: Icon Forge, Favicon Generator, Image Compressor, Color Palette, and Image Converter — all client-side, with more on the way.' },
+    hf_faq_3_a:     { zh: '目前提供图标工坊 IconForge、Favicon 生成器、图片压缩、配色 / 调色板、图片格式转换、图片裁剪与缩放六类工具，均为纯前端实现，后续还会持续增加。', en: 'Currently six tools: Icon Forge, Favicon Generator, Image Compressor, Color Palette, Image Converter, and Crop & Resize — all client-side, with more on the way.' },
 
     /* IconForge */
     if_name:              { zh: '图标工坊 IconForge', en: 'Icon Forge' },
@@ -375,6 +377,49 @@
     cv_faq_4_q: { zh: '转换后体积反而变大了？', en: 'The file got bigger after converting?' },
     cv_faq_4_a: { zh: '有可能：比如 JPEG 转 PNG，无损格式保留了全部像素信息，体积上涨是正常的。格式转换的目标是「换格式」而不是「变小」——想压缩体积请用图片压缩工具。', en: "It can happen — JPEG to PNG, for example, preserves every pixel losslessly. Conversion is about changing formats, not shrinking; use the compressor when size matters." },
 
+    /* 工具六：图片裁剪与缩放 */
+    rz_name:          { zh: '裁剪 / 缩放', en: 'Crop & Resize' },
+    rz_desc:          { zh: '批量居中裁切 1:1 / 4:3 / 16:9 / 9:16，按最长边缩放，可选输出格式，ZIP 打包下载。纯浏览器本地处理。', en: 'Center-crop to 1:1 / 4:3 / 16:9 / 9:16 in batches, scale by max edge, optional output format, ZIP download. Runs entirely in your browser.' },
+    rz_upload:        { zh: '点击或拖入图片（可多选）', en: 'Click or drop images (multiple allowed)' },
+    rz_dz_hint:       { zh: 'PNG / JPG / WebP / GIF / BMP · 全程本地处理，不上传', en: 'PNG / JPG / WebP / GIF / BMP · 100% local, never uploaded' },
+    rz_crop:          { zh: '裁剪比例（居中裁切）', en: 'Crop ratio (centered)' },
+    rz_crop_orig:     { zh: '不裁剪', en: 'No crop' },
+    rz_maxedge:       { zh: '缩放（最长边）', en: 'Resize (max edge)' },
+    rz_edge_orig:     { zh: '原始尺寸', en: 'Original' },
+    rz_format:        { zh: '输出格式', en: 'Output format' },
+    rz_fmt_keep:      { zh: '保持原格式', en: 'Keep original' },
+    rz_quality:       { zh: '输出质量（仅 JPEG / WebP）', en: 'Output quality (JPEG / WebP only)' },
+    rz_quality_hint:  { zh: '仅影响 JPEG / WebP，PNG 为无损不受影响。', en: 'Applies to JPEG / WebP only; PNG is lossless and unaffected.' },
+    rz_note:          { zh: '裁切以图片中心为基准；输出为 JPEG 时透明背景自动铺白底；GIF / BMP 等选「保持原格式」时输出 PNG。', en: 'Cropping is center-based; JPEG output fills transparency with white; GIF / BMP become PNG under "Keep original".' },
+    rz_download_all:  { zh: '打包下载全部（ZIP）', en: 'Download all (ZIP)' },
+    rz_empty:         { zh: '还没有图片，先上传几张试试。', en: 'No images yet — drop some to start.' },
+    rz_bar_stats:     { zh: '已处理 ${n}/${total} 张', en: '${n}/${total} processed' },
+    rz_flat:          { zh: '透明→白底', en: 'Alpha flattened' },
+    rz_dl:            { zh: '下载', en: 'Download' },
+    rz_remove:        { zh: '移除', en: 'Remove' },
+    rz_toast_type:    { zh: '请上传图片文件', en: 'Please upload image files' },
+    rz_toast_too_many:{ zh: '一次最多 ${n} 张，超出部分已忽略', en: 'Up to ${n} images at once; extras skipped' },
+    rz_toast_empty:   { zh: '请先添加图片', en: 'Please add images first' },
+    rz_toast_zip:     { zh: 'ZIP 已开始下载', en: 'ZIP download started' },
+    rz_add_more:      { zh: '继续添加', en: 'Add more' },
+    rz_clear_all:     { zh: '清空全部', en: 'Clear all' },
+    rz_orig:          { zh: '原图', en: 'Original' },
+    rz_new:           { zh: '处理后', en: 'Result' },
+    rz_how_h:  { zh: '怎么用', en: 'How to use' },
+    rz_how_1:  { zh: '<strong>批量上传</strong>：点击或拖入图片，一次最多 20 张。', en: '<strong>Batch upload</strong>: click or drag in images, up to 20 at a time.' },
+    rz_how_2:  { zh: '<strong>选裁剪比例</strong>：1:1 做图标头像、16:9 做封面横图、9:16 做手机竖屏；以图片中心为基准裁切，主体居中效果最佳。', en: '<strong>Pick a crop ratio</strong>: 1:1 for icons and avatars, 16:9 for covers, 9:16 for vertical/mobile. Cropping is center-based — centered subjects work best.' },
+    rz_how_3:  { zh: '<strong>按需缩放</strong>：最长边限制可把大图等比缩到目标档位，不需要就保持原始尺寸。', en: '<strong>Resize as needed</strong>: the max-edge limit scales large images down proportionally, or keep original dimensions.' },
+    rz_how_4:  { zh: '<strong>下载</strong>：默认保持原格式（也可强制 PNG / JPEG / WebP），单张下载或打包 ZIP。', en: '<strong>Download</strong>: keeps the original format by default (or force PNG / JPEG / WebP); grab files one by one or as a ZIP.' },
+    rz_faq_h:  { zh: '常见问题', en: 'FAQ' },
+    rz_faq_1_q: { zh: '裁切会切掉画面两边还是上下？', en: 'Will cropping cut the sides or the top and bottom?' },
+    rz_faq_1_a: { zh: '取决于原图比例与目标比例的差：原图比目标「更宽」就裁左右，更高就裁上下，始终保留中心区域。主体不在画面中心时，建议先在图片编辑器里调整好构图再上传。', en: "It depends on how the original ratio differs from the target: a wider image loses its sides, a taller one loses top/bottom — the center is always kept. If your subject is off-center, fix the composition in an editor first." },
+    rz_faq_2_q: { zh: '图片会被上传到服务器吗？', en: 'Are my images uploaded to a server?' },
+    rz_faq_2_a: { zh: '不会。裁剪与缩放全部在浏览器本地完成（Canvas），图片不经过网络，商业素材和隐私截图都可以放心用。', en: 'No. Cropping and resizing run entirely in your browser (Canvas) — images never touch the network, safe for commercial assets and private screenshots.' },
+    rz_faq_3_q: { zh: '「保持原格式」是什么意思？', en: 'What does "Keep original" mean?' },
+    rz_faq_3_a: { zh: 'PNG 进 PNG 出、JPEG 进 JPEG 出、WebP 进 WebP 出；GIF / BMP / SVG 等浏览器可解码但不适合再编码的格式，统一输出 PNG。也可以强制指定输出为 PNG / JPEG / WebP。', en: 'PNG stays PNG, JPEG stays JPEG, WebP stays WebP; decodable-but-not-reencodable formats like GIF / BMP / SVG come out as PNG. You can also force PNG / JPEG / WebP.' },
+    rz_faq_4_q: { zh: '透明背景会丢失吗？', en: 'Will transparency be lost?' },
+    rz_faq_4_a: { zh: '输出 PNG / WebP 完整保留透明；输出 JPEG 时自动铺白底（JPEG 不支持透明通道），结果行会标记提醒。', en: 'PNG / WebP output preserves transparency fully; JPEG output fills it with white (no alpha in JPEG) and the result row shows a reminder badge.' },
+
     /* 语言按钮（显示“切换到”的目标语言） */
     lang_to_en:     { zh: 'EN', en: '中' }
   };
@@ -465,6 +510,7 @@
           '<a href="/compress/" class="' + (active('/compress/') ? 'active' : '') + '" data-i18n="cp_name">图片压缩</a>' +
           '<a href="/palette/" class="' + (active('/palette/') ? 'active' : '') + '" data-i18n="pl_name">配色工具</a>' +
           '<a href="/convert/" class="' + (active('/convert/') ? 'active' : '') + '" data-i18n="cv_name">格式转换</a>' +
+          '<a href="/resize/" class="' + (active('/resize/') ? 'active' : '') + '" data-i18n="rz_name">裁剪 / 缩放</a>' +
           '<a href="/guides/" class="' + (active('/guides/') ? 'active' : '') + '" data-i18n="nav_guides">使用指南</a>' +
         '</nav>' +
         '<div class="header-actions">' +
