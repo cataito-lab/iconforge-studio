@@ -4,8 +4,9 @@
 node_modules/
 target/
 
-# ===== WorkBuddy 项目数据 =====
+# ===== WorkBuddy / ZCode 项目数据 =====
 .workbuddy/
+.zcode/
 
 # ===== 系统 / 编辑器 =====
 .DS_Store
