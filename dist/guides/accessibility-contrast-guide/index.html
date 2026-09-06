@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>无障碍对比度指南：WCAG AA / AAA 达标全流程 | CATAITO</title>
+<meta name="title-zh" content="无障碍对比度指南：WCAG AA / AAA 达标全流程 | CATAITO">
+<meta name="title-en" content="Accessibility Contrast Guide: Passing WCAG AA / AAA | CATAITO">
+<meta name="description" content="无障碍对比度完整指南：WCAG 2.1 的 AA / AAA 达标线速查（正文 4.5:1、大字号 3:1、UI 组件 3:1）、用免费在线检查器实测的流程、不达标时的四种修改思路，以及灰字白底、品牌色按钮等常见不达标案例。纯浏览器本地处理。">
+<meta name="theme-color" content="#f6f3ec">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="CATAITO 工具箱">
+<meta property="og:title" content="无障碍对比度指南：WCAG AA / AAA 达标全流程">
+<meta property="og:description" content="WCAG 达标线速查、实测流程、四种修改思路与常见不达标案例。">
+<meta property="og:url" content="https://tools.cataito.com/guides/accessibility-contrast-guide/">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:locale:alternate" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="无障碍对比度指南">
+<meta name="twitter:description" content="WCAG AA / AAA 达标全流程，含速查表与常见案例。">
+<link rel="canonical" href="https://tools.cataito.com/guides/accessibility-contrast-guide/">
+<link rel="icon" href="/assets/img/icon.svg">
+<link rel="stylesheet" href="/assets/css/site.css">
+<script src="/assets/js/theme-init.js"></script>
+<script>
+  (function () {
+    try {
+      var l = localStorage.getItem('cataito-lang');
+      document.documentElement.setAttribute('lang', (l === 'en') ? 'en' : 'zh-CN');
+      if (l === 'en') document.documentElement.classList.add('lang-en');
+    } catch (e) {}
+  })();
+</script>
+<style>
+  /* ============ 指南页排版（与其他指南页保持一致） ============ */
+  .guide-wrap { max-width: 760px; margin: 0; }
+  .guide-meta { font-size: 13px; color: var(--text-3); margin: 0 0 6px; }
+  .page-sub { margin-bottom: 10px; }
+  .article { font-size: 15px; line-height: 1.85; color: var(--text); }
+  .article h2 {
+    font-size: 21px; font-weight: 700; letter-spacing: -.3px;
+    margin: 44px 0 14px; padding-top: 16px; border-top: 1px solid var(--border); color: var(--text);
+  }
+  .article h3 { font-size: 16.5px; font-weight: 650; margin: 26px 0 10px; color: var(--text); }
+  .article p { margin: 0 0 14px; color: var(--text-2); }
+  .article strong { color: var(--text); font-weight: 650; }
+  .article a { color: var(--accent); text-decoration: none; }
+  .article a:hover { text-decoration: underline; }
+  .article ul, .article ol { margin: 0 0 16px; padding-left: 22px; color: var(--text-2); }
+  .article li { margin: 6px 0; }
+  .article code {
+    font-family: var(--font-mono);
+    font-size: 13px; background: var(--card-2); border: 1px solid var(--border);
+    border-radius: 3px; padding: 1px 6px; color: var(--text);
+  }
+  .article pre {
+    background: var(--card-2); border: 1px solid var(--border); border-radius: var(--radius-sm);
+    padding: 14px 16px; margin: 14px 0 18px; overflow-x: auto;
+  }
+  .article pre code { background: none; border: none; padding: 0; font-size: 12.5px; line-height: 1.7; }
+  .article table {
+    width: 100%; border-collapse: collapse; margin: 18px 0 22px;
+    font-size: 13.5px; background: var(--card);
+    border: 1px solid var(--border); border-radius: var(--radius-sm); overflow: hidden;
+  }
+  .article th, .article td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--border); }
+  .article th { background: var(--card-2); color: var(--text); font-weight: 650; white-space: nowrap; }
+  .article td { color: var(--text-2); }
+  .article tr:last-child td { border-bottom: none; }
+  .toc {
+    background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 16px 18px; margin: 20px 0 8px; box-shadow: var(--shadow-sm);
+  }
+  .toc-title { font-size: 13px; font-weight: 650; color: var(--text); margin: 0 0 10px; }
+  .toc ol { margin: 0; padding-left: 20px; font-size: 13.5px; }
+  .toc li { margin: 5px 0; }
+  .toc a { color: var(--text-2); text-decoration: none; }
+  .toc a:hover { color: var(--accent); }
+  /* FAQ 卡片样式由 site.css 的 .faq-item / .t-faq-* 统一提供 */
+  .cta-box {
+    background: linear-gradient(135deg, var(--accent-soft), var(--accent-soft-2));
+    border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent); border-radius: var(--radius);
+    padding: 20px 22px; margin: 34px 0 10px; text-align: center;
+  }
+  .cta-box .cta-title { font-size: 17px; font-weight: 700; color: var(--text); margin: 0 0 6px; }
+  .cta-box .cta-sub { font-size: 13.5px; color: var(--text-2); margin: 0 0 14px; }
+  .cta-btn {
+    display: inline-block; background: var(--accent); color: #fff; text-decoration: none;
+    font-size: 14px; font-weight: 600; padding: 11px 26px; border-radius: var(--radius-sm);
+    box-shadow: 0 6px 18px var(--accent-glow); transition: background .15s;
+  }
+  .cta-btn:hover { background: var(--accent-hover); }
+  /* 修复：.article a 的特异度(0,1,1)会压过 .cta-btn(0,1,0) 的 color:#fff，
+     导致按钮底字同色在亮/暗模式下都不可读。用更高特异度夺回白色文字。 */
+  .article a.cta-btn, .article .cta-btn { color: #fff; text-decoration: none; }
+  .article a.cta-btn:hover { color: #fff; text-decoration: none; background: var(--accent-hover); }
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "无障碍对比度指南：WCAG AA / AAA 达标全流程",
+  "description": "详解 WCAG 2.1 对比度达标线（正文 4.5:1、大字号 3:1、UI 组件 3:1）、用免费在线检查器实测的流程、不达标的四种修改思路与常见不达标案例。",
+  "inLanguage": "zh-CN",
+  "datePublished": "2026-09-06",
+  "dateModified": "2026-09-06",
+  "author": { "@type": "Organization", "name": "CATAITO", "url": "https://tools.cataito.com/" },
+  "publisher": { "@type": "Organization", "name": "CATAITO 工具箱", "url": "https://tools.cataito.com/" },
+  "mainEntityOfPage": "https://tools.cataito.com/guides/accessibility-contrast-guide/"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "对比度是怎么计算出来的？",
+      "acceptedAnswer": { "@type": "Answer", "text": "按 WCAG 2.1 标准：先把 RGB 各通道做伽马展开得到相对亮度 L（L = 0.2126×R + 0.7152×G + 0.0722×B），对比度 =（较亮色的 L + 0.05）/（较暗色的 L + 0.05），取值范围 1 到 21。纯黑对纯白正好是 21:1。人眼对不同波长的光敏感度不同，所以绿色通道权重最高，这也是为什么同亮度值的绿色和蓝色看起来明暗不同。" }
+    },
+    {
+      "@type": "Question",
+      "name": "4.5:1 是硬性法律要求吗？",
+      "acceptedAnswer": { "@type": "Answer", "text": "取决于地区与场景：美国的 ADA 判例、欧盟的 EN 301 549、中国的信息无障碍标准都引用 WCAG AA 作为基准，政府与公共服务网站普遍强制；商业网站虽非普遍强制，但无障碍诉讼逐年增多，且搜索引擎将可用性作为排名参考。以 AA 为底线、AAA 为目标是稳妥做法。" }
+    },
+    {
+      "@type": "Question",
+      "name": "Logo 和装饰性元素需要达到对比度标准吗？",
+      "acceptedAnswer": { "@type": "Answer", "text": "不需要。WCAG 明确豁免三类：纯装饰元素、品牌 Logo 与品牌名称、对所有用户都不可见的禁用控件。但表单占位符文字、输入框边框、图标按钮这类「承担信息功能」的元素不属于装饰，仍需满足 3:1 或 4.5:1。" }
+    },
+    {
+      "@type": "Question",
+      "name": "深色模式需要单独验证对比度吗？",
+      "acceptedAnswer": { "@type": "Answer", "text": "需要。亮色模式下达标的色值组合，在深色模式下通常会失效：同一品牌色在暗底上观感更暗更闷，白字黑底的新组合也未必达标。深浅两套主题的每一组「文字 + 背景」组合都要分别验证一遍，别只测亮色模式。" }
+    },
+    {
+      "@type": "Question",
+      "name": "图片上的文字怎么算对比度？",
+      "acceptedAnswer": { "@type": "Answer", "text": "同样按 WCAG 标准，图片内嵌文字与它背后的有效背景之间也要达标，而图片背景往往不是纯色——这是最容易漏检的地方。做法：取文字周围背景的最深与最浅区域分别计算，任何一组不达标就算失败。更稳妥的方案是给文字加半透明底衬，或干脆用真实 HTML 文字替代图片文字。" }
+    },
+    {
+      "@type": "Question",
+      "name": "除了对比度，网页无障碍还要注意什么？",
+      "acceptedAnswer": { "@type": "Answer", "text": "WCAG 还有三大类：可操作性（键盘可导航、焦点可见）、可理解性（表单错误提示明确、页面语言声明）、可感知性（图片 alt 描述、内容可缩放 200%）。对比度是投入产出比最高的第一步，但不是全部；做完对比度后建议用键盘 Tab 键走一遍页面，看焦点是否可见、顺序是否合理。" }
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "首页", "item": "https://tools.cataito.com/" },
+    { "@type": "ListItem", "position": 2, "name": "使用指南", "item": "https://tools.cataito.com/guides/" },
+    { "@type": "ListItem", "position": 3, "name": "无障碍对比度指南", "item": "https://tools.cataito.com/guides/accessibility-contrast-guide/" }
+  ]
+}
+</script>
+</head>
+<body>
+<div id="site-header"></div>
+
+<main class="site-main">
+  <div class="guide-wrap">
+    <nav class="breadcrumb"><a href="/" data-i18n="crumb_home">首页</a><span class="sep">/</span><a href="/guides/" data-i18n="nav_guides">使用指南</a><span class="sep">/</span><span data-i18n="gd_acc_short">无障碍对比度指南</span></nav>
+    <p class="guide-meta"><span data-i18n="gd_published">发布于</span> 2026-09-06 · CATAITO</p>
+    <h1 class="page-h1" data-i18n="gd_acc_h1">无障碍对比度指南：WCAG AA / AAA 达标全流程</h1>
+    <p class="page-sub" data-i18n="gd_acc_sub">灰字白底、品牌色按钮白字——这些「看得见但看不清」的设计，对色觉障碍和低视力用户是硬门槛，对所有人都是体验损耗。本文讲清 WCAG 对比度的达标线、实测流程、不达标时的四种修改思路，以及最容易踩的坑——全程可用免费在线检查器完成。</p>
+
+    <!-- ================= 中文正文 ================= -->
+    <div class="article lb-zh">
+      <div class="toc">
+        <p class="toc-title">目录</p>
+        <ol>
+          <li><a href="#why">为什么对比度是无障碍的第一关</a></li>
+          <li><a href="#rules">达标线速查表</a></li>
+          <li><a href="#how">实测流程：四步完成检查</a></li>
+          <li><a href="#fix">不达标时的四种修改思路</a></li>
+          <li><a href="#cases">五个最常见的不达标案例</a></li>
+          <li><a href="#faq">常见问题</a></li>
+        </ol>
+      </div>
+
+      <h2 id="why">为什么对比度是无障碍的第一关</h2>
+      <p>约 <strong>4.5% 的人口存在色觉障碍</strong>，还有大量低视力、老花用户以及强光下用手机的现实场景——对比度不足的界面对他们而言不是「不好看」，而是<strong>不可读</strong>。WCAG（Web 内容无障碍指南）把对比度作为可感知性的核心指标，也是所有无障碍改造里<strong>投入产出比最高</strong>的一项：不用改结构、不用写代码，往往调几个色值就完成大半。</p>
+      <p>对比度用「比值」衡量，范围 1:1（完全相同）到 21:1（纯黑对纯白）。它是两个颜色的<strong>相对亮度</strong>之比，与色相无关——所以浅绿配白底可能达标，深绿配白底可能不达标，不能凭「感觉够深」判断，必须实测。</p>
+
+      <h2 id="rules">达标线速查表</h2>
+      <p>WCAG 2.1 按文字大小和严格程度给出四条线，外加一条 UI 组件线：</p>
+      <table>
+        <tr><th>内容类型</th><th>AA（基本线）</th><th>AAA（增强级）</th></tr>
+        <tr><td>正文文字（&lt; 24px）</td><td><strong>4.5 : 1</strong></td><td>7 : 1</td></tr>
+        <tr><td>大字号（≥ 24px，或 ≥ 18.66px 粗体）</td><td><strong>3 : 1</strong></td><td>4.5 : 1</td></tr>
+        <tr><td>UI 组件与图形（按钮边框、输入框、图标）</td><td><strong>3 : 1</strong></td><td>—</td></tr>
+      </table>
+      <p>三条经验法则：</p>
+      <ul>
+        <li><strong>正文一律按 4.5:1 卡</strong>：这是使用频率最高、最容易踩线的一条；</li>
+        <li><strong>大字号的优惠别滥用</strong>：只有真的 ≥ 24px（或 ≥ 18.66px 粗体）才算大字号，13px 的「次要说明文字」不享受优惠；</li>
+        <li><strong>UI 组件 3:1 最常被漏检</strong>：输入框边框太浅、按钮和背景糊在一起，都属于这一条。</li>
+      </ul>
+
+      <h2 id="how">实测流程：四步完成检查</h2>
+      <p>用本站 <a href="/contrast/">WCAG 对比度检查器</a>，全程浏览器本地完成：</p>
+      <ol class="t-steps">
+        <li><strong>取色</strong>：从设计稿取前景色（文字）与背景色，输入 HEX 或用拾色器；</li>
+        <li><strong>看比值与徽标</strong>：工具实时显示对比度比值，AA / AAA 各档达标与否用红绿徽标标出；</li>
+        <li><strong>核对预览</strong>：预览区展示正文、大字号、按钮三种真实观感，比值合格但视觉难受的组合也能一眼看出；</li>
+        <li><strong>遍历组合</strong>：把页面里每一组「文字 + 背景」都过一遍——正文、链接、占位符、按钮、页脚，包括<strong>深色模式的那一套</strong>。</li>
+      </ol>
+
+      <h2 id="fix">不达标时的四种修改思路</h2>
+      <ul>
+        <li><strong>调前景</strong>：保持色相不变，把文字提亮或压暗——本站检查器的一键自动调整就是这么做的，取改动更小的方向刚好到 4.5:1；</li>
+        <li><strong>调背景</strong>：文字色是品牌色不能动时，把背景调浅一档（或暗色模式下调深一档），往往一步到位；</li>
+        <li><strong>加大小与字重</strong>：实在调不动颜色，把 16px 升到 24px 或加粗，适用 3:1 的大字号线——但要克制，别为了达标把全文变大；</li>
+        <li><strong>加底衬</strong>：图片上的文字给一个半透明深色底衬，比反复调色可靠得多。</li>
+      </ul>
+      <p>配色定稿前就把这套流程跑完，比上线后返工便宜得多。选色本身的方法论见 <a href="/guides/color-guide/">配色原理指南</a>，深色模式的专项策略见 <a href="/guides/dark-mode-icons/">暗色图标设计指南</a>。</p>
+
+      <h2 id="cases">五个最常见的不达标案例</h2>
+      <ul>
+        <li><strong>灰字白底</strong>：「次要说明」用 #999 配白底只有 2.8:1——最经典的踩坑，次要信息也要 4.5:1；</li>
+        <li><strong>品牌色按钮 + 白字</strong>：很多品牌主色（浅蓝、橙、黄绿）配白字在 2:1–3:1 之间，看起来「挺清楚」但不达标，要么压深按钮色，要么改深色文字；</li>
+        <li><strong>浅灰占位符</strong>：输入框 placeholder 用 #CCC——占位符承担信息功能，同样要 4.5:1，或改用浮动标签；</li>
+        <li><strong>暗色模式照搬亮色色值</strong>：亮色下的 #333 正文搬到暗底上糊成一片，深浅两套要分别验证；</li>
+        <li><strong>图片上的文字没查背景</strong>：照片背景明暗不定，取最深与最浅两处分别算，任何一处不达标就算失败。</li>
+      </ul>
+
+      <h2 id="faq">常见问题</h2>
+      <div class="faq-item"><p class="faq-q">Q：对比度是怎么计算出来的？</p><p class="faq-a">A：按 WCAG 2.1 标准：先把 RGB 各通道做伽马展开得到相对亮度 L（L = 0.2126×R + 0.7152×G + 0.0722×B），对比度 =（较亮色的 L + 0.05）/（较暗色的 L + 0.05），取值范围 1 到 21。纯黑对纯白正好是 21:1。人眼对不同波长的光敏感度不同，所以绿色通道权重最高，这也是为什么同亮度值的绿色和蓝色看起来明暗不同。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：4.5:1 是硬性法律要求吗？</p><p class="faq-a">A：取决于地区与场景：美国的 ADA 判例、欧盟的 EN 301 549、中国的信息无障碍标准都引用 WCAG AA 作为基准，政府与公共服务网站普遍强制；商业网站虽非普遍强制，但无障碍诉讼逐年增多，且搜索引擎将可用性作为排名参考。以 AA 为底线、AAA 为目标是稳妥做法。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：Logo 和装饰性元素需要达到对比度标准吗？</p><p class="faq-a">A：不需要。WCAG 明确豁免三类：纯装饰元素、品牌 Logo 与品牌名称、对所有用户都不可见的禁用控件。但表单占位符文字、输入框边框、图标按钮这类「承担信息功能」的元素不属于装饰，仍需满足 3:1 或 4.5:1。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：深色模式需要单独验证对比度吗？</p><p class="faq-a">A：需要。亮色模式下达标的色值组合，在深色模式下通常会失效：同一品牌色在暗底上观感更暗更闷，白字黑底的新组合也未必达标。深浅两套主题的每一组「文字 + 背景」组合都要分别验证一遍，别只测亮色模式。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：图片上的文字怎么算对比度？</p><p class="faq-a">A：同样按 WCAG 标准，图片内嵌文字与它背后的有效背景之间也要达标，而图片背景往往不是纯色——这是最容易漏检的地方。做法：取文字周围背景的最深与最浅区域分别计算，任何一组不达标就算失败。更稳妥的方案是给文字加半透明底衬，或干脆用真实 HTML 文字替代图片文字。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：除了对比度，网页无障碍还要注意什么？</p><p class="faq-a">A：WCAG 还有三大类：可操作性（键盘可导航、焦点可见）、可理解性（表单错误提示明确、页面语言声明）、可感知性（图片 alt 描述、内容可缩放 200%）。对比度是投入产出比最高的第一步，但不是全部；做完对比度后建议用键盘 Tab 键走一遍页面，看焦点是否可见、顺序是否合理。</p></div>
+
+      <div class="cta-box">
+        <p class="cta-title">免费在线检查 WCAG 对比度</p>
+        <p class="cta-sub">实时比值 · 五档达标判定 · 一键自动调整 · 纯浏览器本地处理</p>
+        <a class="cta-btn" href="/contrast/">打开对比度检查器 →</a>
+      </div>
+    </div>
+
+    <!-- ================= English body ================= -->
+    <div class="article lb-en">
+      <div class="toc">
+        <p class="toc-title">Table of Contents</p>
+        <ol>
+          <li><a href="#why">Why Contrast Is the First Gate of Accessibility</a></li>
+          <li><a href="#rules">Threshold Cheat Sheet</a></li>
+          <li><a href="#how">Testing Workflow: Four Steps</a></li>
+          <li><a href="#fix">Four Ways to Fix a Failure</a></li>
+          <li><a href="#cases">Five Most Common Failures</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ol>
+      </div>
+
+      <h2 id="why">Why Contrast Is the First Gate of Accessibility</h2>
+      <p>About <strong>4.5% of people have some form of color-vision deficiency</strong>, plus huge numbers of low-vision and presbyopic users — and anyone using a phone in bright sunlight. Low contrast isn't "ugly" for them; it's <strong>unreadable</strong>. WCAG treats contrast as a core perceivability requirement, and it's the <strong>highest-ROI</strong> accessibility fix of all: no structural changes, no code — often just a few adjusted color values.</p>
+      <p>Contrast is measured as a ratio from 1:1 (identical) to 21:1 (pure black on pure white). It is the ratio of <strong>relative luminance</strong> between two colors and has nothing to do with hue — light green on white may pass while dark green on white fails, so "it looks dark enough" is never a valid judgment. Test it.</p>
+
+      <h2 id="rules">Threshold Cheat Sheet</h2>
+      <p>WCAG 2.1 defines four text thresholds plus one for UI components:</p>
+      <table>
+        <tr><th>Content type</th><th>AA (baseline)</th><th>AAA (enhanced)</th></tr>
+        <tr><td>Body text (&lt; 24px)</td><td><strong>4.5 : 1</strong></td><td>7 : 1</td></tr>
+        <tr><td>Large text (≥ 24px, or ≥ 18.66px bold)</td><td><strong>3 : 1</strong></td><td>4.5 : 1</td></tr>
+        <tr><td>UI components &amp; graphics (borders, inputs, icons)</td><td><strong>3 : 1</strong></td><td>—</td></tr>
+      </table>
+      <p>Three rules of thumb:</p>
+      <ul>
+        <li><strong>Hold body text to 4.5:1</strong>: the most common threshold and the easiest to barely miss;</li>
+        <li><strong>Don't abuse the large-text discount</strong>: only ≥ 24px (or ≥ 18.66px bold) counts — a 13px "secondary note" gets no discount;</li>
+        <li><strong>UI components at 3:1 are the most-missed check</strong>: faint input borders and buttons blending into the background live here.</li>
+      </ul>
+
+      <h2 id="how">Testing Workflow: Four Steps</h2>
+      <p>Use this site's <a href="/contrast/">WCAG Contrast Checker</a> — everything runs in your browser:</p>
+      <ol class="t-steps">
+        <li><strong>Pick colors</strong>: take the foreground (text) and background from your design; enter HEX or use the pickers;</li>
+        <li><strong>Read the ratio and badges</strong>: the tool shows the live ratio with red/green badges for every AA / AAA threshold;</li>
+        <li><strong>Check the preview</strong>: the preview renders body text, a large heading, and a button — ratios that pass but feel wrong are obvious at a glance;</li>
+        <li><strong>Sweep every combination</strong>: test each text-on-background pair in your page — body, links, placeholders, buttons, footer — including <strong>the dark-mode set</strong>.</li>
+      </ol>
+
+      <h2 id="fix">Four Ways to Fix a Failure</h2>
+      <ul>
+        <li><strong>Adjust the foreground</strong>: keep the hue, brighten or darken the text — the checker's one-click auto-fix does exactly this, taking the smaller change to just reach 4.5:1;</li>
+        <li><strong>Adjust the background</strong>: when the text color is untouchable brand color, shift the background a step lighter (or darker in dark mode) — often a one-step fix;</li>
+        <li><strong>Go bigger and bolder</strong>: if colors can't move, bump 16px to 24px or add bold to qualify for the 3:1 large-text threshold — use sparingly;</li>
+        <li><strong>Add a scrim</strong>: for text on images, a semi-transparent dark backing beats endless color tuning.</li>
+      </ul>
+      <p>Run this workflow before finalizing a palette — far cheaper than rework after launch. For color selection methodology see the <a href="/guides/color-guide/">Color Theory Guide</a>; for dark-mode strategy see the <a href="/guides/dark-mode-icons/">Dark Mode Icon Design Guide</a>.</p>
+
+      <h2 id="cases">Five Most Common Failures</h2>
+      <ul>
+        <li><strong>Gray text on white</strong>: "secondary notes" in #999 on white is only 2.8:1 — the classic miss; secondary information still needs 4.5:1;</li>
+        <li><strong>Brand-color button with white text</strong>: many brand hues (light blue, orange, yellow-green) with white land between 2:1 and 3:1 — it "looks fine" but fails; darken the button or switch to dark text;</li>
+        <li><strong>Light-gray placeholders</strong>: #CCC placeholders in inputs — placeholders carry information and need 4.5:1 too, or switch to floating labels;</li>
+        <li><strong>Reusing light-mode values in dark mode</strong>: #333 body text turns to mud on dark surfaces; verify both themes separately;</li>
+        <li><strong>Text on images without checking the backdrop</strong>: photo backgrounds vary — compute against the darkest and lightest regions; any failure counts.</li>
+      </ul>
+
+      <h2 id="faq">FAQ</h2>
+      <div class="faq-item"><p class="faq-q">Q: How is the contrast ratio calculated?</p><p class="faq-a">A: Per WCAG 2.1: each RGB channel is gamma-expanded into relative luminance L (L = 0.2126×R + 0.7152×G + 0.0722×B), then ratio = (lighter L + 0.05) / (darker L + 0.05), ranging 1 to 21. Pure black on pure white is exactly 21:1. Human eyes are most sensitive to green wavelengths — the green channel carries the most weight, which is why equal-value green and blue look different in brightness.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: Is 4.5:1 a legal requirement?</p><p class="faq-a">A: It depends on region and context: US ADA case law, EU EN 301 549, and China's accessibility standards all reference WCAG AA; government and public-service sites are broadly mandated. Commercial sites aren't universally required, yet accessibility lawsuits keep growing and search engines weigh usability. Treat AA as the floor and AAA as the goal.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: Do logos and decorative elements need to pass?</p><p class="faq-a">A: No. WCAG exempts pure decoration, brand logos and names, and disabled controls invisible to all users. But form placeholder text, input borders, and icon buttons carry information and still need 3:1 or 4.5:1.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: Does dark mode need separate contrast testing?</p><p class="faq-a">A: Yes. Pairs that pass in light mode usually fail in dark mode: the same brand color reads darker and duller on dark surfaces, and new white-on-black combinations aren't automatically compliant. Verify every text/background pair in both themes.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: How does contrast work for text on images?</p><p class="faq-a">A: Same rules — text embedded in images must pass against its effective backdrop, which is rarely a solid color. That's the most-missed case. Compute against both the darkest and lightest regions behind the text; any failure counts. Safer: add a semi-transparent scrim, or replace image text with real HTML text.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: Beyond contrast, what else does web accessibility involve?</p><p class="faq-a">A: WCAG adds operable (keyboard navigable, visible focus), understandable (clear form errors, language declaration), and robust/perceivable basics (alt text, 200% zoom). Contrast is the highest-ROI first step, not the whole job; afterwards, Tab through your page and check that focus is visible and the order makes sense.</p></div>
+
+      <div class="cta-box">
+        <p class="cta-title">Check WCAG Contrast — Free Online</p>
+        <p class="cta-sub">Live ratios · Five thresholds · One-click auto-fix · Runs in your browser</p>
+        <a class="cta-btn" href="/contrast/">Open Contrast Checker →</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<div id="site-footer"></div>
+<script src="/assets/js/site.js" defer></script>
+</body>
+</html>
