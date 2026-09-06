@@ -221,6 +221,14 @@
     gd_alpha_h1:        { zh: '透明背景图标指南：PNG / ICO 透明度正确做法', en: 'Transparent Icon Guide: Getting PNG / ICO Transparency Right' },
     gd_alpha_sub:       { zh: '图标要放在各种底色上，透明背景是基本功。本文讲清 alpha 通道是怎么回事、为什么 JPEG 存不了透明、去背景的三种方法、白边 / iOS 补黑底等常见坑，以及转成 ICO 和 favicon 时如何把透明一路保留——推荐方案免费且纯浏览器本地处理。', en: 'Icons live on all kinds of backgrounds, so transparency is a fundamental. How the alpha channel works, why JPEG can\'t store it, three ways to remove a background, pitfalls like matte halos and iOS black fills, and how to carry transparency all the way into ICO and favicon conversion — the recommended way is free and runs entirely in your browser.' },
     gd_alpha_card_desc: { zh: 'alpha 通道原理、去背景的三种方法、白边与 iOS 补黑底等常见坑，以及 ICO / favicon 转换时如何保留透明。', en: 'How the alpha channel works, three ways to remove a background, pitfalls like matte halos and iOS black fills, and keeping transparency through ICO / favicon conversion.' },
+    gd_acc_short:     { zh: '无障碍对比度指南', en: 'Accessibility Contrast Guide' },
+    gd_acc_h1:        { zh: '无障碍对比度指南：WCAG AA / AAA 达标全流程', en: 'Accessibility Contrast Guide: Passing WCAG AA / AAA' },
+    gd_acc_sub:       { zh: '灰字白底、品牌色按钮白字——这些「看得见但看不清」的设计，对色觉障碍和低视力用户是硬门槛，对所有人都是体验损耗。本文讲清 WCAG 对比度的达标线、实测流程、不达标时的四种修改思路，以及最容易踩的坑——全程可用免费在线检查器完成。', en: 'Gray-on-white text and brand-color buttons with white labels — designs that are "visible but not readable" are hard barriers for low-vision users and friction for everyone. WCAG contrast thresholds, a four-step testing workflow, four ways to fix failures, and the most common pitfalls — all verifiable with a free online checker.' },
+    gd_acc_card_desc: { zh: 'WCAG AA / AAA 达标线速查表、四步实测流程、不达标的四种修改思路，以及灰字白底等五个最常见的不达标案例。', en: 'WCAG threshold cheat sheet, a four-step testing workflow, four ways to fix failures, and five most common cases like gray-on-white text.' },
+    gd_qr_short:      { zh: '二维码扫不出来排查', en: 'QR Code Not Scanning' },
+    gd_qr_h1:         { zh: '二维码扫不出来？8 个常见原因与排查步骤', en: 'QR Code Not Scanning? 8 Common Causes and Fixes' },
+    gd_qr_sub:        { zh: '自己手机能扫、别人扫不出来；屏幕上没问题、印出来就废——二维码的坑几乎全在细节里。本文给你 60 秒快速自检、按命中率排序的 8 个原因、打印与展示的最佳实践，以及用免费生成器重新生成正确参数的方法。', en: "Works on your phone but not on others'; fine on screen but dead in print — QR pitfalls live in the details. A 60-second self-check, 8 causes ranked by hit rate, print and display best practices, and how to regenerate with the right settings using a free generator." },
+    gd_qr_card_desc:  { zh: '60 秒快速自检、8 个常见原因按命中率排序（对比度/静区/反色/尺寸/内容过长等）、打印最佳实践与免费重新生成方法。', en: 'A 60-second self-check, 8 causes ranked by hit rate (contrast, quiet zone, inversion, size, content length...), print best practices, and free regeneration.' },
 
     /* 通用 */
     theme_light:    { zh: '亮色', en: 'Light' },
