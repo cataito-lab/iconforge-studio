@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>二维码扫不出来？8 个常见原因与排查步骤 | CATAITO</title>
+<meta name="title-zh" content="二维码扫不出来？8 个常见原因与排查步骤 | CATAITO">
+<meta name="title-en" content="QR Code Not Scanning? 8 Common Causes and Fixes | CATAITO">
+<meta name="description" content="二维码扫不出来的完整排查指南：60 秒快速自检、按命中率排序的 8 个常见原因（对比度、静区、反色、尺寸、内容过长、纠错级别、打印质量、编码错误）、打印与展示的最佳实践，以及免费在线重新生成的方法。纯浏览器本地处理。">
+<meta name="theme-color" content="#f6f3ec">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="CATAITO 工具箱">
+<meta property="og:title" content="二维码扫不出来？8 个常见原因与排查步骤">
+<meta property="og:description" content="60 秒自检、8 个原因按命中率排序、打印最佳实践与免费重新生成方法。">
+<meta property="og:url" content="https://tools.cataito.com/guides/qr-not-scanning-guide/">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:locale:alternate" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="二维码扫不出来排查">
+<meta name="twitter:description" content="8 个常见原因与排查步骤，60 秒快速自检。">
+<link rel="canonical" href="https://tools.cataito.com/guides/qr-not-scanning-guide/">
+<link rel="icon" href="/assets/img/icon.svg">
+<link rel="stylesheet" href="/assets/css/site.css">
+<script src="/assets/js/theme-init.js"></script>
+<script>
+  (function () {
+    try {
+      var l = localStorage.getItem('cataito-lang');
+      document.documentElement.setAttribute('lang', (l === 'en') ? 'en' : 'zh-CN');
+      if (l === 'en') document.documentElement.classList.add('lang-en');
+    } catch (e) {}
+  })();
+</script>
+<style>
+  /* ============ 指南页排版（与其他指南页保持一致） ============ */
+  .guide-wrap { max-width: 760px; margin: 0; }
+  .guide-meta { font-size: 13px; color: var(--text-3); margin: 0 0 6px; }
+  .page-sub { margin-bottom: 10px; }
+  .article { font-size: 15px; line-height: 1.85; color: var(--text); }
+  .article h2 {
+    font-size: 21px; font-weight: 700; letter-spacing: -.3px;
+    margin: 44px 0 14px; padding-top: 16px; border-top: 1px solid var(--border); color: var(--text);
+  }
+  .article h3 { font-size: 16.5px; font-weight: 650; margin: 26px 0 10px; color: var(--text); }
+  .article p { margin: 0 0 14px; color: var(--text-2); }
+  .article strong { color: var(--text); font-weight: 650; }
+  .article a { color: var(--accent); text-decoration: none; }
+  .article a:hover { text-decoration: underline; }
+  .article ul, .article ol { margin: 0 0 16px; padding-left: 22px; color: var(--text-2); }
+  .article li { margin: 6px 0; }
+  .article code {
+    font-family: var(--font-mono);
+    font-size: 13px; background: var(--card-2); border: 1px solid var(--border);
+    border-radius: 3px; padding: 1px 6px; color: var(--text);
+  }
+  .article pre {
+    background: var(--card-2); border: 1px solid var(--border); border-radius: var(--radius-sm);
+    padding: 14px 16px; margin: 14px 0 18px; overflow-x: auto;
+  }
+  .article pre code { background: none; border: none; padding: 0; font-size: 12.5px; line-height: 1.7; }
+  .article table {
+    width: 100%; border-collapse: collapse; margin: 18px 0 22px;
+    font-size: 13.5px; background: var(--card);
+    border: 1px solid var(--border); border-radius: var(--radius-sm); overflow: hidden;
+  }
+  .article th, .article td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--border); }
+  .article th { background: var(--card-2); color: var(--text); font-weight: 650; white-space: nowrap; }
+  .article td { color: var(--text-2); }
+  .article tr:last-child td { border-bottom: none; }
+  .toc {
+    background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 16px 18px; margin: 20px 0 8px; box-shadow: var(--shadow-sm);
+  }
+  .toc-title { font-size: 13px; font-weight: 650; color: var(--text); margin: 0 0 10px; }
+  .toc ol { margin: 0; padding-left: 20px; font-size: 13.5px; }
+  .toc li { margin: 5px 0; }
+  .toc a { color: var(--text-2); text-decoration: none; }
+  .toc a:hover { color: var(--accent); }
+  /* FAQ 卡片样式由 site.css 的 .faq-item / .t-faq-* 统一提供 */
+  .cta-box {
+    background: linear-gradient(135deg, var(--accent-soft), var(--accent-soft-2));
+    border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent); border-radius: var(--radius);
+    padding: 20px 22px; margin: 34px 0 10px; text-align: center;
+  }
+  .cta-box .cta-title { font-size: 17px; font-weight: 700; color: var(--text); margin: 0 0 6px; }
+  .cta-box .cta-sub { font-size: 13.5px; color: var(--text-2); margin: 0 0 14px; }
+  .cta-btn {
+    display: inline-block; background: var(--accent); color: #fff; text-decoration: none;
+    font-size: 14px; font-weight: 600; padding: 11px 26px; border-radius: var(--radius-sm);
+    box-shadow: 0 6px 18px var(--accent-glow); transition: background .15s;
+  }
+  .cta-btn:hover { background: var(--accent-hover); }
+  /* 修复：.article a 的特异度(0,1,1)会压过 .cta-btn(0,1,0) 的 color:#fff，
+     导致按钮底字同色在亮/暗模式下都不可读。用更高特异度夺回白色文字。 */
+  .article a.cta-btn, .article .cta-btn { color: #fff; text-decoration: none; }
+  .article a.cta-btn:hover { color: #fff; text-decoration: none; background: var(--accent-hover); }
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "二维码扫不出来？8 个常见原因与排查步骤",
+  "description": "详解二维码扫不出来的 8 个常见原因（对比度、静区、反色、尺寸、内容过长、纠错级别、打印质量、编码错误）、60 秒快速自检与打印最佳实践。",
+  "inLanguage": "zh-CN",
+  "datePublished": "2026-09-06",
+  "dateModified": "2026-09-06",
+  "author": { "@type": "Organization", "name": "CATAITO", "url": "https://tools.cataito.com/" },
+  "publisher": { "@type": "Organization", "name": "CATAITO 工具箱", "url": "https://tools.cataito.com/" },
+  "mainEntityOfPage": "https://tools.cataito.com/guides/qr-not-scanning-guide/"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "二维码最小可以印多小？",
+      "acceptedAnswer": { "@type": "Answer", "text": "经验法则是扫描距离的十分之一：手机在 30 厘米外扫，码至少 3 厘米见方。内容越长版本越高、码点越密，同样尺寸下越难扫，所以印刷品上的二维码建议不小于 2×2 厘米，海报上远距离扫描的应按距离放大，并且始终保留四周静区。" }
+    },
+    {
+      "@type": "Question",
+      "name": "纠错级别应该选哪个？",
+      "acceptedAnswer": { "@type": "Answer", "text": "L（7%）码点最稀疏、最容易扫，适合屏幕展示的普通网址；M（15%）是最通用的平衡选择；Q（25%）适合印刷品或有轻微磨损风险的场景；H（30%）适合要叠加 Logo 或环境恶劣的场合。没有特殊需求时选 M 即可——级别越高码点越密，小尺寸下反而更难扫。" }
+    },
+    {
+      "@type": "Question",
+      "name": "二维码会过期吗？",
+      "acceptedAnswer": { "@type": "Answer", "text": "静态二维码不会过期：内容直接编码在图案里，只要图案完整就永远能扫出来。会「过期」的是码里的短链——如果生成器把内容包装成跳转短链，短链服务一旦停服码就失效了。重要场合用静态码或自己域名的跳转。另外印刷前务必实地扫一遍验证内容正确，码本身不会变，但内容打错就废了。" }
+    },
+    {
+      "@type": "Question",
+      "name": "可以自定义二维码的颜色吗？",
+      "acceptedAnswer": { "@type": "Answer", "text": "可以，但必须保证码点比背景深：扫码器按「深色为码点」识别，反色或低对比度都会失败。安全的做法是前景用深色（黑、深蓝、深棕都行），背景用白色或浅色，对比度越大越稳。彩色码点可以用，但要避免用扫码摄像头最不敏感的纯红/纯绿做前景。" }
+    },
+    {
+      "@type": "Question",
+      "name": "反色二维码（浅色码点深色底）能扫吗？",
+      "acceptedAnswer": { "@type": "Answer", "text": "大部分现代扫码器可以，但远不是全部——很多老设备和安卓低端机不支持反色识别，这是「自己手机能扫、别人扫不出来」的常见原因。正式印刷品不要用反色；一定要深底效果的话，给深色底上放一个白色圆角卡片，把正常深色码点放在卡片里。" }
+    },
+    {
+      "@type": "Question",
+      "name": "怎么检查二维码的内容对不对？",
+      "acceptedAnswer": { "@type": "Answer", "text": "最可靠的是实测：用至少两部不同品牌的手机扫一遍，确认跳转内容正确。软件检查可以用本站二维码生成器重新输入同样内容生成对比——图案一致说明内容一致。也可以用在线解码器上传图片读出内容。印刷前实测这一步永远不要省。" }
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "首页", "item": "https://tools.cataito.com/" },
+    { "@type": "ListItem", "position": 2, "name": "使用指南", "item": "https://tools.cataito.com/guides/" },
+    { "@type": "ListItem", "position": 3, "name": "二维码扫不出来排查", "item": "https://tools.cataito.com/guides/qr-not-scanning-guide/" }
+  ]
+}
+</script>
+</head>
+<body>
+<div id="site-header"></div>
+
+<main class="site-main">
+  <div class="guide-wrap">
+    <nav class="breadcrumb"><a href="/" data-i18n="crumb_home">首页</a><span class="sep">/</span><a href="/guides/" data-i18n="nav_guides">使用指南</a><span class="sep">/</span><span data-i18n="gd_qr_short">二维码扫不出来排查</span></nav>
+    <p class="guide-meta"><span data-i18n="gd_published">发布于</span> 2026-09-06 · CATAITO</p>
+    <h1 class="page-h1" data-i18n="gd_qr_h1">二维码扫不出来？8 个常见原因与排查步骤</h1>
+    <p class="page-sub" data-i18n="gd_qr_sub">自己手机能扫、别人扫不出来；屏幕上没问题、印出来就废——二维码的坑几乎全在细节里。本文给你 60 秒快速自检、按命中率排序的 8 个原因、打印与展示的最佳实践，以及用免费生成器重新生成正确参数的方法。</p>
+
+    <!-- ================= 中文正文 ================= -->
+    <div class="article lb-zh">
+      <div class="toc">
+        <p class="toc-title">目录</p>
+        <ol>
+          <li><a href="#check">60 秒快速自检</a></li>
+          <li><a href="#causes">8 个常见原因（按命中率排序）</a></li>
+          <li><a href="#regen">重新生成：正确的参数</a></li>
+          <li><a href="#print">打印与展示最佳实践</a></li>
+          <li><a href="#faq">常见问题</a></li>
+        </ol>
+      </div>
+
+      <h2 id="check">60 秒快速自检</h2>
+      <p>先花一分钟排除「环境问题」，再怀疑码本身：</p>
+      <ol class="t-steps">
+        <li><strong>换手机</strong>：用另一部（最好是不同品牌的）手机扫——很多问题是特定扫码器不兼容；</li>
+        <li><strong>换距离</strong>：靠近到 15–25 厘米，让码占满取景框的三分之二；</li>
+        <li><strong>检查对焦与光线</strong>：等对焦框清晰再判，避免反光和阴影；</li>
+        <li><strong>换来源</strong>：屏幕上看不出问题的，放大到 100% 再扫；印刷品摸一下是否有覆膜反光。</li>
+      </ol>
+      <p>换手机、换距离、换亮度都失败，才进入下面的原因排查。</p>
+
+      <h2 id="causes">8 个常见原因（按命中率排序）</h2>
+
+      <h3>1. 对比度不足（命中率最高）</h3>
+      <p>浅灰、浅棕的码点配白底，屏幕上「看着还行」，摄像头根本分不出来。码点与背景的对比度越大越稳——<strong>深色码点 + 白底是唯一推荐组合</strong>。自定义颜色时避免浅色前景，也避免摄像头最不敏感的纯红/纯绿。</p>
+
+      <h3>2. 静区（四周留白）不足</h3>
+      <p>码四周至少保留 <strong>4 个模块宽度</strong> 的空白。静区被文字、边框、logo 挤占是设计稿里最常见的错误——扫码器靠静区定位码的边界。</p>
+
+      <h3>3. 反色（浅色码点深色底）</h3>
+      <p>很多扫码器不支持反色识别，于是「自己能扫、别人不行」。正式物料不要反色；深底场景用白色圆角卡片衬底。</p>
+
+      <h3>4. 尺寸太小或距离太远</h3>
+      <p>经验法则：<strong>扫描距离的十分之一</strong>。30 厘米外扫至少 3 厘米；海报上 2 米外扫要 20 厘米以上。尺寸不够时再高的纠错也救不了。</p>
+
+      <h3>5. 内容太长，码点过密</h3>
+      <p>长网址让版本升高、模块变多，同样物理尺寸下每个码点更小。把网址用短链服务缩短，或指向落地页而不是塞满参数的原始链接。</p>
+
+      <h3>6. 纠错级别与场景不匹配</h3>
+      <p>L 最稀疏最好扫但耐损性差；H 抗遮挡最强但最密。普通网址用 M；要叠 Logo 或易磨损用 H；小尺寸场景反而应该用 L/M 换取稀疏。</p>
+
+      <h3>7. 打印质量问题</h3>
+      <p>低分辨率打印导致码点边缘发糊；覆膜反光淹没码点；深色/带纹理的纸张吃掉对比度。确保输出 ≥ 300 DPI，用哑光材质，码点边缘清晰锐利。</p>
+
+      <h3>8. 内容编码错误</h3>
+      <p>生成时网址打错字、缺了 https://、中文没编码——码能扫出来但跳转 404。这类「扫出来了但不对」的问题要在生成端解决：生成后立即实测。</p>
+
+      <h2 id="regen">重新生成：正确的参数</h2>
+      <p>用本站 <a href="/qrcode/">二维码生成器</a> 按下面的基准参数重新生成，全程浏览器本地完成：</p>
+      <ol class="t-steps">
+        <li><strong>内容</strong>：核对网址逐字符无误，长链接先缩短；</li>
+        <li><strong>纠错级别</strong>：屏幕展示选 M，要叠 Logo 选 H，小尺寸印刷选 L 或 M；</li>
+        <li><strong>颜色</strong>：深色前景 + 白色背景，别反色；</li>
+        <li><strong>静区与尺寸</strong>：静区至少 4 模块，按扫描距离定下载尺寸，PNG 下载后按需缩放。</li>
+      </ol>
+      <p>生成后立刻用两部手机实测——这一步永远不要省。同类排障方法论可参考 <a href="/guides/favicon-not-showing-guide/">Favicon 不显示排查</a>，思路都是「按命中率排序、先环境后本体」。</p>
+
+      <h2 id="print">打印与展示最佳实践</h2>
+      <ul>
+        <li><strong>最小尺寸</strong>：印刷品不小于 2×2 厘米，远距离场景按「距离的十分之一」放大；</li>
+        <li><strong>输出分辨率</strong>：≥ 300 DPI，二维码是硬边缘图形，矢量输出最佳；</li>
+        <li><strong>材质</strong>：哑光纸优于高光覆膜；深色或纹理纸先打样实测；</li>
+        <li><strong>位置</strong>：避开折痕、装订线和容易磨损的边缘；</li>
+        <li><strong>配套文字</strong>：码下方写明扫出来是什么（「扫码访问官网」），降低用户的尝试成本。</li>
+      </ul>
+
+      <h2 id="faq">常见问题</h2>
+      <div class="faq-item"><p class="faq-q">Q：二维码最小可以印多小？</p><p class="faq-a">A：经验法则是扫描距离的十分之一：手机在 30 厘米外扫，码至少 3 厘米见方。内容越长版本越高、码点越密，同样尺寸下越难扫，所以印刷品上的二维码建议不小于 2×2 厘米，海报上远距离扫描的应按距离放大，并且始终保留四周静区。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：纠错级别应该选哪个？</p><p class="faq-a">A：L（7%）码点最稀疏、最容易扫，适合屏幕展示的普通网址；M（15%）是最通用的平衡选择；Q（25%）适合印刷品或有轻微磨损风险的场景；H（30%）适合要叠加 Logo 或环境恶劣的场合。没有特殊需求时选 M 即可——级别越高码点越密，小尺寸下反而更难扫。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：二维码会过期吗？</p><p class="faq-a">A：静态二维码不会过期：内容直接编码在图案里，只要图案完整就永远能扫出来。会「过期」的是码里的短链——如果生成器把内容包装成跳转短链，短链服务一旦停服码就失效了。重要场合用静态码或自己域名的跳转。另外印刷前务必实地扫一遍验证内容正确，码本身不会变，但内容打错就废了。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：可以自定义二维码的颜色吗？</p><p class="faq-a">A：可以，但必须保证码点比背景深：扫码器按「深色为码点」识别，反色或低对比度都会失败。安全的做法是前景用深色（黑、深蓝、深棕都行），背景用白色或浅色，对比度越大越稳。彩色码点可以用，但要避免用扫码摄像头最不敏感的纯红/纯绿做前景。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：反色二维码（浅色码点深色底）能扫吗？</p><p class="faq-a">A：大部分现代扫码器可以，但远不是全部——很多老设备和安卓低端机不支持反色识别，这是「自己手机能扫、别人扫不出来」的常见原因。正式印刷品不要用反色；一定要深底效果的话，给深色底上放一个白色圆角卡片，把正常深色码点放在卡片里。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：怎么检查二维码的内容对不对？</p><p class="faq-a">A：最可靠的是实测：用至少两部不同品牌的手机扫一遍，确认跳转内容正确。软件检查可以用本站二维码生成器重新输入同样内容生成对比——图案一致说明内容一致。也可以用在线解码器上传图片读出内容。印刷前实测这一步永远不要省。</p></div>
+
+      <div class="cta-box">
+        <p class="cta-title">免费在线生成二维码</p>
+        <p class="cta-sub">纠错级别可调 · 颜色自定义 · 高清 PNG · 纯浏览器本地生成</p>
+        <a class="cta-btn" href="/qrcode/">打开二维码生成器 →</a>
+      </div>
+    </div>
+
+    <!-- ================= English body ================= -->
+    <div class="article lb-en">
+      <div class="toc">
+        <p class="toc-title">Table of Contents</p>
+        <ol>
+          <li><a href="#check">60-Second Quick Check</a></li>
+          <li><a href="#causes">8 Common Causes (Ranked by Hit Rate)</a></li>
+          <li><a href="#regen">Regenerating With the Right Settings</a></li>
+          <li><a href="#print">Print &amp; Display Best Practices</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ol>
+      </div>
+
+      <h2 id="check">60-Second Quick Check</h2>
+      <p>Spend a minute ruling out the environment before blaming the code itself:</p>
+      <ol class="t-steps">
+        <li><strong>Try another phone</strong>: ideally a different brand — many issues are scanner-specific;</li>
+        <li><strong>Change distance</strong>: move to 15–25 cm so the code fills about two-thirds of the viewfinder;</li>
+        <li><strong>Check focus and light</strong>: wait for focus, avoid glare and shadows;</li>
+        <li><strong>Try another source</strong>: zoom a screen to 100% before scanning; feel printed pieces for glare-causing laminate.</li>
+      </ol>
+      <p>If it still fails across phones, distances, and lighting, work through the causes below.</p>
+
+      <h2 id="causes">8 Common Causes (Ranked by Hit Rate)</h2>
+
+      <h3>1. Insufficient contrast (highest hit rate)</h3>
+      <p>Light-gray or beige modules on white "look okay" on screen but confuse the camera. Higher contrast = more reliable scanning — <strong>dark modules on white is the only recommended combination</strong>. Avoid light foregrounds and the camera-blind pure red/green.</p>
+
+      <h3>2. Not enough quiet zone</h3>
+      <p>Keep at least a <strong>4-module margin</strong> on all four sides. Quiet zones squeezed by text, borders, or logos are the most common design-file error — scanners use the quiet zone to find the code's boundaries.</p>
+
+      <h3>3. Inverted colors (light modules on dark)</h3>
+      <p>Many scanners don't support inverted codes — hence "works on my phone, not on yours". Never invert for print; on dark designs, place the code on a white rounded card.</p>
+
+      <h3>4. Too small or too far</h3>
+      <p>Rule of thumb: <strong>one tenth of the scanning distance</strong>. At 30 cm, at least 3 cm; a poster scanned from 2 m needs 20 cm+. No error-correction level rescues an undersized code.</p>
+
+      <h3>5. Content too long, modules too dense</h3>
+      <p>Long URLs push the version up and shrink each module at the same physical size. Shorten URLs, or point to a landing page instead of a parameter-stuffed raw link.</p>
+
+      <h3>6. Wrong error-correction level for the scene</h3>
+      <p>L is sparsest and easiest to scan but fragile; H resists the most occlusion but is densest. Use M for plain URLs, H for logo overlays, and L/M for small sizes where sparseness matters.</p>
+
+      <h3>7. Print quality</h3>
+      <p>Low-DPI output blurs module edges; glossy laminate washes out contrast; dark or textured paper eats it. Print at ≥ 300 DPI, prefer matte stock, keep edges crisp.</p>
+
+      <h3>8. Encoding mistakes</h3>
+      <p>A typo in the URL, a missing https://, unencoded Chinese — the code scans fine but lands on a 404. These "scans but wrong" issues are fixed at generation: test immediately after generating.</p>
+
+      <h2 id="regen">Regenerating With the Right Settings</h2>
+      <p>Use this site's <a href="/qrcode/">QR Code Generator</a> with these baselines — everything runs in your browser:</p>
+      <ol class="t-steps">
+        <li><strong>Content</strong>: verify the URL character by character; shorten long links first;</li>
+        <li><strong>Error correction</strong>: M for screens, H for logo overlays, L/M for small prints;</li>
+        <li><strong>Colors</strong>: dark modules on white; never inverted;</li>
+        <li><strong>Quiet zone &amp; size</strong>: at least 4 modules of margin; size the download for the scanning distance and scale the PNG as needed.</li>
+      </ol>
+      <p>Test with two phones immediately after generating — never skip this. For the same ranked-causes methodology applied to favicons, see <a href="/guides/favicon-not-showing-guide/">Favicon Not Showing</a>: environment first, then the artifact.</p>
+
+      <h2 id="print">Print &amp; Display Best Practices</h2>
+      <ul>
+        <li><strong>Minimum size</strong>: 2×2 cm on print; scale by one tenth of the distance for posters;</li>
+        <li><strong>Output resolution</strong>: ≥ 300 DPI — QR codes are hard-edged graphics, vector output is best;</li>
+        <li><strong>Stock</strong>: matte beats glossy; proof-test dark or textured paper;</li>
+        <li><strong>Placement</strong>: avoid folds, spines, and wear-prone edges;</li>
+        <li><strong>Supporting text</strong>: caption what the code opens ("Scan for our website") to lower the attempt cost.</li>
+      </ul>
+
+      <h2 id="faq">FAQ</h2>
+      <div class="faq-item"><p class="faq-q">Q: How small can a printed QR code be?</p><p class="faq-a">A: One tenth of the scanning distance: at 30 cm, at least 3 cm square. Denser (higher-version) codes are harder to scan at the same size, so keep print codes at least 2×2 cm, scale poster codes by distance, and always keep the quiet zone.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: Which error-correction level should I choose?</p><p class="faq-a">A: L (7%) is sparsest and easiest to scan — good for plain on-screen URLs. M (15%) is the all-purpose balance; Q (25%) suits print and light wear; H (30%) is for logo overlays and harsh environments. When in doubt, M — higher levels pack denser modules and get harder to scan at small sizes.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: Do QR codes expire?</p><p class="faq-a">A: Static QR codes never expire: the content lives in the pattern itself. What "expires" is a wrapped short link inside the code — if the generator routes through a short-link service and that service dies, the code dies. Use static codes or your own domain redirect for anything important. And always scan-test before printing: the code won't change, but a typo'd destination is dead on arrival.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: Can I customize QR code colors?</p><p class="faq-a">A: Yes, but modules must stay darker than the background — scanners read dark-on-light, and inverted or low-contrast codes fail. Safe palette: dark foreground (black, deep blue, deep brown all work) on white or light ground. Colored modules are fine, but avoid pure red/green foregrounds — the least sensitive hues for cameras.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: Do inverted QR codes (light modules on dark) scan?</p><p class="faq-a">A: Most modern scanners handle them, but far from all — older devices and budget Android phones often don't, which is exactly why "works on my phone" fails for others. Never invert for print; for dark designs, put the standard dark-on-light code on a white rounded card.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: How do I verify the QR code's content is correct?</p><p class="faq-a">A: The gold standard is a live test: scan with at least two different-brand phones and confirm the destination. Software-wise, re-enter the same content in this site's QR generator and compare patterns — identical patterns mean identical content. Online decoders that read an uploaded image work too. Never skip the pre-print test.</p></div>
+
+      <div class="cta-box">
+        <p class="cta-title">Generate QR Codes — Free Online</p>
+        <p class="cta-sub">Adjustable error correction · Custom colors · Crisp PNG · Runs in your browser</p>
+        <a class="cta-btn" href="/qrcode/">Open QR Code Generator →</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<div id="site-footer"></div>
+<script src="/assets/js/site.js" defer></script>
+</body>
+</html>
