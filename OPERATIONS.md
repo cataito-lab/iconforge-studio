@@ -45,7 +45,8 @@
 ## 六、数据与统计
 
 - **CF Web Analytics**：beacon 由 `site.js` 的 `bindAnalytics()` 统一注入（token 明文出现在源码是 CF 设计，非密钥）；无 cookie，隐私政策已声明
-- **GSC**：`sitemap.xml` 18 URL，全带 hreflang 三连（zh-CN / en `?lang=en` / x-default）
+- **GSC**：`sitemap.xml` 25 URL，全带 hreflang 三连（zh-CN / en `?lang=en` / x-default）
+- **Google AdSense**（2026-09-06 接入）：`ca-pub-7103529190038161`；验证代码在全部 26 个页面的 `<head>`（含 404）；`dist/ads.txt` 已部署（Google 对每个域名独立检查 ads.txt，**根域 cataito.com 的 ads.txt 需在母站部署**）；隐私政策已含广告披露。条目 cataito.com 状态「正在准备→审核中」，过审后广告投放与收益计入该条目
 
 ## 七、本地开发与测试
 
