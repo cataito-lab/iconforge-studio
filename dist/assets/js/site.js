@@ -9,6 +9,15 @@
 
   var I18N = {
     nav_home:       { zh: '首页',   en: 'Home' },
+    nav_if:         { zh: '图标工坊', en: 'Icons' },
+    nav_fv:         { zh: 'Favicon', en: 'Favicon' },
+    nav_cp:         { zh: '压缩', en: 'Compress' },
+    nav_pl:         { zh: '配色', en: 'Palette' },
+    nav_cv:         { zh: '转换', en: 'Convert' },
+    nav_rz:         { zh: '裁剪', en: 'Resize' },
+    nav_ct:         { zh: '对比度', en: 'Contrast' },
+    nav_qr:         { zh: '二维码', en: 'QR Code' },
+    nav_guides:     { zh: '指南', en: 'Guides' },
     nav_tools:      { zh: '工具',   en: 'Tools' },
     brand_sub:      { zh: '免费工具箱', en: 'FREE TOOLS' },
     free_badge:     { zh: '100% 免费 · 无需注册 · 浏览器本地处理', en: '100% Free · No sign-up · Runs in your browser' },
@@ -43,6 +52,10 @@
     home_tool_convert_desc:  { zh: 'PNG / JPEG / WebP 在线互转，保留透明、可调质量，批量打包下载。', en: 'Convert PNG / JPEG / WebP online with transparency preserved, adjustable quality, and batch ZIP download.' },
     home_tool_resize:        { zh: '裁剪 / 缩放', en: 'Crop & Resize' },
     home_tool_resize_desc:   { zh: '批量居中裁切 1:1 / 16:9 等比例，按最长边缩放，保持原格式导出。', en: 'Center-crop to 1:1 / 16:9 and more in batches, scale by max edge, export in the original format.' },
+    home_tool_contrast:      { zh: '对比度检查', en: 'Contrast Checker' },
+    home_tool_contrast_desc: { zh: 'WCAG 对比度实时计算，AA / AAA 达标判定与一键自动调整。', en: 'Live WCAG contrast ratios with AA / AAA verdicts and a one-click auto-fix.' },
+    home_tool_qrcode:        { zh: '二维码生成', en: 'QR Code Generator' },
+    home_tool_qrcode_desc:   { zh: '文字 / 网址即时生成二维码，纠错与颜色可调，下载高清 PNG。', en: 'Turn text or URLs into QR codes instantly — adjustable error correction and colors, crisp PNG download.' },
 
     /* 首页：实用指南区块 */
     home_guides_h:      { zh: '实用指南', en: 'Practical guides' },
@@ -69,7 +82,7 @@
     hf_faq_2_q:     { zh: '我的图片会被上传到服务器吗？', en: 'Are my images uploaded to a server?' },
     hf_faq_2_a:     { zh: '不会。所有工具基于浏览器本地运算（Canvas / Web API），文件不经过网络，商业素材和隐私截图都能放心使用。', en: 'No. All tools run on in-browser computation (Canvas / Web API); files never cross the network, so commercial assets and private screenshots are safe to use.' },
     hf_faq_3_q:     { zh: '目前提供哪些工具？', en: 'Which tools are available?' },
-    hf_faq_3_a:     { zh: '目前提供图标工坊 IconForge、Favicon 生成器、图片压缩、配色 / 调色板、图片格式转换、图片裁剪与缩放六类工具，均为纯前端实现，后续还会持续增加。', en: 'Currently six tools: Icon Forge, Favicon Generator, Image Compressor, Color Palette, Image Converter, and Crop & Resize — all client-side, with more on the way.' },
+    hf_faq_3_a:     { zh: '目前提供图标工坊 IconForge、Favicon 生成器、图片压缩、配色 / 调色板、图片格式转换、图片裁剪与缩放、对比度检查、二维码生成八类工具，均为纯前端实现，后续还会持续增加。', en: 'Currently eight tools: Icon Forge, Favicon Generator, Image Compressor, Color Palette, Image Converter, Crop & Resize, Contrast Checker, and QR Code Generator — all client-side, with more on the way.' },
 
     /* IconForge */
     if_name:              { zh: '图标工坊 IconForge', en: 'Icon Forge' },
@@ -163,7 +176,6 @@
     crumb_home:     { zh: '首页', en: 'Home' },
 
     /* 指南栏目 */
-    nav_guides:         { zh: '使用指南', en: 'Guides' },
     gd_published:       { zh: '发布于', en: 'Published' },
     gd_index_h1:        { zh: '使用指南', en: 'Guides' },
     gd_index_sub:       { zh: '把工具用对、用好：格式原理、尺寸规范与最佳实践。', en: 'Get the most out of the tools: formats, size specs, and best practices.' },
@@ -420,6 +432,75 @@
     rz_faq_4_q: { zh: '透明背景会丢失吗？', en: 'Will transparency be lost?' },
     rz_faq_4_a: { zh: '输出 PNG / WebP 完整保留透明；输出 JPEG 时自动铺白底（JPEG 不支持透明通道），结果行会标记提醒。', en: 'PNG / WebP output preserves transparency fully; JPEG output fills it with white (no alpha in JPEG) and the result row shows a reminder badge.' },
 
+    /* 工具七：WCAG 对比度检查器 */
+    ct_name:        { zh: '对比度检查', en: 'Contrast Checker' },
+    ct_desc:        { zh: '输入前景色与背景色，实时计算对比度比值，判定 AA / AAA 是否达标，支持一键自动调整。纯浏览器本地处理。', en: 'Enter foreground and background colors to get the live WCAG contrast ratio with AA / AAA verdicts and one-click fix. Runs entirely in your browser.' },
+    ct_fg:          { zh: '前景色（文字）', en: 'Foreground (text)' },
+    ct_bg:          { zh: '背景色', en: 'Background' },
+    ct_hex_title:   { zh: 'HEX 色值', en: 'HEX color' },
+    ct_swap:        { zh: '交换前景/背景色', en: 'Swap foreground/background' },
+    ct_ratio_label: { zh: '对比度比值', en: 'Contrast ratio' },
+    ct_lv_aa_body:   { zh: 'AA 正文', en: 'AA body' },
+    ct_lv_aaa_body:  { zh: 'AAA 正文', en: 'AAA body' },
+    ct_lv_aa_large:  { zh: 'AA 大字', en: 'AA large' },
+    ct_lv_aaa_large: { zh: 'AAA 大字', en: 'AAA large' },
+    ct_lv_ui:        { zh: 'UI 组件', en: 'UI parts' },
+    ct_fix:         { zh: '自动调整前景色到 AA 达标', en: 'Auto-fix foreground to pass AA' },
+    ct_fix_hint:    { zh: '建议调整为 ${hex}（比值 ${ratio}:1，保持色相不变）', en: 'Suggested: ${hex} (ratio ${ratio}:1, hue preserved)' },
+    ct_prev_body:   { zh: '正文预览：The quick brown fox jumps over the lazy dog。敏而好学，不耻下问。', en: 'Body preview: The quick brown fox jumps over the lazy dog.' },
+    ct_prev_large:  { zh: '大字号标题 24px Bold', en: 'Large heading 24px Bold' },
+    ct_prev_ui:     { zh: '按钮文字 Button', en: 'Button' },
+    ct_toast_hex:   { zh: 'HEX 格式不正确，例如 #21 1E 19', en: 'Invalid HEX, e.g. #211E19' },
+    ct_toast_fixed: { zh: '已调整到 AA 达标', en: 'Adjusted to pass AA' },
+    ct_toast_nofix: { zh: '该背景色下无法靠调亮/压暗达标，请换背景色', en: 'Cannot reach AA by shading alone — try another background' },
+    ct_how_h:  { zh: '怎么用', en: 'How to use' },
+    ct_how_1:  { zh: '<strong>选颜色</strong>：用拾色器或直接输入 HEX 值设置前景色（文字）与背景色。', en: '<strong>Pick colors</strong>: use the color pickers or type HEX values for the foreground (text) and background.' },
+    ct_how_2:  { zh: '<strong>看比值</strong>：工具按 WCAG 2.1 公式实时计算对比度（1 到 21）。', en: '<strong>Read the ratio</strong>: the tool computes the WCAG 2.1 contrast ratio (1 to 21) live.' },
+    ct_how_3:  { zh: '<strong>对标准</strong>：正文文字 AA ≥ 4.5、AAA ≥ 7；大字号（≥24px 或 ≥18.66px 粗体）AA ≥ 3、AAA ≥ 4.5；按钮边框等 UI 组件 ≥ 3。', en: '<strong>Check the thresholds</strong>: body text AA ≥ 4.5, AAA ≥ 7; large text (≥24px, or ≥18.66px bold) AA ≥ 3, AAA ≥ 4.5; UI parts like button borders ≥ 3.' },
+    ct_how_4:  { zh: '<strong>一键调整</strong>：不达标时点「自动调整前景色」，工具在保持色相的前提下把前景色调亮或调暗到刚好达标。', en: '<strong>One-click fix</strong>: if it fails, "Auto-fix" brightens or darkens the foreground — hue preserved — just enough to pass.' },
+    ct_faq_h:  { zh: '常见问题', en: 'FAQ' },
+    ct_faq_1_q: { zh: '对比度是怎么算出来的？', en: 'How is the contrast ratio calculated?' },
+    ct_faq_1_a: { zh: '按 WCAG 2.1 标准：先把 RGB 各通道做伽马展开得到相对亮度 L，对比度 =（较亮色的 L + 0.05）/（较暗色的 L + 0.05），取值范围 1 到 21。纯黑对纯白正好是 21。', en: 'Per WCAG 2.1: each RGB channel is gamma-expanded into relative luminance L, then ratio = (lighter L + 0.05) / (darker L + 0.05), ranging 1 to 21. Pure black on pure white is exactly 21.' },
+    ct_faq_2_q: { zh: 'AA 和 AAA 有什么区别？', en: "What's the difference between AA and AAA?" },
+    ct_faq_2_a: { zh: 'AA 是 WCAG 的基本达标线（正文 4.5:1，大字号 3:1），绝大多数无障碍规范与法律（如 ADA、EN 301 549）都要求达到；AAA 是增强级（正文 7:1），适合阅读类产品追求。日常网页以 AA 为底线即可。', en: 'AA is the baseline (4.5:1 body, 3:1 large) required by most accessibility standards and laws (ADA, EN 301 549); AAA is enhanced (7:1 body) worth pursuing for reading-heavy products. Aim for AA as your floor.' },
+    ct_faq_3_q: { zh: '什么算「大字号」？', en: 'What counts as "large text"?' },
+    ct_faq_3_a: { zh: 'WCAG 定义为 ≥ 18pt（约 24px）的常规字重，或 ≥ 14pt（约 18.66px）的粗体。大字号的达标线更宽松：AA 3:1、AAA 4.5:1。', en: 'WCAG defines it as ≥ 18pt (≈24px) regular, or ≥ 14pt (≈18.66px) bold. Large text has looser thresholds: AA 3:1, AAA 4.5:1.' },
+    ct_faq_4_q: { zh: '「自动调整」会改变我的色相吗？', en: "Will auto-fix change my hue?" },
+    ct_faq_4_a: { zh: '不会。工具只在保持色相与饱和度的前提下，把前景色向白色或黑色方向提亮/压暗（取改动更小的方向），刚好达到 4.5:1 停止。是否采用由你决定，结果会同步回拾色器。', en: 'No. The tool only shades the foreground toward white or black — whichever needs less change — keeping hue and saturation, stopping exactly at 4.5:1. Adopting it is up to you; the result syncs back to the picker.' },
+
+    /* 工具八：二维码生成器 */
+    qr_name:        { zh: '二维码生成', en: 'QR Code' },
+    qr_desc:        { zh: '输入文字或网址，即时生成二维码。纠错级别、颜色、尺寸可调，一键下载高清 PNG。纯浏览器本地生成。', en: 'Type text or a URL to get a QR code instantly. Adjustable error correction, colors, and size; download a crisp PNG. Generated entirely in your browser.' },
+    qr_text_label:  { zh: '二维码内容（文字或网址）', en: 'Content (text or URL)' },
+    qr_text_ph:     { zh: 'https://example.com 或任意文字', en: 'https://example.com or any text' },
+    qr_bytes_hint:  { zh: '当前', en: 'Current' },
+    qr_bytes_unit:  { zh: '字节（UTF-8）', en: 'bytes (UTF-8)' },
+    qr_ec:          { zh: '纠错级别', en: 'Error correction' },
+    qr_ec_hint:     { zh: '级别越高抗遮挡能力越强（可加 Logo），但码点更密。网址类建议 M 或 Q。', en: 'Higher levels survive more occlusion (room for a logo) but pack denser modules. M or Q for URLs.' },
+    qr_fg:          { zh: '前景色（码点）', en: 'Foreground (modules)' },
+    qr_bg:          { zh: '背景色', en: 'Background' },
+    qr_scale:       { zh: '模块尺寸', en: 'Module size' },
+    qr_margin:      { zh: '静区边距', en: 'Quiet zone' },
+    qr_error:       { zh: '内容太长，当前纠错级别下编码不了——缩短内容或降低纠错级别（H → L）。', en: 'Content too long for this error-correction level — shorten it or drop to L.' },
+    qr_info:        { zh: '版本 ${v} · 纠错 ${ecl} · ${n} 字节 · ${px}px', en: 'Version ${v} · EC ${ecl} · ${n} bytes · ${px}px' },
+    qr_download:    { zh: '下载 PNG', en: 'Download PNG' },
+    qr_toast_dl:    { zh: 'PNG 已开始下载', en: 'PNG download started' },
+    qr_toast_fail:  { zh: '导出失败，请重试', en: 'Export failed — please retry' },
+    qr_how_h:  { zh: '怎么用', en: 'How to use' },
+    qr_how_1:  { zh: '<strong>输入内容</strong>：网址、文字、Wi-Fi 信息都可以，中文与 Emoji 均支持（UTF-8）。', en: '<strong>Enter content</strong>: URLs, text, Wi-Fi credentials — Chinese and emoji supported (UTF-8).' },
+    qr_how_2:  { zh: '<strong>选纠错级别</strong>：L 最稀疏、H 最抗遮挡。想叠加 Logo 选 H，普通网址 M 即可。', en: '<strong>Pick error correction</strong>: L is sparsest, H survives the most occlusion. Use H for logo overlays; M for plain URLs.' },
+    qr_how_3:  { zh: '<strong>调外观</strong>：前景背景色可改（注意保持足够对比度），模块尺寸与静区边距按用途选择。', en: '<strong>Style it</strong>: foreground/background colors are adjustable (keep contrast high); module size and quiet zone depend on the use case.' },
+    qr_how_4:  { zh: '<strong>下载</strong>：一键导出高清 PNG。建议保留至少 4 模块静区，扫码更稳。', en: '<strong>Download</strong>: export a crisp PNG. Keep at least a 4-module quiet zone for reliable scanning.' },
+    qr_faq_h:  { zh: '常见问题', en: 'FAQ' },
+    qr_faq_1_q: { zh: '内容会被上传到服务器吗？', en: 'Is my content uploaded to a server?' },
+    qr_faq_1_a: { zh: '不会。二维码编码完全在浏览器本地完成（本站自研编码器，零依赖），输入的内容不经过网络，敏感信息也能放心生成。', en: "No. Encoding runs entirely in your browser (our own zero-dependency encoder) — what you type never touches the network, safe for sensitive content." },
+    qr_faq_2_q: { zh: '能放多少内容？', en: 'How much content can a QR code hold?' },
+    qr_faq_2_a: { zh: '纠错级别越低容量越大：L 级最多约 2953 字节（数字模式更多），日常网址几十个字符毫无压力。内容越长码点越密，扫码距离越短——网址过长时建议先用短链服务。', en: 'Lower error correction means more capacity: up to about 2,953 bytes at L (more in numeric mode). Everyday URLs are trivial. Denser codes scan from shorter distances — shorten long URLs first.' },
+    qr_faq_3_q: { zh: '为什么扫不出来？', en: "Why won't my QR code scan?" },
+    qr_faq_3_a: { zh: '三个常见原因：前景背景对比度太低（浅色码点最常见）；静区（四周留白）不够；前景色比背景色更亮（扫码器按深色识别码点）。改回深色码点 + 浅色底 + 4 模块边距即可。', en: 'Three usual suspects: low fg/bg contrast (light modules above all), an insufficient quiet zone, or a foreground lighter than the background (scanners read dark-on-light). Deep modules on a light ground with a 4-module margin just works.' },
+    qr_faq_4_q: { zh: '可以自定义颜色或加 Logo 吗？', en: 'Can I customize colors or add a logo?' },
+    qr_faq_4_a: { zh: '颜色可以：用本工具的前景/背景色设置，但必须保证码点比背景深。叠加 Logo 请选 H 级纠错并把 Logo 控制在码图面积约 1/10 以内——用图片编辑器叠加后再整体导出。', en: 'Colors yes: set fg/bg here, but modules must stay darker than the ground. For a logo overlay pick level H and keep the logo under ~1/10 of the code area — composite it in an image editor, then export.' },
+
     /* 语言按钮（显示“切换到”的目标语言） */
     lang_to_en:     { zh: 'EN', en: '中' }
   };
@@ -505,13 +586,15 @@
         '</a>' +
         '<nav class="nav">' +
           '<a href="/" class="' + (active('/') ? 'active' : '') + '" data-i18n="nav_home">首页</a>' +
-          '<a href="/icon-forge/" class="' + (active('/icon-forge/') ? 'active' : '') + '" data-i18n="if_name">图标工坊 IconForge</a>' +
-          '<a href="/favicon/" class="' + (active('/favicon/') ? 'active' : '') + '" data-i18n="fv_name">Favicon 生成器</a>' +
-          '<a href="/compress/" class="' + (active('/compress/') ? 'active' : '') + '" data-i18n="cp_name">图片压缩</a>' +
-          '<a href="/palette/" class="' + (active('/palette/') ? 'active' : '') + '" data-i18n="pl_name">配色工具</a>' +
-          '<a href="/convert/" class="' + (active('/convert/') ? 'active' : '') + '" data-i18n="cv_name">格式转换</a>' +
-          '<a href="/resize/" class="' + (active('/resize/') ? 'active' : '') + '" data-i18n="rz_name">裁剪 / 缩放</a>' +
-          '<a href="/guides/" class="' + (active('/guides/') ? 'active' : '') + '" data-i18n="nav_guides">使用指南</a>' +
+          '<a href="/icon-forge/" class="' + (active('/icon-forge/') ? 'active' : '') + '" data-i18n="nav_if">图标工坊</a>' +
+          '<a href="/favicon/" class="' + (active('/favicon/') ? 'active' : '') + '" data-i18n="nav_fv">Favicon</a>' +
+          '<a href="/compress/" class="' + (active('/compress/') ? 'active' : '') + '" data-i18n="nav_cp">压缩</a>' +
+          '<a href="/palette/" class="' + (active('/palette/') ? 'active' : '') + '" data-i18n="nav_pl">配色</a>' +
+          '<a href="/convert/" class="' + (active('/convert/') ? 'active' : '') + '" data-i18n="nav_cv">转换</a>' +
+          '<a href="/resize/" class="' + (active('/resize/') ? 'active' : '') + '" data-i18n="nav_rz">裁剪</a>' +
+          '<a href="/contrast/" class="' + (active('/contrast/') ? 'active' : '') + '" data-i18n="nav_ct">对比度</a>' +
+          '<a href="/qrcode/" class="' + (active('/qrcode/') ? 'active' : '') + '" data-i18n="nav_qr">二维码</a>' +
+          '<a href="/guides/" class="' + (active('/guides/') ? 'active' : '') + '" data-i18n="nav_guides">指南</a>' +
         '</nav>' +
         '<div class="header-actions">' +
           '<button class="theme-switch" id="theme-switch" type="button" data-i18n-title="theme_toggle" aria-label="Toggle theme">' +

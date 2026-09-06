@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WCAG 对比度检查器 — 免费在线文字对比度检测 | CATAITO</title>
+<meta name="title-zh" content="WCAG 对比度检查器 — 免费在线文字对比度检测 | CATAITO">
+<meta name="title-en" content="WCAG Contrast Checker — Free Online Text Contrast Test | CATAITO">
+<meta name="description" content="免费在线 WCAG 对比度检查器：输入前景色与背景色，实时计算对比度比值，判断 AA / AAA 达标情况，支持正文、大字号与 UI 组件三档标准，一键自动调整前景色到 AA 达标。纯浏览器本地处理。">
+<meta name="theme-color" content="#f6f3ec">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="CATAITO 工具箱">
+<meta property="og:title" content="WCAG 对比度检查器 — 免费在线文字对比度检测">
+<meta property="og:description" content="实时计算 WCAG 对比度，AA / AAA 达标判定与自动调整，纯本地处理。">
+<meta property="og:url" content="https://tools.cataito.com/contrast/">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:locale:alternate" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="WCAG 对比度检查器">
+<meta name="twitter:description" content="免费在线文字对比度检测，纯本地处理。">
+<link rel="icon" href="/assets/img/icon.svg">
+<link rel="canonical" href="https://tools.cataito.com/contrast/">
+<link rel="stylesheet" href="/assets/css/site.css">
+<script src="/assets/js/theme-init.js"></script>
+<script>
+  (function () {
+    try {
+      var l = localStorage.getItem('cataito-lang');
+      document.documentElement.setAttribute('lang', (l === 'en') ? 'en' : 'zh-CN');
+    } catch (e) {}
+  })();
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "WCAG Contrast Checker",
+  "alternateName": "WCAG 对比度检查器",
+  "applicationCategory": "DesignApplication",
+  "operatingSystem": "Any",
+  "url": "https://tools.cataito.com/contrast/",
+  "inLanguage": ["zh-CN", "en"],
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "description": "免费在线 WCAG 对比度检查器：实时计算对比度比值与 AA / AAA 达标判定，纯本地处理。"
+}
+</script>
+</head>
+<body>
+<div id="site-header"></div>
+<main class="site-main">
+  <div class="t-head">
+    <nav class="breadcrumb"><a href="/" data-i18n="crumb_home">首页</a><span class="sep">/</span><span data-i18n="ct_name">对比度检查</span></nav>
+    <h1 class="page-h1" data-i18n="ct_name">WCAG 对比度检查器</h1>
+    <p class="page-sub" data-i18n="ct_desc">输入前景色与背景色，实时计算对比度比值，判定 AA / AAA 是否达标，支持一键自动调整。纯浏览器本地处理。</p>
+  </div>
+
+  <section class="t-card t-flow">
+    <div class="t-block">
+      <div class="ct-colors">
+        <div class="t-field">
+          <div class="t-label" data-i18n="ct_fg">前景色（文字）</div>
+          <div class="ct-color-row">
+            <input type="color" id="ct-fg-color" value="#211e19" aria-label="Foreground color">
+            <input type="text" id="ct-fg-text" class="t-input" value="#211E19" spellcheck="false" maxlength="7" data-i18n-title="ct_hex_title">
+          </div>
+        </div>
+        <button type="button" class="t-icon-btn" id="ct-swap" data-i18n-title="ct_swap" aria-label="Swap colors">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h11"/><path d="m11 3 4 4-4 4"/><path d="M20 17H9"/><path d="m13 13-4 4 4 4"/></svg>
+        </button>
+        <div class="t-field">
+          <div class="t-label" data-i18n="ct_bg">背景色</div>
+          <div class="ct-color-row">
+            <input type="color" id="ct-bg-color" value="#f6f3ec" aria-label="Background color">
+            <input type="text" id="ct-bg-text" class="t-input" value="#F6F3EC" spellcheck="false" maxlength="7" data-i18n-title="ct_hex_title">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="t-block">
+      <div class="ct-result">
+        <div class="ct-ratio">
+          <span class="ct-ratio-num" id="ct-ratio">—</span>
+          <span class="ct-ratio-label" data-i18n="ct_ratio_label">对比度比值</span>
+        </div>
+        <div class="ct-badges" id="ct-badges"></div>
+      </div>
+      <button type="button" class="t-btn" id="ct-fix" data-i18n="ct_fix">自动调整前景色到 AA 达标</button>
+      <p class="t-hint" id="ct-fix-hint" hidden></p>
+    </div>
+
+    <div class="t-block">
+      <div class="ct-preview" id="ct-preview">
+        <p class="ct-p-body" data-i18n="ct_prev_body">正文预览：The quick brown fox jumps over the lazy dog。敏而好学，不耻下问。</p>
+        <p class="ct-p-large" data-i18n="ct_prev_large">大字号标题 24px Bold</p>
+        <span class="ct-p-ui" data-i18n="ct_prev_ui">按钮文字 Button</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="t-prose">
+    <h2 data-i18n="ct_how_h">怎么用</h2>
+    <ol class="t-steps">
+      <li data-i18n-html="ct_how_1"><strong>选颜色</strong>：用拾色器或直接输入 HEX 值设置前景色（文字）与背景色。</li>
+      <li data-i18n-html="ct_how_2"><strong>看比值</strong>：工具按 WCAG 2.1 公式实时计算对比度（1 到 21）。</li>
+      <li data-i18n-html="ct_how_3"><strong>对标准</strong>：正文文字 AA ≥ 4.5、AAA ≥ 7；大字号（≥24px 或 ≥18.66px 粗体）AA ≥ 3、AAA ≥ 4.5；按钮边框等 UI 组件 ≥ 3。</li>
+      <li data-i18n-html="ct_how_4"><strong>一键调整</strong>：不达标时点「自动调整前景色」，工具在保持色相的前提下把前景色调亮或调暗到刚好达标。</li>
+    </ol>
+
+    <h2 data-i18n="ct_faq_h">常见问题</h2>
+    <div class="t-faq">
+      <div class="t-faq-item">
+        <p class="t-faq-q" data-i18n="ct_faq_1_q">对比度是怎么算出来的？</p>
+        <p class="t-faq-a" data-i18n="ct_faq_1_a">按 WCAG 2.1 标准：先把 RGB 各通道做伽马展开得到相对亮度 L，对比度 =（较亮色的 L + 0.05）/（较暗色的 L + 0.05），取值范围 1 到 21。纯黑对纯白正好是 21。</p>
+      </div>
+      <div class="t-faq-item">
+        <p class="t-faq-q" data-i18n="ct_faq_2_q">AA 和 AAA 有什么区别？</p>
+        <p class="t-faq-a" data-i18n="ct_faq_2_a">AA 是 WCAG 的基本达标线（正文 4.5:1，大字号 3:1），绝大多数无障碍规范与法律（如 ADA、EN 301 549）都要求达到；AAA 是增强级（正文 7:1），适合阅读类产品追求。日常网页以 AA 为底线即可。</p>
+      </div>
+      <div class="t-faq-item">
+        <p class="t-faq-q" data-i18n="ct_faq_3_q">什么算「大字号」？</p>
+        <p class="t-faq-a" data-i18n="ct_faq_3_a">WCAG 定义为 ≥ 18pt（约 24px）的常规字重，或 ≥ 14pt（约 18.66px）的粗体。大字号的达标线更宽松：AA 3:1、AAA 4.5:1。</p>
+      </div>
+      <div class="t-faq-item">
+        <p class="t-faq-q" data-i18n="ct_faq_4_q">「自动调整」会改变我的色相吗？</p>
+        <p class="t-faq-a" data-i18n="ct_faq_4_a">不会。工具只在保持色相与饱和度的前提下，把前景色向白色或黑色方向提亮/压暗（取改动更小的方向），刚好达到 4.5:1 停止。是否采用由你决定，结果会同步回拾色器。</p>
+      </div>
+    </div>
+
+    <h2 data-i18n="related_guides">相关指南</h2>
+    <div class="t-guide-links">
+      <a class="t-guide-link" href="/guides/color-guide/">
+        <p class="t-guide-link-title" data-i18n="gd_color_short">配色原理指南</p>
+        <p class="t-guide-link-desc" data-i18n="gd_color_card_desc">色轮三属性、互补/类似/三角/分裂互补/单色五种配色方案、60-30-10 法则，以及免费在线提取主色生成协调配色。</p>
+      </a>
+      <a class="t-guide-link" href="/guides/dark-mode-icons/">
+        <p class="t-guide-link-title" data-i18n="gd_dark_short">暗色图标设计指南</p>
+        <p class="t-guide-link-desc" data-i18n="gd_dark_card_desc">深色模式图标怎么做：对比度、亮度分层、强调色提亮三大原则与双变体策略。</p>
+      </a>
+    </div>
+  </section>
+</main>
+
+<div id="site-footer"></div>
+<div id="ct-toast" class="t-toast">
+  <span class="t-toast-ic">
+    <svg class="ic-ok" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+    <svg class="ic-err" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+  </span>
+  <span class="t-toast-title"></span>
+</div>
+
+<script src="/assets/js/site.js" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+(function () {
+  'use strict';
+  var t = function (k, vars) { return (window.CATAITO_I18N && window.CATAITO_I18N.t) ? window.CATAITO_I18N.t(k, vars) : k; };
+
+  /* ---------- 颜色工具 ---------- */
+  function parseHex(str) {
+    var m = /^#?([0-9a-f]{6})$/i.exec(String(str).trim());
+    if (!m) return null;
+    var n = parseInt(m[1], 16);
+    return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
+  }
+  function toHex(rgb) {
+    return '#' + rgb.map(function (c) {
+      var s = Math.round(c).toString(16);
+      return s.length === 1 ? '0' + s : s;
+    }).join('').toUpperCase();
+  }
+  function luminance(rgb) {
+    var c = rgb.map(function (v) {
+      v /= 255;
+      return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4);
+    });
+    return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2];
+  }
+  function contrastRatio(rgb1, rgb2) {
+    var l1 = luminance(rgb1), l2 = luminance(rgb2);
+    var hi = Math.max(l1, l2), lo = Math.min(l1, l2);
+    return (hi + 0.05) / (lo + 0.05);
+  }
+  function blend(rgb, target, k) {
+    return rgb.map(function (c, i) { return c + (target[i] - c) * k; });
+  }
+
+  /* ---------- 达标判定 ---------- */
+  var LEVELS = [
+    { key: 'ct_lv_aa_body',   min: 4.5 },
+    { key: 'ct_lv_aaa_body',  min: 7 },
+    { key: 'ct_lv_aa_large',  min: 3 },
+    { key: 'ct_lv_aaa_large', min: 4.5 },
+    { key: 'ct_lv_ui',        min: 3 }
+  ];
+
+  function readColors() {
+    var fg = parseHex(document.getElementById('ct-fg-text').value);
+    var bg = parseHex(document.getElementById('ct-bg-text').value);
+    return { fg: fg, bg: bg };
+  }
+
+  function update() {
+    var c = readColors();
+    if (!c.fg || !c.bg) { return; }
+    document.getElementById('ct-fg-color').value = toHex(c.fg).toLowerCase();
+    document.getElementById('ct-bg-color').value = toHex(c.bg).toLowerCase();
+
+    var ratio = contrastRatio(c.fg, c.bg);
+    var shown = ratio >= 10 ? ratio.toFixed(1) : ratio.toFixed(2);
+    document.getElementById('ct-ratio').textContent = shown + ':1';
+
+    var badges = '';
+    LEVELS.forEach(function (lv) {
+      var pass = ratio >= lv.min;
+      badges += '<span class="t-badge' + (pass ? ' ct-pass' : ' ct-fail') + '">' +
+        esc(t(lv.key)) + ' ' + lv.min.toFixed(1).replace('.0', '') +
+        (pass ? ' ✓' : ' ✗') + '</span> ';
+    });
+    document.getElementById('ct-badges').innerHTML = badges;
+
+    var hex = toHex(c.fg);
+    var prev = document.getElementById('ct-preview');
+    prev.style.background = toHex(c.bg);
+    prev.style.color = hex;
+    document.querySelector('#ct-preview .ct-p-ui').style.borderColor = hex;
+
+    var fixHint = document.getElementById('ct-fix-hint');
+    if (ratio >= 4.5) {
+      fixHint.hidden = true;
+    } else {
+      var fixed = autoFix(c.fg, c.bg);
+      fixHint.hidden = false;
+      fixHint.textContent = t('ct_fix_hint', { hex: fixed ? toHex(fixed) : '' , ratio: fixed ? contrastRatio(fixed, c.bg).toFixed(2) : '' });
+    }
+  }
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, function (ch) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch];
+    });
+  }
+
+  /* 在保持色相/饱和度的前提下，向白或黑二分提亮/压暗，找到刚好 ≥4.5 的最小改动。
+     接受判定必须用取整后的 HEX（否则微小调整量取整后原地踏步，比值仍不达标） */
+  function autoFix(fg, bg) {
+    var baseRatio = contrastRatio(fg, bg);
+    if (baseRatio >= 4.5) return fg;
+    var WHITE = [255, 255, 255], BLACK = [0, 0, 0];
+    var best = null;
+    [WHITE, BLACK].forEach(function (target) {
+      if (contrastRatio(target, bg) < 4.5) return; /* 该方向到头也不达标 */
+      function passes(k) {
+        return contrastRatio(blend(fg, target, k).map(Math.round), bg) >= 4.5;
+      }
+      var lo = 0, hi = 1;
+      for (var i = 0; i < 24; i++) {
+        var mid = (lo + hi) / 2;
+        if (passes(mid)) hi = mid; else lo = mid;
+      }
+      var cand = blend(fg, target, hi).map(Math.round);
+      if (!best || hi < best.k) best = { k: hi, rgb: cand };
+    });
+    return best ? best.rgb : null;
+  }
+
+  /* ---------- Toast ---------- */
+  var toastTimer = null;
+  function showToast(msg, isErr) {
+    var el = document.getElementById('ct-toast');
+    el.querySelector('.t-toast-title').textContent = msg;
+    el.classList.toggle('error', !!isErr);
+    el.classList.add('show');
+    if (toastTimer) clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { el.classList.remove('show'); }, 2600);
+  }
+
+  /* ---------- 事件绑定 ---------- */
+  var fgColor = document.getElementById('ct-fg-color');
+  var bgColor = document.getElementById('ct-bg-color');
+  var fgText = document.getElementById('ct-fg-text');
+  var bgText = document.getElementById('ct-bg-text');
+  fgColor.addEventListener('input', function () { fgText.value = fgColor.value.toUpperCase(); update(); });
+  bgColor.addEventListener('input', function () { bgText.value = bgColor.value.toUpperCase(); update(); });
+  fgText.addEventListener('input', update);
+  bgText.addEventListener('input', update);
+  fgText.addEventListener('change', function () {
+    var c = parseHex(fgText.value);
+    if (c) fgText.value = toHex(c); else { showToast(t('ct_toast_hex'), true); fgText.value = toHex(parseHex(fgColor.value)); }
+    update();
+  });
+  bgText.addEventListener('change', function () {
+    var c = parseHex(bgText.value);
+    if (c) bgText.value = toHex(c); else { showToast(t('ct_toast_hex'), true); bgText.value = toHex(parseHex(bgColor.value)); }
+    update();
+  });
+  document.getElementById('ct-swap').addEventListener('click', function () {
+    var a = fgText.value, b = bgText.value;
+    fgText.value = b; bgText.value = a;
+    update();
+  });
+  document.getElementById('ct-fix').addEventListener('click', function () {
+    var c = readColors();
+    if (!c.fg || !c.bg) { showToast(t('ct_toast_hex'), true); return; }
+    var fixed = autoFix(c.fg, c.bg);
+    if (!fixed) { showToast(t('ct_toast_nofix'), true); return; }
+    fgText.value = toHex(fixed);
+    update();
+    showToast(t('ct_toast_fixed'));
+  });
+  document.addEventListener('cataito-lang-change', update);
+  update();
+})();
+});
+</script>
+
+<style>
+  /* 本页专属规则；通用组件复用 /assets/css/site.css 的 .t-* 共享组件层 */
+  .ct-colors { display: flex; align-items: flex-end; gap: 12px; flex-wrap: wrap; }
+  .ct-colors .t-field { flex: 1 1 220px; margin: 0; }
+  .ct-color-row { display: flex; gap: 8px; }
+  .ct-color-row input[type="color"] {
+    width: 44px; height: 36px; padding: 2px; border: 1px solid var(--border);
+    border-radius: var(--radius-sm); background: var(--card-2); cursor: pointer; flex: none;
+  }
+  .ct-color-row .t-input { flex: 1; min-width: 0; font-family: var(--font-mono); text-transform: uppercase; }
+  .ct-result { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+  .ct-ratio { display: flex; flex-direction: column; }
+  .ct-ratio-num { font-family: var(--font-mono); font-size: 34px; font-weight: 700; color: var(--text); line-height: 1.1; font-variant-numeric: tabular-nums; }
+  .ct-ratio-label { font-size: 12px; color: var(--text-3); font-family: var(--font-mono); letter-spacing: .06em; }
+  .ct-badges { display: flex; gap: 6px; flex-wrap: wrap; flex: 1; }
+  .ct-badge { letter-spacing: .02em; }
+  .ct-badge.ct-pass { color: var(--success); border-color: color-mix(in srgb, var(--success) 45%, transparent); }
+  .ct-badge.ct-fail { color: var(--danger); border-color: color-mix(in srgb, var(--danger) 45%, transparent); }
+  #ct-fix { margin-top: 14px; }
+  #ct-fix-hint { margin-top: 8px; }
+  #ct-fix-hint { font-family: var(--font-mono); }
+  .ct-preview {
+    border: 1px solid var(--border); border-radius: var(--radius-sm);
+    padding: 18px 20px; display: flex; flex-direction: column; gap: 10px; align-items: flex-start;
+    transition: background .15s, color .15s;
+  }
+  .ct-preview .ct-p-body { margin: 0; font-size: 16px; line-height: var(--lh-body); max-width: 46em; }
+  .ct-preview .ct-p-large { margin: 0; font-size: 24px; font-weight: 700; }
+  .ct-preview .ct-p-ui {
+    border: 1.5px solid; border-radius: var(--radius-sm); padding: 7px 16px; font-size: 13.5px; font-weight: 600;
+  }
+</style>
+</body>
+</html>
