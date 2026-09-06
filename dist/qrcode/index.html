@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>二维码生成器 — 免费在线生成二维码（可调纠错与颜色） | CATAITO</title>
+<meta name="title-zh" content="二维码生成器 — 免费在线生成二维码（可调纠错与颜色） | CATAITO">
+<meta name="title-en" content="QR Code Generator — Free Online QR Maker | CATAITO">
+<meta name="description" content="免费在线二维码生成器：输入文字或网址即时生成二维码，可选纠错级别 L/M/Q/H、模块尺寸与边距，自定义前景背景色，一键下载高清 PNG。纯浏览器本地生成，数据绝不上传服务器。">
+<meta name="theme-color" content="#f6f3ec">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="CATAITO 工具箱">
+<meta property="og:title" content="二维码生成器 — 免费在线生成二维码">
+<meta property="og:description" content="即时生成二维码，可调纠错级别与颜色，下载高清 PNG，纯本地处理。">
+<meta property="og:url" content="https://tools.cataito.com/qrcode/">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:locale:alternate" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="二维码生成器">
+<meta name="twitter:description" content="免费在线二维码生成，纯本地处理。">
+<link rel="icon" href="/assets/img/icon.svg">
+<link rel="canonical" href="https://tools.cataito.com/qrcode/">
+<link rel="stylesheet" href="/assets/css/site.css">
+<script src="/assets/js/theme-init.js"></script>
+<script>
+  (function () {
+    try {
+      var l = localStorage.getItem('cataito-lang');
+      document.documentElement.setAttribute('lang', (l === 'en') ? 'en' : 'zh-CN');
+    } catch (e) {}
+  })();
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "QR Code Generator",
+  "alternateName": "二维码生成器",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "Any",
+  "url": "https://tools.cataito.com/qrcode/",
+  "inLanguage": ["zh-CN", "en"],
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "description": "免费在线二维码生成器：即时生成，可调纠错级别与颜色，下载高清 PNG，纯本地处理。"
+}
+</script>
+</head>
+<body>
+<div id="site-header"></div>
+<main class="site-main">
+  <div class="t-head">
+    <nav class="breadcrumb"><a href="/" data-i18n="crumb_home">首页</a><span class="sep">/</span><span data-i18n="qr_name">二维码生成</span></nav>
+    <h1 class="page-h1" data-i18n="qr_name">二维码生成器</h1>
+    <p class="page-sub" data-i18n="qr_desc">输入文字或网址，即时生成二维码。纠错级别、颜色、尺寸可调，一键下载高清 PNG。纯浏览器本地生成。</p>
+  </div>
+
+  <section class="t-card t-flow">
+    <div class="t-block">
+      <div class="t-field">
+        <div class="t-label" data-i18n="qr_text_label">二维码内容（文字或网址）</div>
+        <textarea id="qr-text" class="t-input" rows="4" data-i18n-placeholder="qr_text_ph" placeholder="https://example.com 或任意文字"></textarea>
+        <div class="t-hint"><span data-i18n="qr_bytes_hint">当前</span> <strong id="qr-byte-count">0</strong> <span data-i18n="qr_bytes_unit">字节（UTF-8）</span></div>
+      </div>
+
+      <div class="t-field">
+        <div class="t-label" data-i18n="qr_ec">纠错级别</div>
+        <div class="t-seg" id="qr-ec">
+          <label class="t-seg-item"><input type="radio" name="qr-ec" value="L"><span>L（7%）</span></label>
+          <label class="t-seg-item"><input type="radio" name="qr-ec" value="M" checked><span>M（15%）</span></label>
+          <label class="t-seg-item"><input type="radio" name="qr-ec" value="Q"><span>Q（25%）</span></label>
+          <label class="t-seg-item"><input type="radio" name="qr-ec" value="H"><span>H（30%）</span></label>
+        </div>
+        <div class="t-hint" data-i18n="qr_ec_hint">级别越高抗遮挡能力越强（可加 Logo），但码点更密。网址类建议 M 或 Q。</div>
+      </div>
+
+      <div class="ct-colors">
+        <div class="t-field">
+          <div class="t-label" data-i18n="qr_fg">前景色（码点）</div>
+          <div class="qr-color-row">
+            <input type="color" id="qr-fg-color" value="#211e19" aria-label="Foreground">
+            <input type="text" id="qr-fg-text" class="t-input" value="#211E19" spellcheck="false" maxlength="7">
+          </div>
+        </div>
+        <div class="t-field">
+          <div class="t-label" data-i18n="qr_bg">背景色</div>
+          <div class="qr-color-row">
+            <input type="color" id="qr-bg-color" value="#ffffff" aria-label="Background">
+            <input type="text" id="qr-bg-text" class="t-input" value="#FFFFFF" spellcheck="false" maxlength="7">
+          </div>
+        </div>
+        <div class="t-field">
+          <div class="t-label"><span data-i18n="qr_scale">模块尺寸</span></div>
+          <div class="t-seg" id="qr-scale">
+            <label class="t-seg-item"><input type="radio" name="qr-scale" value="4"><span>4px</span></label>
+            <label class="t-seg-item"><input type="radio" name="qr-scale" value="6" checked><span>6px</span></label>
+            <label class="t-seg-item"><input type="radio" name="qr-scale" value="8"><span>8px</span></label>
+            <label class="t-seg-item"><input type="radio" name="qr-scale" value="10"><span>10px</span></label>
+          </div>
+        </div>
+        <div class="t-field">
+          <div class="t-label"><span data-i18n="qr_margin">静区边距</span></div>
+          <div class="t-seg" id="qr-margin">
+            <label class="t-seg-item"><input type="radio" name="qr-margin" value="2"><span>2</span></label>
+            <label class="t-seg-item"><input type="radio" name="qr-margin" value="4" checked><span>4</span></label>
+            <label class="t-seg-item"><input type="radio" name="qr-margin" value="6"><span>6</span></label>
+            <label class="t-seg-item"><input type="radio" name="qr-margin" value="8"><span>8</span></label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="t-block qr-out-block">
+      <div class="qr-preview-wrap">
+        <canvas id="qr-canvas" width="10" height="10" aria-label="QR code preview"></canvas>
+      </div>
+      <p id="qr-info" class="qr-info"></p>
+      <p id="qr-error" class="t-note" data-i18n="qr_error" hidden></p>
+      <button type="button" class="t-btn primary" id="qr-download" data-i18n="qr_download" disabled>下载 PNG</button>
+    </div>
+  </section>
+
+  <section class="t-prose">
+    <h2 data-i18n="qr_how_h">怎么用</h2>
+    <ol class="t-steps">
+      <li data-i18n-html="qr_how_1"><strong>输入内容</strong>：网址、文字、Wi-Fi 信息都可以，中文与 Emoji 均支持（UTF-8）。</li>
+      <li data-i18n-html="qr_how_2"><strong>选纠错级别</strong>：L 最稀疏、H 最抗遮挡。想叠加 Logo 选 H，普通网址 M 即可。</li>
+      <li data-i18n-html="qr_how_3"><strong>调外观</strong>：前景背景色可改（注意保持足够对比度），模块尺寸与静区边距按用途选择。</li>
+      <li data-i18n-html="qr_how_4"><strong>下载</strong>：一键导出高清 PNG。建议保留至少 4 模块静区，扫码更稳。</li>
+    </ol>
+
+    <h2 data-i18n="qr_faq_h">常见问题</h2>
+    <div class="t-faq">
+      <div class="t-faq-item">
+        <p class="t-faq-q" data-i18n="qr_faq_1_q">内容会被上传到服务器吗？</p>
+        <p class="t-faq-a" data-i18n="qr_faq_1_a">不会。二维码编码完全在浏览器本地完成（本站自研编码器，零依赖），输入的内容不经过网络，敏感信息也能放心生成。</p>
+      </div>
+      <div class="t-faq-item">
+        <p class="t-faq-q" data-i18n="qr_faq_2_q">能放多少内容？</p>
+        <p class="t-faq-a" data-i18n="qr_faq_2_a">纠错级别越低容量越大：L 级最多约 2953 字节（数字模式更多），日常网址几十个字符毫无压力。内容越长码点越密，扫码距离越短——网址过长时建议先用短链服务。</p>
+      </div>
+      <div class="t-faq-item">
+        <p class="t-faq-q" data-i18n="qr_faq_3_q">为什么扫不出来？</p>
+        <p class="t-faq-a" data-i18n="qr_faq_3_a">三个常见原因：前景背景对比度太低（浅色码点最常见）；静区（四周留白）不够；前景色比背景色更亮（扫码器按深色识别码点）。改回深色码点 + 浅色底 + 4 模块边距即可。</p>
+      </div>
+      <div class="t-faq-item">
+        <p class="t-faq-q" data-i18n="qr_faq_4_q">可以自定义颜色或加 Logo 吗？</p>
+        <p class="t-faq-a" data-i18n="qr_faq_4_a">颜色可以：用本工具的前景/背景色设置，但必须保证码点比背景深。叠加 Logo 请选 H 级纠错并把 Logo 控制在码图面积约 1/10 以内——用图片编辑器叠加后再整体导出。</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div id="site-footer"></div>
+<div id="qr-toast" class="t-toast">
+  <span class="t-toast-ic">
+    <svg class="ic-ok" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+    <svg class="ic-err" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+  </span>
+  <span class="t-toast-title"></span>
+</div>
+
+<script src="/assets/js/site.js" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+(function () {
+  'use strict';
+  var t = function (k, vars) { return (window.CATAITO_I18N && window.CATAITO_I18N.t) ? window.CATAITO_I18N.t(k, vars) : k; };
+
+  /* ============================================================
+     自研 QR 编码器（零依赖）：字节模式 UTF-8 · 版本 1-40 · L/M/Q/H
+     纠错系数与块数表遵循 ISO/IEC 18004；掩码选择含 4 条罚分规则。
+     ============================================================ */
+  var ECC_CODEWORDS_PER_BLOCK = [
+    /* L */ [-1,7,10,15,20,26,18,20,24,30,18,20,24,26,30,22,24,28,30,28,28,28,28,30,30,26,28,30,30,30,30,30,30,30,30,30,30,30,30,30,30],
+    /* M */ [-1,10,16,26,18,24,16,18,22,22,26,30,22,22,24,24,28,28,26,26,26,26,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28],
+    /* Q */ [-1,13,22,18,26,18,24,18,22,20,24,28,26,24,20,30,24,28,28,26,30,28,30,30,30,30,28,30,30,30,30,30,30,30,30,30,30,30,30,30,30],
+    /* H */ [-1,17,28,22,16,22,28,26,26,24,28,24,28,22,24,24,30,28,28,26,28,30,24,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30]
+  ];
+  var NUM_ECC_BLOCKS = [
+    /* L */ [-1,1,1,1,1,1,2,2,2,2,4,4,4,4,4,6,6,6,6,7,8,8,9,9,10,12,12,12,13,14,15,16,17,18,19,19,20,21,22,24,25],
+    /* M */ [-1,1,1,1,2,2,4,4,4,5,5,5,8,9,9,10,10,11,13,14,16,17,17,18,20,21,23,25,26,28,29,31,33,35,37,38,40,43,45,47,49],
+    /* Q */ [-1,1,1,2,2,4,4,6,6,8,8,8,10,12,16,12,17,16,18,21,20,23,23,25,27,29,34,34,35,38,40,43,45,48,51,53,56,59,62,65,68],
+    /* H */ [-1,1,1,2,4,4,4,5,6,8,8,11,11,16,16,18,16,19,21,25,25,25,34,30,32,35,37,40,42,45,48,51,54,57,60,63,66,70,74,77,81]
+  ];
+  var EC_LEVELS = { L: 0, M: 1, Q: 2, H: 3 };
+
+  function getNumRawDataModules(ver) {
+    var result = (16 * ver + 128) * ver + 64;
+    if (ver >= 2) {
+      var numAlign = Math.floor(ver / 7) + 2;
+      result -= (25 * numAlign - 10) * numAlign - 55;
+      if (ver >= 7) result -= 36;
+    }
+    return result;
+  }
+  function getNumDataCodewords(ver, ecl) {
+    return Math.floor(getNumRawDataModules(ver) / 8) - ECC_CODEWORDS_PER_BLOCK[ecl][ver] * NUM_ECC_BLOCKS[ecl][ver];
+  }
+  function getAlignmentPositions(ver) {
+    if (ver === 1) return [];
+    var numAlign = Math.floor(ver / 7) + 2;
+    var step = (ver === 32) ? 26 : Math.ceil((ver * 4 + 4) / (numAlign * 2 - 2)) * 2;
+    var result = [6];
+    var pos = ver * 4 + 10;
+    while (result.length < numAlign) { result.splice(1, 0, pos); pos -= step; }
+    return result;
+  }
+
+  /* GF(256) 里德-所罗门 */
+  function rsMultiply(x, y) {
+    var z = 0;
+    for (var i = 7; i >= 0; i--) {
+      z = (z << 1) ^ ((z >>> 7) * 0x11D);
+      z ^= ((y >>> i) & 1) * x;
+    }
+    return z & 0xFF;
+  }
+  function rsDivisor(degree) {
+    var result = [];
+    for (var i = 0; i < degree - 1; i++) result.push(0);
+    result.push(1);
+    var root = 1;
+    for (var d = 0; d < degree; d++) {
+      for (var j = 0; j < result.length; j++) {
+        result[j] = rsMultiply(result[j], root);
+        if (j + 1 < result.length) result[j] ^= result[j + 1];
+      }
+      root = rsMultiply(root, 0x02);
+    }
+    return result;
+  }
+  function rsRemainder(data, divisor) {
+    var result = divisor.map(function () { return 0; });
+    for (var b = 0; b < data.length; b++) {
+      var factor = data[b] ^ result.shift();
+      result.push(0);
+      for (var i = 0; i < divisor.length; i++) result[i] ^= rsMultiply(divisor[i], factor);
+    }
+    return result;
+  }
+
+  /* 生成掩码后的模块矩阵（true = 深色）；forceMask 仅供验证比对，正常传 undefined 自动择优 */
+  function makeQr(text, eclName, forceMask) {
+    var ecl = EC_LEVELS[eclName];
+    var bytes = new TextEncoder().encode(text);
+    var version = -1, cciBits;
+    for (var v = 1; v <= 40; v++) {
+      cciBits = (v <= 9) ? 8 : 16;
+      if (4 + cciBits + bytes.length * 8 <= getNumDataCodewords(v, ecl) * 8) { version = v; break; }
+    }
+    if (version === -1) return null;
+    cciBits = (version <= 9) ? 8 : 16;
+    var size = version * 4 + 17;
+
+    /* 1) 数据位流 */
+    var capBits = getNumDataCodewords(version, ecl) * 8;
+    var bits = [];
+    function appendBits(val, len) { for (var i = len - 1; i >= 0; i--) bits.push((val >>> i) & 1); }
+    appendBits(4, 4);                       /* byte mode */
+    appendBits(bytes.length, cciBits);
+    for (var bi = 0; bi < bytes.length; bi++) appendBits(bytes[bi], 8);
+    appendBits(0, Math.min(4, capBits - bits.length));
+    appendBits(0, (8 - bits.length % 8) % 8);
+    for (var pad = 0xEC; bits.length < capBits; pad ^= 0xEC ^ 0x11) appendBits(pad, 8);
+    var dataCw = [];
+    for (var c = 0; c < bits.length; c += 8) {
+      var byte = 0;
+      for (var k2 = 0; k2 < 8; k2++) byte = (byte << 1) | bits[c + k2];
+      dataCw.push(byte);
+    }
+
+    /* 2) 分块纠错 + 交织 */
+    var numBlocks = NUM_ECC_BLOCKS[ecl][version];
+    var blockEccLen = ECC_CODEWORDS_PER_BLOCK[ecl][version];
+    var rawCw = Math.floor(getNumRawDataModules(version) / 8);
+    var numShort = numBlocks - rawCw % numBlocks;
+    var shortLen = Math.floor(rawCw / numBlocks);
+    var blocks = [];
+    var div = rsDivisor(blockEccLen);
+    for (var bi2 = 0, k3 = 0; bi2 < numBlocks; bi2++) {
+      var dat = dataCw.slice(k3, k3 + shortLen - blockEccLen + (bi2 < numShort ? 0 : 1));
+      k3 += dat.length;
+      var ecc = rsRemainder(dat, div);
+      if (bi2 < numShort) dat.push(0);
+      blocks.push(dat.concat(ecc));
+    }
+    var inter = [];
+    for (var col = 0; col < blocks[0].length; col++) {
+      for (var bIdx = 0; bIdx < numBlocks; bIdx++) {
+        if (col !== shortLen - blockEccLen || bIdx >= numShort) inter.push(blocks[bIdx][col]);
+      }
+    }
+
+    /* 3) 功能模块图 */
+    var isFunc = [];
+    var modules = [];
+    for (var y0 = 0; y0 < size; y0++) { isFunc.push(new Array(size).fill(false)); modules.push(new Array(size).fill(false)); }
+    function setFn(x, y, dark) { modules[y][x] = dark; isFunc[y][x] = true; }
+    function drawFinder(cx, cy) {
+      for (var dy = -4; dy <= 4; dy++) {
+        for (var dx = -4; dx <= 4; dx++) {
+          var dist = Math.max(Math.abs(dx), Math.abs(dy));
+          var xx = cx + dx, yy = cy + dy;
+          if (xx >= 0 && xx < size && yy >= 0 && yy < size) setFn(xx, yy, dist !== 2 && dist !== 4);
+        }
+      }
+    }
+    drawFinder(3, 3); drawFinder(size - 4, 3); drawFinder(3, size - 4);
+    for (var i6 = 8; i6 < size - 8; i6++) {
+      var darkTiming = i6 % 2 === 0;
+      setFn(i6, 6, darkTiming); setFn(6, i6, darkTiming);
+    }
+    var aligns = getAlignmentPositions(version);
+    for (var ai = 0; ai < aligns.length; ai++) {
+      for (var aj = 0; aj < aligns.length; aj++) {
+        if ((ai === 0 && aj === 0) || (ai === 0 && aj === aligns.length - 1) || (ai === aligns.length - 1 && aj === 0)) continue;
+        for (var dy2 = -2; dy2 <= 2; dy2++) {
+          for (var dx2 = -2; dx2 <= 2; dx2++) {
+            setFn(aligns[aj] + dx2, aligns[ai] + dy2, Math.max(Math.abs(dx2), Math.abs(dy2)) !== 1);
+          }
+        }
+      }
+    }
+    /* 版本信息（v7+） */
+    if (version >= 7) {
+      var remV = version;
+      for (var vi = 0; vi < 12; vi++) remV = (remV << 1) ^ ((remV >>> 11) * 0x1F25);
+      var vbits = (version << 12) | remV;
+      for (var vj = 0; vj < 18; vj++) {
+        var vdark = ((vbits >>> vj) & 1) !== 0;
+        var va = size - 11 + vj % 3, vb = Math.floor(vj / 3);
+        setFn(va, vb, vdark); setFn(vb, va, vdark);
+      }
+    }
+
+    /* 格式信息占位（真实掩码值在掩码循环里重写）：
+       必须在数据放置前调用，把格式单元格标记为功能区，否则数据位会侵占这 30 格 */
+    drawFormatInfo(0);
+
+    /* 4) 数据放置（之字形） */
+    var dataIdx = 0;
+    for (var right = size - 1; right >= 1; right -= 2) {
+      if (right === 6) right = 5;
+      for (var vert = 0; vert < size; vert++) {
+        for (var j2 = 0; j2 < 2; j2++) {
+          var x = right - j2;
+          var upward = ((right + 1) & 2) === 0;
+          var y = upward ? size - 1 - vert : vert;
+          if (!isFunc[y][x] && dataIdx < inter.length * 8) {
+            modules[y][x] = ((inter[dataIdx >>> 3] >>> (7 - (dataIdx & 7))) & 1) !== 0;
+            dataIdx++;
+          }
+        }
+      }
+    }
+
+    /* 5) 掩码：8 选 1（罚分最小） */
+    var MASKS = [
+      function (x, y) { return (x + y) % 2 === 0; },
+      function (x, y) { return y % 2 === 0; },
+      function (x, y) { return x % 3 === 0; },
+      function (x, y) { return (x + y) % 3 === 0; },
+      function (x, y) { return (Math.floor(x / 3) + Math.floor(y / 2)) % 2 === 0; },
+      function (x, y) { return (x * y) % 2 + (x * y) % 3 === 0; },
+      function (x, y) { return ((x * y) % 2 + (x * y) % 3) % 2 === 0; },
+      function (x, y) { return ((x + y) % 2 + (x * y) % 3) % 2 === 0; }
+    ];
+    function applyMask(mask) {
+      for (var y = 0; y < size; y++) {
+        for (var x = 0; x < size; x++) {
+          if (!isFunc[y][x] && MASKS[mask](x, y)) modules[y][x] = !modules[y][x];
+        }
+      }
+    }
+    function drawFormatInfo(mask) {
+      /* 格式位映射（ISO 18004）：L=01, M=00, Q=11, H=10 —— 与表索引 L0/M1/Q2/H3 不同 */
+      var data = [1, 0, 3, 2][ecl] << 3 | mask;
+      var rem = data;
+      for (var i = 0; i < 10; i++) rem = (rem << 1) ^ ((rem >>> 9) * 0x537);
+      var bitsF = ((data << 10) | rem) ^ 0x5412;
+      function bit(i) { return ((bitsF >>> i) & 1) !== 0; }
+      for (var a = 0; a <= 5; a++) setFn(8, a, bit(a));
+      setFn(8, 7, bit(6)); setFn(8, 8, bit(7)); setFn(7, 8, bit(8));
+      for (var b = 9; b < 15; b++) setFn(14 - b, 8, bit(b));
+      for (var c2 = 0; c2 <= 7; c2++) setFn(size - 1 - c2, 8, bit(c2));
+      for (var d2 = 8; d2 < 15; d2++) setFn(8, size - 15 + d2, bit(d2));
+      setFn(8, size - 8, true); /* 暗模块：(x=8, y=size-8)，ISO 18004 固定要求 */
+    }
+    function penalty() {
+      var p = 0, x, y;
+      /* 规则 1：行/列连续同色 */
+      for (y = 0; y < size; y++) {
+        var runColor = modules[y][0], runLen = 1;
+        for (x = 1; x < size; x++) {
+          if (modules[y][x] === runColor) { runLen++; if (runLen === 5) p += 3; else if (runLen > 5) p++; }
+          else { runColor = modules[y][x]; runLen = 1; }
+        }
+      }
+      for (x = 0; x < size; x++) {
+        var rc = modules[0][x], rl = 1;
+        for (y = 1; y < size; y++) {
+          if (modules[y][x] === rc) { rl++; if (rl === 5) p += 3; else if (rl > 5) p++; }
+          else { rc = modules[y][x]; rl = 1; }
+        }
+      }
+      /* 规则 2：2×2 同色块 */
+      for (y = 0; y < size - 1; y++) {
+        for (x = 0; x < size - 1; x++) {
+          var m = modules[y][x];
+          if (m === modules[y][x + 1] && m === modules[y + 1][x] && m === modules[y + 1][x + 1]) p += 3;
+        }
+      }
+      /* 规则 3：类定位图形 1:1:3:1:1（含两侧 4 浅） */
+      var PAT = [true, false, true, true, true, false, true, false, false, false, false];
+      var PAT2 = [false, false, false, false, true, false, true, true, true, false, true];
+      function matchAt(get, i, pat) {
+        for (var k = 0; k < pat.length; k++) if (get(i + k) !== pat[k]) return false;
+        return true;
+      }
+      for (y = 0; y < size; y++) {
+        for (x = 0; x <= size - 11; x++) {
+          if (matchAt(function (i2) { return modules[y][x + i2]; }, 0, PAT) ||
+              matchAt(function (i2) { return modules[y][x + i2]; }, 0, PAT2)) p += 40;
+        }
+      }
+      for (x = 0; x < size; x++) {
+        for (y = 0; y <= size - 11; y++) {
+          if (matchAt(function (i2) { return modules[y + i2][x]; }, 0, PAT) ||
+              matchAt(function (i2) { return modules[y + i2][x]; }, 0, PAT2)) p += 40;
+        }
+      }
+      /* 规则 4：深色占比 */
+      var darkCount = 0;
+      for (y = 0; y < size; y++) for (x = 0; x < size; x++) if (modules[y][x]) darkCount++;
+      var total = size * size;
+      var k = Math.ceil(Math.abs(darkCount * 20 - total * 10) / total) - 1;
+      p += k * 10;
+      return p;
+    }
+    var bestMask = 0, bestScore = Infinity;
+    var masksToTry = (typeof forceMask === 'number') ? [forceMask] : [0, 1, 2, 3, 4, 5, 6, 7];
+    for (var mi = 0; mi < masksToTry.length; mi++) {
+      var m = masksToTry[mi];
+      applyMask(m);
+      drawFormatInfo(m);
+      var score = penalty();
+      if (score < bestScore) { bestScore = score; bestMask = m; }
+      applyMask(m); /* 撤销（异或回原状） */
+    }
+    applyMask(bestMask);
+    drawFormatInfo(bestMask);
+
+    var result = { size: size, modules: modules, version: version, mask: bestMask, bytes: bytes.length };
+    if (typeof forceMask === 'number' || window.QRCODE_DEBUG_STAGES) {
+      result.debug = { dataCw: dataCw, inter: inter };
+    }
+    return result;
+  }
+
+  /* ---------- 工具 ---------- */
+  function parseHex(str) {
+    var m = /^#?([0-9a-f]{6})$/i.exec(String(str).trim());
+    if (!m) return null;
+    var n = parseInt(m[1], 16);
+    return 'rgb(' + ((n >> 16) & 255) + ',' + ((n >> 8) & 255) + ',' + (n & 255) + ')';
+  }
+  var toastTimer = null;
+  function showToast(msg, isErr) {
+    var el = document.getElementById('qr-toast');
+    el.querySelector('.t-toast-title').textContent = msg;
+    el.classList.toggle('error', !!isErr);
+    el.classList.add('show');
+    if (toastTimer) clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { el.classList.remove('show'); }, 2600);
+  }
+
+  /* ---------- 渲染 ---------- */
+  var canvas = document.getElementById('qr-canvas');
+  var downloadBtn = document.getElementById('qr-download');
+  var currentResult = null;
+  function render() {
+    var text = document.getElementById('qr-text').value;
+    var ecl = (document.querySelector('input[name="qr-ec"]:checked') || {}).value || 'M';
+    var scale = parseInt((document.querySelector('input[name="qr-scale"]:checked') || {}).value || '6', 10);
+    var margin = parseInt((document.querySelector('input[name="qr-margin"]:checked') || {}).value || '4', 10);
+    var fg = parseHex(document.getElementById('qr-fg-text').value) || 'rgb(0,0,0)';
+    var bg = parseHex(document.getElementById('qr-bg-text').value) || 'rgb(255,255,255)';
+    document.getElementById('qr-fg-color').value = document.getElementById('qr-fg-text').value.length ? toColorInput(document.getElementById('qr-fg-text').value) : '#000000';
+    document.getElementById('qr-bg-color').value = toColorInput(document.getElementById('qr-bg-text').value);
+
+    var bytes = new TextEncoder().encode(text).length;
+    document.getElementById('qr-byte-count').textContent = bytes;
+
+    var errEl = document.getElementById('qr-error');
+    var infoEl = document.getElementById('qr-info');
+    if (!text) {
+      currentResult = null;
+      canvas.width = canvas.height = 10;
+      var ctx0 = canvas.getContext('2d');
+      ctx0.fillStyle = bg; ctx0.fillRect(0, 0, 10, 10);
+      infoEl.textContent = '';
+      errEl.hidden = true;
+      downloadBtn.disabled = true;
+      return;
+    }
+    var qr = makeQr(text, ecl);
+    if (!qr) {
+      currentResult = null;
+      errEl.hidden = false;
+      infoEl.textContent = '';
+      downloadBtn.disabled = true;
+      return;
+    }
+    errEl.hidden = true;
+    currentResult = qr;
+    var total = (qr.size + margin * 2) * scale;
+    canvas.width = canvas.height = total;
+    var ctx = canvas.getContext('2d');
+    ctx.fillStyle = bg; ctx.fillRect(0, 0, total, total);
+    ctx.fillStyle = fg;
+    for (var y = 0; y < qr.size; y++) {
+      for (var x = 0; x < qr.size; x++) {
+        if (qr.modules[y][x]) ctx.fillRect((x + margin) * scale, (y + margin) * scale, scale, scale);
+      }
+    }
+    infoEl.textContent = t('qr_info', { v: qr.version, ecl: ecl, n: qr.bytes, px: total });
+    downloadBtn.disabled = false;
+  }
+  function toColorInput(str) {
+    var m = /^#?([0-9a-f]{6})$/i.exec(String(str).trim());
+    if (!m) return '#000000';
+    return '#' + m[1].toLowerCase();
+  }
+
+  /* 调试钩子：验证用（矩阵级比对），不影响正常使用 */
+  window.QRCODE_DEBUG = makeQr;
+
+  /* ---------- 事件绑定 ---------- */
+  var textEl = document.getElementById('qr-text');
+  var debTimer = null;
+  textEl.addEventListener('input', function () {
+    if (debTimer) clearTimeout(debTimer);
+    debTimer = setTimeout(render, 250);
+  });
+  ['change'].forEach(function (ev) {
+    document.getElementById('qr-ec').addEventListener(ev, render);
+    document.getElementById('qr-scale').addEventListener(ev, render);
+    document.getElementById('qr-margin').addEventListener(ev, render);
+  });
+  var fgColor = document.getElementById('qr-fg-color'), fgText = document.getElementById('qr-fg-text');
+  var bgColor = document.getElementById('qr-bg-color'), bgText = document.getElementById('qr-bg-text');
+  fgColor.addEventListener('input', function () { fgText.value = fgColor.value.toUpperCase(); render(); });
+  bgColor.addEventListener('input', function () { bgText.value = bgColor.value.toUpperCase(); render(); });
+  fgText.addEventListener('input', render);
+  bgText.addEventListener('input', render);
+  downloadBtn.addEventListener('click', function () {
+    if (!currentResult) return;
+    canvas.toBlob(function (blob) {
+      if (!blob) { showToast(t('qr_toast_fail'), true); return; }
+      var a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'qrcode.png';
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(function () { URL.revokeObjectURL(a.href); }, 4000);
+      showToast(t('qr_toast_dl'));
+    }, 'image/png');
+  });
+  document.addEventListener('cataito-lang-change', function () {
+    render();
+  });
+  render();
+})();
+});
+</script>
+
+<style>
+  /* 本页专属规则；通用组件复用 /assets/css/site.css 的 .t-* 共享组件层 */
+  .ct-colors { display: flex; align-items: flex-end; gap: 12px; flex-wrap: wrap; }
+  .ct-colors .t-field { flex: 1 1 160px; margin: 0; }
+  .qr-color-row, .ct-colors .t-seg { display: flex; gap: 8px; }
+  .qr-color-row input[type="color"] {
+    width: 44px; height: 36px; padding: 2px; border: 1px solid var(--border);
+    border-radius: var(--radius-sm); background: var(--card-2); cursor: pointer; flex: none;
+  }
+  .qr-color-row .t-input { flex: 1; min-width: 0; font-family: var(--font-mono); text-transform: uppercase; }
+  #qr-text { resize: vertical; font-family: var(--font-mono); }
+  .qr-out-block { text-align: center; }
+  .qr-preview-wrap { display: flex; justify-content: center; }
+  #qr-canvas {
+    border: 1px solid var(--border); border-radius: var(--radius-sm);
+    max-width: 100%; height: auto; image-rendering: pixelated;
+  }
+  .qr-info { font-family: var(--font-mono); font-size: 12.5px; color: var(--text-3); margin: 12px 0 0; }
+  #qr-download { margin-top: 14px; }
+</style>
+</body>
+</html>
