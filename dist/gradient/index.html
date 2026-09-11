@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CSS 渐变生成器 — 免费在线生成 linear-gradient / radial-gradient | CATAITO</title>
+<meta name="title-zh" content="CSS 渐变生成器 — 免费在线生成 linear-gradient / radial-gradient | CATAITO">
+<meta name="title-en" content="CSS Gradient Generator — Free Online linear-gradient / radial-gradient | CATAITO">
+<meta name="description" content="免费在线 CSS 渐变生成器：线性 / 径向渐变，最多 4 个色标自由定位，实时预览并一键复制 CSS 代码。纯浏览器本地运行。">
+<meta name="theme-color" content="#f6f3ec">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="CATAITO 工具箱">
+<meta property="og:title" content="CSS 渐变生成器 — 免费在线生成">
+<meta property="og:description" content="线性 / 径向渐变，色标自由定位，实时预览，一键复制 CSS。">
+<meta property="og:url" content="https://tools.cataito.com/gradient/">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:locale:alternate" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="CSS 渐变生成器">
+<meta name="twitter:description" content="免费在线 CSS 渐变生成，一键复制。">
+<link rel="icon" href="/assets/img/icon.svg">
+<link rel="canonical" href="https://tools.cataito.com/gradient/">
+<link rel="stylesheet" href="/assets/css/site.css">
+<script src="/assets/js/theme-init.js"></script>
+<script>
+  (function () {
+    try {
+      var l = localStorage.getItem('cataito-lang');
+      document.documentElement.setAttribute('lang', (l === 'en') ? 'en' : 'zh-CN');
+    } catch (e) {}
+  })();
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "CSS Gradient Generator",
+  "alternateName": "CSS 渐变生成器",
+  "applicationCategory": "DesignApplication",
+  "operatingSystem": "Any",
+  "url": "https://tools.cataito.com/gradient/",
+  "inLanguage": ["zh-CN", "en"],
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "description": "免费在线 CSS 渐变生成器：线性 / 径向，色标自由定位，实时预览，一键复制。"
+}
+</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7103529190038161" crossorigin="anonymous"></script>
+</head>
+<body>
+<div id="site-header"></div>
+<main class="site-main">
+  <div class="t-head">
+    <nav class="breadcrumb"><a href="/" data-i18n="crumb_home">首页</a><span class="sep">/</span><span data-i18n="gr_name">CSS 渐变</span></nav>
+    <h1 class="page-h1" data-i18n="gr_name">CSS 渐变生成器</h1>
+    <p class="page-sub" data-i18n="gr_desc">线性 / 径向渐变，最多 4 个色标自由定位，实时预览，一键复制 CSS 代码。纯浏览器本地运行。</p>
+  </div>
+
+  <section class="t-card t-flow">
+    <div class="gr-preview-wrap"><div id="gr-preview" aria-label="gradient preview"></div></div>
+
+    <div class="t-block">
+      <div class="ct-colors">
+        <div class="t-field">
+          <div class="t-label" data-i18n="gr_type">渐变类型</div>
+          <div class="t-seg" id="gr-type">
+            <label class="t-seg-item"><input type="radio" name="gr-type" value="linear" checked><span data-i18n="gr_type_linear">线性</span></label>
+            <label class="t-seg-item"><input type="radio" name="gr-type" value="radial"><span data-i18n="gr_type_radial">径向</span></label>
+          </div>
+        </div>
+        <div class="t-field" id="gr-angle-field">
+          <div class="t-label">
+            <span data-i18n="gr_angle">角度</span>
+            <span class="t-range-val" id="gr-angle-val">135°</span>
+          </div>
+          <input type="range" id="gr-angle" min="0" max="360" step="1" value="135" class="t-range">
+        </div>
+      </div>
+
+      <div class="t-field">
+        <div class="t-label" data-i18n="gr_stops">色标</div>
+        <div id="gr-stops"></div>
+        <button type="button" class="t-btn" id="gr-add-stop" data-i18n="gr_add">添加色标</button>
+      </div>
+
+      <div class="t-field">
+        <div class="t-label" data-i18n="gr_code">CSS 代码</div>
+        <pre class="gr-code"><code id="gr-css">background: linear-gradient(135deg, #bf4324 0%, #f6f3ec 100%);</code></pre>
+        <button type="button" class="t-btn primary" id="gr-copy" data-i18n="gr_copy">复制 CSS</button>
+      </div>
+    </div>
+
+    <p class="t-note" data-i18n="gr_note">渐变由浏览器矢量绘制，任意分辨率都清晰；代码兼容所有现代浏览器。</p>
+  </section>
+
+  <section class="t-prose">
+    <h2 data-i18n="gr_how_h">怎么用</h2>
+    <ol class="t-steps">
+      <li data-i18n-html="gr_how_1"><strong>选类型</strong>：线性渐变沿一个方向过渡，径向渐变从中心向外扩散。</li>
+      <li data-i18n-html="gr_how_2"><strong>调色标</strong>：每个色标有颜色和位置两个属性；添加到 4 个色标可以做出多段过渡。</li>
+      <li data-i18n-html="gr_how_3"><strong>看预览</strong>：预览区即时反映所有改动，满意为止。</li>
+      <li data-i18n-html="gr_how_4"><strong>复制 CSS</strong>：把代码粘到任意元素的 background 属性即可使用。</li>
+    </ol>
+
+    <h2 data-i18n="gr_faq_h">常见问题</h2>
+    <div class="t-faq">
+      <div class="t-faq-item">
+        <p class="t-faq-q" data-i18n="gr_faq_1_q">什么是 CSS 渐变？</p>
+        <p class="t-faq-a" data-i18n="gr_faq_1_a">CSS 渐变是浏览器实时绘制的颜色过渡效果（linear-gradient / radial-gradient），不是图片——放大不失真、体积几乎为零、颜色可随时改代码调整，是网页背景和按钮的首选方案。</p>
+      </div>
+      <div class="t-faq-item">
+        <p class="t-faq-q" data-i18n="gr_faq_2_q">径向渐变和线性渐变有什么区别？</p>
+        <p class="t-faq-a" data-i18n="gr_faq_2_a">线性渐变沿一条直线方向过渡（用角度控制方向，如 135° 是左上到右下）；径向渐变从中心点向四周扩散（ellipse 椭圆或 circle 圆形），适合做光晕、聚光灯效果。</p>
+      </div>
+      <div class="t-faq-item">
+        <p class="t-faq-q" data-i18n="gr_faq_3_q">能导出成图片吗？</p>
+        <p class="t-faq-a" data-i18n="gr_faq_3_a">不需要导出——渐变本来就是代码，直接粘到 CSS 里比图片更清晰、更小、可维护。真需要位图（如某些设计软件不支持 CSS），对预览区截图即可。</p>
+      </div>
+      <div class="t-faq-item">
+        <p class="t-faq-q" data-i18n="gr_faq_4_q">浏览器兼容性如何？</p>
+        <p class="t-faq-a" data-i18n="gr_faq_4_a">现代浏览器（Chrome、Edge、Firefox、Safari 12.1+）全部支持标准写法，本工具生成的就是标准语法，无需加前缀。Internet Explorer 已停止支持，不在考虑范围。</p>
+      </div>
+    </div>
+
+    <h2 data-i18n="related_guides">相关指南</h2>
+    <div class="t-guide-links">
+      <a class="t-guide-link" href="/guides/color-guide/">
+        <p class="t-guide-link-title" data-i18n="gd_color_short">配色原理指南</p>
+        <p class="t-guide-link-desc" data-i18n="gd_color_card_desc">色轮三属性、互补/类似/三角/分裂互补/单色五种配色方案、60-30-10 法则，以及免费在线提取主色生成协调配色。</p>
+      </a>
+      <a class="t-guide-link" href="/guides/accessibility-contrast-guide/">
+        <p class="t-guide-link-title" data-i18n="gd_acc_short">无障碍对比度指南</p>
+        <p class="t-guide-link-desc" data-i18n="gd_acc_card_desc">WCAG AA / AAA 达标线速查表、四步实测流程、不达标的四种修改思路，以及灰字白底等五个最常见的不达标案例。</p>
+      </a>
+    </div>
+  </section>
+</main>
+
+<div id="site-footer"></div>
+<div id="gr-toast" class="t-toast">
+  <span class="t-toast-ic">
+    <svg class="ic-ok" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+    <svg class="ic-err" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+  </span>
+  <span class="t-toast-title"></span>
+</div>
+
+<script src="/assets/js/site.js" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+(function () {
+  'use strict';
+  var t = function (k, vars) { return (window.CATAITO_I18N && window.CATAITO_I18N.t) ? window.CATAITO_I18N.t(k, vars) : k; };
+  /* 色标：[{ color, pos }]，百分比 0-100 */
+  var stops = [
+    { color: '#bf4324', pos: 0 },
+    { color: '#f6f3ec', pos: 100 }
+  ];
+
+  function render() {
+    var type = (document.querySelector('input[name="gr-type"]:checked') || {}).value || 'linear';
+    var angle = parseInt(document.getElementById('gr-angle').value, 10);
+    document.getElementById('gr-angle-val').textContent = angle + '°';
+    document.getElementById('gr-angle-field').style.display = type === 'linear' ? '' : 'none';
+    stops.sort(function (a, b) { return a.pos - b.pos; });
+    var cs = stops.map(function (s) { return s.color + ' ' + s.pos + '%'; }).join(', ');
+    var fn = type === 'linear' ? 'linear-gradient(' + angle + 'deg, ' : 'radial-gradient(ellipse at center, ';
+    var css = 'background: ' + fn + cs + ');';
+    document.getElementById('gr-preview').style.background = 'linear-gradient(135deg, #bf4324 0%, #f6f3ec 100%)';
+    document.getElementById('gr-preview').style.background = (fn + cs + ')');
+    document.getElementById('gr-css').textContent = css;
+    /* 色标行 */
+    var wrap = document.getElementById('gr-stops');
+    wrap.innerHTML = '';
+    stops.forEach(function (s, i) {
+      var row = document.createElement('div');
+      row.className = 'gr-stop-row';
+      row.innerHTML =
+        '<input type="color" value="' + s.color + '" data-i="' + i + '" aria-label="color ' + (i + 1) + '">' +
+        '<input type="range" min="0" max="100" step="1" value="' + s.pos + '" data-i="' + i + '" class="t-range gr-pos">' +
+        '<span class="gr-pos-val">' + s.pos + '%</span>' +
+        (stops.length > 2 ? '<button type="button" class="t-icon-btn danger" data-del="' + i + '" aria-label="remove">&times;</button>' : '');
+      wrap.appendChild(row);
+    });
+  }
+
+  var toastTimer = null;
+  function showToast(msg, isErr) {
+    var el = document.getElementById('gr-toast');
+    el.querySelector('.t-toast-title').textContent = msg;
+    el.classList.toggle('error', !!isErr);
+    el.classList.add('show');
+    if (toastTimer) clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { el.classList.remove('show'); }, 2600);
+  }
+
+  document.getElementById('gr-stops').addEventListener('input', function (e) {
+    var i = parseInt(e.target.getAttribute('data-i'), 10);
+    if (isNaN(i)) return;
+    if (e.target.type === 'color') stops[i].color = e.target.value;
+    else if (e.target.classList.contains('gr-pos')) stops[i].pos = parseInt(e.target.value, 10);
+    render();
+  });
+  document.getElementById('gr-stops').addEventListener('click', function (e) {
+    var btn = e.target.closest ? e.target.closest('[data-del]') : null;
+    if (!btn) return;
+    var i = parseInt(btn.getAttribute('data-del'), 10);
+    stops.splice(i, 1);
+    render();
+  });
+  document.getElementById('gr-add-stop').addEventListener('click', function () {
+    if (stops.length >= 4) { showToast(t('gr_toast_max'), true); return; }
+    /* 新色标插在最右，颜色取当前首尾的中间调 */
+    var maxPos = Math.max.apply(null, stops.map(function (s) { return s.pos; }));
+    stops.push({ color: '#888888', pos: Math.min(100, maxPos + 20) });
+    render();
+  });
+  document.getElementById('gr-type').addEventListener('change', render);
+  document.getElementById('gr-angle').addEventListener('input', render);
+  document.getElementById('gr-copy').addEventListener('click', function () {
+    var css = document.getElementById('gr-css').textContent;
+    function fallback() {
+      var ta = document.createElement('textarea');
+      ta.value = css; document.body.appendChild(ta); ta.select();
+      try { document.execCommand('copy'); showToast(t('gr_toast_copied')); } catch (err) { showToast(t('gr_toast_copy_fail'), true); }
+      ta.remove();
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(css).then(function () { showToast(t('gr_toast_copied')); }, fallback);
+    } else fallback();
+  });
+  document.addEventListener('cataito-lang-change', render);
+  render();
+})();
+});
+</script>
+
+<style>
+  /* 本页专属规则；通用组件复用 /assets/css/site.css 的 .t-* 共享组件层 */
+  .ct-colors { display: flex; align-items: flex-end; gap: 12px; flex-wrap: wrap; }
+  .ct-colors .t-field { flex: 1 1 180px; margin: 0; }
+  .gr-preview-wrap { display: flex; justify-content: center; }
+  #gr-preview {
+    width: 100%; height: 200px;
+    border: 1px solid var(--border); border-radius: var(--radius-sm);
+  }
+  .gr-stop-row {
+    display: flex; align-items: center; gap: 10px; margin-bottom: 10px;
+  }
+  .gr-stop-row input[type="color"] {
+    width: 44px; height: 36px; padding: 2px; border: 1px solid var(--border);
+    border-radius: var(--radius-sm); background: var(--card-2); cursor: pointer; flex: none;
+  }
+  .gr-stop-row .gr-pos { flex: 1; }
+  .gr-stop-row .gr-pos-val {
+    font-family: var(--font-mono); font-size: 12.5px; color: var(--text-3);
+    width: 44px; text-align: right; flex: none;
+  }
+  .gr-code {
+    background: var(--card-2); border: 1px solid var(--border); border-radius: var(--radius-sm);
+    padding: 14px 16px; margin: 0 0 10px; overflow-x: auto;
+  }
+  .gr-code code { font-family: var(--font-mono); font-size: 12.5px; color: var(--text); }
+  #gr-copy { margin-top: 0; }
+</style>
+</body>
+</html>

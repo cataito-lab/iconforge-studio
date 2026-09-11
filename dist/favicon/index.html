@@ -69,6 +69,25 @@
 
     <div class="t-block">
       <div class="t-field">
+        <div class="t-label" data-i18n="fv_quick_h">没有图片？用文字或 Emoji 一键开始</div>
+        <div class="fv-quick-row">
+          <input type="text" id="fv-quick-text" class="t-input" maxlength="2" spellcheck="false" data-i18n-placeholder="fv_quick_ph" placeholder="一个字或 Emoji，如 C / 猫 / 🚀">
+          <button type="button" class="t-btn" id="fv-quick-make" data-i18n="fv_quick_make">生成图标</button>
+        </div>
+        <div class="fv-emoji-row">
+          <button type="button" class="fv-emoji" data-ch="🚀">🚀</button>
+          <button type="button" class="fv-emoji" data-ch="🐱">🐱</button>
+          <button type="button" class="fv-emoji" data-ch="⭐">⭐</button>
+          <button type="button" class="fv-emoji" data-ch="🔥">🔥</button>
+          <button type="button" class="fv-emoji" data-ch="🎨">🎨</button>
+          <button type="button" class="fv-emoji" data-ch="C">C</button>
+        </div>
+        <div class="t-hint" data-i18n="fv_quick_hint">在 512×512 画布居中绘制，下载后可继续调整尺寸。</div>
+      </div>
+    </div>
+
+    <div class="t-block">
+      <div class="t-field">
         <div class="t-label" data-i18n="fv_sizes">尺寸</div>
         <div class="t-chips" id="fv-chips"></div>
       </div>
@@ -80,7 +99,7 @@
   <section class="t-prose">
     <h2 data-i18n="fv_how_h">怎么用</h2>
     <ol class="t-steps">
-      <li data-i18n-html="fv_how_1"><strong>上传一张图</strong>：PNG / JPG / WebP / SVG 都可以，建议用正方形、主体居中的版本。</li>
+      <li data-i18n-html="fv_how_1"><strong>上传一张图</strong>：PNG / JPG / WebP / SVG 都可以，建议用正方形、主体居中的版本。没有图片也可以直接输入一个字或 Emoji 快速开始。</li>
       <li data-i18n-html="fv_how_2"><strong>勾选尺寸</strong>：默认已选中全平台常用档位（16 至 512px），可按需增减。</li>
       <li data-i18n-html="fv_how_3"><strong>生成并下载</strong>：点击生成，得到打包好的 favicon 套件，解压后按说明放进网站根目录。</li>
     </ol>
@@ -293,6 +312,36 @@ document.addEventListener('DOMContentLoaded', function () {
     showToast(t('fv_toast_done'));
   }
 
+  /* ---------- 文字 / Emoji 快速开始 ---------- */
+  function makeTextIcon(ch, bgColor, fgColor) {
+    var c = document.createElement('canvas'); c.width = c.height = 512;
+    var ctx = c.getContext('2d');
+    ctx.fillStyle = bgColor; ctx.fillRect(0, 0, 512, 512);
+    ctx.fillStyle = fgColor;
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    var size = ch.codePointAt(0) > 0xFFFF ? 360 : 340; /* Emoji 稍大，字符稍小 */
+    ctx.font = 'bold ' + size + 'px sans-serif';
+    ctx.fillText(ch, 256, 276);
+    return c;
+  }
+  function useQuickIcon(ch) {
+    if (!ch) { showToast(t('fv_toast_quick_empty'), true); return; }
+    var canvas = makeTextIcon(ch, '#ffffff', '#211e19');
+    var img = new Image();
+    img.onload = function () { fvImage = img; showPreview(); showToast(t('fv_toast_quick_ok')); };
+    img.src = canvas.toDataURL('image/png');
+  }
+  document.getElementById('fv-quick-make').addEventListener('click', function () {
+    useQuickIcon(document.getElementById('fv-quick-text').value.trim());
+  });
+  document.getElementById('fv-quick-text').addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') useQuickIcon(e.target.value.trim());
+  });
+  var emojiBtns = document.querySelectorAll('.fv-emoji');
+  emojiBtns.forEach(function (b) {
+    b.addEventListener('click', function () { useQuickIcon(b.getAttribute('data-ch')); });
+  });
+
   /* ---------- 提示 ---------- */
   var toastTimer = null;
   function showToast(msg, isErr) {
@@ -343,6 +392,15 @@ document.addEventListener('DOMContentLoaded', function () {
   /* 本页专属规则；通用组件（卡片/上传区/字段/芯片/按钮/Toast）
      已统一复用 /assets/css/site.css 的 .t-* 共享组件层 */
   .t-drop.has-image { border-style: solid; }
+  .fv-quick-row { display: flex; gap: 8px; }
+  .fv-quick-row .t-input { flex: 1; min-width: 0; }
+  .fv-emoji-row { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px; }
+  .fv-emoji {
+    font-size: 22px; line-height: 1; padding: 8px 12px;
+    border: 1px solid var(--border); border-radius: var(--radius-sm);
+    background: var(--card-2); cursor: pointer; transition: border-color .15s, background .15s;
+  }
+  .fv-emoji:hover { border-color: var(--accent); background: var(--accent-soft-2); }
   .fv-preview-wrap { position: relative; margin-top: 12px; }
   .fv-preview-wrap img {
     width: 120px; height: 120px; border-radius: var(--radius-sm); border: 1px solid var(--border);

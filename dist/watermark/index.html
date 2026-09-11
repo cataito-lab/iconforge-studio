@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>图片批量加水印 — 免费在线文字水印工具 | CATAITO</title>
+<meta name="title-zh" content="图片批量加水印 — 免费在线文字水印工具 | CATAITO">
+<meta name="title-en" content="Watermark Tool — Free Online Batch Image Watermark | CATAITO">
+<meta name="description" content="免费在线图片批量加水印：自定义文字、字号、透明度、位置、旋转与平铺模式，一次最多 20 张，ZIP 打包下载。纯浏览器本地 Canvas 处理，图片绝不上传服务器。">
+<meta name="theme-color" content="#f6f3ec">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="CATAITO 工具箱">
+<meta property="og:title" content="图片批量加水印 — 免费在线文字水印工具">
+<meta property="og:description" content="自定义文字/字号/透明度/位置/旋转/平铺，批量加水印，本地处理不上传。">
+<meta property="og:url" content="https://tools.cataito.com/watermark/">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:locale:alternate" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="图片批量加水印">
+<meta name="twitter:description" content="免费在线批量图片加水印，纯本地处理。">
+<link rel="icon" href="/assets/img/icon.svg">
+<link rel="canonical" href="https://tools.cataito.com/watermark/">
+<link rel="stylesheet" href="/assets/css/site.css">
+<script src="/assets/js/theme-init.js"></script>
+<script>
+  (function () {
+    try {
+      var l = localStorage.getItem('cataito-lang');
+      document.documentElement.setAttribute('lang', (l === 'en') ? 'en' : 'zh-CN');
+    } catch (e) {}
+  })();
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Watermark Tool",
+  "alternateName": "图片批量加水印",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "Any",
+  "url": "https://tools.cataito.com/watermark/",
+  "inLanguage": ["zh-CN", "en"],
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "description": "免费在线图片批量加水印：自定义文字、字号、透明度、位置、旋转与平铺模式，纯本地处理。"
+}
+</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7103529190038161" crossorigin="anonymous"></script>
+</head>
+<body>
+<div id="site-header"></div>
+<main class="site-main">
+  <div class="t-head">
+    <nav class="breadcrumb"><a href="/" data-i18n="crumb_home">首页</a><span class="sep">/</span><span data-i18n="wm_name">图片加水印</span></nav>
+    <h1 class="page-h1" data-i18n="wm_name">图片加水印</h1>
+    <p class="page-sub" data-i18n="wm_desc">批量给图片叠加文字水印：自定义文字、字号、透明度、位置、旋转与平铺，ZIP 打包下载。纯浏览器本地处理。</p>
+  </div>
+
+  <section class="t-card t-flow">
+    <div id="wm-dropzone" class="t-drop" tabindex="0">
+      <input type="file" id="wm-file" accept="image/*" multiple hidden>
+      <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m7 15 3-3 2 2 3-4 2 5"/><circle cx="9" cy="9" r="1"/></svg>
+      <span class="t-drop-title" data-i18n="wm_upload">点击或拖入图片（可多选）</span>
+      <span class="t-drop-hint" data-i18n="wm_dz_hint">PNG / JPG / WebP / GIF / BMP · 全程本地处理，不上传</span>
+    </div>
+
+    <div class="t-block">
+      <div class="t-field">
+        <div class="t-label" data-i18n="wm_text">水印文字</div>
+        <input type="text" id="wm-text" class="t-input" value="© CATAITO" maxlength="60">
+        <div class="t-hint" data-i18n="wm_text_hint">支持中英文与符号，如 © YourName、仅供预览等。</div>
+      </div>
+
+      <div class="t-field">
+        <div class="t-label" data-i18n="wm_size">字号</div>
+        <div class="t-seg" id="wm-size">
+          <label class="t-seg-item"><input type="radio" name="wm-size" value="24"><span>24px</span></label>
+          <label class="t-seg-item"><input type="radio" name="wm-size" value="48" checked><span>48px</span></label>
+          <label class="t-seg-item"><input type="radio" name="wm-size" value="72"><span>72px</span></label>
+        </div>
+      </div>
+
+      <div class="t-field">
+        <div class="t-label">
+          <span data-i18n="wm_opacity">透明度</span>
+          <span class="t-range-val" id="wm-opacity-val">40</span>
+        </div>
+        <input type="range" id="wm-opacity" min="10" max="100" step="1" value="40" class="t-range">
+        <div class="t-hint" data-i18n="wm_opacity_hint">数值越低越淡，建议 30–50：既能看见又不抢主体。</div>
+      </div>
+
+      <div class="t-field">
+        <div class="t-label" data-i18n="wm_pos">位置</div>
+        <div class="t-seg" id="wm-pos">
+          <label class="t-seg-item"><input type="radio" name="wm-pos" value="tl"><span data-i18n="wm_pos_tl">左上</span></label>
+          <label class="t-seg-item"><input type="radio" name="wm-pos" value="tr"><span data-i18n="wm_pos_tr">右上</span></label>
+          <label class="t-seg-item"><input type="radio" name="wm-pos" value="cc" checked><span data-i18n="wm_pos_cc">居中</span></label>
+          <label class="t-seg-item"><input type="radio" name="wm-pos" value="bl"><span data-i18n="wm_pos_bl">左下</span></label>
+          <label class="t-seg-item"><input type="radio" name="wm-pos" value="br"><span data-i18n="wm_pos_br">右下</span></label>
+        </div>
+      </div>
+
+      <div class="t-field">
+        <div class="t-label" data-i18n="wm_rotate">旋转</div>
+        <div class="t-seg" id="wm-rot">
+          <label class="t-seg-item"><input type="radio" name="wm-rot" value="0" checked><span>0°</span></label>
+          <label class="t-seg-item"><input type="radio" name="wm-rot" value="30"><span>30°</span></label>
+          <label class="t-seg-item"><input type="radio" name="wm-rot" value="45"><span>45°</span></label>
+        </div>
+      </div>
+
+      <div class="t-field">
+        <div class="t-label" data-i18n="wm_color">颜色</div>
+        <input type="color" id="wm-color" value="#ffffff">
+      </div>
+
+      <div class="t-field">
+        <div class="t-label" data-i18n="wm_tile">平铺模式</div>
+        <div class="t-seg" id="wm-tile">
+          <label class="t-seg-item"><input type="radio" name="wm-tile" value="off" checked><span data-i18n="wm_tile_off">关</span></label>
+          <label class="t-seg-item"><input type="radio" name="wm-tile" value="on"><span data-i18n="wm_tile_on">开</span></label>
+        </div>
+        <div class="t-hint" data-i18n="wm_tile_hint">开启后按 45° 斜向网格重复水印覆盖全图，防裁剪防盗图更彻底。</div>
+      </div>
+    </div>
+
+    <div id="wm-list" class="t-list"></div>
+    <p id="wm-empty" class="t-empty" data-i18n="wm_empty">还没有图片，先上传几张试试。</p>
+
+    <div id="wm-bar" class="t-bar" hidden>
+      <div class="t-bar-stats" id="wm-bar-stats"></div>
+      <div class="t-bar-actions">
+        <button type="button" class="t-btn" id="wm-add" data-i18n="wm_add_more">继续添加</button>
+        <button type="button" class="t-btn" id="wm-clear" data-i18n="wm_clear_all">清空全部</button>
+        <button type="button" class="t-btn primary" id="wm-zip" data-i18n="wm_download_all">打包下载全部（ZIP）</button>
+      </div>
+    </div>
+
+    <p class="t-note" data-i18n="wm_note">输出保持原格式（JPEG / PNG / WebP），GIF / BMP 输出为 PNG；水印按原图尺寸绘制，不会被裁掉。</p>
+  </section>
+
+  <section class="t-prose">
+    <h2 data-i18n="wm_how_h">怎么用</h2>
+    <ol class="t-steps">
+      <li data-i18n-html="wm_how_1"><strong>批量上传</strong>：点击或拖入图片，一次最多 20 张，PNG / JPG / WebP / GIF / BMP 都可以。</li>
+      <li data-i18n-html="wm_how_2"><strong>设置水印</strong>：输入水印文字，调整字号、透明度、颜色；位置选九宫格常用五档，或选旋转制造斜排效果。</li>
+      <li data-i18n-html="wm_how_3"><strong>防裁剪可平铺</strong>：开启平铺模式后，水印按 45° 斜向网格重复覆盖全图，裁掉一角也去不掉水印。</li>
+      <li data-i18n-html="wm_how_4"><strong>下载</strong>：每张实时预览效果，单张下载或一键打包全部为 ZIP。</li>
+    </ol>
+
+    <h2 data-i18n="wm_faq_h">常见问题</h2>
+    <div class="t-faq">
+      <div class="t-faq-item">
+        <p class="t-faq-q" data-i18n="wm_faq_1_q">图片会被上传到服务器吗？</p>
+        <p class="t-faq-a" data-i18n="wm_faq_1_a">不会。加水印全部在浏览器本地完成（Canvas 绘制与编码），图片不经过网络，商业素材和隐私截图都可以放心用。</p>
+      </div>
+      <div class="t-faq-item">
+        <p class="t-faq-q" data-i18n="wm_faq_2_q">水印会被裁掉吗？</p>
+        <p class="t-faq-a" data-i18n="wm_faq_2_a">不会。水印按原图尺寸在 Canvas 上直接绘制进像素，不是覆盖层。若担心他人裁剪局部去水印，可开启平铺模式让水印覆盖全图。</p>
+      </div>
+      <div class="t-faq-item">
+        <p class="t-faq-q" data-i18n="wm_faq_3_q">能加图片水印（Logo）吗？</p>
+        <p class="t-faq-a" data-i18n="wm_faq_3_a">当前版本只支持文字水印。需要 Logo 图片水印，可以先用图片编辑器把 Logo 与图片合成，或关注后续版本更新。</p>
+      </div>
+      <div class="t-faq-item">
+        <p class="t-faq-q" data-i18n="wm_faq_4_q">透明度设多少合适？</p>
+        <p class="t-faq-a" data-i18n="wm_faq_4_a">建议 30–50：既能看见又不抢主体。低于 20 容易被忽略甚至被无损处理抹掉，高于 60 会明显遮挡画面内容。</p>
+      </div>
+    </div>
+
+    <h2 data-i18n="related_guides">相关指南</h2>
+    <div class="t-guide-links">
+      <a class="t-guide-link" href="/guides/image-compression-guide/">
+        <p class="t-guide-link-title" data-i18n="gd_comp_short">图片压缩指南</p>
+        <p class="t-guide-link-desc" data-i18n="gd_comp_card_desc">JPG、PNG、WebP 三种格式怎么选、质量参数怎么调、最长边限制的技巧。</p>
+      </a>
+    </div>
+  </section>
+</main>
+
+<div id="site-footer"></div>
+<div id="wm-toast" class="t-toast">
+  <span class="t-toast-ic">
+    <svg class="ic-ok" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+    <svg class="ic-err" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+  </span>
+  <span class="t-toast-title"></span>
+</div>
+
+<script src="/assets/js/site.js" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+(function () {
+  'use strict';
+  var t = function (k, vars) { return (window.CATAITO_I18N && window.CATAITO_I18N.t) ? window.CATAITO_I18N.t(k, vars) : k; };
+  var MAX_FILES = 20;
+  var items = [];   /* { id, file, url, img, w, h, outBlob, outName } */
+  var seq = 0;
+  var running = false, pendingRerun = false;
+
+  /* ---------- 环境：WebP 编码支持检测 ---------- */
+  var webpOK = (function () {
+    var c = document.createElement('canvas'); c.width = c.height = 1;
+    return c.toDataURL('image/webp').indexOf('image/webp') === 5;
+  })();
+
+  /* ---------- 工具函数 ---------- */
+  function fmtSize(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  }
+  function canvasToBlob(canvas, type, quality) {
+    return new Promise(function (resolve) {
+      if (canvas.toBlob) {
+        canvas.toBlob(function (b) { resolve(b); }, type, quality);
+      } else {
+        var u = canvas.toDataURL(type, quality);
+        var bin = atob(u.split(',')[1]);
+        var bytes = new Uint8Array(bin.length);
+        for (var i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+        resolve(new Blob([bytes], { type: type }));
+      }
+    });
+  }
+  function loadFile(file) {
+    return new Promise(function (resolve, reject) {
+      var url = URL.createObjectURL(file);
+      var img = new Image();
+      img.onload = function () { resolve({ img: img, url: url }); };
+      img.onerror = function () { URL.revokeObjectURL(url); reject(); };
+      img.src = url;
+    });
+  }
+
+  /* ---------- 输出格式：保持原格式，GIF/BMP 出 PNG（与 convert 同思路） ---------- */
+  function pickTarget(file) {
+    var type = (file.type || '').toLowerCase();
+    if (type === 'image/jpeg') return { type: 'image/jpeg', ext: 'jpg', q: 0.92 };
+    if (type === 'image/png')  return { type: 'image/png',  ext: 'png', q: undefined };
+    if (type === 'image/webp' && webpOK) return { type: 'image/webp', ext: 'webp', q: 0.92 };
+    return { type: 'image/png', ext: 'png', q: undefined };
+  }
+
+  /* ---------- 水印设置 ---------- */
+  function currentSettings() {
+    return {
+      text: document.getElementById('wm-text').value || ' ',
+      size: parseInt((document.querySelector('input[name="wm-size"]:checked') || {}).value || '48', 10),
+      alpha: parseInt(document.getElementById('wm-opacity').value, 10) / 100,
+      pos: (document.querySelector('input[name="wm-pos"]:checked') || {}).value || 'cc',
+      rot: parseInt((document.querySelector('input[name="wm-rot"]:checked') || {}).value || '0', 10),
+      color: document.getElementById('wm-color').value,
+      tile: ((document.querySelector('input[name="wm-tile"]:checked') || {}).value || 'off') === 'on'
+    };
+  }
+
+  /* ---------- 绘制水印 ---------- */
+  function drawWatermark(canvas, s) {
+    var ctx = canvas.getContext('2d');
+    var w = canvas.width, h = canvas.height;
+    ctx.save();
+    ctx.font = 'bold ' + s.size + 'px sans-serif';
+    ctx.globalAlpha = s.alpha;
+    ctx.fillStyle = s.color;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    var rad = s.rot * Math.PI / 180;
+
+    if (s.tile) {
+      /* 平铺：绕画布中心旋转 45° 斜向网格，间距 = 字号 × 4，覆盖对角线范围 */
+      var d = Math.ceil(Math.sqrt(w * w + h * h) / 2) + s.size;
+      var gap = s.size * 4;
+      ctx.translate(w / 2, h / 2);
+      ctx.rotate(rad);
+      for (var x = -d; x <= d; x += gap) {
+        for (var y = -d; y <= d; y += gap) {
+          ctx.fillText(s.text, x, y);
+        }
+      }
+    } else {
+      /* 单个水印：按位置定位，以水印中心为原点旋转 */
+      var m = Math.max(12, Math.round(s.size * 0.6));
+      var cx = (s.pos === 'tl' || s.pos === 'bl') ? m : (s.pos === 'tr' || s.pos === 'br') ? w - m : w / 2;
+      var cy = (s.pos === 'tl' || s.pos === 'tr') ? m : (s.pos === 'bl' || s.pos === 'br') ? h - m : h / 2;
+      ctx.translate(cx, cy);
+      ctx.rotate(rad);
+      ctx.fillText(s.text, 0, 0);
+    }
+    ctx.restore();
+  }
+
+  /* ---------- 加水印 ---------- */
+  async function markItem(item, s) {
+    var w = item.img.naturalWidth || item.img.width, h = item.img.naturalHeight || item.img.height;
+    var c = document.createElement('canvas');
+    c.width = Math.max(1, w); c.height = Math.max(1, h);
+    var ctx = c.getContext('2d');
+    ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = 'high';
+    ctx.drawImage(item.img, 0, 0, c.width, c.height);
+    drawWatermark(c, s);
+
+    var tgt = pickTarget(item.file);
+    var blob = await canvasToBlob(c, tgt.type, tgt.q);
+    var baseName = item.file.name.replace(/\.[^.]+$/, '');
+    var outName = baseName + '-watermarked.' + tgt.ext;
+    item.outBlob = blob;
+    item.outName = outName;
+  }
+
+  async function runAll() {
+    if (running) { pendingRerun = true; return; }
+    running = true;
+    document.body.classList.add('wm-busy');
+    var s = currentSettings();
+    for (var i = 0; i < items.length; i++) {
+      await markItem(items[i], s);
+      renderRow(items[i]);
+    }
+    running = false;
+    document.body.classList.remove('wm-busy');
+    if (pendingRerun) { pendingRerun = false; runAll(); }
+    renderBar();
+  }
+  var rerunTimer = null;
+  function scheduleRerun() {
+    if (!items.length) return;
+    if (rerunTimer) clearTimeout(rerunTimer);
+    rerunTimer = setTimeout(runAll, 280);
+  }
+
+  /* ---------- 渲染 ---------- */
+  function renderRow(item) {
+    var row = document.getElementById('wm-row-' + item.id);
+    if (!row) return;
+    var outBytes = item.outBlob ? item.outBlob.size : 0;
+    row.innerHTML =
+      '<div class="t-thumb t-checker"><img src="' + (item.outBlob && item.outUrl ? item.outUrl : item.url) + '" alt=""></div>' +
+      '<div class="t-row-main">' +
+        '<div class="t-row-name" title="' + esc(item.outName || item.file.name) + '">' + esc(item.outName || item.file.name) + '</div>' +
+        '<div class="t-row-meta">' +
+          item.w + '×' + item.h + ' · ' +
+          '<span data-i18n="wm_orig">原图</span> ' + fmtSize(item.file.size) +
+          ' → <span data-i18n="wm_new">加水印后</span> <strong>' + fmtSize(outBytes) + '</strong>' +
+        '</div>' +
+      '</div>' +
+      '<div class="wm-row-actions">' +
+        '<button type="button" class="t-icon-btn" data-act="dl" data-i18n-title="wm_dl">' +
+          '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3"/><path d="m7 10 5 5 5-5"/><path d="M4 21h16"/></svg>' +
+        '</button>' +
+        '<button type="button" class="t-icon-btn danger" data-act="rm" data-i18n-title="wm_remove">' +
+          '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>' +
+        '</button>' +
+      '</div>';
+    if (window.CATAITO_I18N) window.CATAITO_I18N.apply();
+  }
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+  function renderList() {
+    var list = document.getElementById('wm-list');
+    list.innerHTML = '';
+    items.forEach(function (item) {
+      var row = document.createElement('div');
+      row.className = 't-row';
+      row.id = 'wm-row-' + item.id;
+      list.appendChild(row);
+      renderRow(item);
+    });
+    document.getElementById('wm-empty').style.display = items.length ? 'none' : '';
+    document.getElementById('wm-bar').hidden = !items.length;
+  }
+  function renderBar() {
+    if (!items.length) return;
+    var out = 0, done = 0;
+    items.forEach(function (it) { if (it.outBlob) { out += it.outBlob.size; done++; } });
+    var txt = t('wm_bar_stats', { n: done, total: items.length, out: fmtSize(out) });
+    document.getElementById('wm-bar-stats').textContent = txt;
+  }
+
+  /* ---------- 添加文件 ---------- */
+  function addFiles(fileList) {
+    var added = 0;
+    var files = Array.prototype.slice.call(fileList || []);
+    for (var i = 0; i < files.length; i++) {
+      var f = files[i];
+      if (!f.type || f.type.indexOf('image/') !== 0) { showToast(t('wm_toast_type'), true); continue; }
+      if (items.length >= MAX_FILES) { showToast(t('wm_toast_too_many', { n: MAX_FILES }), true); break; }
+      (function (file) {
+        var item = { id: ++seq, file: file, url: '', outUrl: '', img: null, w: 0, h: 0, outBlob: null, outName: '' };
+        items.push(item);
+        added++;
+        loadFile(file).then(function (r) {
+          item.img = r.img; item.url = r.url;
+          item.w = r.img.naturalWidth || r.img.width;
+          item.h = r.img.naturalHeight || r.img.height;
+          renderRow(item);
+          renderBar();
+        }).catch(function () {
+          removeItem(item.id);
+          showToast(t('wm_toast_type'), true);
+        });
+      })(f);
+    }
+    if (added) { renderList(); scheduleRerun(); }
+  }
+  function removeItem(id) {
+    for (var i = 0; i < items.length; i++) {
+      if (items[i].id === id) {
+        if (items[i].url) URL.revokeObjectURL(items[i].url);
+        if (items[i].outUrl) URL.revokeObjectURL(items[i].outUrl);
+        items.splice(i, 1);
+        break;
+      }
+    }
+    renderList(); renderBar();
+  }
+  function downloadBlob(blob, name) {
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = name;
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(function () { URL.revokeObjectURL(a.href); }, 4000);
+  }
+
+  /* ---------- ZIP（与 convert 同源的手工实现：CRC32 查表 + UTF-8 文件名 + 固定结构） ---------- */
+  var CRC_TABLE = null;
+  function getCrcTable() {
+    if (CRC_TABLE) return CRC_TABLE;
+    CRC_TABLE = new Uint32Array(256);
+    for (var i = 0; i < 256; i++) {
+      var c = i;
+      for (var k = 0; k < 8; k++) c = (c & 1) ? (0xEDB88320 ^ (c >>> 1)) : (c >>> 1);
+      CRC_TABLE[i] = c >>> 0;
+    }
+    return CRC_TABLE;
+  }
+  function crc32(buf) {
+    var table = getCrcTable();
+    var crc = 0xFFFFFFFF;
+    for (var i = 0; i < buf.length; i++) crc = table[(crc ^ buf[i]) & 0xFF] ^ (crc >>> 8);
+    return (crc ^ 0xFFFFFFFF) >>> 0;
+  }
+  function buildZip(files) {
+    var enc = new TextEncoder();
+    var chunks = [], central = [], offset = 0;
+    var now = new Date();
+    var dosTime = ((now.getHours() & 31) << 11) | ((now.getMinutes() & 63) << 5) | ((now.getSeconds() >> 1) & 31);
+    var dosDate = ((Math.max(0, now.getFullYear() - 1980) & 127) << 9) | (((now.getMonth() + 1) & 15) << 5) | (now.getDate() & 31);
+    for (var f = 0; f < files.length; f++) {
+      var nameBytes = enc.encode(files[f].name);
+      var data = files[f].data;
+      var crc = crc32(data);
+      var local = new DataView(new ArrayBuffer(30));
+      local.setUint32(0, 0x04034b50, true); local.setUint16(4, 20, true); local.setUint16(6, 0x0800, true);
+      local.setUint16(8, 0, true); local.setUint16(10, dosTime, true); local.setUint16(12, dosDate, true);
+      local.setUint32(14, crc, true); local.setUint32(18, data.length, true); local.setUint32(22, data.length, true);
+      local.setUint16(26, nameBytes.length, true); local.setUint16(28, 0, true);
+      chunks.push(new Uint8Array(local.buffer), nameBytes, data);
+      var cd = new DataView(new ArrayBuffer(46));
+      cd.setUint32(0, 0x02014b50, true); cd.setUint16(4, 20, true); cd.setUint16(6, 20, true); cd.setUint16(8, 0x0800, true);
+      cd.setUint16(10, 0, true); cd.setUint16(12, dosTime, true); cd.setUint16(14, dosDate, true);
+      cd.setUint32(16, crc, true); cd.setUint32(20, data.length, true); cd.setUint32(24, data.length, true);
+      cd.setUint16(28, nameBytes.length, true); cd.setUint16(30, 0, true); cd.setUint16(32, 0, true); cd.setUint16(34, 0, true); cd.setUint16(36, 0, true);
+      cd.setUint32(38, 0, true); cd.setUint32(42, offset, true);
+      central.push({ header: new Uint8Array(cd.buffer), name: nameBytes });
+      offset += 30 + nameBytes.length + data.length;
+    }
+    var centralStart = offset, centralSize = 0;
+    central.forEach(function (c) { chunks.push(c.header, c.name); centralSize += c.header.length + c.name.length; });
+    var end = new DataView(new ArrayBuffer(22));
+    end.setUint32(0, 0x06054b50, true); end.setUint16(4, 0, true); end.setUint16(6, 0, true);
+    end.setUint16(8, files.length, true); end.setUint16(10, files.length, true);
+    end.setUint32(12, centralSize, true); end.setUint32(16, centralStart, true); end.setUint16(20, 0, true);
+    chunks.push(new Uint8Array(end.buffer));
+    return new Blob(chunks, { type: 'application/zip' });
+  }
+  function blobToU8(blob) {
+    return blob.arrayBuffer ? blob.arrayBuffer().then(function (b) { return new Uint8Array(b); })
+      : new Promise(function (resolve) {
+          var r = new FileReader();
+          r.onload = function () { resolve(new Uint8Array(r.result)); };
+          r.readAsArrayBuffer(blob);
+        });
+  }
+  async function downloadZip() {
+    if (!items.length) { showToast(t('wm_toast_empty'), true); return; }
+    var files = [];
+    var used = {};
+    for (var i = 0; i < items.length; i++) {
+      var it = items[i];
+      if (!it.outBlob) continue;
+      var name = it.outName;
+      if (used[name]) name = name.replace(/(\.[^.]+)$/, '-' + (i + 1) + '$1');
+      used[name] = 1;
+      files.push({ name: name, data: await blobToU8(it.outBlob) });
+    }
+    if (!files.length) { showToast(t('wm_toast_empty'), true); return; }
+    downloadBlob(buildZip(files), 'watermarked-images.zip');
+    showToast(t('wm_toast_zip'));
+  }
+
+  /* ---------- Toast ---------- */
+  var toastTimer = null;
+  function showToast(msg, isErr) {
+    var el = document.getElementById('wm-toast');
+    el.querySelector('.t-toast-title').textContent = msg;
+    el.classList.toggle('error', !!isErr);
+    el.classList.add('show');
+    if (toastTimer) clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { el.classList.remove('show'); }, 2600);
+  }
+
+  /* ---------- 事件绑定 ---------- */
+  var dz = document.getElementById('wm-dropzone');
+  var fileInput = document.getElementById('wm-file');
+  dz.addEventListener('click', function () { fileInput.click(); });
+  dz.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fileInput.click(); } });
+  fileInput.addEventListener('change', function (e) { addFiles(e.target.files); fileInput.value = ''; });
+  ['dragenter', 'dragover'].forEach(function (ev) {
+    dz.addEventListener(ev, function (e) { e.preventDefault(); dz.classList.add('is-over'); });
+  });
+  ['dragleave', 'drop'].forEach(function (ev) {
+    dz.addEventListener(ev, function (e) { e.preventDefault(); dz.classList.remove('is-over'); });
+  });
+  dz.addEventListener('drop', function (e) {
+    var dt = e.dataTransfer;
+    if (dt && dt.files && dt.files.length) addFiles(dt.files);
+  });
+
+  document.getElementById('wm-text').addEventListener('change', scheduleRerun);
+  var op = document.getElementById('wm-opacity');
+  op.addEventListener('input', function () {
+    document.getElementById('wm-opacity-val').textContent = op.value;
+  });
+  op.addEventListener('change', scheduleRerun);
+  ['change'].forEach(function (ev) {
+    document.getElementById('wm-size').addEventListener(ev, scheduleRerun);
+    document.getElementById('wm-pos').addEventListener(ev, scheduleRerun);
+    document.getElementById('wm-rot').addEventListener(ev, scheduleRerun);
+    document.getElementById('wm-tile').addEventListener(ev, scheduleRerun);
+    document.getElementById('wm-color').addEventListener(ev, scheduleRerun);
+  });
+
+  document.getElementById('wm-list').addEventListener('click', function (e) {
+    var btn = e.target.closest ? e.target.closest('.t-icon-btn') : null;
+    if (!btn) return;
+    var row = btn.closest('.t-row');
+    if (!row) return;
+    var id = parseInt(row.id.replace('wm-row-', ''), 10);
+    var act = btn.getAttribute('data-act');
+    if (act === 'rm') { removeItem(id); return; }
+    if (act === 'dl') {
+      for (var i = 0; i < items.length; i++) {
+        if (items[i].id === id && items[i].outBlob) {
+          downloadBlob(items[i].outBlob, items[i].outName);
+          return;
+        }
+      }
+    }
+  });
+  document.getElementById('wm-add').addEventListener('click', function () { fileInput.click(); });
+  document.getElementById('wm-clear').addEventListener('click', function () {
+    items.forEach(function (it) {
+      if (it.url) URL.revokeObjectURL(it.url);
+      if (it.outUrl) URL.revokeObjectURL(it.outUrl);
+    });
+    items = [];
+    renderList();
+  });
+  document.getElementById('wm-zip').addEventListener('click', downloadZip);
+
+  /* 语言切换时刷新动态文本 */
+  document.addEventListener('cataito-lang-change', function () {
+    renderList();
+    renderBar();
+    var v = document.getElementById('wm-opacity-val');
+    if (v) v.textContent = document.getElementById('wm-opacity').value;
+  });
+})();
+});
+</script>
+
+<style>
+  /* 本页专属规则；通用组件（卡片/上传区/字段/分段控件/结果行/按钮/Toast）
+     已统一复用 /assets/css/site.css 的 .t-* 共享组件层 */
+  .wm-row-actions { display: flex; gap: 6px; flex: none; }
+  body.wm-busy .t-row { opacity: .55; }
+  .t-row-meta strong { color: var(--text-2); font-variant-numeric: tabular-nums; }
+  /* 缩略图透明底统一用 site.css 的 .t-checker，不再覆盖 .t-thumb 背景 */
+  input[type="color"].t-input-color {
+    width: 64px; height: 36px; padding: 2px; border: 1px solid var(--line);
+    border-radius: 8px; background: var(--bg-2); cursor: pointer;
+  }
+  @media (max-width: 560px) {
+    .t-bar { flex-direction: column; align-items: stretch; }
+    .t-bar-actions { width: 100%; }
+    .t-bar-actions .t-btn { flex: 1; }
+  }
+</style>
+</body>
+</html>
