@@ -110,6 +110,7 @@
       <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4m0 0L7 9m5-5l5 5"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
       <span class="t-drop-title" data-i18n="pl_upload">点击或拖入图片</span>
       <span class="t-drop-hint" data-i18n="pl_dz_hint">PNG / JPG / WebP / SVG · 全程本地处理，不上传</span>
+      <button type="button" class="t-btn" id="pl-clear" data-i18n="pl_clear" hidden>清除图片，重新开始</button>
     </div>
 
     <div class="t-block">
@@ -477,6 +478,7 @@ document.addEventListener('DOMContentLoaded', function () {
     img.onload = function () {
       state.img = img;
       state.name = file.name || 'palette';
+      document.getElementById('pl-clear').hidden = false;
       recompute();
       showToast(t('pl_toast_done', { n: state.colors.length }));
     };
@@ -540,6 +542,16 @@ document.addEventListener('DOMContentLoaded', function () {
       var f = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
       if (f) loadFile(f);
     });
+
+    var clearBtn = document.getElementById('pl-clear');
+    clearBtn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      state.img = null; state.colors = []; state.name = '';
+      clearBtn.hidden = true;
+      render();
+      showToast(t('pl_toast_cleared'));
+    });
+    clearBtn.addEventListener('keydown', function (e) { e.stopPropagation(); });
 
     document.getElementById('pl-count').addEventListener('change', recompute);
     document.getElementById('pl-scheme').addEventListener('change', recompute);

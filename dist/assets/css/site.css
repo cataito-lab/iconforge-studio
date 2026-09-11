@@ -124,6 +124,31 @@ html.dark .brand__logo--light { display: inline-block; }
 .nav a:hover { color: var(--accent); }
 .nav a.active { color: var(--text); border-bottom-color: var(--accent); font-weight: 600; }
 
+/* 「更多工具」下拉：纯 CSS hover/focus，未来加工具只改 site.js 的 MORE_ITEMS */
+.nav-more { position: relative; }
+.nav-more-btn {
+  background: none; border: none; cursor: pointer;
+  font-size: 13.5px; color: var(--text-2);
+  padding: 7px 11px; border-bottom: 2px solid transparent;
+  font-family: inherit; display: inline-flex; align-items: center; gap: 4px;
+}
+.nav-more-btn::after { content: "▾"; font-size: 10px; }
+.nav-more-btn:hover { color: var(--accent); }
+.nav-more.has-active .nav-more-btn { color: var(--text); border-bottom-color: var(--accent); font-weight: 600; }
+.nav-more-menu {
+  display: none; position: absolute; top: 100%; left: 0;
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: var(--radius-sm); box-shadow: var(--shadow-md);
+  min-width: 132px; padding: 6px 0; z-index: 30;
+}
+.nav-more:hover .nav-more-menu, .nav-more:focus-within .nav-more-menu { display: block; }
+.nav-more-menu a {
+  display: block; padding: 8px 16px; font-size: 13px;
+  color: var(--text-2); text-decoration: none; border-bottom: none;
+}
+.nav-more-menu a:hover { color: var(--accent); background: var(--accent-soft-2); }
+.nav-more-menu a.active { color: var(--accent); font-weight: 600; }
+
 .lang-switch {
   display: inline-flex; align-items: center; gap: 6px;
   border: 1px solid var(--border);

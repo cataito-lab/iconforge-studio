@@ -22,6 +22,7 @@
     nav_gr:         { zh: '渐变', en: 'Gradient' },
     nav_pw:         { zh: '密码', en: 'Password' },
     nav_mt:         { zh: 'Meta', en: 'Meta Tags' },
+    nav_more:       { zh: '更多工具', en: 'More tools' },
     nav_guides:     { zh: '指南', en: 'Guides' },
     nav_tools:      { zh: '工具',   en: 'Tools' },
     brand_sub:      { zh: '免费工具箱', en: 'FREE TOOLS' },
@@ -368,6 +369,8 @@
     pl_faq_4_q:      { zh: '提取的颜色可以直接做品牌色吗？', en: 'Can I use the extracted colors as brand colors directly?' },
     pl_faq_4_a:      { zh: '建议以它为起点再手动微调：算法提取的是统计意义上的平均色，通常会略微发灰，实际使用时可适度提高饱和度，并在深浅背景下各验证一次对比度。', en: 'Treat them as a starting point: the algorithm produces statistical averages that tend to look slightly desaturated. Bump saturation a little and check contrast on both light and dark backgrounds.' },
     pl_toast_type:      { zh: '请上传图片文件', en: 'Please upload an image file' },
+    pl_clear:           { zh: '清除图片，重新开始', en: 'Clear image and restart' },
+    pl_toast_cleared:   { zh: '已清除，可重新上传', en: 'Cleared — upload a new image' },
     pl_toast_done:      { zh: '已提取 ${n} 个颜色', en: 'Extracted ${n} colors' },
     pl_toast_load_fail: { zh: '图片读取失败，换一张试试', en: 'Could not read that image — try another' },
     pl_toast_read_fail: { zh: '无法读取像素，请换一张图片', en: 'Could not read pixels — try another image' },
@@ -766,6 +769,20 @@
 
   var MARK = '<svg width="18" height="18" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="7" fill="#fff"/><rect x="8" y="8" width="7" height="7" rx="1.5" fill="#6d6ae8"/><rect x="17" y="8" width="7" height="7" rx="1.5" fill="#6d6ae8" opacity=".55"/><rect x="8" y="17" width="7" height="7" rx="1.5" fill="#6d6ae8" opacity=".55"/><rect x="17" y="17" width="7" height="7" rx="1.5" fill="#6d6ae8" opacity=".3"/></svg>';
 
+  /* 导航「更多工具」下拉清单：新增工具只需在此追加，不动顶栏结构 */
+  var MORE_ITEMS = [
+    { href: '/convert/', key: 'nav_cv', label: '格式转换' },
+    { href: '/resize/', key: 'nav_rz', label: '裁剪缩放' },
+    { href: '/contrast/', key: 'nav_ct', label: '对比度' },
+    { href: '/barcode/', key: 'nav_bc', label: '条形码' },
+    { href: '/watermark/', key: 'nav_wm', label: '水印' },
+    { href: '/gradient/', key: 'nav_gr', label: '渐变' },
+    { href: '/password/', key: 'nav_pw', label: '密码' },
+    { href: '/meta-tags/', key: 'nav_mt', label: 'Meta 标签' }
+  ];
+  function MORE_ACTIVE(path) {
+    return MORE_ITEMS.some(function (it) { return path.indexOf(it.href) === 0; });
+  }
   function renderHeader() {
     var el = document.getElementById('site-header');
     if (!el) return;
@@ -787,16 +804,16 @@
           '<a href="/favicon/" class="' + (active('/favicon/') ? 'active' : '') + '" data-i18n="nav_fv">Favicon</a>' +
           '<a href="/compress/" class="' + (active('/compress/') ? 'active' : '') + '" data-i18n="nav_cp">压缩</a>' +
           '<a href="/palette/" class="' + (active('/palette/') ? 'active' : '') + '" data-i18n="nav_pl">配色</a>' +
-          '<a href="/convert/" class="' + (active('/convert/') ? 'active' : '') + '" data-i18n="nav_cv">转换</a>' +
-          '<a href="/resize/" class="' + (active('/resize/') ? 'active' : '') + '" data-i18n="nav_rz">裁剪</a>' +
-          '<a href="/contrast/" class="' + (active('/contrast/') ? 'active' : '') + '" data-i18n="nav_ct">对比度</a>' +
           '<a href="/qrcode/" class="' + (active('/qrcode/') ? 'active' : '') + '" data-i18n="nav_qr">二维码</a>' +
-          '<a href="/barcode/" class="' + (active('/barcode/') ? 'active' : '') + '" data-i18n="nav_bc">条形码</a>' +
-          '<a href="/watermark/" class="' + (active('/watermark/') ? 'active' : '') + '" data-i18n="nav_wm">水印</a>' +
-          '<a href="/gradient/" class="' + (active('/gradient/') ? 'active' : '') + '" data-i18n="nav_gr">渐变</a>' +
-          '<a href="/password/" class="' + (active('/password/') ? 'active' : '') + '" data-i18n="nav_pw">密码</a>' +
-          '<a href="/meta-tags/" class="' + (active('/meta-tags/') ? 'active' : '') + '" data-i18n="nav_mt">Meta</a>' +
           '<a href="/guides/" class="' + (active('/guides/') ? 'active' : '') + '" data-i18n="nav_guides">指南</a>' +
+          '<div class="nav-more' + (MORE_ACTIVE(path) ? ' has-active' : '') + '">' +
+            '<button type="button" class="nav-more-btn" aria-haspopup="true" data-i18n="nav_more">更多工具</button>' +
+            '<div class="nav-more-menu">' +
+              MORE_ITEMS.map(function (it) {
+                return '<a href="' + it.href + '" class="' + (active(it.href) ? 'active' : '') + '" data-i18n="' + it.key + '">' + it.label + '</a>';
+              }).join('') +
+            '</div>' +
+          '</div>' +
         '</nav>' +
         '<div class="header-actions">' +
           '<button class="theme-switch" id="theme-switch" type="button" data-i18n-title="theme_toggle" aria-label="Toggle theme">' +
