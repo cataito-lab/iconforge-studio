@@ -35,12 +35,12 @@
 
 ## 五、内容清单与新增 checklist
 
-- 工具 8：`/icon-forge/`（ICO/PNG 图标）、`/favicon/`、`/compress/`（≤20 张批量）、`/palette/`、`/convert/`（PNG/JPEG/WebP 互转，转 JPEG 铺白底、WebP/PNG 保透明）、`/resize/`（居中裁切 1:1/4:3/16:9/9:16 + 最长边缩放，默认保持原格式）、`/contrast/`（WCAG 对比度检查 + 自动调整）、`/qrcode/`（自研 QR 编码器，字节模式 v1-40，矩阵级验证）
+- 工具 13：`/icon-forge/`（ICO/PNG 图标）、`/favicon/`、`/compress/`（≤20 张批量）、`/palette/`、`/convert/`（PNG/JPEG/WebP 互转，转 JPEG 铺白底、WebP/PNG 保透明）、`/resize/`（居中裁切 1:1/4:3/16:9/9:16 + 最长边缩放，默认保持原格式）、`/contrast/`（WCAG 对比度检查 + 自动调整）、`/qrcode/`（自研 QR 编码器，字节模式 v1-40，矩阵级验证）
 - 指南 12：ico-file-guide、favicon-guide、dark-mode-icons、image-compression-guide、webp-guide、color-guide、app-icon-sizes、png-to-ico-guide、favicon-not-showing-guide、transparent-icon-guide、accessibility-contrast-guide、qr-not-scanning-guide（均中英双语 `.lb-zh`/`.lb-en` 双块）
 - 信任页：about / privacy / contact + 404（noindex）
 
 **新增页面 checklist**：`sitemap.xml`（hreflang 三连 zh-CN/en/x-default + priority）→ `llms.txt` → guides 索引卡（如指南）→ `site.js` 词典（`gd_*` 键）→ 相关工具页反向内链 → `<title>` 双语 meta + JSON-LD。⚠️ 每新增一篇指南，首页「实用指南」区块（4 篇轮换 + 全部入口）与指南间互链网络也要同步评估（2026-09-05 B3 内链加固后建立的网络基线见 HANDOFF）。
-- sitemap 现共 25 URL（首页 + 8 工具 + about/privacy/contact + /guides/ + 12 指南）；首页有「实用指南」编号目录区块（4 篇支柱 + 全部入口）；guides 索引页收齐 10 卡。导航为短标签（`nav_*` 词典键），完整名称在页面 h1 与首页卡。
+- sitemap 现共 30 URL（首页 + 13 工具 + about/privacy/contact + /guides/ + 12 指南）；首页有「实用指南」编号目录区块（4 篇支柱 + 全部入口）；guides 索引页收齐 10 卡。导航为短标签（`nav_*` 词典键），完整名称在页面 h1 与首页卡。
 
 ## 六、数据与统计
 
