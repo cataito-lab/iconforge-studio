@@ -109,6 +109,13 @@
     font-size: 11px; color: var(--text-3);
     padding-top: 12px; border-top: 1px solid var(--border);
   }
+
+  .if-clear-btn {
+    margin-top: 8px; font-size: 12px; color: var(--danger);
+    background: none; border: 1px solid var(--border); border-radius: var(--radius-sm);
+    padding: 5px 12px; cursor: pointer;
+  }
+  .if-clear-btn:hover { border-color: var(--danger); }
 </style>
 <script>
   (function () {
@@ -174,6 +181,7 @@
               <div class="preview-stage light t-checker">
                 <img id="render-preview-light" src="" alt="" style="display:none">
                 <div id="placeholder-preview-light" class="ph" data-i18n="if_no_preview">暂无预览</div>
+                <button type="button" id="if-clear-light" class="if-clear-btn" data-i18n="if_clear_img" hidden>删除图片</button>
               </div>
             </div>
           </div>
@@ -200,6 +208,7 @@
               <div class="preview-stage dark">
                 <img id="render-preview-dark" src="" alt="" style="display:none">
                 <div id="placeholder-preview-dark" class="ph" data-i18n="if_no_preview">暂无预览</div>
+                <button type="button" id="if-clear-dark" class="if-clear-btn" data-i18n="if_clear_img" hidden>删除图片</button>
               </div>
             </div>
           </div>
@@ -598,12 +607,36 @@ document.addEventListener('DOMContentLoaded', function () {
         preview.src = dataUrl;
         preview.style.display = '';
         document.getElementById('placeholder-preview-dark').style.display = 'none';
+        document.getElementById('if-clear-dark').hidden = false;
       }
+      const clearBtn = document.getElementById(type === 'light' ? 'if-clear-light' : 'if-clear-dark');
+      if (clearBtn) clearBtn.hidden = false;
       // [修复 P5] 成功后清空 input.value，允许再次选择同一文件
       if (inputEl) inputEl.value = '';
     };
     img.src = dataUrl;
   }
+
+
+  // 删除已上传图片：清空对应槽位并复位预览
+  function clearSlot(type) {
+    if (type === 'light') {
+      state.lightImage = null;
+      const p = document.getElementById('render-preview-light');
+      p.src = ''; p.style.display = 'none';
+      document.getElementById('placeholder-preview-light').style.display = '';
+      document.getElementById('if-clear-light').hidden = true;
+    } else {
+      state.darkImage = null;
+      const p = document.getElementById('render-preview-dark');
+      p.src = ''; p.style.display = 'none';
+      document.getElementById('placeholder-preview-dark').style.display = '';
+      document.getElementById('if-clear-dark').hidden = true;
+    }
+    refreshSourceInfo && refreshSourceInfo();
+  }
+  document.getElementById('if-clear-light').addEventListener('click', function (e) { e.stopPropagation(); clearSlot('light'); });
+  document.getElementById('if-clear-dark').addEventListener('click', function (e) { e.stopPropagation(); clearSlot('dark'); });
 
   // 规范化 SVG：补齐 width/height（优先用 viewBox 推导，都没有则默认 512），确保 img 有内宽高
   function normalizeSvg(svgText) {

@@ -123,6 +123,11 @@
       </div>
     </div>
 
+    <div class="t-block" id="wm-preview-block" hidden>
+      <div class="t-label" data-i18n="wm_preview">实时预览（第一张图）</div>
+      <div class="wm-preview-wrap"><img id="wm-preview-img" alt="watermark preview"></div>
+    </div>
+
     <div id="wm-list" class="t-list"></div>
     <p id="wm-empty" class="t-empty" data-i18n="wm_empty">还没有图片，先上传几张试试。</p>
 
@@ -322,7 +327,25 @@ document.addEventListener('DOMContentLoaded', function () {
     renderBar();
   }
   var rerunTimer = null;
+  function renderPreview() {
+    var block = document.getElementById('wm-preview-block');
+    var imgEl = document.getElementById('wm-preview-img');
+    var src = null;
+    for (var i = 0; i < items.length; i++) { if (items[i].img) { src = items[i]; break; } }
+    if (!src) { block.hidden = true; return; }
+    block.hidden = false;
+    var w = src.img.naturalWidth || src.img.width, h = src.img.naturalHeight || src.img.height;
+    var c = document.createElement('canvas');
+    c.width = Math.max(1, w); c.height = Math.max(1, h);
+    var ctx = c.getContext('2d');
+    ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = 'high';
+    ctx.drawImage(src.img, 0, 0, c.width, c.height);
+    drawWatermark(c, currentSettings());
+    imgEl.src = c.toDataURL('image/png');
+  }
+
   function scheduleRerun() {
+    renderPreview();
     if (!items.length) return;
     if (rerunTimer) clearTimeout(rerunTimer);
     rerunTimer = setTimeout(runAll, 280);
@@ -397,6 +420,7 @@ document.addEventListener('DOMContentLoaded', function () {
           item.h = r.img.naturalHeight || r.img.height;
           renderRow(item);
           renderBar();
+          renderPreview();
         }).catch(function () {
           removeItem(item.id);
           showToast(t('wm_toast_type'), true);
@@ -415,6 +439,7 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     }
     renderList(); renderBar();
+    renderPreview();
   }
   function downloadBlob(blob, name) {
     var a = document.createElement('a');
@@ -530,9 +555,11 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   document.getElementById('wm-text').addEventListener('change', scheduleRerun);
+  document.getElementById('wm-text').addEventListener('input', renderPreview);
   var op = document.getElementById('wm-opacity');
   op.addEventListener('input', function () {
     document.getElementById('wm-opacity-val').textContent = op.value;
+    renderPreview();
   });
   op.addEventListener('change', scheduleRerun);
   ['change'].forEach(function (ev) {
@@ -568,6 +595,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
     items = [];
     renderList();
+    renderPreview();
   });
   document.getElementById('wm-zip').addEventListener('click', downloadZip);
 
@@ -593,6 +621,8 @@ document.addEventListener('DOMContentLoaded', function () {
     width: 64px; height: 36px; padding: 2px; border: 1px solid var(--line);
     border-radius: 8px; background: var(--bg-2); cursor: pointer;
   }
+  .wm-preview-wrap { display: flex; justify-content: center; }
+  #wm-preview-img { max-width: 100%; max-height: 420px; border: 1px solid var(--border); border-radius: var(--radius-sm); }
   @media (max-width: 560px) {
     .t-bar { flex-direction: column; align-items: stretch; }
     .t-bar-actions { width: 100%; }
