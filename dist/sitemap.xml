@@ -226,6 +226,46 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://tools.cataito.com/guides/barcode-guide/</loc>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://tools.cataito.com/guides/barcode-guide/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tools.cataito.com/guides/barcode-guide/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tools.cataito.com/guides/barcode-guide/"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://tools.cataito.com/guides/watermark-guide/</loc>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://tools.cataito.com/guides/watermark-guide/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tools.cataito.com/guides/watermark-guide/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tools.cataito.com/guides/watermark-guide/"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://tools.cataito.com/guides/gradient-guide/</loc>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://tools.cataito.com/guides/gradient-guide/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tools.cataito.com/guides/gradient-guide/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tools.cataito.com/guides/gradient-guide/"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://tools.cataito.com/guides/password-guide/</loc>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://tools.cataito.com/guides/password-guide/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tools.cataito.com/guides/password-guide/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tools.cataito.com/guides/password-guide/"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://tools.cataito.com/guides/meta-tags-guide/</loc>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://tools.cataito.com/guides/meta-tags-guide/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tools.cataito.com/guides/meta-tags-guide/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tools.cataito.com/guides/meta-tags-guide/"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://tools.cataito.com/guides/color-guide/</loc>
     <xhtml:link rel="alternate" hreflang="zh-CN" href="https://tools.cataito.com/guides/color-guide/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://tools.cataito.com/guides/color-guide/?lang=en"/>

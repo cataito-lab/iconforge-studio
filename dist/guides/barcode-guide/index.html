@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>条形码入门与打印指南：Code128 / EAN-13 怎么选 | CATAITO</title>
+<meta name="title-zh" content="条形码入门与打印指南：Code128 / EAN-13 怎么选 | CATAITO">
+<meta name="title-en" content="Barcode Basics & Printing Guide: Code128 vs EAN-13 | CATAITO">
+<meta name="description" content="条形码选型与打印完整指南：Code128 与 EAN-13 怎么选（内部资产 vs 零售）、EAN-13 校验位原理与手算方法、打印规范（最小尺寸、≥300 DPI、静区），以及条码与二维码的选择建议。纯浏览器本地生成。">
+<meta name="theme-color" content="#f6f3ec">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="CATAITO 工具箱">
+<meta property="og:title" content="条形码入门与打印指南：Code128 / EAN-13 怎么选">
+<meta property="og:description" content="两种条码怎么选、校验位怎么算、最小尺寸与静区怎么留——一维码选型与打印一次讲清。">
+<meta property="og:url" content="https://tools.cataito.com/guides/barcode-guide/">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:locale:alternate" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="条形码入门与打印指南">
+<meta name="twitter:description" content="Code128 / EAN-13 怎么选、校验位原理与打印规范。">
+<link rel="canonical" href="https://tools.cataito.com/guides/barcode-guide/">
+<link rel="icon" href="/assets/img/icon.svg">
+<link rel="stylesheet" href="/assets/css/site.css">
+<script src="/assets/js/theme-init.js"></script>
+<script>
+  (function () {
+    try {
+      var l = localStorage.getItem('cataito-lang');
+      document.documentElement.setAttribute('lang', (l === 'en') ? 'en' : 'zh-CN');
+      if (l === 'en') document.documentElement.classList.add('lang-en');
+    } catch (e) {}
+  })();
+</script>
+<style>
+  /* ============ 指南页排版（与其他指南页保持一致） ============ */
+  .guide-wrap { max-width: 760px; margin: 0; }
+  .guide-meta { font-size: 13px; color: var(--text-3); margin: 0 0 6px; }
+  .page-sub { margin-bottom: 10px; }
+  .article { font-size: 15px; line-height: 1.85; color: var(--text); }
+  .article h2 {
+    font-size: 21px; font-weight: 700; letter-spacing: -.3px;
+    margin: 44px 0 14px; padding-top: 16px; border-top: 1px solid var(--border); color: var(--text);
+  }
+  .article h3 { font-size: 16.5px; font-weight: 650; margin: 26px 0 10px; color: var(--text); }
+  .article p { margin: 0 0 14px; color: var(--text-2); }
+  .article strong { color: var(--text); font-weight: 650; }
+  .article a { color: var(--accent); text-decoration: none; }
+  .article a:hover { text-decoration: underline; }
+  .article ul, .article ol { margin: 0 0 16px; padding-left: 22px; color: var(--text-2); }
+  .article li { margin: 6px 0; }
+  .article code {
+    font-family: var(--font-mono);
+    font-size: 13px; background: var(--card-2); border: 1px solid var(--border);
+    border-radius: 3px; padding: 1px 6px; color: var(--text);
+  }
+  .article pre {
+    background: var(--card-2); border: 1px solid var(--border); border-radius: var(--radius-sm);
+    padding: 14px 16px; margin: 14px 0 18px; overflow-x: auto;
+  }
+  .article pre code { background: none; border: none; padding: 0; font-size: 12.5px; line-height: 1.7; }
+  .article table {
+    width: 100%; border-collapse: collapse; margin: 18px 0 22px;
+    font-size: 13.5px; background: var(--card);
+    border: 1px solid var(--border); border-radius: var(--radius-sm); overflow: hidden;
+  }
+  .article th, .article td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--border); }
+  .article th { background: var(--card-2); color: var(--text); font-weight: 650; white-space: nowrap; }
+  .article td { color: var(--text-2); }
+  .article tr:last-child td { border-bottom: none; }
+  .toc {
+    background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 16px 18px; margin: 20px 0 8px; box-shadow: var(--shadow-sm);
+  }
+  .toc-title { font-size: 13px; font-weight: 650; color: var(--text); margin: 0 0 10px; }
+  .toc ol { margin: 0; padding-left: 20px; font-size: 13.5px; }
+  .toc li { margin: 5px 0; }
+  .toc a { color: var(--text-2); text-decoration: none; }
+  .toc a:hover { color: var(--accent); }
+  /* FAQ 卡片样式由 site.css 的 .faq-item / .t-faq-* 统一提供 */
+  .cta-box {
+    background: linear-gradient(135deg, var(--accent-soft), var(--accent-soft-2));
+    border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent); border-radius: var(--radius);
+    padding: 20px 22px; margin: 34px 0 10px; text-align: center;
+  }
+  .cta-box .cta-title { font-size: 17px; font-weight: 700; color: var(--text); margin: 0 0 6px; }
+  .cta-box .cta-sub { font-size: 13.5px; color: var(--text-2); margin: 0 0 14px; }
+  .cta-btn {
+    display: inline-block; background: var(--accent); color: #fff; text-decoration: none;
+    font-size: 14px; font-weight: 600; padding: 11px 26px; border-radius: var(--radius-sm);
+    box-shadow: 0 6px 18px var(--accent-glow); transition: background .15s;
+  }
+  .cta-btn:hover { background: var(--accent-hover); }
+  /* 修复：.article a 的特异度(0,1,1)会压过 .cta-btn(0,1,0) 的 color:#fff，
+     导致按钮底字同色在亮/暗模式下都不可读。用更高特异度夺回白色文字。 */
+  .article a.cta-btn, .article .cta-btn { color: #fff; text-decoration: none; }
+  .article a.cta-btn:hover { color: #fff; text-decoration: none; background: var(--accent-hover); }
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "条形码入门与打印指南：Code128 / EAN-13 怎么选",
+  "description": "详解 Code128 与 EAN-13 的选型逻辑（内部资产 vs 零售）、EAN-13 校验位原理、打印规范（最小尺寸、≥300 DPI、静区）以及条码与二维码的选择建议。",
+  "inLanguage": "zh-CN",
+  "datePublished": "2026-09-11",
+  "dateModified": "2026-09-11",
+  "author": { "@type": "Organization", "name": "CATAITO", "url": "https://tools.cataito.com/" },
+  "publisher": { "@type": "Organization", "name": "CATAITO 工具箱", "url": "https://tools.cataito.com/" },
+  "mainEntityOfPage": "https://tools.cataito.com/guides/barcode-guide/"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Code128 和 EAN-13 到底怎么选？",
+      "acceptedAnswer": { "@type": "Answer", "text": "看用途：给顾客扫的商品零售码必须用 EAN-13（申请 GS1 前缀），系统只认标准商品编码；仓库资产、内部单据、会员卡、序列号等内部用途选 Code128——支持大小写字母、数字和符号，长度不限，密度也更高。简单说：进超市用 EAN-13，不进超市用 Code128。" }
+    },
+    {
+      "@type": "Question",
+      "name": "EAN-13 的校验位是怎么算的？",
+      "acceptedAnswer": { "@type": "Answer", "text": "前 12 位从右往左交替乘以 3 和 1，求和后取「补到下一个 10 的倍数」的差：校验位 = (10 − 和的个位) mod 10。例如前 12 位加权求和得到 101，个位是 1，校验位就是 9。扫码器解码后会重算校验和，不一致就拒绝读取，所以校验位错一位，整条码就扫不出来。" }
+    },
+    {
+      "@type": "Question",
+      "name": "条形码最小可以印多小？",
+      "acceptedAnswer": { "@type": "Answer", "text": "以 EAN-13 为例，标准尺寸是 37.29×25.93 毫米（放大系数 100%），规范允许的最低放大系数是 80%，再小扫描器就难以稳定识读。Code128 没有固定外形，但窄单元（最细的条或空）印刷时不低于 0.19 毫米、通常建议 0.25 毫米以上。尺寸越小，越要保证高分辨率打印和足够的静区。" }
+    },
+    {
+      "@type": "Question",
+      "name": "静区是什么？为什么条码总是被它「切断」？",
+      "acceptedAnswer": { "@type": "Answer", "text": "静区是条码两端必须保留的空白带，EAN-13 左端约 11 个模块、右端约 7 个模块宽，Code128 一般要求窄单元宽度的 10 倍以上。扫码器靠静区判断条码从哪里开始和结束，排版时被文字、边框或裁切线挤占，就会出现「条码明明印得很清楚却扫不出来」。设计稿里给条码预留独立区域，不要让任何元素侵入静区。" }
+    },
+    {
+      "@type": "Question",
+      "name": "条码扫不出来怎么排查？",
+      "acceptedAnswer": { "@type": "Answer", "text": "按命中率排查：先看静区是否被挤占，再检查打印分辨率是否达到 300 DPI（低分辨率会让细条发糊粘连），然后核对条码类型与内容是否匹配——比如把字母编进了只认数字的 EAN-13。最后用另一台扫描设备交叉验证，排除扫描器本身不兼容的情况。重新生成时逐字符核对内容，生成后立即实测。" }
+    },
+    {
+      "@type": "Question",
+      "name": "自己编的条码能用吗？什么时候需要申请 GS1 码？",
+      "acceptedAnswer": { "@type": "Answer", "text": "内部用途随时可以自己编：Code128 编上资产编号、工单号，只要自己的扫描系统能识别就行。但只要条码要流出组织、被外部系统扫描——尤其是作为商品零售条码进入商超和电商平台——就必须申请 GS1 厂商识别代码，使用全球唯一的 EAN-13 编码。自己编的码撞上别人的商品码，会造成库存和结算混乱。" }
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "首页", "item": "https://tools.cataito.com/" },
+    { "@type": "ListItem", "position": 2, "name": "使用指南", "item": "https://tools.cataito.com/guides/" },
+    { "@type": "ListItem", "position": 3, "name": "条形码入门与打印指南", "item": "https://tools.cataito.com/guides/barcode-guide/" }
+  ]
+}
+</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7103529190038161" crossorigin="anonymous"></script>
+</head>
+<body>
+<div id="site-header"></div>
+
+<main class="site-main">
+  <div class="guide-wrap">
+    <nav class="breadcrumb"><a href="/" data-i18n="crumb_home">首页</a><span class="sep">/</span><a href="/guides/" data-i18n="nav_guides">使用指南</a><span class="sep">/</span><span data-i18n="gd_bcg_short">条形码入门与打印指南</span></nav>
+    <p class="guide-meta"><span data-i18n="gd_published">发布于</span> 2026-09-11 · CATAITO</p>
+    <h1 class="page-h1" data-i18n="gd_bcg_h1">条形码入门与打印指南：Code128 / EAN-13 怎么选</h1>
+    <p class="page-sub" data-i18n="gd_bcg_sub">一维码不是「随便生成一串数字贴上去」。类型选错、校验位算错、静区被挤掉，条码就扫不出来。本文讲清 Code128 与 EAN-13 的选型逻辑、校验位原理、打印规范（最小尺寸、分辨率、静区），以及条码与二维码怎么取舍。</p>
+
+    <!-- ================= 中文正文 ================= -->
+    <div class="article lb-zh">
+      <div class="toc">
+        <p class="toc-title">目录</p>
+        <ol>
+          <li><a href="#choose">怎么选：内部资产 vs 零售</a></li>
+          <li><a href="#checksum">校验位原理</a></li>
+          <li><a href="#print">打印规范：尺寸、分辨率、静区</a></li>
+          <li><a href="#vs">条码 vs 二维码</a></li>
+          <li><a href="#faq">常见问题</a></li>
+        </ol>
+      </div>
+
+      <h2 id="choose">怎么选：内部资产 vs 零售</h2>
+      <p>选型的第一问不是「哪种更好」，而是<strong>这条码会被谁扫</strong>。只有你自己组织的扫描系统读，还是外部系统（商超 POS、电商平台、图书馆）也要读？答案直接决定类型。</p>
+
+      <h3>Code128：内部系统的万能码</h3>
+      <p>Code128 支持<strong>大小写字母、数字、全部 ASCII 符号</strong>，长度理论上不限，同一个码里混编「ABC-00123」没问题。密度高、配合校验可靠，是仓库资产标签、工单、会员号、序列号、图书馆索书号的事实标准。内部用途几乎无脑选它。</p>
+
+      <h3>EAN-13：零售商品的全球通行证</h3>
+      <p>EAN-13 是固定 <strong>13 位纯数字</strong>的零售商品条码，结构是全球统一的：前缀（国家/地区）+ 厂商识别代码 + 商品项代码 + 1 位校验位。它的前提是<strong>你申请了 GS1 厂商识别代码</strong>——没有 GS1 前缀的「自制 EAN-13」不是合法零售码，进不了正规商超渠道。</p>
+
+      <table>
+        <thead><tr><th>维度</th><th>Code128</th><th>EAN-13</th></tr></thead>
+        <tbody>
+          <tr><td>字符集</td><td>字母、数字、符号（ASCII）</td><td>仅数字</td></tr>
+          <tr><td>长度</td><td>可变</td><td>固定 13 位</td></tr>
+          <tr><td>是否需申请</td><td>不需要</td><td>需要（GS1 前缀）</td></tr>
+          <tr><td>典型场景</td><td>资产、工单、内部单据</td><td>零售商品、商超结算</td></tr>
+          <tr><td>校验方式</td><td>内置 mod 103</td><td>末位 mod 10 校验位</td></tr>
+        </tbody>
+      </table>
+
+      <p>确定类型后，用本站 <a href="/barcode/">条形码生成器</a> 直接生成——选类型、输入内容，校验位自动计算，全程浏览器本地完成，不上传任何数据。</p>
+
+      <h2 id="checksum">校验位原理</h2>
+      <p>校验位是印在条码末尾的一位「自检数字」：扫码器逐条解码后重新计算一遍，与读到的校验位比对，不一致就拒绝返回结果。它防的是<strong>误读</strong>——污损、掉墨、错位导致的读错一位，绝大多数会被校验拦下。</p>
+
+      <h3>EAN-13 的 mod 10 算法</h3>
+      <p>取前 12 位，从右往左依次乘以 3、1、3、1……求和后看个位：校验位 = (10 − 个位) mod 10。手算一遍最直观：</p>
+      <pre><code>前 12 位：6 9 0 1 2 3 4 5 6 7 8 9
+从右加权：×1 ×3 ×1 ×3 ×1 ×3 ×1 ×3 ×1 ×3 ×1 ×3
+        = 6 +27 +0 +3 +2 +9 +4 +15 +6 +21 +8 +27
+        = 128 → 个位 8 → 校验位 = (10−8) mod 10 = 2
+完整码：6901234567892</code></pre>
+      <p>生成器会自动算校验位，但理解原理有两个实际好处：核对印刷品上的数字有没有被打错；排查「条码清清楚楚却扫不出来」时，先怀疑内容或校验位错了。</p>
+
+      <h3>Code128 的内置校验</h3>
+      <p>Code128 的校验不占可见字符——每个符号自带 mod 103 校验字符，编码时自动附加。你不用管它，只需知道：码越短越宽、越容易一次读对。</p>
+
+      <h2 id="print">打印规范：尺寸、分辨率、静区</h2>
+      <p>条码是硬边缘图形，屏幕上看着对，印出来常出问题。三个硬指标：</p>
+      <ul>
+        <li><strong>最小尺寸</strong>：EAN-13 标准尺寸 37.29×25.93 毫米，允许的最低放大系数 80%；Code128 窄单元不低于 0.19 毫米，建议 0.25 毫米以上。尺寸越小越难扫，别压线设计；</li>
+        <li><strong>输出分辨率 ≥ 300 DPI</strong>：低分辨率打印会让最细的条发糊、粘连，直接读不出来。条件允许用矢量（PDF/SVG）输出最稳；</li>
+        <li><strong>静区</strong>：条码两端必须留空白——EAN-13 左 11 模块、右 7 模块，Code128 至少 10 倍窄单元宽度。静区被文字、边框、裁切线侵入是排稿时最常见的翻车点；</li>
+        <li><strong>颜色</strong>：条用深色、空和底用浅色，黑条白底最稳；不要用红色系做条（红色扫描器不识别），不要反白。</li>
+      </ul>
+      <p>打印前用 <a href="/barcode/">条形码生成器</a> 重新导出一份高分辨率版本，先打样实测再批量印刷——这一步和二维码印刷一样，永远不要省。</p>
+
+      <h2 id="vs">条码 vs 二维码</h2>
+      <p>两者不是替代关系，是<strong>面向对象不同</strong>：</p>
+      <ul>
+        <li><strong>选条码</strong>：内容是一个短编号、由扫描枪批量识读、成本敏感（不干胶标签即可）、不需要人看懂——库存、资产、票务检票、零售结算；</li>
+        <li><strong>选二维码</strong>：内容是网址或结构化数据、由消费者手机扫描、需要容错（破损仍可读）、要在码上叠 Logo——落地页、支付、名片、包装互动。</li>
+      </ul>
+      <p>简单判断：<strong>机器读编号用条码，人扫码看内容用二维码</strong>。同一个包装上两者共存很常见——侧面印商品条码供结算，背面印二维码供互动。如果选了二维码，印刷排障和参数选择可参考 <a href="/guides/qr-not-scanning-guide/" data-i18n="gd_qr_short">二维码扫不出来排查</a>，静区与分辨率的讲究是相通的。</p>
+
+      <h2 id="faq">常见问题</h2>
+      <div class="faq-item"><p class="faq-q">Q：Code128 和 EAN-13 到底怎么选？</p><p class="faq-a">A：看用途：给顾客扫的商品零售码必须用 EAN-13（申请 GS1 前缀），系统只认标准商品编码；仓库资产、内部单据、会员卡、序列号等内部用途选 Code128——支持大小写字母、数字和符号，长度不限，密度也更高。简单说：进超市用 EAN-13，不进超市用 Code128。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：EAN-13 的校验位是怎么算的？</p><p class="faq-a">A：前 12 位从右往左交替乘以 3 和 1，求和后取「补到下一个 10 的倍数」的差：校验位 = (10 − 和的个位) mod 10。例如前 12 位加权求和得到 101，个位是 1，校验位就是 9。扫码器解码后会重算校验和，不一致就拒绝读取，所以校验位错一位，整条码就扫不出来。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：条形码最小可以印多小？</p><p class="faq-a">A：以 EAN-13 为例，标准尺寸是 37.29×25.93 毫米（放大系数 100%），规范允许的最低放大系数是 80%，再小扫描器就难以稳定识读。Code128 没有固定外形，但窄单元（最细的条或空）印刷时不低于 0.19 毫米、通常建议 0.25 毫米以上。尺寸越小，越要保证高分辨率打印和足够的静区。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：静区是什么？为什么条码总是被它「切断」？</p><p class="faq-a">A：静区是条码两端必须保留的空白带，EAN-13 左端约 11 个模块、右端约 7 个模块宽，Code128 一般要求窄单元宽度的 10 倍以上。扫码器靠静区判断条码从哪里开始和结束，排版时被文字、边框或裁切线挤占，就会出现「条码明明印得很清楚却扫不出来」。设计稿里给条码预留独立区域，不要让任何元素侵入静区。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：条码扫不出来怎么排查？</p><p class="faq-a">A：按命中率排查：先看静区是否被挤占，再检查打印分辨率是否达到 300 DPI（低分辨率会让细条发糊粘连），然后核对条码类型与内容是否匹配——比如把字母编进了只认数字的 EAN-13。最后用另一台扫描设备交叉验证，排除扫描器本身不兼容的情况。重新生成时逐字符核对内容，生成后立即实测。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：自己编的条码能用吗？什么时候需要申请 GS1 码？</p><p class="faq-a">A：内部用途随时可以自己编：Code128 编上资产编号、工单号，只要自己的扫描系统能识别就行。但只要条码要流出组织、被外部系统扫描——尤其是作为商品零售条码进入商超和电商平台——就必须申请 GS1 厂商识别代码，使用全球唯一的 EAN-13 编码。自己编的码撞上别人的商品码，会造成库存和结算混乱。</p></div>
+
+      <div class="cta-box">
+        <p class="cta-title">免费在线生成条形码</p>
+        <p class="cta-sub">Code128 / EAN-13 · 校验位自动计算 · 高清 PNG · 纯浏览器本地生成</p>
+        <a class="cta-btn" href="/barcode/">打开条形码生成器 →</a>
+      </div>
+    </div>
+
+    <!-- ================= English body ================= -->
+    <div class="article lb-en">
+      <div class="toc">
+        <p class="toc-title">Table of Contents</p>
+        <ol>
+          <li><a href="#choose">Choosing: Internal Assets vs Retail</a></li>
+          <li><a href="#checksum">How Check Digits Work</a></li>
+          <li><a href="#print">Print Specs: Size, Resolution, Quiet Zone</a></li>
+          <li><a href="#vs">Barcode vs QR Code</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ol>
+      </div>
+
+      <h2 id="choose">Choosing: Internal Assets vs Retail</h2>
+      <p>The first question isn't "which is better" but <strong>who will scan this barcode</strong>. Only your own systems, or external ones too (retail POS, marketplaces, libraries)? The answer decides the symbology.</p>
+
+      <h3>Code128: the workhorse for internal systems</h3>
+      <p>Code128 supports <strong>upper/lowercase letters, digits, and all ASCII symbols</strong> with virtually unlimited length — mixing "ABC-00123" in one code is fine. High density and reliable checks make it the de-facto standard for warehouse asset tags, work orders, membership numbers, serials, and call numbers. For internal use, pick it by default.</p>
+
+      <h3>EAN-13: the global passport for retail</h3>
+      <p>EAN-13 is a fixed <strong>13-digit, numeric-only</strong> retail code with a worldwide structure: prefix (region) + manufacturer code + item reference + 1 check digit. It presumes <strong>a GS1 manufacturer prefix</strong> — a self-made "EAN-13" without one is not a legitimate retail code and won't be accepted by proper retail channels.</p>
+
+      <table>
+        <thead><tr><th>Aspect</th><th>Code128</th><th>EAN-13</th></tr></thead>
+        <tbody>
+          <tr><td>Charset</td><td>Letters, digits, symbols (ASCII)</td><td>Digits only</td></tr>
+          <tr><td>Length</td><td>Variable</td><td>Fixed 13 digits</td></tr>
+          <tr><td>Registration</td><td>Not required</td><td>Required (GS1 prefix)</td></tr>
+          <tr><td>Typical use</td><td>Assets, work orders, internal docs</td><td>Retail products, checkout</td></tr>
+          <tr><td>Check</td><td>Built-in mod 103</td><td>Trailing mod-10 check digit</td></tr>
+        </tbody>
+      </table>
+
+      <p>Once you've picked a type, generate it with this site's <a href="/barcode/">Barcode Generator</a> — choose the symbology, type the content, and the check digit is computed automatically, all locally in your browser.</p>
+
+      <h2 id="checksum">How Check Digits Work</h2>
+      <p>A check digit is a self-test digit at the end of the code: the scanner decodes each bar, recomputes the checksum, and rejects the result on mismatch. It guards against <strong>misreads</strong> — smudges, faded ink, and skew that flip a digit are mostly caught by the check.</p>
+
+      <h3>The EAN-13 mod-10 algorithm</h3>
+      <p>Take the first 12 digits, weight them alternately 3 and 1 from the right, sum them, then: check digit = (10 − last digit of the sum) mod 10. A worked example:</p>
+      <pre><code>First 12:  6 9 0 1 2 3 4 5 6 7 8 9
+Weights:  ×1 ×3 ×1 ×3 ×1 ×3 ×1 ×3 ×1 ×3 ×1 ×3
+        = 6 +27 +0 +3 +2 +9 +4 +15 +6 +21 +8 +27
+        = 128 → last digit 8 → check = (10−8) mod 10 = 2
+Full code: 6901234567892</code></pre>
+      <p>Generators compute it for you, but knowing the mechanics pays off twice: you can spot a mistyped digit on a printed label, and when a "perfectly printed" code won't scan, a wrong check digit is a prime suspect.</p>
+
+      <h3>Code128's built-in check</h3>
+      <p>Code128's check isn't a visible character — every symbol carries a mod-103 check character appended automatically at encode time. Nothing to manage; just know that shorter, wider codes read right on the first pass more often.</p>
+
+      <h2 id="print">Print Specs: Size, Resolution, Quiet Zone</h2>
+      <p>Barcodes are hard-edged graphics — fine on screen, fragile in print. Three hard requirements:</p>
+      <ul>
+        <li><strong>Minimum size</strong>: EAN-13 standard size is 37.29×25.93 mm with a minimum magnification of 80%; Code128 narrow elements should stay above 0.19 mm, ideally 0.25 mm+. Don't design at the limit — smaller means harder to scan;</li>
+        <li><strong>Output at ≥ 300 DPI</strong>: low resolution blurs and merges the narrowest bars, making the code unreadable. Vector output (PDF/SVG) is best when available;</li>
+        <li><strong>Quiet zone</strong>: keep blank margins at both ends — 11 modules left / 7 right for EAN-13, at least 10× the narrow element width for Code128. Quiet zones invaded by text, borders, or crop marks are the most common layout failure;</li>
+        <li><strong>Colors</strong>: dark bars on a light ground; black on white is safest. Avoid red bars (scanners skip red) and never invert.</li>
+      </ul>
+      <p>Re-export a high-resolution copy from the <a href="/barcode/">Barcode Generator</a> before printing, proof-test one copy, then run the batch — same rule as QR printing: never skip the live test.</p>
+
+      <h2 id="vs">Barcode vs QR Code</h2>
+      <p>They don't replace each other — they <strong>address different audiences</strong>:</p>
+      <ul>
+        <li><strong>Choose a barcode</strong> when the content is a short numeric ID read in bulk by scanners, cost-sensitive (plain labels), and not meant for humans — inventory, assets, ticketing, retail checkout;</li>
+        <li><strong>Choose a QR code</strong> when the content is a URL or structured data scanned by consumers' phones, when damage tolerance matters, or when you want a logo overlay — landing pages, payments, packaging interactivity.</li>
+      </ul>
+      <p>Rule of thumb: <strong>machines reading IDs get barcodes; people scanning content get QR codes</strong>. Packaging often carries both — a product barcode on one side for checkout, a QR code on the back for engagement. If you go the QR route, see <a href="/guides/qr-not-scanning-guide/" data-i18n="gd_qr_short">QR Code Not Scanning</a> — the quiet-zone and resolution discipline carries over.</p>
+
+      <h2 id="faq">FAQ</h2>
+      <div class="faq-item"><p class="faq-q">Q: Code128 or EAN-13 — which one?</p><p class="faq-a">A: Depends on the use: retail codes scanned at checkout must be EAN-13 with a GS1 prefix — the retail system only accepts standard product codes. For warehouse assets, internal documents, membership cards, and serials, choose Code128: letters, digits, and symbols, unlimited length, higher density. In short: into supermarkets, EAN-13; not into supermarkets, Code128.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: How is the EAN-13 check digit calculated?</p><p class="faq-a">A: Weight the first 12 digits alternately by 3 and 1 from the right, sum them, then take the difference to the next multiple of ten: check digit = (10 − last digit of the sum) mod 10. If the weighted sum is 101, the check digit is 9. Scanners recompute the checksum and reject mismatches, so one wrong check digit makes the whole code unscannable.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: How small can a printed barcode be?</p><p class="faq-a">A: For EAN-13, the standard size is 37.29×25.93 mm (100% magnification) and the spec allows down to 80% — below that scanners struggle. Code128 has no fixed outline, but keep narrow elements above 0.19 mm, preferably 0.25 mm or more. The smaller the code, the more you need high-resolution printing and a proper quiet zone.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: What is the quiet zone, and why does it keep getting clipped?</p><p class="faq-a">A: The quiet zone is the mandatory blank margin at both ends — about 11 modules left and 7 right for EAN-13, or at least 10× the narrow element width for Code128. Scanners use it to find where the code starts and ends; when text, borders, or crop marks invade it, you get "clearly printed yet unscannable". Reserve a dedicated area in the layout and let nothing intrude.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: My barcode won't scan — how do I troubleshoot?</p><p class="faq-a">A: By hit rate: check the quiet zone first, then verify the print resolution reaches 300 DPI (low DPI blurs and merges narrow bars), then confirm symbology matches content — letters inside a digits-only EAN-13, for example. Finally cross-test with another scanner to rule out device incompatibility. Regenerate with the content verified character by character and test immediately.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: Can I just make up my own barcode? When do I need GS1?</p><p class="faq-a">A: For internal use, anytime: encode asset IDs and work orders in Code128 and your own scanners will read them. But once the code leaves your organization and gets scanned by external systems — especially as a retail code entering supermarkets and marketplaces — you must register a GS1 manufacturer code and use globally unique EAN-13 numbers. A collision with someone else's product code wrecks inventory and settlement.</p></div>
+
+      <div class="cta-box">
+        <p class="cta-title">Generate Barcodes — Free Online</p>
+        <p class="cta-sub">Code128 / EAN-13 · Automatic check digits · Crisp PNG · Runs in your browser</p>
+        <a class="cta-btn" href="/barcode/">Open Barcode Generator →</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<div id="site-footer"></div>
+<script src="/assets/js/site.js" defer></script>
+</body>
+</html>

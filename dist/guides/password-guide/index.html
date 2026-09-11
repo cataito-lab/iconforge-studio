@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>强密码指南：怎么生成并管理不重复的密码 | CATAITO</title>
+<meta name="title-zh" content="强密码指南：怎么生成并管理不重复的密码 | CATAITO">
+<meta name="title-en" content="Strong Password Guide: How to Create and Manage Unique Passwords | CATAITO">
+<meta name="description" content="强密码完整指南：长度/随机性/不复用三要素、熵的概念与计算方法、密码管理器配合使用、易混淆字符（l/1/I、O/0）说明，以及为什么绝不能用个人信息做密码。附免费在线随机密码生成器，纯浏览器本地生成。">
+<meta name="theme-color" content="#f6f3ec">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="CATAITO 工具箱">
+<meta property="og:title" content="强密码指南：怎么生成并管理不重复的密码">
+<meta property="og:description" content="强密码三要素、熵的计算、管理器配合与易混淆字符说明，附免费本地密码生成器。">
+<meta property="og:url" content="https://tools.cataito.com/guides/password-guide/">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:locale:alternate" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="强密码指南">
+<meta name="twitter:description" content="长度/随机性/不复用三要素与熵的计算，密码管理器配合指南。">
+<link rel="canonical" href="https://tools.cataito.com/guides/password-guide/">
+<link rel="icon" href="/assets/img/icon.svg">
+<link rel="stylesheet" href="/assets/css/site.css">
+<script src="/assets/js/theme-init.js"></script>
+<script>
+  (function () {
+    try {
+      var l = localStorage.getItem('cataito-lang');
+      document.documentElement.setAttribute('lang', (l === 'en') ? 'en' : 'zh-CN');
+      if (l === 'en') document.documentElement.classList.add('lang-en');
+    } catch (e) {}
+  })();
+</script>
+<style>
+  /* ============ 指南页排版（与其他指南页保持一致） ============ */
+  .guide-wrap { max-width: 760px; margin: 0; }
+  .guide-meta { font-size: 13px; color: var(--text-3); margin: 0 0 6px; }
+  .page-sub { margin-bottom: 10px; }
+  .article { font-size: 15px; line-height: 1.85; color: var(--text); }
+  .article h2 {
+    font-size: 21px; font-weight: 700; letter-spacing: -.3px;
+    margin: 44px 0 14px; padding-top: 16px; border-top: 1px solid var(--border); color: var(--text);
+  }
+  .article h3 { font-size: 16.5px; font-weight: 650; margin: 26px 0 10px; color: var(--text); }
+  .article p { margin: 0 0 14px; color: var(--text-2); }
+  .article strong { color: var(--text); font-weight: 650; }
+  .article a { color: var(--accent); text-decoration: none; }
+  .article a:hover { text-decoration: underline; }
+  .article ul, .article ol { margin: 0 0 16px; padding-left: 22px; color: var(--text-2); }
+  .article li { margin: 6px 0; }
+  .article code {
+    font-family: var(--font-mono);
+    font-size: 13px; background: var(--card-2); border: 1px solid var(--border);
+    border-radius: 3px; padding: 1px 6px; color: var(--text);
+  }
+  .article pre {
+    background: var(--card-2); border: 1px solid var(--border); border-radius: var(--radius-sm);
+    padding: 14px 16px; margin: 14px 0 18px; overflow-x: auto;
+  }
+  .article pre code { background: none; border: none; padding: 0; font-size: 12.5px; line-height: 1.7; }
+  .article table {
+    width: 100%; border-collapse: collapse; margin: 18px 0 22px;
+    font-size: 13.5px; background: var(--card);
+    border: 1px solid var(--border); border-radius: var(--radius-sm); overflow: hidden;
+  }
+  .article th, .article td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--border); }
+  .article th { background: var(--card-2); color: var(--text); font-weight: 650; white-space: nowrap; }
+  .article td { color: var(--text-2); }
+  .article tr:last-child td { border-bottom: none; }
+  .toc {
+    background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 16px 18px; margin: 20px 0 8px; box-shadow: var(--shadow-sm);
+  }
+  .toc-title { font-size: 13px; font-weight: 650; color: var(--text); margin: 0 0 10px; }
+  .toc ol { margin: 0; padding-left: 20px; font-size: 13.5px; }
+  .toc li { margin: 5px 0; }
+  .toc a { color: var(--text-2); text-decoration: none; }
+  .toc a:hover { color: var(--accent); }
+  /* FAQ 卡片样式由 site.css 的 .faq-item / .t-faq-* 统一提供 */
+  .cta-box {
+    background: linear-gradient(135deg, var(--accent-soft), var(--accent-soft-2));
+    border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent); border-radius: var(--radius);
+    padding: 20px 22px; margin: 34px 0 10px; text-align: center;
+  }
+  .cta-box .cta-title { font-size: 17px; font-weight: 700; color: var(--text); margin: 0 0 6px; }
+  .cta-box .cta-sub { font-size: 13.5px; color: var(--text-2); margin: 0 0 14px; }
+  .cta-btn {
+    display: inline-block; background: var(--accent); color: #fff; text-decoration: none;
+    font-size: 14px; font-weight: 600; padding: 11px 26px; border-radius: var(--radius-sm);
+    box-shadow: 0 6px 18px var(--accent-glow); transition: background .15s;
+  }
+  .cta-btn:hover { background: var(--accent-hover); }
+  /* 修复：.article a 的特异度(0,1,1)会压过 .cta-btn(0,1,0) 的 color:#fff，
+     导致按钮底字同色在亮/暗模式下都不可读。用更高特异度夺回白色文字。 */
+  .article a.cta-btn, .article .cta-btn { color: #fff; text-decoration: none; }
+  .article a.cta-btn:hover { color: #fff; text-decoration: none; background: var(--accent-hover); }
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "强密码指南：怎么生成并管理不重复的密码",
+  "description": "详解强密码三要素（长度、随机性、不复用）、熵的概念与计算方法、密码管理器配合使用、易混淆字符说明，以及为什么不能用个人信息做密码。",
+  "inLanguage": "zh-CN",
+  "datePublished": "2026-09-11",
+  "dateModified": "2026-09-11",
+  "author": { "@type": "Organization", "name": "CATAITO", "url": "https://tools.cataito.com/" },
+  "publisher": { "@type": "Organization", "name": "CATAITO 工具箱", "url": "https://tools.cataito.com/" },
+  "mainEntityOfPage": "https://tools.cataito.com/guides/password-guide/"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "多长的密码才算强密码？",
+      "acceptedAnswer": { "@type": "Answer", "text": "对由大小写字母加数字组成的随机密码来说，16 位是当前的主流底线（约 95 比特熵），管理器允许时可以到 20–32 位更稳妥。密码越短，对字符种类的补偿要求就越高：纯小写字母要达到同样强度大约需要 20 位以上。长度是最容易堆的强度，优先加长度。" }
+    },
+    {
+      "@type": "Question",
+      "name": "什么是熵？怎么估算一个密码的强度？",
+      "acceptedAnswer": { "@type": "Answer", "text": "熵衡量的是密码的不可预测性，单位是比特。估算方法：每个字符约贡献 log2(字符集大小) 比特——纯小写字母约 4.7 比特/位，大小写加数字 62 个字符约 5.95 比特/位，含全部符号约 6.5 比特/位。用位数乘以每位的熵即得总量：16 位字母数字约 95 比特，而「姓名+生日」这类人选拼凑的密码实际熵可能不到 20 比特，几小时就能被穷举。" }
+    },
+    {
+      "@type": "Question",
+      "name": "密码管理器值得信任吗？主密码忘了怎么办？",
+      "acceptedAnswer": { "@type": "Answer", "text": "主流密码管理器采用零知识加密：数据在本地加密后才上传，服务商也看不到你的密码，安全性远高于浏览器明文记住密码和跨站复用。真正的单点是主密码，务必抄写在纸上放于安全处，并开启恢复方式（如紧急联系人、恢复密钥）。忘记主密码且无恢复手段时，数据无法找回，这是设计使然，不是缺陷。" }
+    },
+    {
+      "@type": "Question",
+      "name": "需要定期更换密码吗？",
+      "acceptedAnswer": { "@type": "Answer", "text": "现代安全共识是：不要无脑定期改。频繁更换会让人生成「Abc123!→Abc124!」这类弱规律密码，反而降低强度。正确的做法是：出现相关泄露事件时立即改，长期不动的关键账号（邮箱、管理器主密码）可以每 1–2 年检查一次，其余账号只在有理由怀疑泄露时更换。开启两步验证比频繁改密码有效得多。" }
+    },
+    {
+      "@type": "Question",
+      "name": "l/1/I、O/0 这类易混淆字符该不该用？",
+      "acceptedAnswer": { "@type": "Answer", "text": "随机生成时可以放心用——密码是复制粘贴进登录框的，不存在「认错」。需要人工抄写、口头传达或在电视上展示的场景（如 WiFi 密码）才建议在生成器里勾选「排除易混淆字符」，去掉 l/1/I、O/0 等。注意排除字符会缩小字符集，略微降低熵，随机密码尽量保留完整字符集。" }
+    },
+    {
+      "@type": "Question",
+      "name": "为什么不能用姓名、生日等个人信息做密码？",
+      "acceptedAnswer": { "@type": "Answer", "text": "因为攻击者优先猜的正是这些：密码字典的构建材料排第一的就是姓名、拼音缩写、生日、手机号、纪念日，配合常见变换规则（首字母大写、加感叹号、年份后缀）几秒内即可命中。这些信息往往在社交平台上公开可查。个人信息构成的密码看着「只有自己知道」，实际是攻击面最大的那一类。" }
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "首页", "item": "https://tools.cataito.com/" },
+    { "@type": "ListItem", "position": 2, "name": "使用指南", "item": "https://tools.cataito.com/guides/" },
+    { "@type": "ListItem", "position": 3, "name": "强密码指南", "item": "https://tools.cataito.com/guides/password-guide/" }
+  ]
+}
+</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7103529190038161" crossorigin="anonymous"></script>
+</head>
+<body>
+<div id="site-header"></div>
+
+<main class="site-main">
+  <div class="guide-wrap">
+    <nav class="breadcrumb"><a href="/" data-i18n="crumb_home">首页</a><span class="sep">/</span><a href="/guides/" data-i18n="nav_guides">使用指南</a><span class="sep">/</span><span data-i18n="gd_pwd_short">强密码指南</span></nav>
+    <p class="guide-meta"><span data-i18n="gd_published">发布于</span> 2026-09-11 · CATAITO</p>
+    <h1 class="page-h1" data-i18n="gd_pwd_h1">强密码指南：怎么生成并管理不重复的密码</h1>
+    <p class="page-sub" data-i18n="gd_pwd_sub">「弱密码」很少输在字符太简单上，更多是输在复用和可猜测：一个密码走天下，泄露一处全站沦陷。本文讲清强密码的三要素、熵到底怎么算、密码管理器怎么配合、易混淆字符什么时候要排除，以及为什么个人信息是密码最差的原料。</p>
+
+    <!-- ================= 中文正文 ================= -->
+    <div class="article lb-zh">
+      <div class="toc">
+        <p class="toc-title">目录</p>
+        <ol>
+          <li><a href="#pillars">强密码三要素</a></li>
+          <li><a href="#entropy">熵：衡量强度的尺子</a></li>
+          <li><a href="#manager">密码管理器怎么配合</a></li>
+          <li><a href="#confusable">易混淆字符说明</a></li>
+          <li><a href="#personal">为什么不用个人信息</a></li>
+          <li><a href="#faq">常见问题</a></li>
+        </ol>
+      </div>
+
+      <h2 id="pillars">强密码三要素</h2>
+      <p>一个密码够不够强，只看三件事：</p>
+      <ol class="t-steps">
+        <li><strong>长度</strong>：这是最有效的强度来源。每多一位，穷举成本就乘以字符集的大小（字母数字集是 ×62）；</li>
+        <li><strong>随机性</strong>：每一位都不能有规律。人「随手打」的密码几乎必然带规律——常用词、键盘走位、可预测的替换（a→@）；</li>
+        <li><strong>不复用</strong>：强度再高的密码，复用到十个站点后，安全水平等于最弱的那个站点。数据库泄露防不住，复用才是灾难放大的根源。</li>
+      </ol>
+      <p>三条合起来的实践标准：<strong>每个账号一条独立生成的随机密码，16 位起步</strong>。靠脑子记住几十条这样的密码不现实，所以第三条要素其实指向后面讲的管理器方案。</p>
+
+      <h2 id="entropy">熵：衡量强度的尺子</h2>
+      <p>「强」是个模糊的词，密码学里用<strong>熵</strong>来量化：单位是比特，含义是「随机猜中这个密码平均需要多少次二选一」。它只由两件事决定——<strong>字符集大小 × 密码长度</strong>，前提是每一位真的随机。</p>
+      <p>每个字符贡献的熵约等于 log2(字符集大小)：</p>
+      <table>
+        <thead>
+          <tr><th>字符集</th><th>大小</th><th>每位熵</th><th>16 位总熵</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>纯小写字母</td><td>26</td><td>≈ 4.7 比特</td><td>≈ 75 比特</td></tr>
+          <tr><td>大小写 + 数字</td><td>62</td><td>≈ 5.95 比特</td><td>≈ 95 比特</td></tr>
+          <tr><td>含全部可打印符号</td><td>95</td><td>≈ 6.5 比特</td><td>≈ 104 比特</td></tr>
+        </tbody>
+      </table>
+      <p>参考基准：80 比特以上对抗离线穷举比较从容，100 比特以上在可预见的算力下接近「猜不动」。反过来，一个由常见单词加年份构成的密码，<strong>人选拼凑的实际熵往往不到 20 比特</strong>——哪怕它有 12 位长、还带感叹号。这也是「P@ssw0rd2024」毫无强度的原因：字符集看着花哨，但每个选择都是人做的，不随机。</p>
+      <p>所以正确的思路不是「往里塞符号」，而是<strong>让机器替你随机</strong>。用<a href="/password/">密码生成器</a>生成 16–32 位的随机串，长度和字符集一目了然，熵直接算得出来。</p>
+
+      <h2 id="manager">密码管理器怎么配合</h2>
+      <p>管理器解决的是「生成之后怎么用」的问题，分工非常清晰：</p>
+      <ol class="t-steps">
+        <li><strong>管理器保管</strong>：几十上百条随机密码由管理器加密存储，自动填充登录，你只需要记一条主密码；</li>
+        <li><strong>生成器造料</strong>：新注册账号时用<a href="/password/">随机密码生成器</a>现生成一条，长度拉到 16 位以上、全字符集、每条独立，生成后立即存入管理器；</li>
+        <li><strong>主密码单独强化</strong>：主密码是唯一的单点，要更长（20 位左右的随机串或四五个不相关的随机单词），并开启两步验证；</li>
+        <li><strong>关键账号留后手</strong>：邮箱是所有「忘记密码」的重置入口，它的密码加两步验证优先级最高。</li>
+      </ol>
+      <p>选管理器时看三点：零知识加密（服务商无法解密你的库）、开源或有安全审计记录、支持自动填充和跨设备同步。浏览器自带的「记住密码」可以当临时方案，但没有独立的生成和加密强度保证。</p>
+
+      <h2 id="confusable">易混淆字符说明</h2>
+      <p>很多生成器提供一个「排除易混淆字符」选项，去掉 <code>l</code> / <code>1</code> / <code>I</code>、<code>O</code> / <code>0</code> 这类长得很像的字符。用不用取决于使用场景：</p>
+      <ul>
+        <li><strong>复制粘贴场景：不用排除</strong>。网页登录、App 登录都是粘贴或自动填充，字符再像也不会认错，保留完整字符集反而熵更高；</li>
+        <li><strong>人工抄写场景：建议排除</strong>。WiFi 密码要念给客人、打印在会议室墙上的密码、手写在笔记本上的初始密码——这些场景里 <code>l1I0O</code> 是灾难，勾选排除更实用；顺带一提，把 WiFi 密码做成二维码让客人扫码加入，可以彻底绕开念错与抄错（见<a href="/qrcode/">二维码生成器</a>）；</li>
+        <li><strong>代价</strong>：排除 5 个字符相当于字符集从 62 缩到 57，16 位密码的熵从约 95 降到约 93 比特。损失很小，但在需要看清楚的场景里完全值回。</li>
+      </ul>
+      <p>同理，连字符分组显示（如 <code>k7m2-qp9x</code>）只是为了方便分段抄写和朗读，粘贴时按整体处理即可。</p>
+
+      <h2 id="personal">为什么不用个人信息</h2>
+      <p>「姓名拼音 + 生日」是最符合直觉的密码原料，也正因为如此，它是攻击者最先尝试的。针对性攻击的字典构建顺序大致是：</p>
+      <ol class="t-steps">
+        <li>你的姓名、拼音、缩写、昵称、网名；</li>
+        <li>生日、手机号、纪念日、工号；</li>
+        <li>常见单词 + 年份，配合规则变换（首字母大写、倒序、加 <code>!</code>、<code>a→@</code>）；</li>
+        <li>全网泄露库里的密码及其微调版本。</li>
+      </ol>
+      <p>前两类材料在社交平台、公司主页、相册 EXIF 里几乎都能查到；第三、四类则是每个暴力破解工具的出厂配置。更隐蔽的问题是<strong>规律性复用</strong>：「姓名+站点名首字母」看似每个站都不同，但规则一旦从一个泄露的账号被反推出来，其余账号全部沦陷。</p>
+      <p>结论很简单：密码的原料必须与「你是谁」完全无关，只有机器随机才能保证这一点。生成之后交给管理器保管，人只负责记住主密码——这套流程绕开了上面所有的坑。改完密码后如果账号绑定了两步验证，别忘了把恢复码也抄一份放进管理器的安全备注。</p>
+
+      <h2 id="faq">常见问题</h2>
+      <div class="faq-item"><p class="faq-q">Q：多长的密码才算强密码？</p><p class="faq-a">A：对由大小写字母加数字组成的随机密码来说，16 位是当前的主流底线（约 95 比特熵），管理器允许时可以到 20–32 位更稳妥。密码越短，对字符种类的补偿要求就越高：纯小写字母要达到同样强度大约需要 20 位以上。长度是最容易堆的强度，优先加长度。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：什么是熵？怎么估算一个密码的强度？</p><p class="faq-a">A：熵衡量的是密码的不可预测性，单位是比特。估算方法：每个字符约贡献 log2(字符集大小) 比特——纯小写字母约 4.7 比特/位，大小写加数字 62 个字符约 5.95 比特/位，含全部符号约 6.5 比特/位。用位数乘以每位的熵即得总量：16 位字母数字约 95 比特，而「姓名+生日」这类人选拼凑的密码实际熵可能不到 20 比特，几小时就能被穷举。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：密码管理器值得信任吗？主密码忘了怎么办？</p><p class="faq-a">A：主流密码管理器采用零知识加密：数据在本地加密后才上传，服务商也看不到你的密码，安全性远高于浏览器明文记住密码和跨站复用。真正的单点是主密码，务必抄写在纸上放于安全处，并开启恢复方式（如紧急联系人、恢复密钥）。忘记主密码且无恢复手段时，数据无法找回，这是设计使然，不是缺陷。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：需要定期更换密码吗？</p><p class="faq-a">A：现代安全共识是：不要无脑定期改。频繁更换会让人生成「Abc123!→Abc124!」这类弱规律密码，反而降低强度。正确的做法是：出现相关泄露事件时立即改，长期不动的关键账号（邮箱、管理器主密码）可以每 1–2 年检查一次，其余账号只在有理由怀疑泄露时更换。开启两步验证比频繁改密码有效得多。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：l/1/I、O/0 这类易混淆字符该不该用？</p><p class="faq-a">A：随机生成时可以放心用——密码是复制粘贴进登录框的，不存在「认错」。需要人工抄写、口头传达或在电视上展示的场景（如 WiFi 密码）才建议在生成器里勾选「排除易混淆字符」，去掉 l/1/I、O/0 等。注意排除字符会缩小字符集，略微降低熵，随机密码尽量保留完整字符集。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：为什么不能用姓名、生日等个人信息做密码？</p><p class="faq-a">A：因为攻击者优先猜的正是这些：密码字典的构建材料排第一的就是姓名、拼音缩写、生日、手机号、纪念日，配合常见变换规则（首字母大写、加感叹号、年份后缀）几秒内即可命中。这些信息往往在社交平台上公开可查。个人信息构成的密码看着「只有自己知道」，实际是攻击面最大的那一类。</p></div>
+
+      <div class="cta-box">
+        <p class="cta-title">免费在线生成强密码</p>
+        <p class="cta-sub">长度与字符集可调 · 排除易混淆字符可选 · 纯浏览器本地生成 · 不上传任何数据</p>
+        <a class="cta-btn" href="/password/">打开密码生成器 →</a>
+      </div>
+    </div>
+
+    <!-- ================= English body ================= -->
+    <div class="article lb-en">
+      <div class="toc">
+        <p class="toc-title">Table of Contents</p>
+        <ol>
+          <li><a href="#pillars">The Three Pillars of a Strong Password</a></li>
+          <li><a href="#entropy">Entropy: The Ruler of Password Strength</a></li>
+          <li><a href="#manager">Working With a Password Manager</a></li>
+          <li><a href="#confusable">About Look-Alike Characters</a></li>
+          <li><a href="#personal">Why Personal Information Makes Terrible Passwords</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ol>
+      </div>
+
+      <h2 id="pillars">The Three Pillars of a Strong Password</h2>
+      <p>Whether a password is strong comes down to exactly three things:</p>
+      <ol class="t-steps">
+        <li><strong>Length</strong>: the most effective source of strength. Each extra character multiplies the search space by the alphabet size (×62 for letters+digits);</li>
+        <li><strong>Randomness</strong>: no pattern in any position. Passwords typed "off the top of your head" almost always contain patterns — common words, keyboard walks, predictable substitutions (a→@);</li>
+        <li><strong>No reuse</strong>: a great password shared across ten sites is only as strong as the weakest of those sites. Breaches happen; reuse is what turns one breach into ten.</li>
+      </ol>
+      <p>Put together, the practical standard is: <strong>one independently generated random password per account, 16+ characters</strong>. Memorizing dozens of these is impossible — which is why the third pillar points to the password manager below.</p>
+
+      <h2 id="entropy">Entropy: The Ruler of Password Strength</h2>
+      <p>"Strong" is vague; cryptography quantifies it with <strong>entropy</strong>, measured in bits — how many binary guesses an attacker needs on average. It depends on exactly two things: <strong>alphabet size × length</strong>, provided every character is truly random.</p>
+      <p>Each character contributes roughly log2(alphabet size) bits:</p>
+      <table>
+        <thead>
+          <tr><th>Alphabet</th><th>Size</th><th>Bits per character</th><th>16-char total</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Lowercase only</td><td>26</td><td>≈ 4.7 bits</td><td>≈ 75 bits</td></tr>
+          <tr><td>Upper + lower + digits</td><td>62</td><td>≈ 5.95 bits</td><td>≈ 95 bits</td></tr>
+          <tr><td>All printable symbols</td><td>95</td><td>≈ 6.5 bits</td><td>≈ 104 bits</td></tr>
+        </tbody>
+      </table>
+      <p>Useful baselines: 80+ bits is comfortable against offline cracking; 100+ bits is effectively unguessable with foreseeable hardware. By contrast, a password assembled from common words plus a year — however long and however many exclamation marks — often carries <strong>under 20 bits of real entropy</strong>, because every choice in it was made by a human. That's why "P@ssw0rd2024" is worthless: the character classes look fancy, but nothing is random.</p>
+      <p>So don't try to stuff symbols in yourself — <strong>let a machine pick</strong>. Generate a 16–32 character random string with the <a href="/password/">Password Generator</a>, where length and alphabet are explicit and the entropy is computable at a glance.</p>
+
+      <h2 id="manager">Working With a Password Manager</h2>
+      <p>The manager solves "what happens after generation". The division of labor is simple:</p>
+      <ol class="t-steps">
+        <li><strong>The manager stores</strong>: dozens of random passwords sit encrypted in one vault with autofill — you only memorize a master password;</li>
+        <li><strong>The generator makes them</strong>: when signing up anywhere, generate a fresh one with the <a href="/password/">random Password Generator</a> — 16+ characters, full alphabet, unique per site — and save it to the vault immediately;</li>
+        <li><strong>Harden the master password</strong>: it's your single point of failure — make it longer (a ~20-character random string, or 4–5 unrelated random words) and enable two-factor authentication;</li>
+        <li><strong>Backstop the key account</strong>: your email is the reset gate for everything else, so its password and 2FA come first in priority.</li>
+      </ol>
+      <p>When choosing a manager, check three things: zero-knowledge encryption (the vendor can't decrypt your vault), open source or independently audited, and solid autofill with cross-device sync. Browser "save password" features are a stopgap, without dedicated generation or guaranteed encryption strength.</p>
+
+      <h2 id="confusable">About Look-Alike Characters</h2>
+      <p>Many generators offer an "exclude look-alike characters" option that drops <code>l</code> / <code>1</code> / <code>I</code> and <code>O</code> / <code>0</code>. Whether to use it depends on the scenario:</p>
+      <ul>
+        <li><strong>Copy-paste scenarios: don't exclude</strong>. Web and app logins paste or autofill the string — look-alikes can't be misread, and the full alphabet means slightly more entropy;</li>
+        <li><strong>Human-transcription scenarios: exclude them</strong>. Wi-Fi passwords read aloud to guests, printed on a meeting-room wall, or handwritten on a sticky note — here <code>l1I0O</code> is a disaster, so tick the exclusion; incidentally, turning the Wi-Fi password into a QR code lets guests scan to join and skips dictation entirely (see the <a href="/qrcode/">QR Code Generator</a>);</li>
+        <li><strong>The cost</strong>: removing five characters shrinks the alphabet from 62 to 57, dropping a 16-character password from ~95 to ~93 bits. A tiny loss that fully pays off whenever a human has to read it.</li>
+      </ul>
+      <p>Hyphen grouping (like <code>k7m2-qp9x</code>) exists purely for easier reading aloud and transcription — paste the whole thing as one string.</p>
+
+      <h2 id="personal">Why Personal Information Makes Terrible Passwords</h2>
+      <p>"Name + birthday" is the most intuitive password material — which is exactly why attackers try it first. A targeted attack's dictionary is typically built in this order:</p>
+      <ol class="t-steps">
+        <li>Your name, its romanization, initials, nicknames, and handles;</li>
+        <li>Birthday, phone number, anniversaries, employee ID;</li>
+        <li>Common words + year, with rule-based twists (capitalize, reverse, append <code>!</code>, <code>a→@</code>);</li>
+        <li>Previously breached passwords and their near-variants.</li>
+      </ol>
+      <p>The first two categories are public on social profiles, company pages, and photo EXIF data; the last two ship as defaults in every cracking tool. The subtler trap is <strong>patterned reuse</strong>: "name + first letter of the site" looks unique per site, but once one breached account reveals the rule, every account falls with it.</p>
+      <p>The conclusion is simple: password material must have zero connection to who you are, and only machine randomness guarantees that. Generate, store in a manager, and memorize one master password — this flow sidesteps every trap above. And once you've changed a password, copy the 2FA recovery codes into the vault's secure notes as well.</p>
+
+      <h2 id="faq">FAQ</h2>
+      <div class="faq-item"><p class="faq-q">Q: How long does a password need to be?</p><p class="faq-a">A: For random passwords over upper/lowercase letters and digits, 16 characters is the current mainstream floor (~95 bits of entropy), and 20–32 is safer where the manager allows it. The shorter the password, the more the character variety has to compensate: lowercase-only needs roughly 20+ characters for comparable strength. Length is the easiest strength to add — add length first.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: What is entropy and how do I estimate a password's strength?</p><p class="faq-a">A: Entropy measures unpredictability in bits. Estimate it as log2(alphabet size) per character — about 4.7 bits/char for lowercase, 5.95 for 62 characters of letters+digits, 6.5 with all symbols. Multiply by length: 16 characters of letters+digits ≈ 95 bits, while a human-assembled "name + birthday" password may carry under 20 bits and fall to brute force within hours.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: Can password managers be trusted? What if I forget the master password?</p><p class="faq-a">A: Reputable managers use zero-knowledge encryption: data is encrypted locally before upload, so the vendor can't see your passwords — far safer than browser-saved plaintext plus cross-site reuse. The real single point of failure is the master password: write it on paper kept somewhere safe and set up recovery (emergency contact, recovery key). If you forget it with no recovery in place, the data is unrecoverable by design — that's the point.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: Should I change passwords regularly?</p><p class="faq-a">A: Modern consensus says: not mindlessly. Forced rotation breeds "Abc123!→Abc124!" pattern passwords that weaken security. Instead: change immediately after a relevant breach, review critical accounts (email, master password) every 1–2 years, and otherwise change only when compromise is plausible. Two-factor authentication does far more than frequent rotation.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: Should I avoid look-alike characters like l/1/I and O/0?</p><p class="faq-a">A: For randomly generated passwords, feel free to keep them — they're pasted into login forms and never misread. Only exclude them (via the generator's option) for passwords that humans transcribe, dictate, or display, like Wi-Fi passwords. Note that exclusion shrinks the alphabet and slightly lowers entropy, so keep the full character set for pure random use.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: Why shouldn't I use my name or birthday in a password?</p><p class="faq-a">A: Because that's precisely what attackers try first: dictionaries are seeded with names, initials, birthdays, phone numbers, and anniversaries, combined with common transforms (capitalization, exclamation marks, year suffixes) that crack in seconds. This information is often publicly visible on social platforms. A "personal" password looks like only you could know it, but it's actually the largest attack surface there is.</p></div>
+
+      <div class="cta-box">
+        <p class="cta-title">Generate Strong Passwords — Free Online</p>
+        <p class="cta-sub">Adjustable length &amp; alphabet · Optional look-alike exclusion · Runs in your browser · Nothing uploaded</p>
+        <a class="cta-btn" href="/password/">Open Password Generator →</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<div id="site-footer"></div>
+<script src="/assets/js/site.js" defer></script>
+</body>
+</html>

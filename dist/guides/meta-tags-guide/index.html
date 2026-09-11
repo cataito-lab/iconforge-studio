@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meta 标签与社交分享指南：OG / Twitter Card 全解 | CATAITO</title>
+<meta name="title-zh" content="Meta 标签与社交分享指南：OG / Twitter Card 全解 | CATAITO">
+<meta name="title-en" content="Meta Tags & Social Sharing Guide: OG / Twitter Card Explained | CATAITO">
+<meta name="description" content="OG（Open Graph）协议全解：og:image 为什么是 1200×630、标题与描述的长度上限、用各平台分享调试器验证并刷新缓存的方法，以及分享卡片不生效的三大常见原因（非 https 绝对路径、平台缓存、缺标签）。附免费在线 Meta Tag 生成器。">
+<meta name="theme-color" content="#f6f3ec">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="CATAITO 工具箱">
+<meta property="og:title" content="Meta 标签与社交分享指南：OG / Twitter Card 全解">
+<meta property="og:description" content="og:image 1200×630 规范、标题描述长度、调试器与缓存刷新方法、卡片不生效的常见原因全解。">
+<meta property="og:url" content="https://tools.cataito.com/guides/meta-tags-guide/">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:locale:alternate" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="OG / Twitter Card 全解">
+<meta name="twitter:description" content="og:image 1200×630、长度规范、调试方法与不生效排查。">
+<link rel="canonical" href="https://tools.cataito.com/guides/meta-tags-guide/">
+<link rel="icon" href="/assets/img/icon.svg">
+<link rel="stylesheet" href="/assets/css/site.css">
+<script src="/assets/js/theme-init.js"></script>
+<script>
+  (function () {
+    try {
+      var l = localStorage.getItem('cataito-lang');
+      document.documentElement.setAttribute('lang', (l === 'en') ? 'en' : 'zh-CN');
+      if (l === 'en') document.documentElement.classList.add('lang-en');
+    } catch (e) {}
+  })();
+</script>
+<style>
+  /* ============ 指南页排版（与其他指南页保持一致） ============ */
+  .guide-wrap { max-width: 760px; margin: 0; }
+  .guide-meta { font-size: 13px; color: var(--text-3); margin: 0 0 6px; }
+  .page-sub { margin-bottom: 10px; }
+  .article { font-size: 15px; line-height: 1.85; color: var(--text); }
+  .article h2 {
+    font-size: 21px; font-weight: 700; letter-spacing: -.3px;
+    margin: 44px 0 14px; padding-top: 16px; border-top: 1px solid var(--border); color: var(--text);
+  }
+  .article h3 { font-size: 16.5px; font-weight: 650; margin: 26px 0 10px; color: var(--text); }
+  .article p { margin: 0 0 14px; color: var(--text-2); }
+  .article strong { color: var(--text); font-weight: 650; }
+  .article a { color: var(--accent); text-decoration: none; }
+  .article a:hover { text-decoration: underline; }
+  .article ul, .article ol { margin: 0 0 16px; padding-left: 22px; color: var(--text-2); }
+  .article li { margin: 6px 0; }
+  .article code {
+    font-family: var(--font-mono);
+    font-size: 13px; background: var(--card-2); border: 1px solid var(--border);
+    border-radius: 3px; padding: 1px 6px; color: var(--text);
+  }
+  .article pre {
+    background: var(--card-2); border: 1px solid var(--border); border-radius: var(--radius-sm);
+    padding: 14px 16px; margin: 14px 0 18px; overflow-x: auto;
+  }
+  .article pre code { background: none; border: none; padding: 0; font-size: 12.5px; line-height: 1.7; }
+  .article table {
+    width: 100%; border-collapse: collapse; margin: 18px 0 22px;
+    font-size: 13.5px; background: var(--card);
+    border: 1px solid var(--border); border-radius: var(--radius-sm); overflow: hidden;
+  }
+  .article th, .article td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--border); }
+  .article th { background: var(--card-2); color: var(--text); font-weight: 650; white-space: nowrap; }
+  .article td { color: var(--text-2); }
+  .article tr:last-child td { border-bottom: none; }
+  .toc {
+    background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 16px 18px; margin: 20px 0 8px; box-shadow: var(--shadow-sm);
+  }
+  .toc-title { font-size: 13px; font-weight: 650; color: var(--text); margin: 0 0 10px; }
+  .toc ol { margin: 0; padding-left: 20px; font-size: 13.5px; }
+  .toc li { margin: 5px 0; }
+  .toc a { color: var(--text-2); text-decoration: none; }
+  .toc a:hover { color: var(--accent); }
+  /* FAQ 卡片样式由 site.css 的 .faq-item / .t-faq-* 统一提供 */
+  .cta-box {
+    background: linear-gradient(135deg, var(--accent-soft), var(--accent-soft-2));
+    border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent); border-radius: var(--radius);
+    padding: 20px 22px; margin: 34px 0 10px; text-align: center;
+  }
+  .cta-box .cta-title { font-size: 17px; font-weight: 700; color: var(--text); margin: 0 0 6px; }
+  .cta-box .cta-sub { font-size: 13.5px; color: var(--text-2); margin: 0 0 14px; }
+  .cta-btn {
+    display: inline-block; background: var(--accent); color: #fff; text-decoration: none;
+    font-size: 14px; font-weight: 600; padding: 11px 26px; border-radius: var(--radius-sm);
+    box-shadow: 0 6px 18px var(--accent-glow); transition: background .15s;
+  }
+  .cta-btn:hover { background: var(--accent-hover); }
+  /* 修复：.article a 的特异度(0,1,1)会压过 .cta-btn(0,1,0) 的 color:#fff，
+     导致按钮底字同色在亮/暗模式下都不可读。用更高特异度夺回白色文字。 */
+  .article a.cta-btn, .article .cta-btn { color: #fff; text-decoration: none; }
+  .article a.cta-btn:hover { color: #fff; text-decoration: none; background: var(--accent-hover); }
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Meta 标签与社交分享指南：OG / Twitter Card 全解",
+  "description": "详解 OG（Open Graph）协议、og:image 1200×630 图片规范、标题与描述长度、各平台分享调试器与缓存刷新方法，以及分享卡片不生效的常见原因排查。",
+  "inLanguage": "zh-CN",
+  "datePublished": "2026-09-11",
+  "dateModified": "2026-09-11",
+  "author": { "@type": "Organization", "name": "CATAITO", "url": "https://tools.cataito.com/" },
+  "publisher": { "@type": "Organization", "name": "CATAITO 工具箱", "url": "https://tools.cataito.com/" },
+  "mainEntityOfPage": "https://tools.cataito.com/guides/meta-tags-guide/"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "OG 标签会直接影响 SEO 排名吗？",
+      "acceptedAnswer": { "@type": "Answer", "text": "不会直接参与排名算法——Google 主要看 <title>、<meta name=\"description\"> 和正文本身。但 OG 标签决定链接在社交平台上的分享卡片：标题是否抓人、图片是否清晰，直接影响点击率；而点击率与外链传播会间接影响 SEO。一句话：OG 不加分，但没有它分享出去就是一截光秃秃的 URL，损失是实打实的。" }
+    },
+    {
+      "@type": "Question",
+      "name": "og:image 应该用多大的图片？",
+      "acceptedAnswer": { "@type": "Answer", "text": "推荐 1200×630 像素（比例约 1.91:1），这是 Facebook 声明的标准大图尺寸，Twitter/X 的 summary_large_image 卡片同样按此设计，微信、LinkedIn 等平台也兼容良好。文件控制在 1 MB、8 MB 以内（不同平台上限不同，按 1 MB 做最保险），格式用 JPG 或 PNG。小于 200×200 的图会被降级成小缩略图甚至不显示。" }
+    },
+    {
+      "@type": "Question",
+      "name": "为什么改了标签，分享出去还是旧内容？",
+      "acceptedAnswer": { "@type": "Answer", "text": "因为各平台会抓取并缓存 OG 数据，之后分享同一条链接时直接读缓存。解决办法是用各平台的官方调试器（Facebook Sharing Debugger、Twitter/X Card Validator、LinkedIn Post Inspector）重新抓取一次，抓取即刷新缓存。没有调试器的平台通常换个带参数的 URL（加 ?v=2）也能强制重新抓取。" }
+    },
+    {
+      "@type": "Question",
+      "name": "Twitter Card 和 OG 标签要写两套吗？",
+      "acceptedAnswer": { "@type": "Answer", "text": "基本不用。Twitter/X 在缺少专属标签时会回退读取 OG 标签，所以一套完整的 OG（og:title、og:description、og:image）已经能覆盖大多数场景。建议额外只加一条 <meta name=\"twitter:card\" content=\"summary_large_image\">，把卡片声明为大图样式；只有想给 Twitter 单独定制文案或图片时才补 twitter:title 等其余标签。" }
+    },
+    {
+      "@type": "Question",
+      "name": "页面上明明写了标签，为什么平台还是抓不到？",
+      "acceptedAnswer": { "@type": "Answer", "text": "按命中率排查：一是标签不在 <head> 里，或被 JS 动态插入——多数平台的抓取器不执行 JavaScript，服务端渲染的 HTML 里必须静态存在；二是 og:image 用了相对路径或非 https 地址，抓取器要求可公网访问的 https 绝对 URL；三是页面或图片需要登录/防火墙才能访问；四是标签拼写错误（og:image 写成 og:image url 等）。用调试器看「实际抓到的标签」与源码逐一比对。" }
+    },
+    {
+      "@type": "Question",
+      "name": "og:title 和 <title> 必须一样吗？",
+      "acceptedAnswer": { "@type": "Answer", "text": "不必须，而且通常不该一样。<title> 兼顾 SEO 关键词，常常带「| 站名」后缀、偏正式；og:title 是给人扫一眼的社交文案，可以更短更口语、不带站名（og:site_name 已经单独承担了站名）。最佳实践是两条独立撰写：og:title 控制在 60 字符左右，突出一个利益点或悬念。" }
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "首页", "item": "https://tools.cataito.com/" },
+    { "@type": "ListItem", "position": 2, "name": "使用指南", "item": "https://tools.cataito.com/guides/" },
+    { "@type": "ListItem", "position": 3, "name": "OG / Twitter Card 全解", "item": "https://tools.cataito.com/guides/meta-tags-guide/" }
+  ]
+}
+</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7103529190038161" crossorigin="anonymous"></script>
+</head>
+<body>
+<div id="site-header"></div>
+
+<main class="site-main">
+  <div class="guide-wrap">
+    <nav class="breadcrumb"><a href="/" data-i18n="crumb_home">首页</a><span class="sep">/</span><a href="/guides/" data-i18n="nav_guides">使用指南</a><span class="sep">/</span><span data-i18n="gd_mtg_short">OG / Twitter Card 全解</span></nav>
+    <p class="guide-meta"><span data-i18n="gd_published">发布于</span> 2026-09-11 · CATAITO</p>
+    <h1 class="page-h1" data-i18n="gd_mtg_h1">Meta 标签与社交分享指南：OG / Twitter Card 全解</h1>
+    <p class="page-sub" data-i18n="gd_mtg_sub">链接发到微信里没有缩略图、发到 X 上光秃秃一条 URL——几乎全是 Meta 标签的锅。本文讲清 OG 协议是什么、og:image 为什么必须是 1200×630 的 https 绝对路径、标题和描述多长合适、怎么用各平台调试器验证并刷新缓存，以及卡片不生效时按命中率排序的排查清单。</p>
+
+    <!-- ================= 中文正文 ================= -->
+    <div class="article lb-zh">
+      <div class="toc">
+        <p class="toc-title">目录</p>
+        <ol>
+          <li><a href="#og">OG 协议是什么</a></li>
+          <li><a href="#image">og:image：1200×630 规范</a></li>
+          <li><a href="#length">标题与描述的长度</a></li>
+          <li><a href="#debug">调试：验证器与缓存刷新</a></li>
+          <li><a href="#why">常见不生效原因</a></li>
+          <li><a href="#faq">常见问题</a></li>
+        </ol>
+      </div>
+
+      <h2 id="og">OG 协议是什么</h2>
+      <p>OG（Open Graph）是 Facebook 在 2010 年推出的页面级元数据协议，如今已是事实标准：Facebook、X/Twitter、LinkedIn、WhatsApp、Telegram、Slack、Discord 等几乎所有平台，分享链接时都会读取 <code>&lt;head&gt;</code> 里的 <code>og:*</code> 标签来渲染卡片。核心四件套：</p>
+      <pre><code>&lt;meta property="og:type" content="website"&gt;
+&lt;meta property="og:title" content="页面标题"&gt;
+&lt;meta property="og:description" content="一句话描述"&gt;
+&lt;meta property="og:image" content="https://example.com/cover.png"&gt;
+&lt;meta property="og:url" content="https://example.com/page/"&gt;</code></pre>
+      <p>对应的 Twitter Card 体系只多一条关键标签：<code>&lt;meta name="twitter:card" content="summary_large_image"&gt;</code>，声明用大图卡片；其余 twitter:title / twitter:description / twitter:image 在缺省时全部回退读取 OG 同名标签。<strong>一套 OG + 一条 twitter:card 即可覆盖绝大多数平台</strong>。</p>
+      <p>不想手写的话，用本站 <a href="/meta-tags/">Meta Tag 生成器</a> 填一次标题、描述和图片地址，直接输出完整可粘贴的标签块。</p>
+
+      <h2 id="image">og:image：1200×630 规范</h2>
+      <p>分享卡片上最显眼的是图，也最容易出问题。各平台的公约数：</p>
+      <ul>
+        <li><strong>尺寸</strong>：<strong>1200×630 像素</strong>（约 1.91:1）。这是 Facebook 声明的大图标准，X 的 summary_large_image 按同比例设计，LinkedIn、微信兼容良好。更大可以，但平台会自行缩放裁切；</li>
+        <li><strong>最小尺寸</strong>：低于 200×200 的图会被降级为小缩略图，部分平台直接不显示；</li>
+        <li><strong>文件体积</strong>：按 <strong>1 MB 以内</strong> 做最保险（Facebook 上限 8 MB，X 上限 5 MB，但体积过大常被抓取超时）；</li>
+        <li><strong>格式</strong>：JPG 或 PNG 最稳，WebP 支持参差；</li>
+        <li><strong>URL</strong>：<strong>必须是 https 绝对路径</strong>，且无需登录即可公网访问。相对路径 <code>/assets/cover.png</code> 是最常见的「图片不显示」原因；</li>
+        <li><strong>构图</strong>：关键内容放画面中央，避免边缘文字——各平台裁切策略不同，中央安全区最稳。</li>
+      </ul>
+      <p>每张页面再加 <code>og:image:width</code> / <code>og:image:height</code> 两条标签，可以让平台在抓取图片前就预留版位，加快首屏渲染。</p>
+
+      <h2 id="length">标题与描述的长度</h2>
+      <p>平台对卡片文字没有硬性截断上限，只有「显示不下就省略号」，所以按展示宽度倒推：</p>
+      <table>
+        <thead>
+          <tr><th>字段</th><th>建议长度</th><th>说明</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>og:title</td><td>≤ 60 字符（中文约 30 字）</td><td>超出在移动端被截断；别重复 og:site_name</td></tr>
+          <tr><td>og:description</td><td>≤ 110 字符（中文约 55 字）</td><td>约两行；把关键信息放前半句</td></tr>
+          <tr><td>&lt;title&gt;</td><td>≤ 60 字符</td><td>兼顾 SEO，可与 og:title 不同</td></tr>
+          <tr><td>&lt;meta name="description"&gt;</td><td>≤ 160 字符</td><td>搜索结果摘要用，可比 og:description 长</td></tr>
+        </tbody>
+      </table>
+      <p>注意 og:title 和 <code>&lt;title&gt;</code> 面向的场景不同：前者是社交信息流里被扫一眼的文案，短、直接、有利益点；后者服务搜索结果，可以带关键词和站名后缀。两者独立撰写效果最好。</p>
+
+      <h2 id="debug">调试：验证器与缓存刷新</h2>
+      <p>改完标签不要靠「发给朋友试试」来验证，各平台都有官方调试器，会模拟自己的抓取器访问页面并列出<strong>实际抓到的数据</strong>：</p>
+      <ol class="t-steps">
+        <li><strong>Facebook / Meta</strong>：Sharing Debugger（developers.facebook.com/tools/debug/）——粘贴 URL 点 Debug，可看到抓取到的全部标签和图片预览；</li>
+        <li><strong>X / Twitter</strong>：Card Validator（需登录开发者账号）；卡片预览直接显示大图效果；</li>
+        <li><strong>LinkedIn</strong>：Post Inspector；</li>
+        <li><strong>通用</strong>：Google Rich Results Test 可作为「抓取器视角看 HTML」的旁证。</li>
+      </ol>
+      <p>调试器还有一个关键功能：<strong>重新抓取 = 刷新缓存</strong>。Facebook Debugger 点「Scrape Again」，LinkedIn/Post Inspector 重新提交即可。改了标签但分享出去还是旧内容的，九成是缓存问题——先刷抓取，再验证。没有官方调试器的平台（如微信），常用手段是给 URL 加一个无害参数（<code>?v=2</code>）让它变成「新链接」。</p>
+
+      <h2 id="why">常见不生效原因</h2>
+      <p>卡片不生效按命中率排序排查：</p>
+      <h3>1. og:image 不是 https 绝对路径</h3>
+      <p>写了 <code>content="/img/cover.png"</code> 或 <code>http://</code> 地址。抓取器要求完整、可公网访问的 https URL，相对路径直接解析失败。同理检查图片没有被防盗链、防火墙或登录墙挡住——调试器里的图片预览能立刻暴露这类问题。</p>
+      <h3>2. 平台缓存了旧数据</h3>
+      <p>标签改对了但分享还是旧的：用上文调试器强制重新抓取，或给 URL 加参数。缓存在「改对之后仍然不生效」的原因里占比最高。</p>
+      <h3>3. 缺标签或标签位置错误</h3>
+      <p>OG 标签必须静态存在于服务端返回的 HTML 的 <code>&lt;head&gt;</code> 内。常见坑：标签被前端 JS 动态插入（多数平台抓取器不执行 JavaScript，SPA 页面尤其注意）、被渲染进 <code>&lt;body&gt;</code>、或拼写错误（把 <code>property</code> 写成 <code>name</code> 一般可用，但 <code>og:image</code> 漏写成 <code>og:img</code> 就完全无效）。在调试器里核对「抓到的标签」与源码逐一比对。</p>
+      <p>这套「按命中率排序、用官方工具看抓取结果」的排障方法，与静态资源类问题同源——<a href="/guides/favicon-not-showing-guide/">Favicon 不显示排查</a>用的正是同一套思路：先确认文件可访问，再查引用路径，最后看缓存。</p>
+      <p>把标签块生成、复制、粘贴回 <code>&lt;head&gt;</code> 这套流程，用 <a href="/meta-tags/">Meta Tag 生成器</a> 可以一次做完，避免手写漏字段。</p>
+
+      <h2 id="faq">常见问题</h2>
+      <div class="faq-item"><p class="faq-q">Q：OG 标签会直接影响 SEO 排名吗？</p><p class="faq-a">A：不会直接参与排名算法——Google 主要看 &lt;title&gt;、&lt;meta name="description"&gt; 和正文本身。但 OG 标签决定链接在社交平台上的分享卡片：标题是否抓人、图片是否清晰，直接影响点击率；而点击率与外链传播会间接影响 SEO。一句话：OG 不加分，但没有它分享出去就是一截光秃秃的 URL，损失是实打实的。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：og:image 应该用多大的图片？</p><p class="faq-a">A：推荐 1200×630 像素（比例约 1.91:1），这是 Facebook 声明的标准大图尺寸，Twitter/X 的 summary_large_image 卡片同样按此设计，微信、LinkedIn 等平台也兼容良好。文件控制在 1 MB、8 MB 以内（不同平台上限不同，按 1 MB 做最保险），格式用 JPG 或 PNG。小于 200×200 的图会被降级成小缩略图甚至不显示。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：为什么改了标签，分享出去还是旧内容？</p><p class="faq-a">A：因为各平台会抓取并缓存 OG 数据，之后分享同一条链接时直接读缓存。解决办法是用各平台的官方调试器（Facebook Sharing Debugger、Twitter/X Card Validator、LinkedIn Post Inspector）重新抓取一次，抓取即刷新缓存。没有调试器的平台通常换个带参数的 URL（加 ?v=2）也能强制重新抓取。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：Twitter Card 和 OG 标签要写两套吗？</p><p class="faq-a">A：基本不用。Twitter/X 在缺少专属标签时会回退读取 OG 标签，所以一套完整的 OG（og:title、og:description、og:image）已经能覆盖大多数场景。建议额外只加一条 &lt;meta name="twitter:card" content="summary_large_image"&gt;，把卡片声明为大图样式；只有想给 Twitter 单独定制文案或图片时才补 twitter:title 等其余标签。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：页面上明明写了标签，为什么平台还是抓不到？</p><p class="faq-a">A：按命中率排查：一是标签不在 &lt;head&gt; 里，或被 JS 动态插入——多数平台的抓取器不执行 JavaScript，服务端渲染的 HTML 里必须静态存在；二是 og:image 用了相对路径或非 https 地址，抓取器要求可公网访问的 https 绝对 URL；三是页面或图片需要登录/防火墙才能访问；四是标签拼写错误（og:image 写成 og:image url 等）。用调试器看「实际抓到的标签」与源码逐一比对。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：og:title 和 &lt;title&gt; 必须一样吗？</p><p class="faq-a">A：不必须，而且通常不该一样。&lt;title&gt; 兼顾 SEO 关键词，常常带「| 站名」后缀、偏正式；og:title 是给人扫一眼的社交文案，可以更短更口语、不带站名（og:site_name 已经单独承担了站名）。最佳实践是两条独立撰写：og:title 控制在 60 字符左右，突出一个利益点或悬念。</p></div>
+
+      <div class="cta-box">
+        <p class="cta-title">免费在线生成 Meta 标签</p>
+        <p class="cta-sub">OG + Twitter Card 一次生成 · 实时预览卡片效果 · 纯浏览器本地运行</p>
+        <a class="cta-btn" href="/meta-tags/">打开 Meta Tag 生成器 →</a>
+      </div>
+    </div>
+
+    <!-- ================= English body ================= -->
+    <div class="article lb-en">
+      <div class="toc">
+        <p class="toc-title">Table of Contents</p>
+        <ol>
+          <li><a href="#og">What Is the OG Protocol</a></li>
+          <li><a href="#image">og:image: The 1200×630 Spec</a></li>
+          <li><a href="#length">Title &amp; Description Lengths</a></li>
+          <li><a href="#debug">Debugging: Validators &amp; Cache Refresh</a></li>
+          <li><a href="#why">Why Cards Fail to Render</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ol>
+      </div>
+
+      <h2 id="og">What Is the OG Protocol</h2>
+      <p>OG (Open Graph) is a page-level metadata protocol introduced by Facebook in 2010 and now the de facto standard: when a link is shared, Facebook, X/Twitter, LinkedIn, WhatsApp, Telegram, Slack, Discord and most other platforms read the <code>og:*</code> tags in <code>&lt;head&gt;</code> to render the card. The core four:</p>
+      <pre><code>&lt;meta property="og:type" content="website"&gt;
+&lt;meta property="og:title" content="Page Title"&gt;
+&lt;meta property="og:description" content="One-line summary"&gt;
+&lt;meta property="og:image" content="https://example.com/cover.png"&gt;
+&lt;meta property="og:url" content="https://example.com/page/"&gt;</code></pre>
+      <p>The Twitter Card system adds only one essential tag: <code>&lt;meta name="twitter:card" content="summary_large_image"&gt;</code>, which declares the large-image layout. Everything else — twitter:title, twitter:description, twitter:image — falls back to the matching OG tag when absent. <strong>One OG set plus one twitter:card covers nearly every platform.</strong></p>
+      <p>If you'd rather not hand-write them, the <a href="/meta-tags/">Meta Tag Generator</a> takes a title, description, and image URL once and outputs a complete, paste-ready block.</p>
+
+      <h2 id="image">og:image: The 1200×630 Spec</h2>
+      <p>The image is the most visible part of the card and the easiest to get wrong. The common denominator across platforms:</p>
+      <ul>
+        <li><strong>Size</strong>: <strong>1200×630 pixels</strong> (about 1.91:1). Facebook's declared large-image standard; X's summary_large_image is designed to the same ratio; LinkedIn and WeChat handle it well. Larger is fine — platforms scale and crop;</li>
+        <li><strong>Minimum</strong>: images under 200×200 get demoted to a tiny thumbnail or dropped entirely;</li>
+        <li><strong>File size</strong>: aim for <strong>under 1 MB</strong> to be safe (Facebook allows 8 MB, X allows 5 MB, but oversized files often hit crawler timeouts);</li>
+        <li><strong>Format</strong>: JPG or PNG are safest; WebP support is uneven;</li>
+        <li><strong>URL</strong>: must be an <strong>https absolute URL</strong>, publicly reachable without login. A relative path like <code>/assets/cover.png</code> is the most common "image not showing" cause;</li>
+        <li><strong>Composition</strong>: keep key content centered — platforms crop differently, and the center is the only safe zone.</li>
+      </ul>
+      <p>Also add <code>og:image:width</code> and <code>og:image:height</code>: they let platforms reserve layout space before the image finishes downloading, speeding first render.</p>
+
+      <h2 id="length">Title &amp; Description Lengths</h2>
+      <p>Platforms have no hard truncation limit — text just gets an ellipsis when it doesn't fit. Plan by display width:</p>
+      <table>
+        <thead>
+          <tr><th>Field</th><th>Suggested length</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>og:title</td><td>≤ 60 characters</td><td>Truncated on mobile; don't repeat og:site_name</td></tr>
+          <tr><td>og:description</td><td>≤ 110 characters</td><td>About two lines; front-load the key info</td></tr>
+          <tr><td>&lt;title&gt;</td><td>≤ 60 characters</td><td>SEO-facing; may differ from og:title</td></tr>
+          <tr><td>&lt;meta name="description"&gt;</td><td>≤ 160 characters</td><td>Search-snippet use; may be longer</td></tr>
+        </tbody>
+      </table>
+      <p>Remember og:title and <code>&lt;title&gt;</code> serve different audiences: the former is scanned in a social feed — short, direct, benefit-led; the latter serves search results, where keywords and a brand suffix help. Writing them independently works best.</p>
+
+      <h2 id="debug">Debugging: Validators &amp; Cache Refresh</h2>
+      <p>Don't verify by "sending it to a friend". Every major platform ships an official debugger that simulates its own crawler and lists <strong>exactly what it fetched</strong>:</p>
+      <ol class="t-steps">
+        <li><strong>Facebook / Meta</strong>: Sharing Debugger (developers.facebook.com/tools/debug/) — paste the URL, hit Debug, and see every fetched tag plus an image preview;</li>
+        <li><strong>X / Twitter</strong>: Card Validator (requires a developer login) — previews the large-image card directly;</li>
+        <li><strong>LinkedIn</strong>: Post Inspector;</li>
+        <li><strong>Generic</strong>: Google's Rich Results Test as a secondary "crawler's view of the HTML".</li>
+      </ol>
+      <p>The debugger also has a second job: <strong>re-scraping refreshes the cache</strong>. Hit "Scrape Again" in Facebook Debugger, or resubmit in Post Inspector. If you fixed the tags but shares still show old content, it's cache nine times out of ten — re-scrape first, verify second. For platforms without a debugger (like WeChat), appending a harmless query parameter (<code>?v=2</code>) turns the link into a "new" one and forces a fresh fetch.</p>
+
+      <h2 id="why">Why Cards Fail to Render</h2>
+      <p>When the card doesn't render, troubleshoot in this order:</p>
+      <h3>1. og:image isn't an https absolute URL</h3>
+      <p><code>content="/img/cover.png"</code> or an <code>http://</code> address. Crawlers require a complete, publicly reachable https URL; relative paths simply fail to resolve. Also check the image isn't blocked by hotlink protection, a firewall, or a login wall — the debugger's image preview exposes these instantly.</p>
+      <h3>2. The platform cached old data</h3>
+      <p>Tags are fixed but shares still show old content: force a re-scrape with the debuggers above, or add a URL parameter. Caching is the top cause among "I already fixed it" reports.</p>
+      <h3>3. Missing tags or wrong placement</h3>
+      <p>OG tags must exist statically in the <code>&lt;head&gt;</code> of the server-rendered HTML. Common pitfalls: tags injected client-side by JavaScript (most crawlers don't execute JS — watch out on SPAs), rendered into <code>&lt;body&gt;</code>, or misspelled (<code>property</code> vs <code>name</code> usually still works, but <code>og:img</code> instead of <code>og:image</code> is silently ignored). Compare the debugger's fetched tags against your source one by one.</p>
+      <p>This ranked-causes, use-the-official-tool methodology is the same one that solves static-asset issues — the <a href="/guides/favicon-not-showing-guide/">Favicon Not Showing</a> guide follows the identical playbook: confirm the file is reachable, check the reference path, then suspect the cache.</p>
+      <p>For generating the block, copying it, and pasting it back into <code>&lt;head&gt;</code>, the <a href="/meta-tags/">Meta Tag Generator</a> does it in one pass so no field gets skipped.</p>
+
+      <h2 id="faq">FAQ</h2>
+      <div class="faq-item"><p class="faq-q">Q: Do OG tags directly affect SEO rankings?</p><p class="faq-a">A: No — Google ranks on &lt;title&gt;, &lt;meta name="description"&gt;, and the content itself. But OG tags decide how your link's card looks on social platforms: a compelling title and a crisp image drive click-through, and clicks plus link sharing influence SEO indirectly. In short: OG earns no ranking points, but without it a shared link is a bare URL — and that loss is very real.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: How big should og:image be?</p><p class="faq-a">A: 1200×630 pixels (about 1.91:1) — Facebook's declared standard, the ratio X's summary_large_image card is designed for, and one that WeChat and LinkedIn handle well. Keep the file under ~1 MB to be safe (platform caps differ; 1 MB avoids crawler timeouts), in JPG or PNG. Images under 200×200 get demoted to small thumbnails or dropped.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: Why do shares still show old content after I changed the tags?</p><p class="faq-a">A: Platforms fetch and cache OG data, then reuse the cache for every future share of the same URL. Fix it with each platform's official debugger (Facebook Sharing Debugger, X Card Validator, LinkedIn Post Inspector): a fresh scrape refreshes the cache. Platforms without a debugger usually re-fetch if you share a URL with a new query parameter (?v=2).</p></div>
+      <div class="faq-item"><p class="faq-q">Q: Do I need both Twitter Card and OG tags?</p><p class="faq-a">A: Mostly no. X falls back to OG tags when its own are missing, so one complete OG set (og:title, og:description, og:image) covers nearly everything. Just add &lt;meta name="twitter:card" content="summary_large_image"&gt; to opt into the large-image layout, and only add twitter:title and friends if you want Twitter-specific copy or imagery.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: The tags are in my page — why can't the platform see them?</p><p class="faq-a">A: Ranked by likelihood: the tags aren't statically in &lt;head&gt; (e.g. injected by JS — most crawlers don't run JavaScript); og:image uses a relative or non-https address (crawlers need a public https absolute URL); the page or image sits behind a login or firewall; or a typo broke the tag. Use the debugger's "fetched tags" view and diff it against your source.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: Must og:title match the &lt;title&gt; tag?</p><p class="faq-a">A: No — and they usually shouldn't match. &lt;title&gt; serves search results with keywords and a "| Brand" suffix; og:title is social feed copy, so keep it shorter, more conversational, and brand-free (og:site_name handles that separately). Best practice: write them independently, and keep og:title around 60 characters with one clear hook.</p></div>
+
+      <div class="cta-box">
+        <p class="cta-title">Generate Meta Tags — Free Online</p>
+        <p class="cta-sub">OG + Twitter Card in one pass · Live card preview · Runs in your browser</p>
+        <a class="cta-btn" href="/meta-tags/">Open Meta Tag Generator →</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<div id="site-footer"></div>
+<script src="/assets/js/site.js" defer></script>
+</body>
+</html>

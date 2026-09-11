@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CSS 渐变设计指南：从色标到上线 | CATAITO</title>
+<meta name="title-zh" content="CSS 渐变设计指南：从色标到上线 | CATAITO">
+<meta name="title-en" content="CSS Gradient Design Guide: From Color Stops to Production | CATAITO">
+<meta name="description" content="CSS 渐变完整设计指南：线性与径向渐变的应用场景、色标数量与角度选择、为什么渐变中间会发灰、品牌渐变的三步落地方法，以及渐变上文字的无障碍对比度校验（WCAG 4.5:1）。纯浏览器本地调试。">
+<meta name="theme-color" content="#f6f3ec">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="CATAITO 工具箱">
+<meta property="og:title" content="CSS 渐变设计指南：从色标到上线">
+<meta property="og:description" content="线性/径向怎么选、色标与角度怎么定、中间发灰怎么办、渐变上的文字对比度怎么达标。">
+<meta property="og:url" content="https://tools.cataito.com/guides/gradient-guide/">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:locale:alternate" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="CSS 渐变设计指南">
+<meta name="twitter:description" content="从色标到上线：类型、色标、角度与无障碍对比度。">
+<link rel="canonical" href="https://tools.cataito.com/guides/gradient-guide/">
+<link rel="icon" href="/assets/img/icon.svg">
+<link rel="stylesheet" href="/assets/css/site.css">
+<script src="/assets/js/theme-init.js"></script>
+<script>
+  (function () {
+    try {
+      var l = localStorage.getItem('cataito-lang');
+      document.documentElement.setAttribute('lang', (l === 'en') ? 'en' : 'zh-CN');
+      if (l === 'en') document.documentElement.classList.add('lang-en');
+    } catch (e) {}
+  })();
+</script>
+<style>
+  /* ============ 指南页排版（与其他指南页保持一致） ============ */
+  .guide-wrap { max-width: 760px; margin: 0; }
+  .guide-meta { font-size: 13px; color: var(--text-3); margin: 0 0 6px; }
+  .page-sub { margin-bottom: 10px; }
+  .article { font-size: 15px; line-height: 1.85; color: var(--text); }
+  .article h2 {
+    font-size: 21px; font-weight: 700; letter-spacing: -.3px;
+    margin: 44px 0 14px; padding-top: 16px; border-top: 1px solid var(--border); color: var(--text);
+  }
+  .article h3 { font-size: 16.5px; font-weight: 650; margin: 26px 0 10px; color: var(--text); }
+  .article p { margin: 0 0 14px; color: var(--text-2); }
+  .article strong { color: var(--text); font-weight: 650; }
+  .article a { color: var(--accent); text-decoration: none; }
+  .article a:hover { text-decoration: underline; }
+  .article ul, .article ol { margin: 0 0 16px; padding-left: 22px; color: var(--text-2); }
+  .article li { margin: 6px 0; }
+  .article code {
+    font-family: var(--font-mono);
+    font-size: 13px; background: var(--card-2); border: 1px solid var(--border);
+    border-radius: 3px; padding: 1px 6px; color: var(--text);
+  }
+  .article pre {
+    background: var(--card-2); border: 1px solid var(--border); border-radius: var(--radius-sm);
+    padding: 14px 16px; margin: 14px 0 18px; overflow-x: auto;
+  }
+  .article pre code { background: none; border: none; padding: 0; font-size: 12.5px; line-height: 1.7; }
+  .article table {
+    width: 100%; border-collapse: collapse; margin: 18px 0 22px;
+    font-size: 13.5px; background: var(--card);
+    border: 1px solid var(--border); border-radius: var(--radius-sm); overflow: hidden;
+  }
+  .article th, .article td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--border); }
+  .article th { background: var(--card-2); color: var(--text); font-weight: 650; white-space: nowrap; }
+  .article td { color: var(--text-2); }
+  .article tr:last-child td { border-bottom: none; }
+  .toc {
+    background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 16px 18px; margin: 20px 0 8px; box-shadow: var(--shadow-sm);
+  }
+  .toc-title { font-size: 13px; font-weight: 650; color: var(--text); margin: 0 0 10px; }
+  .toc ol { margin: 0; padding-left: 20px; font-size: 13.5px; }
+  .toc li { margin: 5px 0; }
+  .toc a { color: var(--text-2); text-decoration: none; }
+  .toc a:hover { color: var(--accent); }
+  /* FAQ 卡片样式由 site.css 的 .faq-item / .t-faq-* 统一提供 */
+  .cta-box {
+    background: linear-gradient(135deg, var(--accent-soft), var(--accent-soft-2));
+    border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent); border-radius: var(--radius);
+    padding: 20px 22px; margin: 34px 0 10px; text-align: center;
+  }
+  .cta-box .cta-title { font-size: 17px; font-weight: 700; color: var(--text); margin: 0 0 6px; }
+  .cta-box .cta-sub { font-size: 13.5px; color: var(--text-2); margin: 0 0 14px; }
+  .cta-btn {
+    display: inline-block; background: var(--accent); color: #fff; text-decoration: none;
+    font-size: 14px; font-weight: 600; padding: 11px 26px; border-radius: var(--radius-sm);
+    box-shadow: 0 6px 18px var(--accent-glow); transition: background .15s;
+  }
+  .cta-btn:hover { background: var(--accent-hover); }
+  /* 修复：.article a 的特异度(0,1,1)会压过 .cta-btn(0,1,0) 的 color:#fff，
+     导致按钮底字同色在亮/暗模式下都不可读。用更高特异度夺回白色文字。 */
+  .article a.cta-btn, .article .cta-btn { color: #fff; text-decoration: none; }
+  .article a.cta-btn:hover { color: #fff; text-decoration: none; background: var(--accent-hover); }
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "CSS 渐变设计指南：从色标到上线",
+  "description": "详解 CSS 线性与径向渐变的应用场景、色标数量与角度选择、渐变中间发灰的原因与解法、品牌渐变的三步落地方法，以及渐变上文字的无障碍对比度校验（WCAG 4.5:1，按最差点检查）。",
+  "inLanguage": "zh-CN",
+  "datePublished": "2026-09-11",
+  "dateModified": "2026-09-11",
+  "author": { "@type": "Organization", "name": "CATAITO", "url": "https://tools.cataito.com/" },
+  "publisher": { "@type": "Organization", "name": "CATAITO 工具箱", "url": "https://tools.cataito.com/" },
+  "mainEntityOfPage": "https://tools.cataito.com/guides/gradient-guide/"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "线性渐变和径向渐变分别适合什么场景？",
+      "acceptedAnswer": { "@type": "Answer", "text": "线性渐变沿一个方向过渡，适合横幅、按钮、分区背景和封面图这类「有方向感」的设计；径向渐变从一个中心点向外扩散，适合聚光灯、光晕、头像背景和按钮高光；圆锥渐变适合饼图和装饰性扇形。拿不准时先用线性 135 度（左上到右下）试——它是视觉上最自然、最不容易出错的默认选择。" }
+    },
+    {
+      "@type": "Question",
+      "name": "渐变角度怎么选？",
+      "acceptedAnswer": { "@type": "Answer", "text": "CSS 里 0deg 指向上、90deg 指向右、180deg 指向下，角度按顺时针计算。常用的安全角度：135deg（左上到右下）最自然；90deg（水平）适合窄按钮；180deg（垂直）适合大面积背景。同一产品里固定一两个角度反复使用，比每处换个角度更显专业——角度本身就是品牌渐变系统的一部分。" }
+    },
+    {
+      "@type": "Question",
+      "name": "为什么我的渐变中间发灰、发脏？",
+      "acceptedAnswer": { "@type": "Answer", "text": "两个原因：一是两端色相相隔太远（比如青色到橙色），插值路径穿过低饱和区，中段自然发灰；二是互补色在 RGB 空间直接插值。解决办法：缩短两端色相距离，改用同色系深浅渐变；必须跨色相时在中间加一个过渡色标，手动指定中段颜色；或使用支持 OKLCH 插值的现代语法（interpolation color space）。" }
+    },
+    {
+      "@type": "Question",
+      "name": "渐变上的文字对比度怎么保证？",
+      "acceptedAnswer": { "@type": "Answer", "text": "WCAG 要求正文对比度至少 4.5:1、大字号 3:1，而渐变上每个点的颜色都不一样——必须按最差的那一点校验，通常是文字颜色对渐变较亮的一端。实测方法：取出渐变两端色值，分别与文字颜色检查对比度，取不达标就压深渐变、加暗色遮罩层，或给文字加投影。最稳的兜底是纯白文字配足够深的渐变。" }
+    },
+    {
+      "@type": "Question",
+      "name": "品牌渐变应该用几个色标？",
+      "acceptedAnswer": { "@type": "Answer", "text": "两个色标是默认答案——最干净、最不容易失控。三个色标用于需要「高光感」的场景（深-亮-深）。超过三个色标很容易变成彩虹墙，除非品牌本身就是多色系。确定色标后把它固化成设计令牌：一组品牌色 + 固定角度 + 固定色标位置，全站引用同一套值，而不是每个页面重新配。" }
+    },
+    {
+      "@type": "Question",
+      "name": "暗色模式下渐变要注意什么？",
+      "acceptedAnswer": { "@type": "Answer", "text": "亮色模式下舒服的浅色渐变，放到深色背景上常显得刺眼或像发光的错误。做法是为暗色模式单独定义一组渐变令牌：降低整体亮度、拉开端点间的明度跨度，让渐变融入深色底而不是浮在上面。同时重新校验暗色模式下文字与渐变的对比度——背景变了，之前达标的组合可能不再达标。" }
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "首页", "item": "https://tools.cataito.com/" },
+    { "@type": "ListItem", "position": 2, "name": "使用指南", "item": "https://tools.cataito.com/guides/" },
+    { "@type": "ListItem", "position": 3, "name": "CSS 渐变设计指南", "item": "https://tools.cataito.com/guides/gradient-guide/" }
+  ]
+}
+</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7103529190038161" crossorigin="anonymous"></script>
+</head>
+<body>
+<div id="site-header"></div>
+
+<main class="site-main">
+  <div class="guide-wrap">
+    <nav class="breadcrumb"><a href="/" data-i18n="crumb_home">首页</a><span class="sep">/</span><a href="/guides/" data-i18n="nav_guides">使用指南</a><span class="sep">/</span><span data-i18n="gd_gdg_short">CSS 渐变设计指南</span></nav>
+    <p class="guide-meta"><span data-i18n="gd_published">发布于</span> 2026-09-11 · CATAITO</p>
+    <h1 class="page-h1" data-i18n="gd_gdg_h1">CSS 渐变设计指南：从色标到上线</h1>
+    <p class="page-sub" data-i18n="gd_gdg_sub">渐变好看与难看之间隔着一整套决策：类型、色标、角度、插值空间，还有最容易被忽略的——渐变上的文字对比度。本文按「选型 → 调参 → 品牌化 → 无障碍」的顺序，把一条渐变从想法带到上线。</p>
+
+    <!-- ================= 中文正文 ================= -->
+    <div class="article lb-zh">
+      <div class="toc">
+        <p class="toc-title">目录</p>
+        <ol>
+          <li><a href="#type">先选类型：线性、径向还是圆锥</a></li>
+          <li><a href="#stops">色标与角度：渐变的核心参数</a></li>
+          <li><a href="#brand">品牌渐变的三步落地</a></li>
+          <li><a href="#a11y">渐变上的文字：按最差点校验对比度</a></li>
+          <li><a href="#faq">常见问题</a></li>
+        </ol>
+      </div>
+
+      <h2 id="type">先选类型：线性、径向还是圆锥</h2>
+      <p>CSS 三种渐变各管一个方向感，选错类型怎么调都别扭：</p>
+      <ul>
+        <li><strong>线性渐变（linear-gradient）</strong>：沿一个方向过渡。横幅、Hero 背景、按钮、卡片边框、分区过渡，凡是「有方向感」的设计都用它——也是默认首选；</li>
+        <li><strong>径向渐变（radial-gradient）</strong>：从中心点向外扩散。聚光灯效果、光晕、头像底衬、按钮内高光、「页面四角压暗」的氛围层；</li>
+        <li><strong>圆锥渐变（conic-gradient）</strong>：绕中心点旋转过渡。饼图、色轮、装饰性扇形和加载指示器。</li>
+      </ul>
+      <p>拿不准就用 <a href="/gradient/">CSS 渐变生成器</a> 并排试三种类型——实时预览下哪个对味一目了然，调好直接复制 CSS。</p>
+
+      <h2 id="stops">色标与角度：渐变的核心参数</h2>
+
+      <h3>色标数量：从两个开始</h3>
+      <p><strong>两个色标是默认答案</strong>，最干净也最难失控。三个色标用于营造高光感（深-亮-深）或承接三种品牌色；超过三个极易变成彩虹墙。色标位置不必对半开——把主色标移到 30%/70% 附近，渐变会更有节奏。中间发灰的问题见下一节和 FAQ。</p>
+
+      <h3>角度：固定比「每次换着来」更专业</h3>
+      <p>CSS 角度顺时针计算：<code>0deg</code> 向上、<code>90deg</code> 向右、<code>180deg</code> 向下。常用安全角度：</p>
+      <table>
+        <thead><tr><th>角度</th><th>方向</th><th>适用</th></tr></thead>
+        <tbody>
+          <tr><td>135deg</td><td>左上 → 右下</td><td>默认首选，最自然</td></tr>
+          <tr><td>90deg</td><td>左 → 右</td><td>窄按钮、横向条带</td></tr>
+          <tr><td>180deg</td><td>上 → 下</td><td>大面积背景、页头</td></tr>
+        </tbody>
+      </table>
+      <p>同一产品固定一两个角度，视觉上会呈现「系统感」；每个模块换一个角度，看起来就是随手调的。</p>
+
+      <h3>插值：为什么中间会发灰</h3>
+      <p>两端色相隔得远（青 → 橙），浏览器在 RGB 空间直线插值，路径正好穿过低饱和区，中段就发灰。解法按优先级：换同色系深浅对（最稳）；跨色相时在中间加过渡色标手动指定中段色；或改用现代语法 <code>in oklch</code> 插值，让路径绕开灰区。选色配色思路可参考 <a href="/guides/color-guide/" data-i18n="gd_color_short">配色原理指南</a> 的色轮与色相距离。</p>
+
+      <h2 id="brand">品牌渐变的三步落地</h2>
+      <ol class="t-steps">
+        <li><strong>定两端色</strong>：从品牌主色出发选第二个颜色——同色相拉深浅是安全牌；跨色相时先在生成器里预览中段是否发灰；</li>
+        <li><strong>定角度系统</strong>：全局固定一个主角度（如 135deg），按钮等窄元素允许一个副角度。写进设计规范，而不是每个页面现场发挥；</li>
+        <li><strong>固化成令牌</strong>：把最终 CSS 存成设计令牌（如 <code>--brand-grad</code>），全站引用同一值。改渐变只改一处。</li>
+      </ol>
+      <p>在 <a href="/gradient/">CSS 渐变生成器</a> 里调好后直接复制 CSS，贴进令牌文件即可。上线前务必做下一节的对比度校验。</p>
+
+      <h2 id="a11y">渐变上的文字：按最差点校验对比度</h2>
+      <p>纯色背景上文字对比度只有一个数，渐变背景上<strong>每个点的对比度都不同</strong>——必须按最差的点校验，也就是文字颜色对渐变较亮一端的组合。WCAG 的达标线：正文至少 <strong>4.5:1</strong>，18pt 以上大字至少 <strong>3:1</strong>。</p>
+      <p>实测流程：</p>
+      <ol class="t-steps">
+        <li>从渐变里取出两端色值（生成器里直接能看到）；</li>
+        <li>用 <a href="/contrast/">对比度检查器</a> 分别测文字色对两端色的比值，取较差的那个；</li>
+        <li>不达标就三选一：压深渐变较亮端、文字下加暗色遮罩层、给文字加投影（最后手段）；</li>
+        <li>暗色模式换了一组渐变令牌，就重新测一遍——背景变了，之前达标的不代表还达标。</li>
+      </ol>
+      <p>对比度的达标线、实测细节与常见误区，在 <a href="/guides/accessibility-contrast-guide/" data-i18n="gd_acc_short">无障碍对比度指南</a> 里有完整展开；渐变场景记住一句话：<strong>校验最差点，而不是平均值</strong>。</p>
+
+      <h2 id="faq">常见问题</h2>
+      <div class="faq-item"><p class="faq-q">Q：线性渐变和径向渐变分别适合什么场景？</p><p class="faq-a">A：线性渐变沿一个方向过渡，适合横幅、按钮、分区背景和封面图这类「有方向感」的设计；径向渐变从一个中心点向外扩散，适合聚光灯、光晕、头像背景和按钮高光；圆锥渐变适合饼图和装饰性扇形。拿不准时先用线性 135 度（左上到右下）试——它是视觉上最自然、最不容易出错的默认选择。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：渐变角度怎么选？</p><p class="faq-a">A：CSS 里 0deg 指向上、90deg 指向右、180deg 指向下，角度按顺时针计算。常用的安全角度：135deg（左上到右下）最自然；90deg（水平）适合窄按钮；180deg（垂直）适合大面积背景。同一产品里固定一两个角度反复使用，比每处换个角度更显专业——角度本身就是品牌渐变系统的一部分。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：为什么我的渐变中间发灰、发脏？</p><p class="faq-a">A：两个原因：一是两端色相相隔太远（比如青色到橙色），插值路径穿过低饱和区，中段自然发灰；二是互补色在 RGB 空间直接插值。解决办法：缩短两端色相距离，改用同色系深浅渐变；必须跨色相时在中间加一个过渡色标，手动指定中段颜色；或使用支持 OKLCH 插值的现代语法（interpolation color space）。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：渐变上的文字对比度怎么保证？</p><p class="faq-a">A：WCAG 要求正文对比度至少 4.5:1、大字号 3:1，而渐变上每个点的颜色都不一样——必须按最差的那一点校验，通常是文字颜色对渐变较亮的一端。实测方法：取出渐变两端色值，分别与文字颜色检查对比度，取不达标就压深渐变、加暗色遮罩层，或给文字加投影。最稳的兜底是纯白文字配足够深的渐变。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：品牌渐变应该用几个色标？</p><p class="faq-a">A：两个色标是默认答案——最干净、最不容易失控。三个色标用于需要「高光感」的场景（深-亮-深）。超过三个色标很容易变成彩虹墙，除非品牌本身就是多色系。确定色标后把它固化成设计令牌：一组品牌色 + 固定角度 + 固定色标位置，全站引用同一套值，而不是每个页面重新配。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：暗色模式下渐变要注意什么？</p><p class="faq-a">A：亮色模式下舒服的浅色渐变，放到深色背景上常显得刺眼或像发光的错误。做法是为暗色模式单独定义一组渐变令牌：降低整体亮度、拉开端点间的明度跨度，让渐变融入深色底而不是浮在上面。同时重新校验暗色模式下文字与渐变的对比度——背景变了，之前达标的组合可能不再达标。</p></div>
+
+      <div class="cta-box">
+        <p class="cta-title">免费在线调 CSS 渐变</p>
+        <p class="cta-sub">线性 / 径向 / 圆锥 · 色标实时预览 · 一键复制 CSS · 纯浏览器本地调试</p>
+        <a class="cta-btn" href="/gradient/">打开 CSS 渐变生成器 →</a>
+      </div>
+    </div>
+
+    <!-- ================= English body ================= -->
+    <div class="article lb-en">
+      <div class="toc">
+        <p class="toc-title">Table of Contents</p>
+        <ol>
+          <li><a href="#type">Pick the Type: Linear, Radial, or Conic</a></li>
+          <li><a href="#stops">Stops and Angles: The Core Parameters</a></li>
+          <li><a href="#brand">Landing a Brand Gradient in Three Steps</a></li>
+          <li><a href="#a11y">Text on Gradients: Check the Worst Point</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ol>
+      </div>
+
+      <h2 id="type">Pick the Type: Linear, Radial, or Conic</h2>
+      <p>Each CSS gradient type handles a different sense of direction — pick the wrong one and no amount of tuning feels right:</p>
+      <ul>
+        <li><strong>Linear gradients</strong> transition along one direction. Banners, hero backgrounds, buttons, card borders, section transitions — anything "directional". The default choice;</li>
+        <li><strong>Radial gradients</strong> spread outward from a center point. Spotlights, glows, avatar backdrops, inner button highlights, vignette layers;</li>
+        <li><strong>Conic gradients</strong> rotate around a center. Pie charts, color wheels, decorative sectors, spinners.</li>
+      </ul>
+      <p>When unsure, preview all three side by side in the <a href="/gradient/">CSS Gradient Generator</a> — with live rendering, the right one is obvious, and the CSS copies straight out.</p>
+
+      <h2 id="stops">Stops and Angles: The Core Parameters</h2>
+
+      <h3>Stop count: start with two</h3>
+      <p><strong>Two stops is the default answer</strong> — cleanest and hardest to break. Three stops build a highlight (dark-light-dark) or carry three brand colors; beyond three, you're one step from a rainbow wall. Stop positions don't have to be even — moving the main stop to around 30%/70% gives the gradient rhythm. (For the muddy-middle problem, see below and the FAQ.)</p>
+
+      <h3>Angles: fixing one beats improvising every time</h3>
+      <p>CSS angles run clockwise: <code>0deg</code> points up, <code>90deg</code> right, <code>180deg</code> down. Safe go-to angles:</p>
+      <table>
+        <thead><tr><th>Angle</th><th>Direction</th><th>Best for</th></tr></thead>
+        <tbody>
+          <tr><td>135deg</td><td>top-left → bottom-right</td><td>Default; most natural</td></tr>
+          <tr><td>90deg</td><td>left → right</td><td>Narrow buttons, horizontal bands</td></tr>
+          <tr><td>180deg</td><td>top → bottom</td><td>Large backgrounds, page headers</td></tr>
+        </tbody>
+      </table>
+      <p>Fixing one or two angles across a product creates a sense of system; a different angle per module reads as improvised.</p>
+
+      <h3>Interpolation: why the middle turns gray</h3>
+      <p>When the two ends are far apart in hue (cyan → orange), the browser interpolates in a straight line through RGB — the path crosses a low-saturation zone and the middle muddies. Fixes, in order of preference: switch to a same-hue light/dark pair (safest); add a middle transition stop with a hand-picked color; or interpolate in a modern space with <code>in oklch</code> to route around the gray. For hue distance and color-wheel thinking, see the <a href="/guides/color-guide/" data-i18n="gd_color_short">Color Theory Guide</a>.</p>
+
+      <h2 id="brand">Landing a Brand Gradient in Three Steps</h2>
+      <ol class="t-steps">
+        <li><strong>Fix the two ends</strong>: start from the brand color and pick the second — a same-hue light/dark pair is the safe bet; if crossing hues, preview the middle in the generator first;</li>
+        <li><strong>Fix the angle system</strong>: one global primary angle (say 135deg), with at most one secondary for narrow elements like buttons. Write it into the design spec — don't improvise per page;</li>
+        <li><strong>Tokenize it</strong>: store the final CSS as a design token (e.g. <code>--brand-grad</code>) and reference that everywhere. Changing the gradient then means changing one line.</li>
+      </ol>
+      <p>Tune it in the <a href="/gradient/">CSS Gradient Generator</a>, copy the CSS, and paste it into your token file. Before shipping, run the accessibility check below.</p>
+
+      <h2 id="a11y">Text on Gradients: Check the Worst Point</h2>
+      <p>On a solid background, text contrast is a single number; on a gradient, <strong>every point has its own ratio</strong> — so you must validate the worst point, typically the text color against the lighter end of the gradient. WCAG thresholds: at least <strong>4.5:1</strong> for body text, <strong>3:1</strong> for large text (18pt+).</p>
+      <p>Practical workflow:</p>
+      <ol class="t-steps">
+        <li>Grab the color values at both gradient ends (the generator shows them directly);</li>
+        <li>Run each against the text color in the <a href="/contrast/">Contrast Checker</a> and keep the worse ratio;</li>
+        <li>If it fails, pick one: darken the lighter end, add a dark overlay behind the text, or add a text shadow (last resort);</li>
+        <li>If dark mode swaps in a different gradient token, re-test — a passing combination doesn't survive a background change.</li>
+      </ol>
+      <p>The thresholds, testing details, and common pitfalls are covered fully in the <a href="/guides/accessibility-contrast-guide/" data-i18n="gd_acc_short">Accessibility Contrast Guide</a>; for gradients, remember one sentence: <strong>validate the worst point, not the average</strong>.</p>
+
+      <h2 id="faq">FAQ</h2>
+      <div class="faq-item"><p class="faq-q">Q: When do I use linear vs radial gradients?</p><p class="faq-a">A: Linear gradients transition along one direction — banners, buttons, section backgrounds, covers, anything directional. Radial gradients spread from a center point — spotlights, glows, avatar backdrops, button highlights. Conic gradients suit pie charts and decorative sectors. When unsure, try linear at 135deg (top-left to bottom-right) first — the most natural, hardest-to-ruin default.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: How do I choose the gradient angle?</p><p class="faq-a">A: In CSS, 0deg points up, 90deg right, 180deg down — angles are clockwise. Safe go-tos: 135deg (top-left to bottom-right) is the most natural; 90deg (horizontal) suits narrow buttons; 180deg (vertical) suits large backgrounds. Fixing one or two angles across a product reads as more professional than changing it everywhere — the angle itself is part of your brand gradient system.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: Why does my gradient turn gray or muddy in the middle?</p><p class="faq-a">A: Two causes: the end hues are too far apart (cyan to orange, say), so the interpolation path crosses a low-saturation zone and the middle grays out; or complementary colors are interpolated directly in RGB. Fixes: shorten the hue distance and use a same-hue light/dark pair; add a middle transition stop with a hand-picked color when you must cross hues; or use modern OKLCH interpolation (interpolation color space).</p></div>
+      <div class="faq-item"><p class="faq-q">Q: How do I guarantee text contrast on a gradient?</p><p class="faq-a">A: WCAG requires at least 4.5:1 for body text and 3:1 for large text — but on a gradient every point differs, so validate the worst point, usually the text color against the gradient's lighter end. Method: extract both end colors and check each against the text color; if either fails, darken the gradient, add a dark overlay, or add a text shadow. The safest fallback is pure white text on a sufficiently dark gradient.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: How many color stops should a brand gradient use?</p><p class="faq-a">A: Two is the default answer — cleanest and hardest to lose control of. Three stops serve highlight effects (dark-light-dark). Beyond three easily becomes a rainbow wall, unless your brand is genuinely multi-hue. Once decided, tokenize it: one set of brand colors + a fixed angle + fixed stop positions, referenced site-wide instead of re-mixed per page.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: What should I watch out for in dark mode?</p><p class="faq-a">A: Light pastel gradients that look great in light mode often glare on dark backgrounds or read as a glow bug. Define a separate gradient token set for dark mode: lower overall brightness, widen the lightness span between ends so the gradient melts into the dark ground instead of floating on it. And re-validate text-on-gradient contrast — the background changed, so a previously passing pair may now fail.</p></div>
+
+      <div class="cta-box">
+        <p class="cta-title">Tune CSS Gradients — Free Online</p>
+        <p class="cta-sub">Linear / radial / conic · Live stop preview · Copy CSS in one click · Runs in your browser</p>
+        <a class="cta-btn" href="/gradient/">Open CSS Gradient Generator →</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<div id="site-footer"></div>
+<script src="/assets/js/site.js" defer></script>
+</body>
+</html>

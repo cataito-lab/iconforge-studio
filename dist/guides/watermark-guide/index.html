@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>图片加水印指南：防盗图的最佳实践 | CATAITO</title>
+<meta name="title-zh" content="图片加水印指南：防盗图的最佳实践 | CATAITO">
+<meta name="title-en" content="Image Watermarking Guide: Best Practices to Protect Your Pictures | CATAITO">
+<meta name="description" content="图片加水印完整指南：为什么要加水印、文字水印的设计要素（透明度 30-50%、位置、斜向平铺）、批量处理工作流，以及诚实的局限性说明——水印不能 100% 防盗，但能显著提高盗用门槛。纯浏览器本地处理，图片不上传。">
+<meta name="theme-color" content="#f6f3ec">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="CATAITO 工具箱">
+<meta property="og:title" content="图片加水印指南：防盗图的最佳实践">
+<meta property="og:description" content="透明度多少合适、水印放哪最有效、批量怎么保持一致——文字水印设计一次讲清。">
+<meta property="og:url" content="https://tools.cataito.com/guides/watermark-guide/">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:locale:alternate" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="图片加水印指南">
+<meta name="twitter:description" content="防盗图的最佳实践：透明度、位置、批量工作流。">
+<link rel="canonical" href="https://tools.cataito.com/guides/watermark-guide/">
+<link rel="icon" href="/assets/img/icon.svg">
+<link rel="stylesheet" href="/assets/css/site.css">
+<script src="/assets/js/theme-init.js"></script>
+<script>
+  (function () {
+    try {
+      var l = localStorage.getItem('cataito-lang');
+      document.documentElement.setAttribute('lang', (l === 'en') ? 'en' : 'zh-CN');
+      if (l === 'en') document.documentElement.classList.add('lang-en');
+    } catch (e) {}
+  })();
+</script>
+<style>
+  /* ============ 指南页排版（与其他指南页保持一致） ============ */
+  .guide-wrap { max-width: 760px; margin: 0; }
+  .guide-meta { font-size: 13px; color: var(--text-3); margin: 0 0 6px; }
+  .page-sub { margin-bottom: 10px; }
+  .article { font-size: 15px; line-height: 1.85; color: var(--text); }
+  .article h2 {
+    font-size: 21px; font-weight: 700; letter-spacing: -.3px;
+    margin: 44px 0 14px; padding-top: 16px; border-top: 1px solid var(--border); color: var(--text);
+  }
+  .article h3 { font-size: 16.5px; font-weight: 650; margin: 26px 0 10px; color: var(--text); }
+  .article p { margin: 0 0 14px; color: var(--text-2); }
+  .article strong { color: var(--text); font-weight: 650; }
+  .article a { color: var(--accent); text-decoration: none; }
+  .article a:hover { text-decoration: underline; }
+  .article ul, .article ol { margin: 0 0 16px; padding-left: 22px; color: var(--text-2); }
+  .article li { margin: 6px 0; }
+  .article code {
+    font-family: var(--font-mono);
+    font-size: 13px; background: var(--card-2); border: 1px solid var(--border);
+    border-radius: 3px; padding: 1px 6px; color: var(--text);
+  }
+  .article pre {
+    background: var(--card-2); border: 1px solid var(--border); border-radius: var(--radius-sm);
+    padding: 14px 16px; margin: 14px 0 18px; overflow-x: auto;
+  }
+  .article pre code { background: none; border: none; padding: 0; font-size: 12.5px; line-height: 1.7; }
+  .article table {
+    width: 100%; border-collapse: collapse; margin: 18px 0 22px;
+    font-size: 13.5px; background: var(--card);
+    border: 1px solid var(--border); border-radius: var(--radius-sm); overflow: hidden;
+  }
+  .article th, .article td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--border); }
+  .article th { background: var(--card-2); color: var(--text); font-weight: 650; white-space: nowrap; }
+  .article td { color: var(--text-2); }
+  .article tr:last-child td { border-bottom: none; }
+  .toc {
+    background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 16px 18px; margin: 20px 0 8px; box-shadow: var(--shadow-sm);
+  }
+  .toc-title { font-size: 13px; font-weight: 650; color: var(--text); margin: 0 0 10px; }
+  .toc ol { margin: 0; padding-left: 20px; font-size: 13.5px; }
+  .toc li { margin: 5px 0; }
+  .toc a { color: var(--text-2); text-decoration: none; }
+  .toc a:hover { color: var(--accent); }
+  /* FAQ 卡片样式由 site.css 的 .faq-item / .t-faq-* 统一提供 */
+  .cta-box {
+    background: linear-gradient(135deg, var(--accent-soft), var(--accent-soft-2));
+    border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent); border-radius: var(--radius);
+    padding: 20px 22px; margin: 34px 0 10px; text-align: center;
+  }
+  .cta-box .cta-title { font-size: 17px; font-weight: 700; color: var(--text); margin: 0 0 6px; }
+  .cta-box .cta-sub { font-size: 13.5px; color: var(--text-2); margin: 0 0 14px; }
+  .cta-btn {
+    display: inline-block; background: var(--accent); color: #fff; text-decoration: none;
+    font-size: 14px; font-weight: 600; padding: 11px 26px; border-radius: var(--radius-sm);
+    box-shadow: 0 6px 18px var(--accent-glow); transition: background .15s;
+  }
+  .cta-btn:hover { background: var(--accent-hover); }
+  /* 修复：.article a 的特异度(0,1,1)会压过 .cta-btn(0,1,0) 的 color:#fff，
+     导致按钮底字同色在亮/暗模式下都不可读。用更高特异度夺回白色文字。 */
+  .article a.cta-btn, .article .cta-btn { color: #fff; text-decoration: none; }
+  .article a.cta-btn:hover { color: #fff; text-decoration: none; background: var(--accent-hover); }
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "图片加水印指南：防盗图的最佳实践",
+  "description": "详解图片加水印的目的、文字水印设计要素（透明度 30-50%、位置选择、斜向平铺）、批量处理工作流，以及诚实的局限性分析——水印不能 100% 防盗，但能提高盗用门槛并留下权属声明。",
+  "inLanguage": "zh-CN",
+  "datePublished": "2026-09-11",
+  "dateModified": "2026-09-11",
+  "author": { "@type": "Organization", "name": "CATAITO", "url": "https://tools.cataito.com/" },
+  "publisher": { "@type": "Organization", "name": "CATAITO 工具箱", "url": "https://tools.cataito.com/" },
+  "mainEntityOfPage": "https://tools.cataito.com/guides/watermark-guide/"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "水印透明度多少合适？",
+      "acceptedAnswer": { "@type": "Answer", "text": "30%–50% 是通用区间：低于 30% 在浅色或高亮度画面里几乎隐形，起不到威慑作用；高于 50% 会明显压住画面主体，影响正常浏览和分享意愿。纯色背景上的 Logo 水印可以取 40%–50%，照片类取 30%–40%。设置完务必在缩略图尺寸下检查一遍——水印首先要保证缩略图里也能被认出来。" }
+    },
+    {
+      "@type": "Question",
+      "name": "水印放在哪个位置最有效？",
+      "acceptedAnswer": { "@type": "Answer", "text": "右下角最常用——避开视觉重心又不至于被忽略；正中央防盗效果最好但最影响观感，适合明显不希望被整图盗用的预览图。单一位置水印可以被裁掉，斜向平铺（整图均匀重复多条水印）让盗图者无法通过裁剪去除，是保护性最强的方式，代价是观赏性下降。根据图片用途选择：展示图用角落，售卖预览图用平铺。" }
+    },
+    {
+      "@type": "Question",
+      "name": "文字水印该包含哪些内容？",
+      "acceptedAnswer": { "@type": "Answer", "text": "至少包含可归属的标识：站点域名、品牌名或作者名，域名最推荐——看到水印的人能直接找到来源。可选项是年份和「版权所有」类字样。字号以「缩略图下可辨认、原图下不喧宾夺主」为准；加 1 像素左右的浅色描边或投影，能让水印在明暗不一的画面上都保持可读。" }
+    },
+    {
+      "@type": "Question",
+      "name": "图片加了水印就安全了吗？",
+      "acceptedAnswer": { "@type": "Answer", "text": "不是。水印不是技术加密，裁剪、涂抹、AI 修复都能去除或削弱它，尤其是单一角落水印。它的真实作用是提高盗用门槛、留下权属声明、帮传播带来回流——对绝大多数随手搬运足够有效。真正重要的图片要组合防护：水印 + 只发布低分辨率版本 + 保留原始高分辨率文件和拍摄记录作为权属证据。" }
+    },
+    {
+      "@type": "Question",
+      "name": "批量加水印怎么保持一致？",
+      "acceptedAnswer": { "@type": "Answer", "text": "把水印当模板管理：固定一套文字、字体、透明度、位置参数，之后所有图片复用同一套设置，而不是每次凭感觉调。处理时统一输出尺寸和格式（展示用 JPEG/WebP，需要透明叠加用 PNG），文件命名带日期或编号方便日后溯源。批量处理的意义不只是快——一致性本身就是专业感和可信度的来源。" }
+    },
+    {
+      "@type": "Question",
+      "name": "加水印会影响图片 SEO 吗？",
+      "acceptedAnswer": { "@type": "Answer", "text": "搜索引擎识别的是图片文件本身和配套文本：文件名、alt 描述、周围正文。适度水印不影响排名，但把重要信息只放在水印里、alt 却留空，搜索引擎就读不到。正确做法是水印负责品牌与版权声明，文件名和 alt 负责语义描述，两者互补。另外水印过大过密会降低图片被引用和分享的概率，间接影响外链与曝光。" }
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "首页", "item": "https://tools.cataito.com/" },
+    { "@type": "ListItem", "position": 2, "name": "使用指南", "item": "https://tools.cataito.com/guides/" },
+    { "@type": "ListItem", "position": 3, "name": "图片加水印指南", "item": "https://tools.cataito.com/guides/watermark-guide/" }
+  ]
+}
+</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7103529190038161" crossorigin="anonymous"></script>
+</head>
+<body>
+<div id="site-header"></div>
+
+<main class="site-main">
+  <div class="guide-wrap">
+    <nav class="breadcrumb"><a href="/" data-i18n="crumb_home">首页</a><span class="sep">/</span><a href="/guides/" data-i18n="nav_guides">使用指南</a><span class="sep">/</span><span data-i18n="gd_wmg_short">图片加水印指南</span></nav>
+    <p class="guide-meta"><span data-i18n="gd_published">发布于</span> 2026-09-11 · CATAITO</p>
+    <h1 class="page-h1" data-i18n="gd_wmg_h1">图片加水印指南：防盗图的最佳实践</h1>
+    <p class="page-sub" data-i18n="gd_wmg_sub">水印太浅看不见、太深毁图片；角落水印一裁就没，平铺水印又显脏——加水印的分寸全在参数里。本文讲清水印的真实作用、文字水印的设计要素（透明度 30-50%、位置、斜向平铺）、批量工作流，以及它防不了什么。</p>
+
+    <!-- ================= 中文正文 ================= -->
+    <div class="article lb-zh">
+      <div class="toc">
+        <p class="toc-title">目录</p>
+        <ol>
+          <li><a href="#why">为什么要给图片加水印</a></li>
+          <li><a href="#design">文字水印的设计要素</a></li>
+          <li><a href="#batch">批量工作流：一致性就是专业感</a></li>
+          <li><a href="#limits">局限性：水印不是保险箱</a></li>
+          <li><a href="#faq">常见问题</a></li>
+        </ol>
+      </div>
+
+      <h2 id="why">为什么要给图片加水印</h2>
+      <p>先明确水印能换来什么，再决定值不值得加：</p>
+      <ul>
+        <li><strong>权属声明</strong>：图片随水印带着来源信息，被转载时权属关系跟着图走，发生纠纷时是有力的辅助证据；</li>
+        <li><strong>威慑与提门槛</strong>：带水印的图对「随手搬运」的搬运者天然劝退——处理水印比换一张图麻烦；</li>
+        <li><strong>传播回流</strong>：图被分享到别处，水印上的域名能把看到的人带回你这里，被盗用反而可能带来流量。</li>
+      </ul>
+      <p>用本站 <a href="/watermark/">图片加水印工具</a> 可以给图片叠加文字水印，全部处理在浏览器本地完成，图片不上传服务器——涉及版权的素材，这一点很重要。</p>
+
+      <h2 id="design">文字水印的设计要素</h2>
+
+      <h3>透明度：30%–50% 区间起步</h3>
+      <p>低于 30% 的水印在亮部画面里几乎消失，等于没加；高于 50% 会明显压住主体，观看者反感、分享意愿下降。<strong>纯色背景上的 Logo 水印可以取 40%–50%，照片类建议 30%–40%</strong>。定完参数后把图缩到社交平台的缩略图尺寸看一眼——水印首先要保证在缩略图里也能被认出来。</p>
+
+      <h3>位置：角落还是居中</h3>
+      <p>右下角是最通用的选择：避开视觉重心、不挡主体、又足够显眼。正中央防盗性最强但最影响观感，适合素材站的低分辨率预览图这类「明确不希望被整图拿走」的场景。无论选哪里，都让水印与画面边缘保留一点内边距，别贴死边。</p>
+
+      <h3>斜向平铺：防裁剪的保护方式</h3>
+      <p>单一角落水印的致命弱点是<strong>一裁就没</strong>——盗图者裁掉水印区域即可。斜向平铺把水印按约 30–45 度角、以一定间距重复铺满整图，任何裁剪都会切出残留水印。代价是观赏性明显下降，所以更适合：付费素材预览、样片、课程配图等「防拿走优先」的场合；日常展示图仍推荐角落水印。</p>
+
+      <h3>文字与描边</h3>
+      <p>内容上<strong>域名优于品牌名</strong>——看到水印的人能直接访问；字号以缩略图可辨认、原图不喧宾夺主为准。浅色描边或轻投影能让水印在明暗混杂的画面上始终可读。水印颜色别用饱和色，白色、黑色或品牌灰最稳。</p>
+
+      <h2 id="batch">批量工作流：一致性就是专业感</h2>
+      <p>一两张图手动调没问题，长期产出必须流程化：</p>
+      <ol class="t-steps">
+        <li><strong>固定模板</strong>：把水印文字、字体、透明度、位置、角度定成一套参数，所有图片复用，不逐张重调；</li>
+        <li><strong>统一输出</strong>：展示渠道统一导出尺寸与格式——需要透明叠加或最高质量用 PNG，网页展示用 JPEG；压缩与格式取舍可参考 <a href="/guides/image-compression-guide/" data-i18n="gd_comp_short">图片压缩指南</a> 和 <a href="/guides/webp-guide/" data-i18n="gd_webp_short">WebP 格式指南</a>；</li>
+        <li><strong>命名与留档</strong>：导出文件带日期或编号，原始无水印文件分级保存——这是后面「权属证据」的底气；</li>
+        <li><strong>交付前抽检</strong>：按缩略图尺寸抽查水印可读性，发现太浅或太深立刻回调模板参数。</li>
+      </ol>
+      <p>用 <a href="/watermark/">图片加水印工具</a> 处理时保持同一套参数，出来的图就是一致的品牌观感。</p>
+
+      <h2 id="limits">局限性：水印不是保险箱</h2>
+      <p>必须诚实地说：<strong>水印不能 100% 防盗</strong>。单一角落水印可以被裁掉；半透明水印可以被涂抹、内容感知填充和 AI 修复工具削弱甚至去除；有耐心的人对着原图重打一遍也能消掉大部分痕迹。</p>
+      <p>它的准确定位是<strong>提高盗用门槛 + 保留权属声明</strong>，对绝大多数随手搬运足够有效。重要图片要组合防护：</p>
+      <ul>
+        <li><strong>只发布低分辨率版本</strong>：预览图限制在 1200–1500 像素宽，高清原图不外发；</li>
+        <li><strong>保留权属证据</strong>：原始文件（含拍摄时间、PSD/RAW 分层）、发布记录、带时间的上传截图；</li>
+        <li><strong>关键场合加隐形措施</strong>：元数据记录、按渠道定制水印（不同渠道不同水印位置，泄露来源可追溯）；</li>
+        <li><strong>发现盗用再维权</strong>：水印 + 发布记录 + 原始文件，构成完整的证据链。</li>
+      </ul>
+      <p>把水印当作这套体系的第一道墙，而不是唯一的墙。</p>
+
+      <h2 id="faq">常见问题</h2>
+      <div class="faq-item"><p class="faq-q">Q：水印透明度多少合适？</p><p class="faq-a">A：30%–50% 是通用区间：低于 30% 在浅色或高亮度画面里几乎隐形，起不到威慑作用；高于 50% 会明显压住画面主体，影响正常浏览和分享意愿。纯色背景上的 Logo 水印可以取 40%–50%，照片类取 30%–40%。设置完务必在缩略图尺寸下检查一遍——水印首先要保证缩略图里也能被认出来。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：水印放在哪个位置最有效？</p><p class="faq-a">A：右下角最常用——避开视觉重心又不至于被忽略；正中央防盗效果最好但最影响观感，适合明显不希望被整图盗用的预览图。单一位置水印可以被裁掉，斜向平铺（整图均匀重复多条水印）让盗图者无法通过裁剪去除，是保护性最强的方式，代价是观赏性下降。根据图片用途选择：展示图用角落，售卖预览图用平铺。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：文字水印该包含哪些内容？</p><p class="faq-a">A：至少包含可归属的标识：站点域名、品牌名或作者名，域名最推荐——看到水印的人能直接找到来源。可选项是年份和「版权所有」类字样。字号以「缩略图下可辨认、原图下不喧宾夺主」为准；加 1 像素左右的浅色描边或投影，能让水印在明暗不一的画面上都保持可读。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：图片加了水印就安全了吗？</p><p class="faq-a">A：不是。水印不是技术加密，裁剪、涂抹、AI 修复都能去除或削弱它，尤其是单一角落水印。它的真实作用是提高盗用门槛、留下权属声明、帮传播带来回流——对绝大多数随手搬运足够有效。真正重要的图片要组合防护：水印 + 只发布低分辨率版本 + 保留原始高分辨率文件和拍摄记录作为权属证据。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：批量加水印怎么保持一致？</p><p class="faq-a">A：把水印当模板管理：固定一套文字、字体、透明度、位置参数，之后所有图片复用同一套设置，而不是每次凭感觉调。处理时统一输出尺寸和格式（展示用 JPEG/WebP，需要透明叠加用 PNG），文件命名带日期或编号方便日后溯源。批量处理的意义不只是快——一致性本身就是专业感和可信度的来源。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：加水印会影响图片 SEO 吗？</p><p class="faq-a">A：搜索引擎识别的是图片文件本身和配套文本：文件名、alt 描述、周围正文。适度水印不影响排名，但把重要信息只放在水印里、alt 却留空，搜索引擎就读不到。正确做法是水印负责品牌与版权声明，文件名和 alt 负责语义描述，两者互补。另外水印过大过密会降低图片被引用和分享的概率，间接影响外链与曝光。</p></div>
+
+      <div class="cta-box">
+        <p class="cta-title">免费在线给图片加水印</p>
+        <p class="cta-sub">透明度可调 · 多位置平铺 · 批量处理 · 图片不上传，本地完成</p>
+        <a class="cta-btn" href="/watermark/">打开图片加水印工具 →</a>
+      </div>
+    </div>
+
+    <!-- ================= English body ================= -->
+    <div class="article lb-en">
+      <div class="toc">
+        <p class="toc-title">Table of Contents</p>
+        <ol>
+          <li><a href="#why">Why Watermark Your Images</a></li>
+          <li><a href="#design">Designing a Text Watermark</a></li>
+          <li><a href="#batch">Batch Workflow: Consistency Reads as Professional</a></li>
+          <li><a href="#limits">Limitations: A Watermark Is Not a Safe</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ol>
+      </div>
+
+      <h2 id="why">Why Watermark Your Images</h2>
+      <p>Be clear about what a watermark buys before deciding it's worth adding:</p>
+      <ul>
+        <li><strong>Ownership statement</strong>: the image carries its source wherever it travels; in a dispute, the watermark is useful supporting evidence;</li>
+        <li><strong>Deterrence</strong>: watermarked images naturally discourage casual re-posters — stripping a watermark is more work than grabbing another image;</li>
+        <li><strong>Attribution loop</strong>: when your image gets shared elsewhere, the domain on the watermark brings viewers back — even unauthorized use can send traffic.</li>
+      </ul>
+      <p>With this site's <a href="/watermark/">Image Watermark tool</a> you overlay text watermarks entirely in your browser — images never leave your device, which matters for licensed material.</p>
+
+      <h2 id="design">Designing a Text Watermark</h2>
+
+      <h3>Opacity: start in the 30%–50% range</h3>
+      <p>Below 30%, a watermark disappears into bright areas — pointless. Above 50%, it visibly buries the subject and hurts sharing. <strong>Logo watermarks on flat backgrounds can go 40%–50%; on photos aim for 30%–40%</strong>. After setting it, zoom out to thumbnail size — the watermark must stay recognizable as a thumbnail first.</p>
+
+      <h3>Placement: corner or center</h3>
+      <p>Bottom-right is the universal default: off the focal point, off the subject, still visible. Dead-center is the hardest to remove and the most intrusive — right for stock-preview-style images you explicitly don't want taken whole. Wherever it goes, keep a small inset from the edges; don't pin it to the border.</p>
+
+      <h3>Diagonal tiling: cut-proof protection</h3>
+      <p>The fatal flaw of a single corner watermark is that <strong>one crop removes it</strong>. Diagonal tiling repeats the watermark across the whole image at roughly 30–45 degrees, so any crop leaves fragments behind. The cost is aesthetics — which is why tiling fits paid-asset previews, proofs, and course materials where "don't take it" beats "looks pretty". Everyday showcase images still get corner marks.</p>
+
+      <h3>Text and stroke</h3>
+      <p><strong>Domain beats brand name</strong> — viewers can visit it directly. Size the text to survive thumbnails without dominating the original. A subtle 1px stroke or soft shadow keeps the watermark readable across both dark and bright regions. Avoid saturated colors; white, black, or brand gray are safest.</p>
+
+      <h2 id="batch">Batch Workflow: Consistency Reads as Professional</h2>
+      <p>Hand-tuning one or two images is fine; ongoing output needs a process:</p>
+      <ol class="t-steps">
+        <li><strong>Fix a template</strong>: settle the text, font, opacity, position, and angle once — reuse the same settings for every image;</li>
+        <li><strong>Standardize output</strong>: one export size and format per channel — PNG for transparency or max quality, JPEG for web display; see <a href="/guides/image-compression-guide/" data-i18n="gd_comp_short">Image Compression Guide</a> and <a href="/guides/webp-guide/" data-i18n="gd_webp_short">WebP Format Guide</a> for the trade-offs;</li>
+        <li><strong>Name and archive</strong>: dated or numbered export filenames; keep clean originals on a separate tier — that's the evidence base discussed below;</li>
+        <li><strong>Spot-check before delivery</strong>: review at thumbnail size; adjust the template immediately if anything reads too faint or too heavy.</li>
+      </ol>
+      <p>Process your images through the <a href="/watermark/">Image Watermark tool</a> with the same settings every time, and the output carries a consistent brand feel.</p>
+
+      <h2 id="limits">Limitations: A Watermark Is Not a Safe</h2>
+      <p>To be honest: <strong>a watermark cannot 100% prevent theft</strong>. Corner watermarks can be cropped off; semi-transparent ones can be weakened or removed with inpainting and AI restoration; a patient person can even repaint over one.</p>
+      <p>Its accurate job description is <strong>raising the theft barrier + carrying an ownership statement</strong> — effective against the vast majority of casual copying. Protect what matters with layers:</p>
+      <ul>
+        <li><strong>Publish low-resolution versions only</strong>: cap previews at 1200–1500 px wide; never release the full-res original;</li>
+        <li><strong>Keep ownership evidence</strong>: original files (with capture time, layered PSD/RAW), publication records, timestamped upload screenshots;</li>
+        <li><strong>Add invisible measures for high-value work</strong>: metadata, per-channel watermark variants (different placement per channel makes leaks traceable);</li>
+        <li><strong>Enforce when you find infringement</strong>: watermark + publication record + original file form a complete evidence chain.</li>
+      </ul>
+      <p>Treat the watermark as the first wall of that system, not the only one.</p>
+
+      <h2 id="faq">FAQ</h2>
+      <div class="faq-item"><p class="faq-q">Q: What watermark opacity is right?</p><p class="faq-a">A: The universal range is 30%–50%. Below 30% it vanishes into bright areas and loses its deterrent value; above 50% it buries the subject and hurts viewing and sharing. Logo watermarks on flat backgrounds can take 40%–50%; photos do better at 30%–40%. Always check at thumbnail size — the watermark must be recognizable even as a thumbnail.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: Where should I place the watermark?</p><p class="faq-a">A: Bottom-right is the most common — off the focal point yet still noticeable. Dead-center protects best but hurts the look, suiting preview images you don't want taken whole. A single-position mark can be cropped away; diagonal tiling (repeating the watermark across the image) is the strongest protection because no crop removes it — at the cost of aesthetics. Showpiece images get corners; sale previews get tiling.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: What should a text watermark contain?</p><p class="faq-a">A: At minimum an attributable identifier: your site domain, brand, or author name — the domain is best because viewers can find you directly. Optionally add a year and a copyright notice. Size it to be readable as a thumbnail without overwhelming the original; a subtle light stroke or shadow keeps it legible across mixed lighting.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: Is an image safe once watermarked?</p><p class="faq-a">A: No. A watermark is not encryption — cropping, smudging, and AI restoration can remove or weaken it, especially single-corner marks. Its real value is raising the theft barrier, recording ownership, and driving attribution traffic — enough for most casual copying. Truly important images need layered protection: watermark + low-resolution publishing + retained original files and capture records as ownership evidence.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: How do I keep batch watermarks consistent?</p><p class="faq-a">A: Manage the watermark as a template: fix one set of text, font, opacity, and position parameters and reuse it for every image instead of adjusting by feel each time. Standardize export size and format (JPEG/WebP for display, PNG for transparent overlays), and date or number filenames for traceability. Batching isn't just about speed — consistency itself is a source of professionalism and trust.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: Does watermarking hurt image SEO?</p><p class="faq-a">A: Search engines read the image file plus its surrounding text: filename, alt description, and page copy. Moderate watermarks don't affect rankings, but putting key information only in the watermark while leaving alt empty means search engines read nothing. Let the watermark carry brand and copyright, and let filename and alt carry the semantics. Also, oversized or tiled marks reduce citations and shares, indirectly costing links and exposure.</p></div>
+
+      <div class="cta-box">
+        <p class="cta-title">Watermark Images — Free Online</p>
+        <p class="cta-sub">Adjustable opacity · Multi-position tiling · Batch processing · Images never leave your browser</p>
+        <a class="cta-btn" href="/watermark/">Open Image Watermark Tool →</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<div id="site-footer"></div>
+<script src="/assets/js/site.js" defer></script>
+</body>
+</html>
