@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>条形码生成器 — 免费在线生成 Code128 / EAN-13 / UPC-A 条码 | CATAITO</title>
+<meta name="title-zh" content="条形码生成器 — 免费在线生成 Code128 / EAN-13 / UPC-A 条码 | CATAITO">
+<meta name="title-en" content="Barcode Generator — Free Online Code128 / EAN-13 / UPC-A | CATAITO">
+<meta name="description" content="免费在线条形码生成器：Code128（任意文字）、EAN-13 / UPC-A / EAN-8（商品条码），可调条宽高度与颜色，自动计算校验位，SVG 矢量预览 + PNG 下载。纯浏览器本地生成，数据绝不上传服务器。">
+<meta name="theme-color" content="#f6f3ec">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="CATAITO 工具箱">
+<meta property="og:title" content="条形码生成器 — 免费在线生成">
+<meta property="og:description" content="Code128 / EAN-13 / UPC-A 条码在线生成，自动校验位，PNG 下载，纯本地处理。">
+<meta property="og:url" content="https://tools.cataito.com/barcode/">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:locale:alternate" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="条形码生成器">
+<meta name="twitter:description" content="免费在线条形码生成，纯本地处理。">
+<link rel="icon" href="/assets/img/icon.svg">
+<link rel="canonical" href="https://tools.cataito.com/barcode/">
+<link rel="stylesheet" href="/assets/css/site.css">
+<script src="/assets/js/theme-init.js"></script>
+<script>
+  (function () {
+    try {
+      var l = localStorage.getItem('cataito-lang');
+      document.documentElement.setAttribute('lang', (l === 'en') ? 'en' : 'zh-CN');
+    } catch (e) {}
+  })();
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Barcode Generator",
+  "alternateName": "条形码生成器",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "Any",
+  "url": "https://tools.cataito.com/barcode/",
+  "inLanguage": ["zh-CN", "en"],
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "description": "免费在线条形码生成器：Code128 / EAN-13 / UPC-A，自动校验位，纯本地处理。"
+}
+</script>
+</head>
+<body>
+<div id="site-header"></div>
+<main class="site-main">
+  <div class="t-head">
+    <nav class="breadcrumb"><a href="/" data-i18n="crumb_home">首页</a><span class="sep">/</span><span data-i18n="bc_name">条形码生成</span></nav>
+    <h1 class="page-h1" data-i18n="bc_name">条形码生成器</h1>
+    <p class="page-sub" data-i18n="bc_desc">生成 Code128（任意文字）与 EAN-13 / UPC-A / EAN-8（商品条码），自动计算校验位，SVG 预览 + PNG 下载。纯浏览器本地生成。</p>
+  </div>
+
+  <section class="t-card t-flow">
+    <div class="t-block">
+      <div class="t-field">
+        <div class="t-label" data-i18n="bc_type">条码类型</div>
+        <div class="t-seg" id="bc-type">
+          <label class="t-seg-item"><input type="radio" name="bc-type" value="code128" checked><span>Code128</span></label>
+          <label class="t-seg-item"><input type="radio" name="bc-type" value="ean13"><span>EAN-13</span></label>
+          <label class="t-seg-item"><input type="radio" name="bc-type" value="upca"><span>UPC-A</span></label>
+          <label class="t-seg-item"><input type="radio" name="bc-type" value="ean8"><span>EAN-8</span></label>
+        </div>
+        <div class="t-hint" data-i18n="bc_type_hint">Code128 支持任意字母数字符号；EAN-13 / UPC-A / EAN-8 是商品零售条码，只接受数字。</div>
+      </div>
+
+      <div class="t-field">
+        <div class="t-label"><span data-i18n="bc_content">条码内容</span></div>
+        <input type="text" id="bc-text" class="t-input" spellcheck="false" data-i18n-placeholder="bc_text_ph" placeholder="CAT-12345 或 6901234567892">
+        <div class="t-hint" id="bc-content-hint"></div>
+      </div>
+
+      <div class="ct-colors">
+        <div class="t-field">
+          <div class="t-label"><span data-i18n="bc_scale">条宽</span></div>
+          <div class="t-seg" id="bc-scale">
+            <label class="t-seg-item"><input type="radio" name="bc-scale" value="2"><span>2px</span></label>
+            <label class="t-seg-item"><input type="radio" name="bc-scale" value="3" checked><span>3px</span></label>
+            <label class="t-seg-item"><input type="radio" name="bc-scale" value="4"><span>4px</span></label>
+          </div>
+        </div>
+        <div class="t-field">
+          <div class="t-label"><span data-i18n="bc_height">条高</span></div>
+          <div class="t-seg" id="bc-height">
+            <label class="t-seg-item"><input type="radio" name="bc-height" value="80"><span>80</span></label>
+            <label class="t-seg-item"><input type="radio" name="bc-height" value="120" checked><span>120</span></label>
+            <label class="t-seg-item"><input type="radio" name="bc-height" value="160"><span>160</span></label>
+          </div>
+        </div>
+        <div class="t-field">
+          <div class="t-label" data-i18n="bc_fg">颜色</div>
+          <div class="bc-color-row">
+            <input type="color" id="bc-fg-color" value="#211e19" aria-label="Foreground">
+            <input type="text" id="bc-bg-text" class="t-input" value="#FFFFFF" spellcheck="false" maxlength="7" data-i18n-title="ct_hex_title">
+          </div>
+        </div>
+        <div class="t-field">
+          <div class="t-label" data-i18n="bc_text_label">下方文字</div>
+          <div class="t-seg" id="bc-textshow">
+            <label class="t-seg-item"><input type="radio" name="bc-textshow" value="1" checked><span data-i18n="bc_text_on">显示</span></label>
+            <label class="t-seg-item"><input type="radio" name="bc-textshow" value="0"><span data-i18n="bc_text_off">隐藏</span></label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="t-block bc-out-block">
+      <div class="bc-preview-wrap"><div id="bc-svg-wrap"></div></div>
+      <p id="bc-info" class="bc-info"></p>
+      <p id="bc-error" class="t-note" hidden></p>
+      <button type="button" class="t-btn primary" id="bc-download" data-i18n="bc_download" disabled>下载 PNG</button>
+    </div>
+  </section>
+
+  <section class="t-prose">
+    <h2 data-i18n="bc_how_h">怎么用</h2>
+    <ol class="t-steps">
+      <li data-i18n-html="bc_how_1"><strong>选类型</strong>：内部资产 / 序列号用 Code128；商品零售条码用 EAN-13（中国商品条码 690-699 开头）或 UPC-A（北美）。</li>
+      <li data-i18n-html="bc_how_2"><strong>输入内容</strong>：EAN-13 输 12 位自动补校验位；输满 13 位会校验末位是否正确。UPC-A 输 11 位自动补校验位。</li>
+      <li data-i18n-html="bc_how_3"><strong>调外观</strong>：条宽越大越容易扫，印刷建议 ≥ 3px；颜色必须保证条比底深。</li>
+      <li data-i18n-html="bc_how_4"><strong>下载</strong>：PNG 下载后按打印尺寸缩放，印刷建议 ≥ 300 DPI。</li>
+    </ol>
+
+    <h2 data-i18n="bc_faq_h">常见问题</h2>
+    <div class="t-faq">
+      <div class="t-faq-item">
+        <p class="t-faq-q" data-i18n="bc_faq_1_q">Code128 和 EAN-13 有什么区别？</p>
+        <p class="t-faq-a" data-i18n="bc_faq_1_a">Code128 可编码任意字母、数字与符号，常用于内部资产、物流单号、序列号；EAN-13 / UPC-A / EAN-8 是国际零售商品条码标准，只含数字且有固定长度与校验位，商品进入商超必须用它。两者外观相似但不可混用。</p>
+      </div>
+      <div class="t-faq-item">
+        <p class="t-faq-q" data-i18n="bc_faq_2_q">内容会被上传到服务器吗？</p>
+        <p class="t-faq-a" data-i18n="bc_faq_2_a">不会。条码编码完全在浏览器本地完成（本站自研编码器），输入的内容不经过网络，内部序列号等敏感信息也能放心生成。</p>
+      </div>
+      <div class="t-faq-item">
+        <p class="t-faq-q" data-i18n="bc_faq_3_q">校验位是怎么算的？</p>
+        <p class="t-faq-a" data-i18n="bc_faq_3_a">Code128：起始符值加上每个字符的码值乘以位置序号，求和后对 103 取模。EAN-13 / UPC-A：从右往左奇数位乘 1、偶数位乘 3 求和，取补到下一个 10 的倍数。工具会自动计算并附加；若你输入了带校验位的完整码，工具会验证其正确性。</p>
+      </div>
+      <div class="t-faq-item">
+        <p class="t-faq-q" data-i18n="bc_faq_4_q">条形码和二维码该用哪个？</p>
+        <p class="t-faq-a" data-i18n="bc_faq_4_a">商品零售结算必须用条形码（EAN 家族，扫码枪硬件标准）；需要携带网址、名片、WiFi 等更多信息且由手机扫描的，用二维码。内部库存管理两者皆可——条形码更适合扫码枪批量作业，二维码适合手机场景。</p>
+      </div>
+    </div>
+
+    <h2 data-i18n="related_guides">相关指南</h2>
+    <div class="t-guide-links">
+      <a class="t-guide-link" href="/qrcode/">
+        <p class="t-guide-link-title" data-i18n="qr_name">二维码生成器</p>
+        <p class="t-guide-link-desc" data-i18n="qr_desc">输入文字或网址，即时生成二维码。纠错级别、颜色、尺寸可调，一键下载高清 PNG。纯浏览器本地生成。</p>
+      </a>
+    </div>
+  </section>
+</main>
+
+<div id="site-footer"></div>
+<div id="bc-toast" class="t-toast">
+  <span class="t-toast-ic">
+    <svg class="ic-ok" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+    <svg class="ic-err" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+  </span>
+  <span class="t-toast-title"></span>
+</div>
+
+<script src="/assets/js/site.js" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+(function () {
+  'use strict';
+  var t = function (k, vars) { return (window.CATAITO_I18N && window.CATAITO_I18N.t) ? window.CATAITO_I18N.t(k, vars) : k; };
+
+  /* ===== Code128 编码表（106 码 + STOP，位串形式）===== */
+  var C128 = ["11011001100", "11001101100", "11001100110", "10010011000", "10010001100", "10001001100", "10011001000", "10011000100", "10001100100", "11001001000", "11001000100", "11000100100", "10110011100", "10011011100", "10011001110", "10111001100", "10011101100", "10011100110", "11001110010", "11001011100", "11001001110", "11011100100", "11001110100", "11101101110", "11101001100", "11100101100", "11100100110", "11101100100", "11100110100", "11100110010", "11011011000", "11011000110", "11000110110", "10100011000", "10001011000", "10001000110", "10110001000", "10001101000", "10001100010", "11010001000", "11000101000", "11000100010", "10110111000", "10110001110", "10001101110", "10111011000", "10111000110", "10001110110", "11101110110", "11010001110", "11000101110", "11011101000", "11011100010", "11011101110", "11101011000", "11101000110", "11100010110", "11101101000", "11101100010", "11100011010", "11101111010", "11001000010", "11110001010", "10100110000", "10100001100", "10010110000", "10010000110", "10000101100", "10000100110", "10110010000", "10110000100", "10011010000", "10011000010", "10000110100", "10000110010", "11000010010", "11001010000", "11110111010", "11000010100", "10001111010", "10100111100", "10010111100", "10010011110", "10111100100", "10011110100", "10011110010", "11110100100", "11110010100", "11110010010", "11011011110", "11011110110", "11110110110", "10101111000", "10100011110", "10001011110", "10111101000", "10111100010", "11110101000", "11110100010", "10111011110", "10111101110", "11101011110", "11110101110", "11010000100", "11010010000", "11010011100", "11000111010"];
+  /* 字符 → Code128B 码值 */
+  var C128B_MAP = {" ": 0, "!": 1, "\"": 2, "#": 3, "$": 4, "%": 5, "&": 6, "'": 7, "(": 8, ")": 9, "*": 10, "+": 11, ",": 12, "-": 13, ".": 14, "/": 15, "0": 16, "1": 17, "2": 18, "3": 19, "4": 20, "5": 21, "6": 22, "7": 23, "8": 24, "9": 25, ":": 26, ";": 27, "<": 28, "=": 29, ">": 30, "?": 31, "@": 32, "A": 33, "B": 34, "C": 35, "D": 36, "E": 37, "F": 38, "G": 39, "H": 40, "I": 41, "J": 42, "K": 43, "L": 44, "M": 45, "N": 46, "O": 47, "P": 48, "Q": 49, "R": 50, "S": 51, "SHIFT": 98, "T": 52, "TO_A": 101, "TO_C": 99, "U": 53, "V": 54, "W": 55, "X": 56, "Y": 57, "Z": 58, "[": 59, "\\": 60, "]": 61, "^": 62, "_": 63, "`": 64, "a": 65, "b": 66, "c": 67, "d": 68, "e": 69, "f": 70, "g": 71, "h": 72, "i": 73, "j": 74, "k": 75, "l": 76, "m": 77, "n": 78, "o": 79, "p": 80, "q": 81, "r": 82, "s": 83, "t": 84, "u": 85, "v": 86, "w": 87, "x": 88, "y": 89, "z": 90, "{": 91, "|": 92, "}": 93, "~": 94, "\u007f": 95, "\u00f1": 102, "\u00f2": 97, "\u00f3": 96, "\u00f4": 100};
+  var C128_START_B = 104, C128_STOP = 106;
+
+  /* ===== EAN 编码表 ===== */
+  var EAN_A = ["0001101", "0011001", "0010011", "0111101", "0100011", "0110001", "0101111", "0111011", "0110111", "0001011"], EAN_B = ["0100111", "0110011", "0011011", "0100001", "0011101", "0111001", "0000101", "0010001", "0001001", "0010111"], EAN_C = ["1110010", "1100110", "1101100", "1000010", "1011100", "1001110", "1010000", "1000100", "1001000", "1110100"];
+  var EAN_LEFT_PATTERN = ["AAAAAA", "AABABB", "AABBAB", "AABBBA", "ABAABB", "ABBAAB", "ABBBAA", "ABABAB", "ABABBA", "ABBABA"];
+  var EAN_EDGE = '101', EAN_MIDDLE = '01010';
+
+  /* ---------- 编码器：Code128 含 CodeC 优化 ---------- */
+  var C128_TO_C = 99, C128_TO_B = 100, C128_START_C = 105;
+  var C128_C = {}; /* "00".."99" → 码值 0..99 */
+  (function () {
+    for (var n = 0; n < 100; n++) C128_C[n < 10 ? '0' + n : String(n)] = n;
+  })();
+  function encodeCode128(text) {
+    if (!/^[\x20-\x7E]+$/.test(text)) return null; /* 仅可见 ASCII */
+    var codes = [C128_START_B], i = 0, inC = false;
+    while (i < text.length) {
+      var run = 0;
+      while (i + run < text.length && text[i + run] >= '0' && text[i + run] <= '9') run++;
+      if (run >= 4) {
+        /* 需要 CodeC：从 B 态切到 C */
+        if (!inC) { codes.push(C128_TO_C); inC = true; }
+        var pairs = run >> 1;
+        for (var p = 0; p < pairs; p++) codes.push(C128_C[text.substr(i, 2)]), i += 2;
+        if (run % 2 === 1) { /* 落单 1 位：回 B 编 */
+          codes.push(C128_TO_B); inC = false;
+          codes.push(C128B_MAP[text[i]]); i++;
+        }
+      } else {
+        if (inC) { codes.push(C128_TO_B); inC = false; }
+        codes.push(C128B_MAP[text[i]]); i++;
+      }
+    }
+    var sum = codes[0];
+    for (var j = 1; j < codes.length; j++) sum += codes[j] * j;
+    codes.push(sum % 103); codes.push(C128_STOP);
+    var bits = '';
+    for (var k = 0; k < codes.length; k++) bits += C128[codes[k]];
+    return bits + '11'; /* 终止条 */
+  }
+  function eanCheckDigit(digits12) {
+    var sum = 0;
+    for (var i = 0; i < 12; i++) sum += parseInt(digits12[i], 10) * (i % 2 === 0 ? 1 : 3);
+    return (10 - sum % 10) % 10;
+  }
+  function encodeEAN13(d13) {
+    var bits = EAN_EDGE;
+    var pattern = EAN_LEFT_PATTERN[parseInt(d13[0], 10)];
+    for (var i = 1; i <= 6; i++) bits += (pattern[i - 1] === 'A' ? EAN_A : EAN_B)[parseInt(d13[i], 10)];
+    bits += EAN_MIDDLE;
+    for (var j = 7; j <= 12; j++) bits += EAN_C[parseInt(d13[j], 10)];
+    return bits + EAN_EDGE;
+  }
+  function encodeEAN8(d8) {
+    var bits = EAN_EDGE;
+    for (var i = 0; i < 4; i++) bits += EAN_A[parseInt(d8[i], 10)];
+    bits += EAN_MIDDLE;
+    for (var j = 4; j < 8; j++) bits += EAN_C[parseInt(d8[j], 10)];
+    return bits + EAN_EDGE;
+  }
+
+  /* ---------- 高层 API：按类型编码，返回 { bits, text, human } ---------- */
+  function makeBarcode(type, text) {
+    text = text.trim();
+    if (!text) return null;
+    if (type === 'code128') {
+      var bits = encodeCode128(text);
+      return bits ? { bits: bits, human: text } : { error: 'ascii' };
+    }
+    var d = text.replace(/\D/g, '');
+    if (type === 'ean13') {
+      if (d.length === 12) d += String(eanCheckDigit(d));
+      if (d.length !== 13 || eanCheckDigit(d.slice(0, 12)) !== parseInt(d[12], 10)) return { error: 'ean13' };
+      return { bits: encodeEAN13(d), human: d };
+    }
+    if (type === 'upca') {
+      if (d.length === 11) d = '0' + d;                  /* 11 位 → 12 位 EAN-13 型 */
+      if (d.length === 12) d = d + String(eanCheckDigit(d)); /* 补校验位 → 13 位 */
+      if (d.length === 13 && eanCheckDigit(d.slice(0, 12)) === parseInt(d[12], 10)) {
+        return { bits: encodeEAN13(d), human: d.slice(1) }; /* UPC-A 显示去前导 0 */
+      }
+      return { error: 'upca' };
+    }
+    if (type === 'ean8') {
+      if (d.length === 7) {
+        var sum = 0;
+        for (var i = 0; i < 7; i++) sum += parseInt(d[i], 10) * (i % 2 === 0 ? 3 : 1);
+        d += String((10 - sum % 10) % 10);
+      }
+      if (d.length !== 8) return { error: 'ean8' };
+      var chk = 0;
+      for (var m = 0; m < 7; m++) chk += parseInt(d[m], 10) * (m % 2 === 0 ? 3 : 1);
+      if ((10 - chk % 10) % 10 !== parseInt(d[7], 10)) return { error: 'ean8' };
+      return { bits: encodeEAN8(d), human: d };
+    }
+    return null;
+  }
+  window.BARCODE_DEBUG = makeBarcode;
+
+  /* ---------- 渲染 ---------- */
+  function parseHex(str) {
+    var m = /^#?([0-9a-f]{6})$/i.exec(String(str).trim());
+    return m ? '#' + m[1] : null;
+  }
+  var toastTimer = null;
+  function showToast(msg, isErr) {
+    var el = document.getElementById('bc-toast');
+    el.querySelector('.t-toast-title').textContent = msg;
+    el.classList.toggle('error', !!isErr);
+    el.classList.add('show');
+    if (toastTimer) clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { el.classList.remove('show'); }, 2600);
+  }
+
+  var current = null; /* { bits, human, scale, height, fg, showText } */
+  function render() {
+    var type = (document.querySelector('input[name="bc-type"]:checked') || {}).value || 'code128';
+    var text = document.getElementById('bc-text').value;
+    var scale = parseInt((document.querySelector('input[name="bc-scale"]:checked') || {}).value || '3', 10);
+    var height = parseInt((document.querySelector('input[name="bc-height"]:checked') || {}).value || '120', 10);
+    var fg = parseHex(document.getElementById('bc-fg-color').value) || '#211e19';
+    var bgText = document.getElementById('bc-bg-text').value;
+    document.getElementById('bc-fg-color').value = parseHex(bgText) ? toColorInput(bgText) : '#211e19';
+    var showText = (document.querySelector('input[name="bc-textshow"]:checked') || {}).value === '1';
+
+    var errEl = document.getElementById('bc-error');
+    var infoEl = document.getElementById('bc-info');
+    var dl = document.getElementById('bc-download');
+    var wrap = document.getElementById('bc-svg-wrap');
+    current = null;
+    if (!text) { wrap.innerHTML = ''; infoEl.textContent = ''; errEl.hidden = true; dl.disabled = true; return; }
+    var r = makeBarcode(type, text);
+    if (!r || r.error) {
+      var key = { ascii: 'bc_err_ascii', ean13: 'bc_err_ean13', upca: 'bc_err_upca', ean8: 'bc_err_ean8' }[(r && r.error) || ''];
+      errEl.textContent = t(key || 'bc_err_ean13');
+      errEl.hidden = false; infoEl.textContent = ''; wrap.innerHTML = ''; dl.disabled = true;
+      return;
+    }
+    errEl.hidden = true;
+    current = { bits: r.bits, human: r.human, scale: scale, height: height, fg: fg, bg: parseHex(bgText) || '#ffffff', showText: showText, type: type };
+    /* 渲染 SVG */
+    var modules = r.bits.length;
+    var textH = showText ? 24 : 0;
+    var w = modules * scale, h = height + textH + 8;
+    var rects = '', x = 0;
+    for (var i = 0; i < modules; i++) {
+      if (r.bits[i] === '1') rects += '<rect x="' + x + '" y="4" width="' + scale + '" height="' + height + '"/>';
+      x += scale;
+    }
+    var textEl = '';
+    if (showText) {
+      var tw = r.human.length * 9 * 1.15;
+      textEl = '<text x="' + (w / 2 - tw / 2) + '" y="' + (height + 22) + '" font-family="monospace" font-size="20" letter-spacing="3">' + r.human.replace(/&/g, '&amp;').replace(/</g, '&lt;') + '</text>';
+    }
+    wrap.innerHTML = '<svg id="bc-svg" xmlns="http://www.w3.org/2000/svg" width="' + w + '" height="' + h + '" style="background:' + current.bg + ';max-width:100%;height:auto">' +
+      '<g fill="' + fg + '">' + rects + textEl + '</g></svg>';
+    infoEl.textContent = t('bc_info', { n: modules, w: w });
+    dl.disabled = false;
+  }
+  function toColorInput(str) {
+    var m = /^#?([0-9a-f]{6})$/i.exec(String(str).trim());
+    return m ? '#' + m[1].toLowerCase() : '#211e19';
+  }
+
+  /* ---------- 事件 ---------- */
+  var typeHintDone = false;
+  function updateHint() {
+    var type = (document.querySelector('input[name="bc-type"]:checked') || {}).value;
+    var hints = { code128: 'bc_hint_c128', ean13: 'bc_hint_e13', upca: 'bc_hint_upca', ean8: 'bc_hint_e8' };
+    document.getElementById('bc-content-hint').textContent = t(hints[type]);
+  }
+  var textEl = document.getElementById('bc-text');
+  var debTimer = null;
+  textEl.addEventListener('input', function () {
+    if (debTimer) clearTimeout(debTimer);
+    debTimer = setTimeout(render, 250);
+  });
+  ['change'].forEach(function (ev) {
+    document.getElementById('bc-type').addEventListener(ev, function () { updateHint(); render(); });
+    document.getElementById('bc-scale').addEventListener(ev, render);
+    document.getElementById('bc-height').addEventListener(ev, render);
+    document.getElementById('bc-textshow').addEventListener(ev, render);
+  });
+  var fgColor = document.getElementById('bc-fg-color'), bgText = document.getElementById('bc-bg-text');
+  fgColor.addEventListener('input', function () { bgText.value = fgColor.value.toUpperCase(); render(); });
+  bgText.addEventListener('input', render);
+  document.getElementById('bc-download').addEventListener('click', function () {
+    if (!current) return;
+    var canvas = document.createElement('canvas');
+    var modules = current.bits.length;
+    var textH = current.showText ? 24 : 0;
+    canvas.width = modules * current.scale + 16;
+    canvas.height = current.height + textH + 16;
+    var ctx = canvas.getContext('2d');
+    ctx.fillStyle = current.bg; ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = current.fg;
+    for (var i = 0, x = 8; i < modules; i++) {
+      if (current.bits[i] === '1') ctx.fillRect(x, 8, current.scale, current.height);
+      x += current.scale;
+    }
+    if (current.showText) {
+      ctx.font = '20px monospace';
+      ctx.textAlign = 'center';
+      ctx.fillText(current.human, canvas.width / 2, current.height + 22);
+    }
+    canvas.toBlob(function (blob) {
+      if (!blob) { showToast(t('qr_toast_fail'), true); return; }
+      var a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'barcode-' + current.human.replace(/[^\w.-]+/g, '_') + '.png';
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(function () { URL.revokeObjectURL(a.href); }, 4000);
+      showToast(t('cv_toast_zip'));
+    }, 'image/png');
+  });
+  document.addEventListener('cataito-lang-change', function () { updateHint(); render(); });
+  updateHint();
+  render();
+})();
+});
+</script>
+
+<style>
+  /* 本页专属规则；通用组件复用 /assets/css/site.css 的 .t-* 共享组件层 */
+  .ct-colors { display: flex; align-items: flex-end; gap: 12px; flex-wrap: wrap; }
+  .ct-colors .t-field { flex: 1 1 150px; margin: 0; }
+  .bc-color-row { display: flex; gap: 8px; }
+  .bc-color-row input[type="color"] {
+    width: 44px; height: 36px; padding: 2px; border: 1px solid var(--border);
+    border-radius: var(--radius-sm); background: var(--card-2); cursor: pointer; flex: none;
+  }
+  .bc-color-row .t-input { flex: 1; min-width: 0; font-family: var(--font-mono); text-transform: uppercase; }
+  .bc-out-block { text-align: center; }
+  .bc-preview-wrap { display: flex; justify-content: center; overflow-x: auto; }
+  #bc-svg-wrap svg { border: 1px solid var(--border); border-radius: var(--radius-sm); }
+  .bc-info { font-family: var(--font-mono); font-size: 12.5px; color: var(--text-3); margin: 12px 0 0; }
+  #bc-download { margin-top: 14px; }
+</style>
+</body>
+</html>
