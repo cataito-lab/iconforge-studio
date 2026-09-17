@@ -35,12 +35,12 @@
 
 ## 五、内容清单与新增 checklist
 
-- 工具 13：`/icon-forge/`（ICO/PNG 图标）、`/favicon/`、`/compress/`（≤20 张批量）、`/palette/`、`/convert/`（PNG/JPEG/WebP 互转，转 JPEG 铺白底、WebP/PNG 保透明）、`/resize/`（居中裁切 1:1/4:3/16:9/9:16 + 最长边缩放，默认保持原格式）、`/contrast/`（WCAG 对比度检查 + 自动调整）、`/qrcode/`（自研 QR 编码器，字节模式 v1-40，矩阵级验证）
-- 指南 17：ico-file-guide、favicon-guide、dark-mode-icons、image-compression-guide、webp-guide、color-guide、app-icon-sizes、png-to-ico-guide、favicon-not-showing-guide、transparent-icon-guide、accessibility-contrast-guide、qr-not-scanning-guide（均中英双语 `.lb-zh`/`.lb-en` 双块）
+- 工具 16：`/icon-forge/`（ICO/PNG 图标）、`/favicon/`、`/compress/`（≤20 张批量）、`/palette/`、`/convert/`（PNG/JPEG/WebP 互转，转 JPEG 铺白底、WebP/PNG 保透明）、`/resize/`（居中裁切 1:1/4:3/16:9/9:16 + 最长边缩放，默认保持原格式）、`/contrast/`（WCAG 对比度检查 + 自动调整）、`/qrcode/`（自研 QR 编码器，字节模式 v1-40，矩阵级验证）、`/barcode/`（Code128/EAN-13/UPC-A/EAN-8）、`/watermark/`、`/gradient/`、`/password/`、`/meta-tags/`、`/text/json/`（JSON 格式化/校验/压缩）、`/text/char-count/`（字数统计 + 阅读时长）、`/text/uuid/`（v4/v1/v5 UUID）
+- 指南 20：ico-file-guide、favicon-guide、dark-mode-icons、image-compression-guide、webp-guide、color-guide、app-icon-sizes、png-to-ico-guide、favicon-not-showing-guide、transparent-icon-guide、accessibility-contrast-guide、qr-not-scanning-guide、barcode-guide、watermark-guide、gradient-guide、password-guide、meta-tags-guide、json-guide、word-count-guide、uuid-guide（均中英双语 `.lb-zh`/`.lb-en` 双块）
 - 信任页：about / privacy / contact + 404（noindex）
 
 **新增页面 checklist**：`sitemap.xml`（hreflang 三连 zh-CN/en/x-default + priority）→ `llms.txt` → guides 索引卡（如指南）→ `site.js` 词典（`gd_*` 键）→ 相关工具页反向内链 → `<title>` 双语 meta + JSON-LD。⚠️ 每新增一篇指南，首页「实用指南」区块（4 篇轮换 + 全部入口）与指南间互链网络也要同步评估（2026-09-05 B3 内链加固后建立的网络基线见 HANDOFF）。
-- sitemap 现共 30 URL（首页 + 13 工具 + about/privacy/contact + /guides/ + 17 指南）；首页有「实用指南」编号目录区块（4 篇支柱 + 全部入口）；guides 索引页收齐 10 卡。导航为短标签（`nav_*` 词典键），完整名称在页面 h1 与首页卡。
+- sitemap 现共 41 URL（首页 + 16 工具 + about/privacy/contact + /guides/ + 20 指南）；首页有「实用指南」编号目录区块（4 篇支柱 + 全部入口）；guides 索引页收齐 20 卡。导航为短标签（`nav_*` 词典键），完整名称在页面 h1 与首页卡。
 
 ## 六、数据与统计
 
@@ -75,7 +75,7 @@
 
 ## 十、首页改版触发条件（2026-09-17 锚点）
 
-**当前状态**：13 工具用「印刷工具目录」设计语言（米纸/墨色/朱砂 + 编号目录行 + 规则线）恰好合适，**不主动改版**。JSON-LD 已在 2026-09-17 修掉 ItemList 第 64 行损坏重复条目。
+**当前状态**：16 工具用「印刷工具目录」设计语言（米纸/墨色/朱砂 + 编号目录行 + 规则线）恰好合适，**不主动改版**。JSON-LD 已在 2026-09-17 修掉 ItemList 第 64 行损坏重复条目。阶段 A 试点（3 个文本工具 + 3 篇配套指南）已落地，首页工具数 13→16、指南数 17→20、sitemap 30→41 URL。
 
 **任一条件满足即启动首页改版（一次性做完）**：
 

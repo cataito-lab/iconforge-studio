@@ -263,6 +263,60 @@ html.dark .theme-switch .ico-sun { display: none; }
 .faq-q::before { content: "Q. "; font-family: var(--font-mono); font-size: 13px; color: var(--accent); }
 .faq-a { font-size: 13.5px; color: var(--text-2); line-height: 1.7; margin: 0; max-width: 46em; }
 
+/* ---------- 首页：同类工具对比（横向 2-3 列，规则线分隔） ---------- */
+.home-compare { margin-top: 8px; }
+.compare-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+  border-top: 2px solid var(--text);
+}
+@media (min-width: 720px) {
+  .compare-list { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; }
+}
+.compare-item {
+  display: block;
+  padding: 20px 20px 20px 0;
+  text-decoration: none;
+  border-bottom: 1px solid var(--border);
+}
+@media (min-width: 720px) {
+  .compare-item {
+    padding-left: 20px;
+    border-bottom: none;
+    border-right: 1px solid var(--border);
+  }
+  .compare-item:last-child { border-right: none; padding-right: 0; }
+}
+.compare-item__tag {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--accent);
+  letter-spacing: .04em;
+  margin-bottom: 8px;
+}
+.compare-item__title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0 0 6px;
+}
+.compare-item__title .vs {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--accent);
+  margin: 0 6px;
+  font-weight: 400;
+}
+.compare-item__desc {
+  font-size: 13px;
+  color: var(--text-2);
+  line-height: 1.65;
+  margin: 0;
+}
+
 /* 工具目录行：编号 + 图标 + 名称/描述 + 箭头 */
 .tool-card {
   counter-increment: toolidx;

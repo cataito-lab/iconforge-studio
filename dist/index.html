@@ -65,7 +65,10 @@
     { "@type": "ListItem", "position": 10, "item": { "@type": "SoftwareApplication", "name": "Watermark Tool", "applicationCategory": "UtilityApplication", "operatingSystem": "Any", "url": "https://tools.cataito.com/watermark/", "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" } } },
     { "@type": "ListItem", "position": 11, "item": { "@type": "SoftwareApplication", "name": "CSS Gradient Generator", "applicationCategory": "DesignApplication", "operatingSystem": "Any", "url": "https://tools.cataito.com/gradient/", "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" } } },
     { "@type": "ListItem", "position": 12, "item": { "@type": "SoftwareApplication", "name": "Password Generator", "applicationCategory": "UtilityApplication", "operatingSystem": "Any", "url": "https://tools.cataito.com/password/", "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" } } },
-    { "@type": "ListItem", "position": 13, "item": { "@type": "SoftwareApplication", "name": "Meta Tag Generator", "applicationCategory": "DesignApplication", "operatingSystem": "Any", "url": "https://tools.cataito.com/meta-tags/", "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" } } }
+    { "@type": "ListItem", "position": 13, "item": { "@type": "SoftwareApplication", "name": "Meta Tag Generator", "applicationCategory": "DesignApplication", "operatingSystem": "Any", "url": "https://tools.cataito.com/meta-tags/", "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" } } },
+    { "@type": "ListItem", "position": 14, "item": { "@type": "SoftwareApplication", "name": "JSON Formatter", "applicationCategory": "DeveloperApplication", "operatingSystem": "Any", "url": "https://tools.cataito.com/text/json/", "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" } } },
+    { "@type": "ListItem", "position": 15, "item": { "@type": "SoftwareApplication", "name": "Word Counter", "applicationCategory": "UtilityApplication", "operatingSystem": "Any", "url": "https://tools.cataito.com/text/char-count/", "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" } } },
+    { "@type": "ListItem", "position": 16, "item": { "@type": "SoftwareApplication", "name": "UUID Generator", "applicationCategory": "DeveloperApplication", "operatingSystem": "Any", "url": "https://tools.cataito.com/text/uuid/", "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" } } }
   ]
 }
 </script>
@@ -104,7 +107,7 @@
     {
       "@type": "Question",
       "name": "目前提供哪些工具？",
-      "acceptedAnswer": { "@type": "Answer", "text": "目前提供图标工坊 IconForge、Favicon 生成器、图片压缩、配色 / 调色板、图片格式转换、图片裁剪与缩放、对比度检查、二维码生成、条形码生成、图片加水印、CSS 渐变、密码生成器、Meta 标签十三类工具，均为纯前端实现，后续还会持续增加。" }
+      "acceptedAnswer": { "@type": "Answer", "text": "目前提供图标工坊 IconForge、Favicon 生成器、图片压缩、配色 / 调色板、图片格式转换、图片裁剪与缩放、对比度检查、二维码生成、条形码生成、图片加水印、CSS 渐变、密码生成器、Meta 标签、JSON 格式化、字数统计、UUID 生成十六类工具，均为纯前端实现，后续还会持续增加。" }
     }
   ]
 }
@@ -219,6 +222,12 @@
       <div class="tool-card__top"><span class="tool-card__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 1 1 8 0v3"/></svg></span><h3 class="tool-card__name" data-i18n="home_tool_password">密码生成器</h3></div><p class="tool-card__desc" data-i18n="home_tool_password_desc">crypto 安全随机生成密码，强度熵显示，批量备选，一键复制。</p><div class="tool-card__foot"><span class="tool-card__go" data-i18n="use_tool">使用工具 →</span></div></a>
     <a class="tool-card" href="/meta-tags/">
       <div class="tool-card__top"><span class="tool-card__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9l8-6 8 6M6 8v10h12V8M10 13h4"/></svg></span><h3 class="tool-card__name" data-i18n="home_tool_meta">Meta 标签</h3></div><p class="tool-card__desc" data-i18n="home_tool_meta_desc">填写标题描述图片，实时预览微信/Twitter 分享卡片，生成 OG 代码。</p><div class="tool-card__foot"><span class="tool-card__go" data-i18n="use_tool">使用工具 →</span></div></a>
+    <a class="tool-card" href="/text/json/">
+      <div class="tool-card__top"><span class="tool-card__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4c-2 0-2 2-2 4v0c0 2 0 4-2 4 2 0 2 2 2 4v0c0 2 0 4 2 4M16 4c2 0 2 2 2 4v0c0 2 0 4 2 4-2 0-2 2-2 4v0c0 2 0 4-2 4"/></svg></span><h3 class="tool-card__name" data-i18n="home_tool_txt_json">JSON 格式化</h3></div><p class="tool-card__desc" data-i18n="home_tool_txt_json_desc">粘贴 JSON 实时校验、格式化或压缩，错误定位到行列，缩进 2/4/Tab 可选。</p><div class="tool-card__foot"><span class="tool-card__go" data-i18n="use_tool">使用工具 →</span></div></a>
+    <a class="tool-card" href="/text/char-count/">
+      <div class="tool-card__top"><span class="tool-card__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h10M4 17h16"/></svg></span><h3 class="tool-card__name" data-i18n="home_tool_txt_cc">字数统计</h3></div><p class="tool-card__desc" data-i18n="home_tool_txt_cc_desc">实时统计字符/词/句/段/阅读与朗读时长，中英日混合自动识别。</p><div class="tool-card__foot"><span class="tool-card__go" data-i18n="use_tool">使用工具 →</span></div></a>
+    <a class="tool-card" href="/text/uuid/">
+      <div class="tool-card__top"><span class="tool-card__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 8a4 4 0 0 1 4 4v0a4 4 0 0 1-4 4M16 12a4 4 0 0 0-4-4v0a4 4 0 0 0 4 4"/><circle cx="10" cy="10" r="1"/><circle cx="14" cy="14" r="1"/></svg></span><h3 class="tool-card__name" data-i18n="home_tool_txt_uuid">UUID 生成</h3></div><p class="tool-card__desc" data-i18n="home_tool_txt_uuid_desc">v4 / v1 / v5 三种版本，批量生成 1/10/100 个，大小写切换，一键复制或下载。</p><div class="tool-card__foot"><span class="tool-card__go" data-i18n="use_tool">使用工具 →</span></div></a>
   </div>
 
   <!-- 实用指南（静态真文本 + 指南反链，铁律 11：不依赖 JS 注入） -->
@@ -307,6 +316,40 @@
         <h3 class="faq-q" data-i18n="hf_faq_3_q">目前提供哪些工具？</h3>
         <p class="faq-a" data-i18n="hf_faq_3_a">目前提供图标工坊 IconForge、Favicon 生成器、图片压缩、配色 / 调色板、图片格式转换、图片裁剪与缩放、对比度检查、二维码生成、条形码生成、图片加水印、CSS 渐变、密码生成器、Meta 标签十三类工具，均为纯前端实现，后续还会持续增加。</p>
       </div>
+    </div>
+  </section>
+
+  <!-- 同类工具对比（权重回流：跨工具的语义关联） -->
+  <section class="home-compare">
+    <h2 class="section-head" data-i18n="home_compare_h">同类工具对比</h2>
+    <div class="compare-list">
+      <a class="compare-item" href="/icon-forge/">
+        <span class="compare-item__tag">01</span>
+        <h3 class="compare-item__title">
+          <span data-i18n="cmp_1_a">图标工坊 IconForge</span>
+          <span class="vs" data-i18n="cmp_vs">vs</span>
+          <span data-i18n="cmp_1_b">Favicon 生成器</span>
+        </h3>
+        <p class="compare-item__desc" data-i18n="cmp_1_desc">桌面/移动应用图标走 IconForge（Light &amp; Dark 双变体、16–256px 全套）；只给网站配 favicon 走 Favicon 生成器（16–192px 全平台）。两者输出格式相似但用途不同。</p>
+      </a>
+      <a class="compare-item" href="/compress/">
+        <span class="compare-item__tag">02</span>
+        <h3 class="compare-item__title">
+          <span data-i18n="cmp_2_a">图片压缩</span>
+          <span class="vs" data-i18n="cmp_vs">vs</span>
+          <span data-i18n="cmp_2_b">格式转换</span>
+        </h3>
+        <p class="compare-item__desc" data-i18n="cmp_2_desc">目标是「变小」用压缩（智能选格式、质量滑块 30–95）；目标是「换格式」用转换（PNG/JPEG/WebP 互转、保透明/铺白底）。压缩页对 WebP 也会智能选格式，重叠时优先用压缩。</p>
+      </a>
+      <a class="compare-item" href="/palette/">
+        <span class="compare-item__tag">03</span>
+        <h3 class="compare-item__title">
+          <span data-i18n="cmp_3_a">配色 / 调色板</span>
+          <span class="vs" data-i18n="cmp_vs">vs</span>
+          <span data-i18n="cmp_3_b">对比度检查</span>
+        </h3>
+        <p class="compare-item__desc" data-i18n="cmp_3_desc">配色页从图片提取主色、生成协调方案（互补/类似/三角）；对比度页检查具体两色是否达 WCAG AA/AAA。配色出方案，对比度验达标。</p>
+      </a>
     </div>
   </section>
 </main>

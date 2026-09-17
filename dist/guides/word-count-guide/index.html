@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>字数统计与写作时长估算：中英文与写作场景 | CATAITO</title>
+<meta name="title-zh" content="字数统计与写作时长估算：中英文与写作场景 | CATAITO">
+<meta name="title-en" content="Word Count & Reading Time Estimation | CATAITO">
+<meta name="description" content="字数统计完整指南：中文/英文/混排的计算方式、字符 vs 词数的区别、阅读/朗读速度依据（中英 wpm）、不同文体差异（新闻/学术/营销）、常见写作目标（微博/论文/演讲稿）与 SEO 字数考量。附免费在线字数统计器，纯浏览器本地处理。">
+<meta name="theme-color" content="#f6f3ec">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="CATAITO 工具箱">
+<meta property="og:title" content="字数统计与写作时长估算">
+<meta property="og:description" content="中英文字数计算、阅读/朗读速度依据、文体差异与写作目标。附免费本地字数统计器。">
+<meta property="og:url" content="https://tools.cataito.com/guides/word-count-guide/">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:locale:alternate" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="字数统计与写作时长估算">
+<meta name="twitter:description" content="中英文字数计算、阅读/朗读速度依据、文体差异与写作目标。">
+<link rel="canonical" href="https://tools.cataito.com/guides/word-count-guide/">
+<link rel="icon" type="image/png" href="/assets/img/cataito-logo.png">
+<link rel="stylesheet" href="/assets/css/site.css">
+<script src="/assets/js/theme-init.js"></script>
+<script>
+  (function () {
+    try {
+      var l = localStorage.getItem('cataito-lang');
+      document.documentElement.setAttribute('lang', (l === 'en') ? 'en' : 'zh-CN');
+      if (l === 'en') document.documentElement.classList.add('lang-en');
+    } catch (e) {}
+  })();
+</script>
+<style>
+  .guide-wrap { max-width: 760px; margin: 0; }
+  .guide-meta { font-size: 13px; color: var(--text-3); margin: 0 0 6px; }
+  .page-sub { margin-bottom: 10px; }
+  .article { font-size: 15px; line-height: 1.85; color: var(--text); }
+  .article h2 {
+    font-size: 21px; font-weight: 700; letter-spacing: -.3px;
+    margin: 44px 0 14px; padding-top: 16px; border-top: 1px solid var(--border); color: var(--text);
+  }
+  .article h3 { font-size: 16.5px; font-weight: 650; margin: 26px 0 10px; color: var(--text); }
+  .article p { margin: 0 0 14px; color: var(--text-2); }
+  .article strong { color: var(--text); font-weight: 650; }
+  .article a { color: var(--accent); text-decoration: none; }
+  .article a:hover { text-decoration: underline; }
+  .article ul, .article ol { margin: 0 0 16px; padding-left: 22px; color: var(--text-2); }
+  .article li { margin: 6px 0; }
+  .article code {
+    font-family: var(--font-mono);
+    font-size: 13px; background: var(--card-2); border: 1px solid var(--border);
+    border-radius: 3px; padding: 1px 6px; color: var(--text);
+  }
+  .article table {
+    width: 100%; border-collapse: collapse; margin: 18px 0 22px;
+    font-size: 13.5px; background: var(--card);
+    border: 1px solid var(--border); border-radius: var(--radius-sm); overflow: hidden;
+  }
+  .article th, .article td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--border); }
+  .article th { background: var(--card-2); color: var(--text); font-weight: 650; white-space: nowrap; }
+  .article td { color: var(--text-2); }
+  .article tr:last-child td { border-bottom: none; }
+  .toc {
+    background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 16px 18px; margin: 20px 0 8px; box-shadow: var(--shadow-sm);
+  }
+  .toc-title { font-size: 13px; font-weight: 650; color: var(--text); margin: 0 0 10px; }
+  .toc ol { margin: 0; padding-left: 20px; font-size: 13.5px; }
+  .toc li { margin: 5px 0; }
+  .toc a { color: var(--text-2); text-decoration: none; }
+  .toc a:hover { color: var(--accent); }
+  .cta-box {
+    background: linear-gradient(135deg, var(--accent-soft), var(--accent-soft-2));
+    border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent); border-radius: var(--radius);
+    padding: 20px 22px; margin: 34px 0 10px; text-align: center;
+  }
+  .cta-box .cta-title { font-size: 17px; font-weight: 700; color: var(--text); margin: 0 0 6px; }
+  .cta-box .cta-sub { font-size: 13.5px; color: var(--text-2); margin: 0 0 14px; }
+  .cta-btn {
+    display: inline-block; background: var(--accent); color: #fff; text-decoration: none;
+    font-size: 14px; font-weight: 600; padding: 11px 26px; border-radius: var(--radius-sm);
+    box-shadow: 0 6px 18px var(--accent-glow); transition: background .15s;
+  }
+  .cta-btn:hover { background: var(--accent-hover); }
+  .article a.cta-btn, .article .cta-btn { color: #fff; text-decoration: none; }
+  .article a.cta-btn:hover { color: #fff; text-decoration: none; background: var(--accent-hover); }
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "字数统计与写作时长估算",
+  "description": "详解中英文字数计算方式、阅读/朗读速度依据、不同文体差异与常见写作目标，附免费在线字数统计器。",
+  "inLanguage": "zh-CN",
+  "datePublished": "2026-09-17",
+  "dateModified": "2026-09-17",
+  "author": { "@type": "Organization", "name": "CATAITO", "url": "https://tools.cataito.com/" },
+  "publisher": { "@type": "Organization", "name": "CATAITO 工具箱", "url": "https://tools.cataito.com/" },
+  "mainEntityOfPage": "https://tools.cataito.com/guides/word-count-guide/"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "字数和词数有什么区别？",
+      "acceptedAnswer": { "@type": "Answer", "text": "字数按字符计（中文每个汉字算一个字符）；词数按连续字母或数字串计（英文每个单词算一个词）。中文写作用字数，英文写作用词数；混排文本需要同时看两个数字。" }
+    },
+    {
+      "@type": "Question",
+      "name": "阅读速度真的能到 400 字/分钟吗？",
+      "acceptedAnswer": { "@type": "Answer", "text": "成人英文阅读的平均速度是 200-300 wpm（每分钟单词），阅读能力强的可以到 400-500 wpm；中文阅读速度约 400 字/分钟是常见估算值。实际速度因文体、复杂度、读者背景差异很大，这些数字只是估算基准。" }
+    },
+    {
+      "@type": "Question",
+      "name": "SEO 对字数有硬性要求吗？",
+      "acceptedAnswer": { "@type": "Answer", "text": "没有硬性要求。Google 官方声明不要求特定字数。但实际数据显示，排名靠前的页面中位数约 1000-1500 词。字数只是内容深度的信号之一，比字数更重要的是相关性、结构、可读性和用户停留时间。" }
+    },
+    {
+      "@type": "Question",
+      "name": "中文标点算字数吗？",
+      "acceptedAnswer": { "@type": "Answer", "text": "看工具约定。主流约定：中文标点（，。！？）计入「总字符数」但不计入「中文字数」，因为标点是符号不是汉字。英文标点和空格同理，不计入「英文词数」但计入「总字符数」。" }
+    },
+    {
+      "@type": "Question",
+      "name": "写作时应该以哪个数字为目标？",
+      "acceptedAnswer": { "@type": "Answer", "text": "中文写作以字数为目标，英文写作以词数为目标，混排文本以阅读时长为目标。字数/词数是「量」的指标，阅读时长是「体验」的指标。写长文先看时长，写短文再看字数/词数是否符合场景要求。" }
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "首页", "item": "https://tools.cataito.com/" },
+    { "@type": "ListItem", "position": 2, "name": "使用指南", "item": "https://tools.cataito.com/guides/" },
+    { "@type": "ListItem", "position": 3, "name": "字数统计与写作时长估算", "item": "https://tools.cataito.com/guides/word-count-guide/" }
+  ]
+}
+</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7103529190038161" crossorigin="anonymous"></script>
+</head>
+<body>
+<div id="site-header"></div>
+
+<main class="site-main">
+  <div class="guide-wrap">
+    <nav class="breadcrumb"><a href="/" data-i18n="crumb_home">首页</a><span class="sep">/</span><a href="/guides/" data-i18n="nav_guides">使用指南</a><span class="sep">/</span><span data-i18n="gd_wc_short">字数统计指南</span></nav>
+    <p class="guide-meta"><span data-i18n="gd_published">发布于</span> 2026-09-17 · CATAITO</p>
+    <h1 class="page-h1" data-i18n="gd_wc_h1">字数统计与写作时长估算</h1>
+    <p class="page-sub" data-i18n="gd_wc_sub">从字数 vs 词数的定义，到阅读/朗读速度依据、文体差异与常见写作目标。附免费在线字数统计器。</p>
+
+    <div class="article lb-zh">
+      <div class="toc">
+        <p class="toc-title">目录</p>
+        <ol>
+          <li><a href="#words-vs-chars">字数 vs 词数</a></li>
+          <li><a href="#counting-rules">中英文的计算方式</a></li>
+          <li><a href="#time-rates">阅读与朗读速度的依据</a></li>
+          <li><a href="#genres">不同文体的字数差异</a></li>
+          <li><a href="#writing-goals">常见写作目标的字数</a></li>
+          <li><a href="#seo">SEO 中的字数考量</a></li>
+          <li><a href="#faq">常见问题</a></li>
+        </ol>
+      </div>
+
+      <h2 id="words-vs-chars">字数 vs 词数</h2>
+      <p>这两个词在中文和英文里指向不同的东西：</p>
+      <ul>
+        <li><strong>字数</strong>（characters）：每个字符（汉字、字母、数字、标点）都算一个。中文里习惯把「字数」理解为「字符数」，1 个汉字 = 1 个字符。</li>
+        <li><strong>词数</strong>（words）：连续的字母或数字串算一个词。英文里 1 个单词 = 1 个词；中文里如果按词切分，「今天天气真好」是 4 个词（今天/天气/真/好）。</li>
+      </ul>
+      <p>主流工具的处理方式：</p>
+      <table>
+        <thead><tr><th>语言</th><th>主指标</th><th>辅助指标</th></tr></thead>
+        <tbody>
+          <tr><td>中文</td><td>字数（字符数）</td><td>句数、段数</td></tr>
+          <tr><td>英文</td><td>词数（words）</td><td>句数、段数</td></tr>
+          <tr><td>混排</td><td>两者并看</td><td>阅读时长</td></tr>
+        </tbody>
+      </table>
+      <p>本站 <a href="/text/char-count/">字数统计器</a> 会同时显示字符数、中文字数、英文词数、句数、段数，避免混排文本被误判。</p>
+
+      <h2 id="counting-rules">中英文的计算方式</h2>
+      <h3>中文字数怎么数</h3>
+      <p>主流约定：<strong>Unicode CJK 统一汉字区段</strong>（U+4E00–U+9FFF）加扩展 A 区段（U+3400–U+4DBF）都算汉字。中文标点（，。！？；：""''…）和英文标点都不算「汉字」，但会计入「总字符数」。</p>
+      <p>常见的边界情况：</p>
+      <ul>
+        <li><strong>全角/半角</strong>：全角字母（ＡＢＣ）按汉字算，半角（ABC）按英文词算——这会造成统计不一致，建议统一用半角。</li>
+        <li><strong>繁体字</strong>：繁体（漢字）也在 CJK 区段内，正常计入。</li>
+        <li><strong>标点</strong>：中文字数里标点不计入，所以 100 字的文章实际可能是 110 字符。</li>
+      </ul>
+      <h3>英文词数怎么数</h3>
+      <p>主流规则：<strong>连续的字母或数字串算一个词</strong>，支持缩写（Mary's = 1 词）、数字（3.14 = 1 词、1,000 = 1 词）、连字符（well-known = 1 词或 2 词，看工具）。中文标点不影响英文词的判定——「Hello，world」仍然是 2 个词。</p>
+      <h3>混排</h3>
+      <p>「今天发布新 product！」按主流规则：中文 4 个字符（今天发布新）+ 英文 1 个词（product）+ 1 个感叹号。这类文本应分别报两个数字，再用阅读时长合并。</p>
+
+      <h2 id="time-rates">阅读与朗读速度的依据</h2>
+      <p>「读一篇文章要多久」是用字数除以速度得出的。速度基准来自研究数据：</p>
+      <table>
+        <thead><tr><th>场景</th><th>中文速度</th><th>英文速度</th><th>依据</th></tr></thead>
+        <tbody>
+          <tr><td>阅读</td><td>≈ 400 字/分钟</td><td>≈ 200-300 词/分钟</td><td>成人平均速度，阅读能力强的可到 400-500 wpm</td></tr>
+          <tr><td>朗读</td><td>≈ 220 字/分钟</td><td>≈ 150 词/分钟</td><td>新闻播报级，清晰但自然</td></tr>
+          <tr><td>演讲</td><td>≈ 180 字/分钟</td><td>≈ 130 词/分钟</td><td>舞台演讲，留停顿</td></tr>
+        </tbody>
+      </table>
+      <p>这些是基准值，实际因人而异：复杂内容（学术、法律）速度慢 30-50%；简单内容（儿童读物、口语体）可快 30%。工具给出的时间是<strong>估算</strong>，供参考不供考核。</p>
+
+      <h2 id="genres">不同文体的字数差异</h2>
+      <p>同样是「一篇文章」，不同文体的目标字数天差地别：</p>
+      <table>
+        <thead><tr><th>文体</th><th>中文目标</th><th>英文目标</th><th>说明</th></tr></thead>
+        <tbody>
+          <tr><td>新闻快讯</td><td>200-500 字</td><td>150-300 词</td><td>短平快，1 分钟读完</td></tr>
+          <tr><td>微博/短推</td><td>140-300 字</td><td>140 字符</td><td>社交平台硬上限</td></tr>
+          <tr><td>博客长文</td><td>2000-5000 字</td><td>1000-2500 词</td><td>SEO 友好区间</td></tr>
+          <tr><td>学术论文</td><td>8000-15000 字</td><td>5000-10000 词</td><td>含参考文献</td></tr>
+          <tr><td>演讲稿</td><td>1500-3000 字</td><td>1000-2000 词</td><td>8-15 分钟演讲量</td></tr>
+          <tr><td>说明书</td><td>3000-8000 字</td><td>1500-4000 词</td><td>结构清晰、段落短</td></tr>
+          <tr><td>小说章节</td><td>3000-6000 字</td><td>2000-4000 词</td><td>按章节节奏</td></tr>
+        </tbody>
+      </table>
+      <p>写作前先定目标字数，写完后核对差距。差距过大通常是<strong>结构问题</strong>——不是补字就是删字，而是重新分配段落权重。</p>
+
+      <h2 id="writing-goals">常见写作目标的字数</h2>
+      <h3>社交平台</h3>
+      <ul>
+        <li><strong>微信公众号</strong>：正文 800-2000 字为宜；标题 10-30 字；摘要 40-80 字。</li>
+        <li><strong>知乎回答</strong>：干货回答 500-2000 字；深度分析可到 5000 字。</li>
+        <li><strong>小红书</strong>：正文 300-800 字；标题 10-20 字。</li>
+        <li><strong>Twitter/X</strong>：140 字符（英文约 28-35 词）；长文要拆推文串。</li>
+      </ul>
+      <h3>写作与学术</h3>
+      <ul>
+        <li><strong>论文摘要</strong>：200-300 词（英文）；中文约 400-600 字。</li>
+        <li><strong>论文正文</strong>：本科 5000-15000 字；硕士 20000-50000 字；博士 50000+ 字。</li>
+        <li><strong>邮件正文</strong>：30-200 字，长邮件分点列出。</li>
+      </ul>
+      <h3>演讲稿</h3>
+      <p>8-15 分钟演讲对应中文 1500-3000 字、英文 1000-2000 词。留 10-15% 缓冲（现场会超时）。</p>
+
+      <h2 id="seo">SEO 中的字数考量</h2>
+      <p>Google 官方明确说过：<strong>没有硬性字数要求</strong>。但实际数据支持「内容深度」和排名的相关性：</p>
+      <ul>
+        <li><strong>博客长文</strong>：排名靠前的页面中位数约 1000-1500 英文词（约 2000-3000 中文字）。</li>
+        <li><strong>程序化页面</strong>（如本站的工具页）：字数少没关系，但要有结构化数据（JSON-LD）和语义清晰的标题。</li>
+        <li><strong>指南/教程</strong>：越接近「读者要解决的实际问题」越重要，字数是信号不是目标。</li>
+      </ul>
+      <p>常见误区：</p>
+      <ul>
+        <li><strong>为凑字数灌水</strong>：会稀释内容密度，反而降低排名。SEO 看的是「信息量/字符」的比率，不是字符数本身。</li>
+        <li><strong>只看英文词数</strong>：中文内容用英文词数判断，会严重低估深度。</li>
+        <li><strong>忽略结构化数据</strong>：字数达标但缺 JSON-LD，Google Rich Results 无法识别，富摘要机会丢失。</li>
+      </ul>
+      <p>正确做法：<strong>先定读者要解决的问题</strong>，再按文体经验值写；写完后核对字数是否覆盖了问题，而不是反过来用字数反推内容。</p>
+
+      <h2 id="faq">常见问题</h2>
+      <div class="faq-item"><p class="faq-q">Q：字数和词数有什么区别？</p><p class="faq-a">A：字数按字符计（中文每个汉字算一个字符）；词数按连续字母或数字串计（英文每个单词算一个词）。中文写作用字数，英文写作用词数；混排文本需要同时看两个数字。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：阅读速度真的能到 400 字/分钟吗？</p><p class="faq-a">A：成人英文阅读平均 200-300 wpm，阅读能力强的可到 400-500 wpm；中文阅读速度约 400 字/分钟是常见估算值。实际速度因文体、复杂度、读者背景差异很大。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：SEO 对字数有硬性要求吗？</p><p class="faq-a">A：没有硬性要求。Google 官方声明不要求特定字数。但实际数据显示，排名靠前的页面中位数约 1000-1500 词。字数只是内容深度的信号之一。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：中文标点算字数吗？</p><p class="faq-a">A：主流约定：中文标点计入「总字符数」但不计入「中文字数」，因为标点是符号不是汉字。英文标点和空格同理。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：写作时应该以哪个数字为目标？</p><p class="faq-a">A：中文写作以字数为目标，英文写作以词数为目标，混排文本以阅读时长为目标。字数/词数是「量」的指标，阅读时长是「体验」的指标。</p></div>
+
+      <div class="cta-box">
+        <p class="cta-title">免费统计字符 / 词 / 句 / 段 / 时长</p>
+        <p class="cta-sub">中英日混合自动识别 · 阅读/朗读时长估算 · 纯浏览器本地处理</p>
+        <a class="cta-btn" href="/text/char-count/">打开字数统计器 →</a>
+      </div>
+    </div>
+
+    <div class="article lb-en">
+      <div class="toc">
+        <p class="toc-title">Table of Contents</p>
+        <ol>
+          <li><a href="#words-vs-chars">Characters vs Words</a></li>
+          <li><a href="#counting-rules">Counting Rules for Chinese &amp; English</a></li>
+          <li><a href="#time-rates">Reading &amp; Speaking Speeds</a></li>
+          <li><a href="#genres">Genre-Based Lengths</a></li>
+          <li><a href="#writing-goals">Common Writing Targets</a></li>
+          <li><a href="#seo">Word Count in SEO</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ol>
+      </div>
+
+      <h2 id="words-vs-chars">Characters vs Words</h2>
+      <p>These two terms point to different things across Chinese and English:</p>
+      <ul>
+        <li><strong>Characters</strong> (字数): each character (Chinese, Latin letter, digit, punctuation) counts as one. In Chinese, 1 汉字 = 1 character.</li>
+        <li><strong>Words</strong> (词数): a run of letters or digits counts as one. In English, 1 word = 1 word; in Chinese, if segmented, "今天天气真好" is 4 words (今天/天气/真/好).</li>
+      </ul>
+      <p>How mainstream tools handle this:</p>
+      <table>
+        <thead><tr><th>Language</th><th>Primary metric</th><th>Secondary</th></tr></thead>
+        <tbody>
+          <tr><td>Chinese</td><td>Characters</td><td>Sentences, paragraphs</td></tr>
+          <tr><td>English</td><td>Words</td><td>Sentences, paragraphs</td></tr>
+          <tr><td>Mixed</td><td>Both</td><td>Reading time</td></tr>
+        </tbody>
+      </table>
+      <p>Our <a href="/text/char-count/">Word Counter</a> shows character count, Chinese characters, English words, sentences, and paragraphs side-by-side, so mixed text isn't misread.</p>
+
+      <h2 id="counting-rules">Counting Rules for Chinese &amp; English</h2>
+      <h3>How Chinese characters are counted</h3>
+      <p>Standard convention: <strong>the CJK Unified Ideographs range</strong> (U+4E00–U+9FFF) plus Extension A (U+3400–U+4DBF) are counted as Chinese characters. Chinese punctuation (，。！？；：""''…) and English punctuation are not counted as characters, but they do count toward total characters.</p>
+      <p>Common edge cases:</p>
+      <ul>
+        <li><strong>Full-width vs half-width</strong>: full-width letters (ＡＢＣ) are treated as Chinese; half-width (ABC) as English. Inconsistent counting results if you mix them — use half-width uniformly.</li>
+        <li><strong>Traditional Chinese</strong>: traditional characters (漢字) are in the CJK range, counted normally.</li>
+        <li><strong>Punctuation</strong>: Chinese punctuation is excluded from character count, so a 100-character article may actually be 110 characters total.</li>
+      </ul>
+      <h3>How English words are counted</h3>
+      <p>Mainstream rule: <strong>a run of letters or digits counts as one word</strong>. Supports abbreviations (Mary's = 1 word), numbers (3.14 = 1 word, 1,000 = 1 word), hyphenated compounds (well-known = 1 or 2 depending on the tool). Chinese punctuation does not affect English word detection — "Hello，world" is still 2 words.</p>
+      <h3>Mixed text</h3>
+      <p>"今天发布新 product！" under the mainstream rule: 5 Chinese characters (今天发布新) + 1 English word (product) + 1 exclamation. Report both numbers separately, then combine via reading time.</p>
+
+      <h2 id="time-rates">Reading &amp; Speaking Speeds</h2>
+      <p>"How long will it take to read?" is characters divided by speed. Baselines from research:</p>
+      <table>
+        <thead><tr><th>Scenario</th><th>Chinese</th><th>English</th><th>Basis</th></tr></thead>
+        <tbody>
+          <tr><td>Reading</td><td>~400 chars/min</td><td>~200-300 wpm</td><td>Adult average; fast readers 400-500 wpm</td></tr>
+          <tr><td>Speaking</td><td>~220 chars/min</td><td>~150 wpm</td><td>News broadcast pace, clear and natural</td></tr>
+          <tr><td>Presenting</td><td>~180 chars/min</td><td>~130 wpm</td><td>Stage speech, with pauses</td></tr>
+        </tbody>
+      </table>
+      <p>These are baselines; actual speed varies: complex content (academic, legal) is 30-50% slower; simple content (children's reading, conversational) can be 30% faster. Tool outputs are <strong>estimates</strong>, for reference not for evaluation.</p>
+
+      <h2 id="genres">Genre-Based Lengths</h2>
+      <p>Same "article" can mean wildly different lengths by genre:</p>
+      <table>
+        <thead><tr><th>Genre</th><th>Chinese target</th><th>English target</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>News brief</td><td>200-500 chars</td><td>150-300 words</td><td>Quick read, 1 minute</td></tr>
+          <tr><td>Social post</td><td>140-300 chars</td><td>140 chars</td><td>Platform hard limit</td></tr>
+          <tr><td>Blog post</td><td>2000-5000 chars</td><td>1000-2500 words</td><td>SEO-friendly range</td></tr>
+          <tr><td>Academic paper</td><td>8000-15000 chars</td><td>5000-10000 words</td><td>Including references</td></tr>
+          <tr><td>Speech</td><td>1500-3000 chars</td><td>1000-2000 words</td><td>8-15 minute talk</td></tr>
+          <tr><td>Manual / docs</td><td>3000-8000 chars</td><td>1500-4000 words</td><td>Clear structure, short paragraphs</td></tr>
+          <tr><td>Fiction chapter</td><td>3000-6000 chars</td><td>2000-4000 words</td><td>Paced per chapter</td></tr>
+        </tbody>
+      </table>
+      <p>Decide a target length before writing, then check the gap afterward. A large gap is usually a <strong>structure problem</strong> — not more words or fewer, but re-allocated section weight.</p>
+
+      <h2 id="writing-goals">Common Writing Targets</h2>
+      <h3>Social platforms</h3>
+      <ul>
+        <li><strong>WeChat Official Account</strong>: 800-2000 characters for body; title 10-30 characters; summary 40-80 characters.</li>
+        <li><strong>Zhihu answer</strong>: 500-2000 characters for dry-goods; 5000 characters for deep analysis.</li>
+        <li><strong>Xiaohongshu</strong>: 300-800 characters for body; title 10-20 characters.</li>
+        <li><strong>Twitter/X</strong>: 140 characters (~28-35 English words); long content uses threads.</li>
+      </ul>
+      <h3>Writing and academia</h3>
+      <ul>
+        <li><strong>Paper abstract</strong>: 200-300 words (English); ~400-600 Chinese characters.</li>
+        <li><strong>Thesis body</strong>: undergraduate 5000-15000 chars; master's 20000-50000 chars; PhD 50000+ chars.</li>
+        <li><strong>Email body</strong>: 30-200 characters; long emails should be bulleted.</li>
+      </ul>
+      <h3>Speeches</h3>
+      <p>An 8-15 minute talk corresponds to 1500-3000 Chinese characters, or 1000-2000 English words. Leave a 10-15% buffer (live events tend to overrun).</p>
+
+      <h2 id="seo">Word Count in SEO</h2>
+      <p>Google has explicitly stated: <strong>there is no hard word-count requirement</strong>. But actual data supports a correlation between content depth and rankings:</p>
+      <ul>
+        <li><strong>Blog posts</strong>: top-ranking pages median about 1000-1500 English words (~2000-3000 Chinese characters).</li>
+        <li><strong>Programmatic pages</strong> (like our tool pages): short text is fine, provided there's structured data (JSON-LD) and semantically clear titles.</li>
+        <li><strong>Guides/tutorials</strong>: being close to "the actual problem the reader wants to solve" matters more; word count is a signal, not a goal.</li>
+      </ul>
+      <p>Common mistakes:</p>
+      <ul>
+        <li><strong>Padding to hit a target</strong>: dilutes information density and actually lowers rankings. SEO cares about the "information per character" ratio, not raw character count.</li>
+        <li><strong>Reading English word count for Chinese content</strong>: severely underestimates depth.</li>
+        <li><strong>Skipping structured data</strong>: word count is fine but without JSON-LD, Google Rich Results can't recognize it — missed rich-snippet opportunity.</li>
+      </ul>
+      <p>Right approach: <strong>start from the problem the reader wants solved</strong>, then write at the genre's typical length; afterward, verify the word count actually covers the problem — don't reverse-engineer content from a word target.</p>
+
+      <h2 id="faq">FAQ</h2>
+      <div class="faq-item"><p class="faq-q">Q: What's the difference between characters and words?</p><p class="faq-a">A: Characters count each char (Chinese = 1 char per 汉字); words count runs of letters/digits (English word = 1 word). Chinese writing uses character count, English uses word count; mixed text needs both.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: Can reading speed really reach 400 chars/min?</p><p class="faq-a">A: Adult English reading averages 200-300 wpm, fast readers 400-500 wpm; Chinese reading at ~400 chars/min is a common estimate. Actual speed varies greatly by genre, complexity, and reader background.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: Is there a hard SEO word-count requirement?</p><p class="faq-a">A: No hard requirement. Google officially states no specific word count is required. Actual data shows top-ranking pages median around 1000-1500 words. Word count is only one signal of content depth.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: Does Chinese punctuation count toward word count?</p><p class="faq-a">A: Mainstream convention: Chinese punctuation counts toward "total characters" but not "Chinese character count", because punctuation is a symbol not a 汉字. English punctuation and spaces behave similarly.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: Which number should I target while writing?</p><p class="faq-a">A: Target character count for Chinese, word count for English, reading time for mixed text. Character/word count measures "quantity"; reading time measures "experience".</p></div>
+
+      <div class="cta-box">
+        <p class="cta-title">Free Character / Word / Sentence / Time Counter</p>
+        <p class="cta-sub">Auto-detects Chinese / English / Mixed · Reading &amp; speaking time estimates · 100% browser-local</p>
+        <a class="cta-btn" href="/text/char-count/">Open Word Counter →</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<div id="site-footer"></div>
+<script src="/assets/js/site.js" defer></script>
+</body>
+</html>

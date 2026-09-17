@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UUID 生成器 — 免费在线 v4/v1/v5 | CATAITO</title>
+<meta name="title-zh" content="UUID 生成器 — 免费在线 v4/v1/v5 | CATAITO">
+<meta name="title-en" content="UUID Generator — Free Online v4/v1/v5 | CATAITO">
+<meta name="description" content="免费在线 UUID 生成器：支持 v4（随机）、v1（时间）、v5（命名空间哈希），批量生成 1/10/100 个，大小写切换，一键复制或下载 .txt。使用 Web Crypto 和 SubtleCrypto，纯浏览器本地生成，绝不上传。">
+<meta name="theme-color" content="#f6f3ec">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="CATAITO 工具箱">
+<meta property="og:title" content="UUID 生成器 — 免费 v4/v1/v5">
+<meta property="og:description" content="批量生成 UUID，v4/v1/v5，纯本地处理。">
+<meta property="og:url" content="https://tools.cataito.com/text/uuid/">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:locale:alternate" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="UUID 生成器">
+<meta name="twitter:description" content="免费在线 UUID 生成，纯本地处理。">
+<link rel="icon" type="image/png" href="/assets/img/cataito-logo.png">
+<link rel="canonical" href="https://tools.cataito.com/text/uuid/">
+<link rel="stylesheet" href="/assets/css/site.css">
+<script src="/assets/js/theme-init.js"></script>
+<script>
+  (function () {
+    try {
+      var l = localStorage.getItem('cataito-lang');
+      document.documentElement.setAttribute('lang', (l === 'en') ? 'en' : 'zh-CN');
+    } catch (e) {}
+  })();
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "UUID Generator",
+  "alternateName": "UUID 生成器",
+  "applicationCategory": "DeveloperApplication",
+  "operatingSystem": "Any",
+  "url": "https://tools.cataito.com/text/uuid/",
+  "inLanguage": ["zh-CN", "en"],
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "description": "免费在线 UUID 生成器：v4/v1/v5，批量生成，大小写切换，一键复制或下载。纯浏览器本地处理。"
+}
+</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7103529190038161" crossorigin="anonymous"></script>
+</head>
+<body>
+<div id="site-header"></div>
+<main class="site-main">
+  <div class="t-head">
+    <nav class="breadcrumb"><a href="/" data-i18n="crumb_home">首页</a><span class="sep">/</span><span data-i18n="uu_name">UUID 生成器</span></nav>
+    <h1 class="page-h1" data-i18n="uu_name">UUID 生成器</h1>
+    <p class="page-sub" data-i18n="uu_desc">支持 v4 / v1 / v5 三种版本，批量生成 1/10/100 个，大小写切换，一键复制或下载 .txt。全部在浏览器本地生成，绝不上传。</p>
+  </div>
+
+  <section class="t-card t-flow">
+    <div class="t-block">
+      <div class="t-field">
+        <div class="t-label" data-i18n="uu_version_h">UUID 版本</div>
+        <div class="t-seg" id="uu-version">
+          <label class="t-seg-item"><input type="radio" name="uu-version" value="v4" checked><span data-i18n="uu_version_v4">v4 · 随机</span></label>
+          <label class="t-seg-item"><input type="radio" name="uu-version" value="v1"><span data-i18n="uu_version_v1">v1 · 时间</span></label>
+          <label class="t-seg-item"><input type="radio" name="uu-version" value="v5"><span data-i18n="uu_version_v5">v5 · 命名空间哈希</span></label>
+        </div>
+        <div class="t-hint" id="uu-version-tip" data-i18n="uu_version_v4_tip">加密级随机，推荐默认</div>
+      </div>
+
+      <div class="t-field" id="uu-v5-block" hidden>
+        <div class="t-label" data-i18n="uu_namespace_h">命名空间（仅 v5 生效）</div>
+        <div class="uu-ns-row">
+          <select id="uu-ns-preset" class="t-select">
+            <option value="6ba7b811-9dad-11d1-80b4-00c04fd430c8" data-i18n-label="uu_ns_url">URL</option>
+            <option value="6ba7b810-9dad-11d1-80b4-00c04fd430c8" data-i18n-label="uu_ns_dns">DNS</option>
+            <option value="6ba7b812-9dad-11d1-80b4-00c04fd430c8" data-i18n-label="uu_ns_ipv4">IPv4</option>
+            <option value="6ba7b814-9dad-11d1-80b4-00c04fd430c8" data-i18n-label="uu_ns_oid">OID</option>
+            <option value="__custom__" data-i18n-label="uu_ns_custom">自定义</option>
+          </select>
+          <input type="text" id="uu-ns-custom" class="t-input" placeholder="6ba7b811-9dad-11d1-80b4-00c04fd430c8" hidden>
+        </div>
+        <div class="t-label" style="margin-top:10px;" data-i18n="uu_name_input_h">名称</div>
+        <input type="text" id="uu-name" class="t-input" data-i18n-placeholder="uu_name_input_ph">
+      </div>
+    </div>
+
+    <div class="t-block">
+      <div class="uu-controls">
+        <div class="t-field">
+          <div class="t-label" data-i18n="uu_count_h">生成数量</div>
+          <div class="t-seg" id="uu-count">
+            <label class="t-seg-item"><input type="radio" name="uu-count" value="1" checked><span>1</span></label>
+            <label class="t-seg-item"><input type="radio" name="uu-count" value="10"><span>10</span></label>
+            <label class="t-seg-item"><input type="radio" name="uu-count" value="100"><span>100</span></label>
+          </div>
+        </div>
+        <div class="t-field">
+          <div class="t-label" data-i18n="uu_case_h">大小写</div>
+          <div class="t-seg" id="uu-case">
+            <label class="t-seg-item"><input type="radio" name="uu-case" value="lower" checked><span data-i18n="uu_case_lower">小写</span></label>
+            <label class="t-seg-item"><input type="radio" name="uu-case" value="upper"><span data-i18n="uu_case_upper">大写</span></label>
+          </div>
+        </div>
+        <button type="button" class="t-btn primary" id="uu-gen" data-i18n="uu_gen">生成 UUID</button>
+      </div>
+    </div>
+
+    <div class="t-block">
+      <div class="t-label">
+        <span data-i18n="uu_results_h">生成结果（点击任一条复制）</span>
+        <span class="uu-actions">
+          <button type="button" class="t-btn" id="uu-copy-all" data-i18n="uu_copy_all">复制全部</button>
+          <button type="button" class="t-btn" id="uu-download" data-i18n="uu_download">下载 .txt</button>
+        </span>
+      </div>
+      <div class="uu-list-wrap">
+        <ul class="uu-list" id="uu-list"></ul>
+        <p class="uu-count-label" id="uu-count-label" hidden></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="t-prose">
+    <h2 data-i18n="uu_how_h">怎么用</h2>
+    <ol class="t-steps">
+      <li data-i18n-html="uu_how_1"><strong>选版本</strong>：v4 纯随机（推荐日常使用）、v1 基于时间、v5 命名空间哈希（同一名称在同命名空间内恒等）。</li>
+      <li data-i18n-html="uu_how_2"><strong>设参数</strong>：v5 选择预设命名空间或输入自定义 UUID，并填写名称；也可切换生成数量（1/10/100）与大小写。</li>
+      <li data-i18n-html="uu_how_3"><strong>生成</strong>：点击「生成 UUID」，下方等宽字体列出所有结果。</li>
+      <li data-i18n-html="uu_how_4"><strong>复制使用</strong>：单条点击即复制到剪贴板；「复制全部」一次性复制所有，「下载 .txt」保存为纯文本文件。</li>
+    </ol>
+
+    <h2 data-i18n="uu_faq_h">常见问题</h2>
+    <div class="t-faq">
+      <div class="t-faq-item">
+        <p class="t-faq-q" data-i18n="uu_faq_1_q">UUID 是什么？</p>
+        <p class="t-faq-a" data-i18n="uu_faq_1_a">UUID（Universally Unique Identifier）是 128 位标识符，通常格式为 8-4-4-4-12 的十六进制字符串，理论上几乎不会碰撞。不同版本使用不同的生成方式：v1 基于时间，v4 基于随机数，v5 基于命名空间和名称的 SHA-1 哈希。</p>
+      </div>
+      <div class="t-faq-item">
+        <p class="t-faq-q" data-i18n="uu_faq_2_q">该用哪个版本？</p>
+        <p class="t-faq-a" data-i18n="uu_faq_2_a">绝大多数场景选 v4：加密级随机，简单可靠。v1 适合需要时间顺序的场景（但浏览器无法可靠读取 MAC，本工具用随机替代节点位）。v5 适合需要稳定标识的场景——例如根据文件名生成 UUID，同输入恒同输出。</p>
+      </div>
+      <div class="t-faq-item">
+        <p class="t-faq-q" data-i18n="uu_faq_3_q">UUID 会上传到服务器吗？</p>
+        <p class="t-faq-a" data-i18n="uu_faq_3_a">不会。所有生成都在你的浏览器本地完成：v4/v1 使用 Web Crypto API 的随机源，v5 使用 SubtleCrypto 的 SHA-1 摘要。不发生任何网络请求，页面关闭即无残留。</p>
+      </div>
+      <div class="t-faq-item">
+        <p class="t-faq-q" data-i18n="uu_faq_4_q">同一命名空间 + 同一名称生成的 v5 UUID 是否相同？</p>
+        <p class="t-faq-a" data-i18n="uu_faq_4_a">相同。v5 是确定性的哈希算法：只要命名空间 UUID 和名称字符串完全一致，任何时候任何设备生成的 UUID 都一样，可用于跨服务对同一实体做稳定标识。</p>
+      </div>
+    </div>
+
+    <h2 data-i18n="related_guides">相关指南</h2>
+    <div class="t-guide-links">
+      <a class="t-guide-link" href="/password/">
+        <p class="t-guide-link-title" data-i18n="pw_name">密码生成器</p>
+        <p class="t-guide-link-desc" data-i18n="pw_desc">自定义长度与字符集，一键生成高强度随机密码。加密级随机源，纯浏览器本地生成，绝不上传。</p>
+      </a>
+    </div>
+  </section>
+</main>
+
+<div id="site-footer"></div>
+<div id="uu-toast" class="t-toast">
+  <span class="t-toast-ic">
+    <svg class="ic-ok" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+    <svg class="ic-err" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+  </span>
+  <span class="t-toast-title"></span>
+</div>
+
+<script src="/assets/js/site.js" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+(function () {
+  'use strict';
+  var t = function (k, vars) { return (window.CATAITO_I18N && window.CATAITO_I18N.t) ? window.CATAITO_I18N.t(k, vars) : k; };
+
+  var versionEl = document.getElementById('uu-version');
+  var v5Block = document.getElementById('uu-v5-block');
+  var versionTip = document.getElementById('uu-version-tip');
+  var nsPreset = document.getElementById('uu-ns-preset');
+  var nsCustom = document.getElementById('uu-ns-custom');
+  var nameEl = document.getElementById('uu-name');
+  var countEl = document.getElementById('uu-count');
+  var caseEl = document.getElementById('uu-case');
+  var genBtn = document.getElementById('uu-gen');
+  var copyAllBtn = document.getElementById('uu-copy-all');
+  var dlBtn = document.getElementById('uu-download');
+  var listEl = document.getElementById('uu-list');
+  var countLabel = document.getElementById('uu-count-label');
+
+  var VERSION_TIPS = {
+    v4: 'uu_version_v4_tip',
+    v1: 'uu_version_v1_tip',
+    v5: 'uu_version_v5_tip'
+  };
+
+  var NS_UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+  /* ---------- 均匀随机整数 [0, max)：拒绝采样 ---------- */
+  function randIndex(max) {
+    for (;;) {
+      var buf = new Uint32Array(1);
+      crypto.getRandomValues(buf);
+      var x = buf[0] / 4294967296;
+      var idx = Math.floor(x * max);
+      if (idx >= 0 && idx < max) return idx;
+    }
+  }
+
+  function hex(n) {
+    var out = '';
+    for (var i = 0; i < n; i++) {
+      out += '0123456789abcdef'.charAt(randIndex(16));
+    }
+    return out;
+  }
+
+  /* ---------- v4：全随机，version 位=4，variant 位=1xxxxx ---------- */
+  function genV4() {
+    return hex(8) + '-' + hex(4) + '-4' + hex(3) + '-1' + hex(3) + '-' + hex(12);
+  }
+
+  /* ---------- v1：时间戳 + 随机 clock_seq/node ---------- */
+  function genV1() {
+    var timeLow = Date.now();
+    // 60-bit timestamp, 取当前时间低 32 位 + 上 8 位
+    var t = Date.now();
+    var timeLowHex = (t & 0xFFFFFFFF).toString(16).padStart(8, '0');
+    var timeMidHex = ((t >>> 32) & 0xFFF).toString(16).padStart(4, '0');
+    var timeHiHex = hex(2) + '1'; // version 位=1
+    var clockHex = hex(2);
+    var nodeHex = hex(2) + '00'; // variant 位=10xxx
+    var nodeRest = hex(10);
+    return timeLowHex + '-' + timeMidHex + '-' + timeHiHex + '-' + clockHex + nodeHex + '-' + nodeRest;
+  }
+
+  /* ---------- v5：SHA-1(namespace || name) 前 16 字节 ---------- */
+  async function genV5(namespace, name) {
+    var enc = new TextEncoder();
+    var nsBytes = hexToBytes(namespace);
+    var nameBytes = enc.encode(name);
+    var data = new Uint8Array(nsBytes.length + nameBytes.length);
+    data.set(nsBytes, 0);
+    data.set(nameBytes, nsBytes.length);
+    var hash = new Uint8Array(await crypto.subtle.digest('SHA-1', data));
+    // 取前 16 字节，设置 version=5, variant=1xxx
+    hash[6] = (hash[6] & 0x0F) | 0x50;
+    hash[8] = (hash[8] & 0x3F) | 0x80;
+    var h = '';
+    for (var i = 0; i < 16; i++) h += hash[i].toString(16).padStart(2, '0');
+    return h.slice(0, 8) + '-' + h.slice(8, 12) + '-' + h.slice(12, 16) + '-' + h.slice(16, 20) + '-' + h.slice(20, 32);
+  }
+
+  function hexToBytes(s) {
+    var clean = s.replace(/-/g, '');
+    if (clean.length !== 32) return null;
+    var out = new Uint8Array(16);
+    for (var i = 0; i < 16; i++) {
+      out[i] = parseInt(clean.substr(i * 2, 2), 16);
+    }
+    return out;
+  }
+
+  /* ---------- 状态读取 ---------- */
+  function getVersion() {
+    return (versionEl.querySelector('input:checked') || {}).value || 'v4';
+  }
+  function getCount() {
+    return parseInt((countEl.querySelector('input:checked') || {}).value, 10) || 1;
+  }
+  function getCase() {
+    return (caseEl.querySelector('input:checked') || {}).value || 'lower';
+  }
+
+  /* ---------- Toast ---------- */
+  var toastTimer = null;
+  function showToast(msg, isErr) {
+    var el = document.getElementById('uu-toast');
+    el.querySelector('.t-toast-title').textContent = msg;
+    el.classList.toggle('error', !!isErr);
+    el.classList.add('show');
+    if (toastTimer) clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { el.classList.remove('show'); }, 2400);
+  }
+
+  function copyText(text) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function () {
+        showToast(t('uu_toast_copied'));
+      }, function () { fallbackCopy(text); });
+    } else fallbackCopy(text);
+  }
+  function fallbackCopy(txt) {
+    var ta = document.createElement('textarea');
+    ta.value = txt;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand('copy'); showToast(t('uu_toast_copied')); }
+    catch (e) { showToast(t('uu_toast_copy_fail'), true); }
+    ta.remove();
+  }
+
+  /* ---------- 渲染列表 ---------- */
+  function renderList(items) {
+    listEl.textContent = '';
+    var frag = document.createDocumentFragment();
+    for (var i = 0; i < items.length; i++) {
+      var li = document.createElement('li');
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'uu-item';
+      btn.textContent = items[i];
+      btn.setAttribute('data-idx', i);
+      li.appendChild(btn);
+      frag.appendChild(li);
+    }
+    listEl.appendChild(frag);
+    countLabel.textContent = t('uu_count_label', { n: items.length });
+    countLabel.hidden = false;
+  }
+
+  /* ---------- 生成 ---------- */
+  async function generate() {
+    var version = getVersion();
+    var count = getCount();
+    var useUpper = getCase() === 'upper';
+    var items = [];
+
+    if (version === 'v5') {
+      var nsValue;
+      if (nsPreset.value === '__custom__') {
+        nsValue = nsCustom.value.trim();
+      } else {
+        nsValue = nsPreset.value;
+      }
+      if (!nsValue || !NS_UUID_RE.test(nsValue)) {
+        showToast(t('uu_toast_invalid_ns'), true);
+        return;
+      }
+      var name = nameEl.value.trim();
+      if (!name) {
+        showToast(t('uu_toast_name_empty'), true);
+        return;
+      }
+      // v5 是确定性的，同一输入恒同输出——只生成 1 个
+      try {
+        var v5 = await genV5(nsValue, name);
+        items.push(useUpper ? v5.toUpperCase() : v5.toLowerCase());
+      } catch (e) {
+        showToast(t('uu_toast_copy_fail'), true);
+        return;
+      }
+    } else {
+      for (var i = 0; i < count; i++) {
+        var u = (version === 'v1') ? genV1() : genV4();
+        items.push(useUpper ? u.toUpperCase() : u);
+      }
+    }
+    renderList(items);
+  }
+
+  /* ---------- 复制全部 / 下载 ---------- */
+  function collectItems() {
+    return Array.prototype.map.call(listEl.querySelectorAll('.uu-item'), function (el) {
+      return el.textContent;
+    });
+  }
+
+  function copyAll() {
+    var items = collectItems();
+    if (!items.length) return;
+    var txt = items.join('\n');
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(txt).then(function () {
+        if (items.length === 1) showToast(t('uu_toast_copied'));
+        else showToast(t('uu_toast_copy_all', { n: items.length }));
+      }, function () { fallbackCopy(txt); });
+    } else fallbackCopy(txt);
+  }
+
+  function download() {
+    var items = collectItems();
+    if (!items.length) return;
+    var blob = new Blob([items.join('\n') + '\n'], { type: 'text/plain;charset=utf-8' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = 'uuids.txt';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(function () { URL.revokeObjectURL(url); }, 500);
+    showToast(t('uu_toast_dl_done'));
+  }
+
+  /* ---------- 事件绑定 ---------- */
+  versionEl.addEventListener('change', function () {
+    var v = getVersion();
+    v5Block.hidden = (v !== 'v5');
+    versionTip.textContent = t(VERSION_TIPS[v] || 'uu_version_v4_tip');
+  });
+  nsPreset.addEventListener('change', function () {
+    nsCustom.hidden = (nsPreset.value !== '__custom__');
+  });
+  genBtn.addEventListener('click', generate);
+  copyAllBtn.addEventListener('click', copyAll);
+  dlBtn.addEventListener('click', download);
+  listEl.addEventListener('click', function (e) {
+    var btn = e.target.closest('.uu-item');
+    if (!btn) return;
+    copyText(btn.textContent);
+  });
+  document.addEventListener('cataito-lang-change', function () {
+    versionTip.textContent = t(VERSION_TIPS[getVersion()] || 'uu_version_v4_tip');
+  });
+
+  // 首屏：生成 1 个 v4
+  generate();
+})();
+});
+</script>
+
+<style>
+  /* 本页专属规则；通用组件复用 site.css 的 .t-* 共享组件层 */
+  .uu-controls {
+    display: flex; gap: 20px; flex-wrap: wrap; align-items: flex-end;
+  }
+  .uu-controls .t-field { margin: 0; }
+  .uu-controls .t-btn { margin: 0; align-self: flex-end; }
+  .uu-ns-row { display: flex; gap: 8px; flex-wrap: wrap; }
+  .uu-ns-row .t-select { flex: 1 1 200px; }
+  .uu-ns-row .t-input { flex: 2 1 320px; }
+  .uu-actions { margin-left: 10px; display: inline-flex; gap: 6px; }
+  .uu-list-wrap {
+    margin-top: 12px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: var(--card-2);
+    padding: 12px;
+    max-height: 320px;
+    overflow-y: auto;
+  }
+  .uu-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px; }
+  .uu-item {
+    display: block; width: 100%; text-align: left; cursor: pointer;
+    padding: 8px 12px;
+    border: 1px solid transparent;
+    border-radius: var(--radius-sm);
+    background: transparent;
+    color: var(--text);
+    font-family: var(--font-mono);
+    font-size: 13.5px;
+    letter-spacing: .02em;
+    word-break: break-all;
+    transition: background .15s, border-color .15s;
+  }
+  .uu-item:hover { background: var(--card); border-color: var(--border); }
+  .uu-item:active { background: var(--accent-soft-2); }
+  .uu-count-label {
+    margin: 8px 0 0;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-3);
+    text-align: right;
+  }
+</style>
+</body>
+</html>

@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JSON 入门与实用技巧：语法、常见错误与工具使用 | CATAITO</title>
+<meta name="title-zh" content="JSON 入门与实用技巧：语法、常见错误与工具使用 | CATAITO">
+<meta name="title-en" content="JSON: Basics and Practical Tips | CATAITO">
+<meta name="description" content="JSON 完整指南：RFC 8259 语法规范、与 YAML/TOML/CSV 的对比、常见语法错误排查（尾随逗号/单引号/未加引号键）、与 JavaScript 对象的区别、性能考量与工具使用建议。附免费在线 JSON 格式化器，纯浏览器本地处理。">
+<meta name="theme-color" content="#f6f3ec">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="CATAITO 工具箱">
+<meta property="og:title" content="JSON 入门与实用技巧：语法、常见错误与工具使用">
+<meta property="og:description" content="RFC 8259 规范、与 YAML/TOML/CSV 对比、常见错误排查与工具使用建议。附免费本地 JSON 格式化器。">
+<meta property="og:url" content="https://tools.cataito.com/guides/json-guide/">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:locale:alternate" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="JSON 入门与实用技巧">
+<meta name="twitter:description" content="RFC 8259 规范、与 YAML/TOML/CSV 对比、常见错误排查与工具使用建议。">
+<link rel="canonical" href="https://tools.cataito.com/guides/json-guide/">
+<link rel="icon" type="image/png" href="/assets/img/cataito-logo.png">
+<link rel="stylesheet" href="/assets/css/site.css">
+<script src="/assets/js/theme-init.js"></script>
+<script>
+  (function () {
+    try {
+      var l = localStorage.getItem('cataito-lang');
+      document.documentElement.setAttribute('lang', (l === 'en') ? 'en' : 'zh-CN');
+      if (l === 'en') document.documentElement.classList.add('lang-en');
+    } catch (e) {}
+  })();
+</script>
+<style>
+  /* ============ 指南页排版（与其他指南页保持一致） ============ */
+  .guide-wrap { max-width: 760px; margin: 0; }
+  .guide-meta { font-size: 13px; color: var(--text-3); margin: 0 0 6px; }
+  .page-sub { margin-bottom: 10px; }
+  .article { font-size: 15px; line-height: 1.85; color: var(--text); }
+  .article h2 {
+    font-size: 21px; font-weight: 700; letter-spacing: -.3px;
+    margin: 44px 0 14px; padding-top: 16px; border-top: 1px solid var(--border); color: var(--text);
+  }
+  .article h3 { font-size: 16.5px; font-weight: 650; margin: 26px 0 10px; color: var(--text); }
+  .article p { margin: 0 0 14px; color: var(--text-2); }
+  .article strong { color: var(--text); font-weight: 650; }
+  .article a { color: var(--accent); text-decoration: none; }
+  .article a:hover { text-decoration: underline; }
+  .article ul, .article ol { margin: 0 0 16px; padding-left: 22px; color: var(--text-2); }
+  .article li { margin: 6px 0; }
+  .article code {
+    font-family: var(--font-mono);
+    font-size: 13px; background: var(--card-2); border: 1px solid var(--border);
+    border-radius: 3px; padding: 1px 6px; color: var(--text);
+  }
+  .article pre {
+    background: var(--card-2); border: 1px solid var(--border); border-radius: var(--radius-sm);
+    padding: 14px 16px; margin: 14px 0 18px; overflow-x: auto;
+  }
+  .article pre code { background: none; border: none; padding: 0; font-size: 12.5px; line-height: 1.7; }
+  .article table {
+    width: 100%; border-collapse: collapse; margin: 18px 0 22px;
+    font-size: 13.5px; background: var(--card);
+    border: 1px solid var(--border); border-radius: var(--radius-sm); overflow: hidden;
+  }
+  .article th, .article td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--border); }
+  .article th { background: var(--card-2); color: var(--text); font-weight: 650; white-space: nowrap; }
+  .article td { color: var(--text-2); }
+  .article tr:last-child td { border-bottom: none; }
+  .toc {
+    background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 16px 18px; margin: 20px 0 8px; box-shadow: var(--shadow-sm);
+  }
+  .toc-title { font-size: 13px; font-weight: 650; color: var(--text); margin: 0 0 10px; }
+  .toc ol { margin: 0; padding-left: 20px; font-size: 13.5px; }
+  .toc li { margin: 5px 0; }
+  .toc a { color: var(--text-2); text-decoration: none; }
+  .toc a:hover { color: var(--accent); }
+  .cta-box {
+    background: linear-gradient(135deg, var(--accent-soft), var(--accent-soft-2));
+    border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent); border-radius: var(--radius);
+    padding: 20px 22px; margin: 34px 0 10px; text-align: center;
+  }
+  .cta-box .cta-title { font-size: 17px; font-weight: 700; color: var(--text); margin: 0 0 6px; }
+  .cta-box .cta-sub { font-size: 13.5px; color: var(--text-2); margin: 0 0 14px; }
+  .cta-btn {
+    display: inline-block; background: var(--accent); color: #fff; text-decoration: none;
+    font-size: 14px; font-weight: 600; padding: 11px 26px; border-radius: var(--radius-sm);
+    box-shadow: 0 6px 18px var(--accent-glow); transition: background .15s;
+  }
+  .cta-btn:hover { background: var(--accent-hover); }
+  .article a.cta-btn, .article .cta-btn { color: #fff; text-decoration: none; }
+  .article a.cta-btn:hover { color: #fff; text-decoration: none; background: var(--accent-hover); }
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "JSON 入门与实用技巧：语法、常见错误与工具使用",
+  "description": "详解 JSON 的 RFC 8259 语法规范、与 YAML/TOML/CSV 的对比、常见语法错误排查、与 JavaScript 对象的区别、性能考量与工具使用建议。",
+  "inLanguage": "zh-CN",
+  "datePublished": "2026-09-17",
+  "dateModified": "2026-09-17",
+  "author": { "@type": "Organization", "name": "CATAITO", "url": "https://tools.cataito.com/" },
+  "publisher": { "@type": "Organization", "name": "CATAITO 工具箱", "url": "https://tools.cataito.com/" },
+  "mainEntityOfPage": "https://tools.cataito.com/guides/json-guide/"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "JSON 和 JavaScript 对象有什么区别？",
+      "acceptedAnswer": { "@type": "Answer", "text": "JSON 是 RFC 8259 定义的数据格式，JavaScript 对象是 JS 语言内的数据结构。两者在语法上严格区分：JSON 要求键必须用双引号包裹，不允许尾随逗号、单引号字符串、注释或未加引号的键；而 JavaScript 对象字面量允许这些形式。JSON.parse 只接受严格 JSON，不会接受 JS 对象字面量。" }
+    },
+    {
+      "@type": "Question",
+      "name": "JSON 支持哪些数据类型？",
+      "acceptedAnswer": { "@type": "Answer", "text": "RFC 8259 定义 7 种：对象（object，键值对）、数组（array，有序值列表）、字符串（string，UTF-8 编码）、数字（number，整数或浮点，无符号）、布尔（boolean，true/false）、null。没有 undefined、函数、Date、Map 或 Set 类型；需要表达这些概念时，必须用约定编码方式表达。" }
+    },
+    {
+      "@type": "Question",
+      "name": "JSON 键的顺序有保证吗？",
+      "acceptedAnswer": { "@type": "Answer", "text": "RFC 8259 明确规定对象中的成员是无序的：解析器可以重排键的顺序，序列化工具也可以按不同顺序输出。实际实现中，多数现代引擎会保留插入顺序（如 V8、SpiderMonkey），但这不是规范保证，不能依赖。若需要有序结构，用数组而不是对象。" }
+    },
+    {
+      "@type": "Question",
+      "name": "JSON 文件大小有限制吗？",
+      "acceptedAnswer": { "@type": "Answer", "text": "RFC 8259 本身不设上限，限制来自实现方：浏览器 JSON.parse 通常能处理到 50MB 级；HTTP 传输受服务器请求体限制（Nginx 默认 1MB，需手动调）；REST API 常见限 1-10MB。真要传大文件用流式解析（如 JSON Lines，一行一个对象）。" }
+    },
+    {
+      "@type": "Question",
+      "name": "JSON 能直接表示时间戳、日期、二进制吗？",
+      "acceptedAnswer": { "@type": "Answer", "text": "不能。JSON 没有 Date 或 Binary 类型。约定做法：时间用 ISO 8601 字符串（如 2026-09-17T08:30:00Z）、毫秒时间戳数字、Unix 时间戳秒；二进制用 Base64 字符串加 MIME 类型标注。这些都是应用层约定，JSON 规范本身不定义。" }
+    },
+    {
+      "@type": "Question",
+      "name": "什么时候该用 YAML/TOML 而不是 JSON？",
+      "acceptedAnswer": { "@type": "Answer", "text": "YAML/TOML 面向「人读人写」的配置场景：YAML 支持注释、锚点/引用、多文档；TOML 语法更严、类型更明确。JSON 面向「机器对机器」的数据交换：几乎所有语言都有原生支持、无解析歧义。配置用 YAML/TOML，接口/存储/日志用 JSON。" }
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "首页", "item": "https://tools.cataito.com/" },
+    { "@type": "ListItem", "position": 2, "name": "使用指南", "item": "https://tools.cataito.com/guides/" },
+    { "@type": "ListItem", "position": 3, "name": "JSON 入门与实用技巧", "item": "https://tools.cataito.com/guides/json-guide/" }
+  ]
+}
+</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7103529190038161" crossorigin="anonymous"></script>
+</head>
+<body>
+<div id="site-header"></div>
+
+<main class="site-main">
+  <div class="guide-wrap">
+    <nav class="breadcrumb"><a href="/" data-i18n="crumb_home">首页</a><span class="sep">/</span><a href="/guides/" data-i18n="nav_guides">使用指南</a><span class="sep">/</span><span data-i18n="gd_json_short">JSON 入门</span></nav>
+    <p class="guide-meta"><span data-i18n="gd_published">发布于</span> 2026-09-17 · CATAITO</p>
+    <h1 class="page-h1" data-i18n="gd_json_h1">JSON 入门与实用技巧</h1>
+    <p class="page-sub" data-i18n="gd_json_sub">从语法规范到常见错误排查，再到 YAML/TOML/CSV 的取舍。附免费在线 JSON 格式化器。</p>
+
+    <!-- ================= 中文正文 ================= -->
+    <div class="article lb-zh">
+      <div class="toc">
+        <p class="toc-title">目录</p>
+        <ol>
+          <li><a href="#what-is-json">JSON 是什么</a></li>
+          <li><a href="#types">支持的数据类型</a></li>
+          <li><a href="#common-errors">常见语法错误</a></li>
+          <li><a href="#vs-js">与 JavaScript 对象的区别</a></li>
+          <li><a href="#vs-others">与 YAML / TOML / CSV 对比</a></li>
+          <li><a href="#pitfalls">实用技巧与坑</a></li>
+          <li><a href="#faq">常见问题</a></li>
+        </ol>
+      </div>
+
+      <h2 id="what-is-json">JSON 是什么</h2>
+      <p>JSON（JavaScript Object Notation）是 <a href="https://www.rfc-editor.org/rfc/rfc8259" target="_blank" rel="noopener">RFC 8259</a> 定义的一种轻量级数据交换格式。它的核心优势是<strong>几乎所有现代语言都有原生支持</strong>——JavaScript、Python、Java、Go、Rust、Swift……都能一行代码解析或序列化。</p>
+      <p>典型结构长这样：</p>
+      <pre><code>{
+  "name": "CATAITO",
+  "tools": 16,
+  "free": true,
+  "tags": ["web", "privacy"],
+  "nested": { "localOnly": true }
+}</code></pre>
+      <p>JSON 不是 JSONP、不是 JavaScript、不是任何编程语言。它是一种<strong>格式</strong>，跟 HTML、XML 同属数据交换的「语法规则」，本身不含逻辑。这也意味着，只要遵守这套规则，任何两个实现之间的数据都能互换。</p>
+
+      <h2 id="types">支持的数据类型</h2>
+      <p>JSON 只认 7 种类型，比 JavaScript 少得多：</p>
+      <table>
+        <thead><tr><th>类型</th><th>示例</th><th>说明</th></tr></thead>
+        <tbody>
+          <tr><td>object</td><td><code>{"k": "v"}</code></td><td>无序键值对，键必须是字符串</td></tr>
+          <tr><td>array</td><td><code>[1, 2, 3]</code></td><td>有序值列表</td></tr>
+          <tr><td>string</td><td><code>"hello"</code></td><td>UTF-8 编码，必须用双引号</td></tr>
+          <tr><td>number</td><td><code>42</code> / <code>-3.14</code></td><td>整数或浮点，无符号</td></tr>
+          <tr><td>boolean</td><td><code>true</code> / <code>false</code></td><td>只有两个值</td></tr>
+          <tr><td>null</td><td><code>null</code></td><td>显式的「空值」</td></tr>
+          <tr><td colspan="3"><em>不支持</em>：undefined、function、Date、Map、Set、RegExp、Symbol</td></tr>
+        </tbody>
+      </table>
+      <p>没有 Date 类型是很多人踩的第一个坑：<code>new Date()</code> 在 JS 里是原生对象，但 <code>JSON.stringify(new Date())</code> 会输出 ISO 字符串（因为 Date.prototype.toJSON 被覆盖了）。反过来，<code>JSON.parse</code> 遇到 ISO 字符串不会自动还原成 Date，需要应用层自己做转换。</p>
+
+      <h2 id="common-errors">常见语法错误</h2>
+      <p>JSON 解析报错时，90% 是以下几种： 用本站 <a href="/text/json/">JSON 格式化器</a> 可以直接看到错误位置和原因。</p>
+      <ol class="t-steps">
+        <li><strong>尾随逗号</strong>：<code>[1, 2, 3,]</code> 或 <code>{"a": 1,}</code> 都不合法。Python/JS 允许，JSON 不允许。</li>
+        <li><strong>单引号字符串</strong>：<code>{"name": 'Alice'}</code> 不合法。JSON 只认双引号。</li>
+        <li><strong>未加引号的键</strong>：<code>{name: "Alice"}</code> 不合法。JS 对象字面量允许，JSON 不允许。</li>
+        <li><strong>注释</strong>：<code>{"a": 1 /* comment */}</code> 不合法。JSON 没有注释语法。</li>
+        <li><strong>undefined / NaN</strong>：<code>{"a": undefined}</code> 或 <code>{"a": NaN}</code> 不合法。要表达「无值」用 <code>null</code>。</li>
+        <li><strong>引号嵌套未转义</strong>：<code>"say "hi""</code> 会解析失败。内层双引号必须写成 <code>"say \"hi\""</code>。</li>
+      </ol>
+
+      <h2 id="vs-js">与 JavaScript 对象的区别</h2>
+      <p>「JSON 就是 JS 对象」是常见误解。它们在语法上严格区分：</p>
+      <table>
+        <thead><tr><th>方面</th><th>JSON</th><th>JS 对象字面量</th></tr></thead>
+        <tbody>
+          <tr><td>键的引号</td><td>必须双引号 <code>"a"</code></td><td>可省略 <code>a</code>，或单/双引号</td></tr>
+          <tr><td>尾随逗号</td><td>禁止</td><td>允许</td></tr>
+          <tr><td>注释</td><td>禁止</td><td>允许 <code>//</code> / <code>/* */</code></td></tr>
+          <tr><td>键类型</td><td>只能字符串</td><td>可任意值（会被转字符串）</td></tr>
+          <tr><td>值类型</td><td>7 种标准类型</td><td>任意 JS 值，含函数、undefined</td></tr>
+          <tr><td>解析器</td><td><code>JSON.parse()</code></td><td><code>eval()</code>（危险）或不需解析</td></tr>
+        </tbody>
+      </table>
+      <p>所以从 JS 对象生成 JSON，必须走 <code>JSON.stringify(obj)</code>，不能直接把对象字面量当字符串塞进 HTTP 响应。反过来，从 JSON 字符串恢复成 JS 对象，必须走 <code>JSON.parse(str)</code>，不要用 <code>eval()</code>——后者能执行任意代码，是安全漏洞。</p>
+
+      <h2 id="vs-others">与 YAML / TOML / CSV 对比</h2>
+      <p>四种常见的数据格式，适用场景不同：</p>
+      <table>
+        <thead><tr><th>格式</th><th>定位</th><th>优势</th><th>劣势</th></tr></thead>
+        <tbody>
+          <tr><td>JSON</td><td>机器对机器</td><td>原生支持广泛、无歧义、生态成熟</td><td>无注释、无引用、人写易错</td></tr>
+          <tr><td>YAML</td><td>人写配置</td><td>语法简洁、支持注释/锚点/多文档</td><td>解析歧义多、缩进敏感</td></tr>
+          <tr><td>TOML</td><td>严格配置</td><td>语法严、类型明确、语法糖少</td><td>嵌套深时冗长、生态弱于 YAML</td></tr>
+          <tr><td>CSV</td><td>表格数据</td><td>极简、任何表格软件都能读</td><td>无嵌套、无类型、易解析出错</td></tr>
+        </tbody>
+      </table>
+      <p>选择原则：<strong>接口、日志、存储用 JSON</strong>；<strong>配置文件用 YAML 或 TOML</strong>（YAML 生态更成熟，TOML 语法更严格）；<strong>纯表格数据用 CSV</strong>。混用是常见错误——比如把 CSV 当配置存下来，遇到字段里有逗号、换行符、引号就会崩。</p>
+
+      <h2 id="pitfalls">实用技巧与坑</h2>
+      <h3>转义与编码</h3>
+      <p>JSON 字符串里，<code>"</code>、<code>\</code>、控制字符（<code>\n</code>、<code>\t</code>、<code>\r</code>）必须转义；非 ASCII 字符可以用 UTF-8 直接写，也可以用 <code>\uXXXX</code> 表示。中文一般直接写 UTF-8 就好，除非目标环境不支持 UTF-8。</p>
+      <h3>大文件与流式</h3>
+      <p>单次 <code>JSON.parse</code> 一个 50MB 的文件会卡死主线程。大数据场景用<strong>流式解析</strong>：JSON Lines（一行一个 JSON 对象，逐行 parse）是常见做法，Kafka、Elasticsearch 等都用这个格式。</p>
+      <h3>序列化时的 undefined 陷阱</h3>
+      <p><code>JSON.stringify({a: undefined, b: null, c: 1})</code> 输出 <code>{"b":null,"c":1}</code>——<code>undefined</code> 字段会被静默丢弃，<code>null</code> 会保留。如果你依赖「缺字段」和「字段为 null」的语义区分，要格外小心。</p>
+      <h3>数字精度</h3>
+      <p>JSON number 没有整数/浮点区分。JS 的 number 是 64-bit IEEE 754，超过 <code>2^53</code> 会丢精度。处理雪花 ID、雪花 ID 变体或任意精度数字时，建议序列化为字符串：</p>
+      <pre><code>{"id": "12345678901234567890"}  // 字符串，安全
+{"id": 12345678901234567890}   // 数字，可能变成 12345678901234567000</code></pre>
+      <h3>校验 schema</h3>
+      <p>JSON 规范只管语法，不管结构。要校验「某个 JSON 是否符合约定结构」，用 <a href="https://json-schema.org" target="_blank" rel="noopener">JSON Schema</a> 或运行时库（如 Python 的 <code>pydantic</code>、JS 的 <code>zod</code>）。这是生产环境必备的防御层。</p>
+
+      <h2 id="faq">常见问题</h2>
+      <div class="faq-item"><p class="faq-q">Q：JSON 和 JavaScript 对象有什么区别？</p><p class="faq-a">A：JSON 是 RFC 8259 定义的数据格式，JavaScript 对象是 JS 语言内的数据结构。JSON 要求键必须用双引号包裹，不允许尾随逗号、单引号字符串、注释或未加引号的键；JavaScript 对象字面量允许这些形式。JSON.parse 只接受严格 JSON。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：JSON 支持哪些数据类型？</p><p class="faq-a">A：RFC 8259 定义 7 种：对象、数组、字符串、数字、布尔、null。没有 undefined、函数、Date、Map 或 Set 类型。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：JSON 键的顺序有保证吗？</p><p class="faq-a">A：规范明确对象成员无序，解析器可以重排。实际引擎多数保留插入顺序，但不是规范保证，不能依赖。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：JSON 文件大小有限制吗？</p><p class="faq-a">A：RFC 本身不设上限，限制来自实现方。浏览器 JSON.parse 通常能处理到 50MB 级；HTTP 传输受服务器请求体限制（Nginx 默认 1MB）；REST API 常见限 1-10MB。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：JSON 能直接表示时间戳、日期、二进制吗？</p><p class="faq-a">A：不能。约定做法：时间用 ISO 8601 字符串或时间戳数字；二进制用 Base64 字符串加 MIME 类型标注。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：什么时候该用 YAML/TOML 而不是 JSON？</p><p class="faq-a">A：YAML/TOML 面向「人读人写」的配置场景；JSON 面向「机器对机器」的数据交换。配置用 YAML/TOML，接口/存储/日志用 JSON。</p></div>
+
+      <div class="cta-box">
+        <p class="cta-title">免费格式化 / 校验 / 压缩 JSON</p>
+        <p class="cta-sub">粘贴即校验 · 缩进 2/4/Tab 可选 · 错误定位到行列 · 纯浏览器本地处理</p>
+        <a class="cta-btn" href="/text/json/">打开 JSON 格式化器 →</a>
+      </div>
+    </div>
+
+    <!-- ================= English body ================= -->
+    <div class="article lb-en">
+      <div class="toc">
+        <p class="toc-title">Table of Contents</p>
+        <ol>
+          <li><a href="#what-is-json">What JSON Is</a></li>
+          <li><a href="#types">Supported Data Types</a></li>
+          <li><a href="#common-errors">Common Syntax Errors</a></li>
+          <li><a href="#vs-js">JSON vs JavaScript Objects</a></li>
+          <li><a href="#vs-others">JSON vs YAML / TOML / CSV</a></li>
+          <li><a href="#pitfalls">Practical Tips &amp; Gotchas</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ol>
+      </div>
+
+      <h2 id="what-is-json">What JSON Is</h2>
+      <p>JSON (JavaScript Object Notation) is a lightweight data-exchange format defined by <a href="https://www.rfc-editor.org/rfc/rfc8259" target="_blank" rel="noopener">RFC 8259</a>. Its core advantage: nearly every modern language has native support — JavaScript, Python, Java, Go, Rust, Swift all parse and serialize it in one line.</p>
+      <p>Typical structure:</p>
+      <pre><code>{
+  "name": "CATAITO",
+  "tools": 16,
+  "free": true,
+  "tags": ["web", "privacy"],
+  "nested": { "localOnly": true }
+}</code></pre>
+      <p>JSON is not JSONP, not JavaScript, not any programming language. It's a <strong>format</strong> — a grammar of data exchange, parallel to HTML and XML — with no logic of its own. As long as both sides follow the rules, data interoperates.</p>
+
+      <h2 id="types">Supported Data Types</h2>
+      <p>JSON knows only seven types, far fewer than JavaScript:</p>
+      <table>
+        <thead><tr><th>Type</th><th>Example</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>object</td><td><code>{"k": "v"}</code></td><td>Unordered key-value pairs; keys must be strings</td></tr>
+          <tr><td>array</td><td><code>[1, 2, 3]</code></td><td>Ordered list of values</td></tr>
+          <tr><td>string</td><td><code>"hello"</code></td><td>UTF-8 encoded, must use double quotes</td></tr>
+          <tr><td>number</td><td><code>42</code> / <code>-3.14</code></td><td>Integer or float, no sign</td></tr>
+          <tr><td>boolean</td><td><code>true</code> / <code>false</code></td><td>Two values only</td></tr>
+          <tr><td>null</td><td><code>null</code></td><td>Explicit "no value"</td></tr>
+          <tr><td colspan="3"><em>Not supported</em>: undefined, function, Date, Map, Set, RegExp, Symbol</td></tr>
+        </tbody>
+      </table>
+      <p>The absence of Date is a common first stumble: <code>new Date()</code> is a native object in JS, but <code>JSON.stringify(new Date())</code> outputs an ISO string (because Date.prototype.toJSON is overridden). Conversely, <code>JSON.parse</code> given an ISO string does not restore a Date; your application must convert it.</p>
+
+      <h2 id="common-errors">Common Syntax Errors</h2>
+      <p>When JSON parsing fails, 90% of the time it's one of the following. Use the <a href="/text/json/">JSON Formatter</a> to see error positions and reasons.</p>
+      <ol class="t-steps">
+        <li><strong>Trailing commas</strong>: <code>[1, 2, 3,]</code> or <code>{"a": 1,}</code> are invalid. Python/JS allow them, JSON does not.</li>
+        <li><strong>Single-quoted strings</strong>: <code>{"name": 'Alice'}</code> is invalid. JSON only accepts double quotes.</li>
+        <li><strong>Unquoted keys</strong>: <code>{name: "Alice"}</code> is invalid. JS object literals allow it, JSON does not.</li>
+        <li><strong>Comments</strong>: <code>{"a": 1 /* comment */}</code> is invalid. JSON has no comment syntax.</li>
+        <li><strong>undefined / NaN</strong>: <code>{"a": undefined}</code> or <code>{"a": NaN}</code> are invalid. Use <code>null</code> for "no value".</li>
+        <li><strong>Unescaped nested quotes</strong>: <code>"say "hi""</code> will fail. Escape the inner quotes: <code>"say \"hi\""</code>.</li>
+      </ol>
+
+      <h2 id="vs-js">JSON vs JavaScript Objects</h2>
+      <p>"JSON is just a JS object" is a common misconception. They differ strictly in syntax:</p>
+      <table>
+        <thead><tr><th>Aspect</th><th>JSON</th><th>JS Object Literal</th></tr></thead>
+        <tbody>
+          <tr><td>Key quoting</td><td>Must use double quotes <code>"a"</code></td><td>Can omit <code>a</code>, or single/double quotes</td></tr>
+          <tr><td>Trailing commas</td><td>Forbidden</td><td>Allowed</td></tr>
+          <tr><td>Comments</td><td>Forbidden</td><td>Allowed <code>//</code> / <code>/* */</code></td></tr>
+          <tr><td>Key types</td><td>String only</td><td>Any value (coerced to string)</td></tr>
+          <tr><td>Value types</td><td>7 standard types</td><td>Any JS value, including functions, undefined</td></tr>
+          <tr><td>Parser</td><td><code>JSON.parse()</code></td><td><code>eval()</code> (dangerous) or no parsing needed</td></tr>
+        </tbody>
+      </table>
+      <p>So to generate JSON from a JS object, always use <code>JSON.stringify(obj)</code> — never drop the object literal into an HTTP response as a string. Conversely, to restore a JS object from JSON, use <code>JSON.parse(str)</code>, never <code>eval()</code> — the latter executes arbitrary code and is a security hole.</p>
+
+      <h2 id="vs-others">JSON vs YAML / TOML / CSV</h2>
+      <p>Four common data formats with distinct purposes:</p>
+      <table>
+        <thead><tr><th>Format</th><th>Positioning</th><th>Strengths</th><th>Weaknesses</th></tr></thead>
+        <tbody>
+          <tr><td>JSON</td><td>Machine ↔ machine</td><td>Ubiquitous native support, no ambiguity, mature ecosystem</td><td>No comments, no references, easy for humans to typo</td></tr>
+          <tr><td>YAML</td><td>Human-authored config</td><td>Concise syntax, comments, anchors/aliases, multi-doc</td><td>Parser ambiguity, indent-sensitive</td></tr>
+          <tr><td>TOML</td><td>Strict config</td><td>Strict syntax, clear types, less syntactic sugar</td><td>Verbose when deeply nested, smaller ecosystem than YAML</td></tr>
+          <tr><td>CSV</td><td>Tabular data</td><td>Minimal, any spreadsheet reads it</td><td>No nesting, no types, easy to mis-parse</td></tr>
+        </tbody>
+      </table>
+      <p>Rule of thumb: <strong>interfaces, logs, storage use JSON</strong>; <strong>config files use YAML or TOML</strong> (YAML has a larger ecosystem, TOML has stricter syntax); <strong>pure tabular data uses CSV</strong>. Mixing is a common mistake — e.g., treating CSV as config breaks as soon as a field contains commas, newlines, or quotes.</p>
+
+      <h2 id="pitfalls">Practical Tips &amp; Gotchas</h2>
+      <h3>Escaping and encoding</h3>
+      <p>In JSON strings, <code>"</code>, <code>\</code>, and control characters (<code>\n</code>, <code>\t</code>, <code>\r</code>) must be escaped. Non-ASCII characters can be written directly as UTF-8, or via <code>\uXXXX</code>. Chinese generally works as UTF-8 unless the target environment doesn't support it.</p>
+      <h3>Large files and streaming</h3>
+      <p>A single <code>JSON.parse</code> on a 50MB file freezes the main thread. For large data, use <strong>streaming parsers</strong>: JSON Lines (one JSON object per line, parse line-by-line) is a common pattern — used by Kafka, Elasticsearch, etc.</p>
+      <h3>The <code>undefined</code> trap in serialization</h3>
+      <p><code>JSON.stringify({a: undefined, b: null, c: 1})</code> outputs <code>{"b":null,"c":1}</code> — the <code>undefined</code> field is silently dropped, <code>null</code> is preserved. If you depend on the distinction between "field missing" and "field is null", be careful.</p>
+      <h3>Number precision</h3>
+      <p>JSON numbers have no integer/float distinction. JS numbers are 64-bit IEEE 754; values above <code>2^53</code> lose precision. For snowflake IDs and arbitrary-precision numbers, serialize as strings:</p>
+      <pre><code>{"id": "12345678901234567890"}  // String, safe
+{"id": 12345678901234567890}   // Number, may become 12345678901234567000</code></pre>
+      <h3>Schema validation</h3>
+      <p>The JSON spec handles only syntax, not structure. To validate that a JSON conforms to a shape, use <a href="https://json-schema.org" target="_blank" rel="noopener">JSON Schema</a> or a runtime library (e.g., Python's <code>pydantic</code>, JS's <code>zod</code>). This is a required defense layer in production.</p>
+
+      <h2 id="faq">FAQ</h2>
+      <div class="faq-item"><p class="faq-q">Q: What's the difference between JSON and JavaScript objects?</p><p class="faq-a">A: JSON is a data format defined by RFC 8259; JavaScript objects are a JS-language data structure. JSON requires double-quoted keys, disallows trailing commas, single-quoted strings, comments, and unquoted keys. JSON.parse accepts strict JSON only.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: What data types does JSON support?</p><p class="faq-a">A: RFC 8259 defines seven: object, array, string, number, boolean, null. No undefined, function, Date, Map, or Set.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: Is JSON key order guaranteed?</p><p class="faq-a">A: The spec explicitly says object members are unordered; parsers may reorder. Most modern engines preserve insertion order, but this is not a spec guarantee, so don't rely on it.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: Is there a file-size limit for JSON?</p><p class="faq-a">A: RFC itself sets no limit; limits come from implementations. Browser JSON.parse typically handles up to ~50MB; HTTP transfer is bounded by server request-body limits (Nginx defaults to 1MB); REST APIs commonly cap at 1-10MB.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: Can JSON represent timestamps, dates, and binary directly?</p><p class="faq-a">A: No. Conventions: use ISO 8601 strings or numeric timestamps for time; Base64 strings plus a MIME type for binary.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: When should I use YAML/TOML instead of JSON?</p><p class="faq-a">A: YAML/TOML target human-written config; JSON targets machine-to-machine data exchange. Use YAML/TOML for config, JSON for interfaces/storage/logs.</p></div>
+
+      <div class="cta-box">
+        <p class="cta-title">Free JSON Formatter / Validator / Minifier</p>
+        <p class="cta-sub">Paste-to-validate · 2/4/Tab indent · Error line &amp; column · 100% browser-local</p>
+        <a class="cta-btn" href="/text/json/">Open JSON Formatter →</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<div id="site-footer"></div>
+<script src="/assets/js/site.js" defer></script>
+</body>
+</html>

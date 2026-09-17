@@ -22,8 +22,11 @@
 | 密码生成器 | `/password/` | crypto.getRandomValues 拒绝采样，长度 8-64，排除易混淆字符，熵显示 + 批量 5 备选 |
 | Meta 标签生成 | `/meta-tags/` | 标题/描述/URL/图片 → 微信与 Twitter 分享卡片实时预览 + OG/Twitter HTML 一键复制 |
 | 二维码生成 | `/qrcode/` | 文字/网址即时生成二维码：纠错级别 L/M/Q/H、模块尺寸与静区边距可调、前景背景色自定义、下载高清 PNG；自研零依赖 QR 编码器（字节模式 UTF-8，v1-40，矩阵级比对验证） |
+| JSON 格式化 | `/text/json/` | 粘贴即校验、格式化（缩进 2/4/Tab 可选）或压缩，错误定位到行列，显示字符/字节/嵌套深度/键数量统计，纯本地处理 |
+| 字数统计 | `/text/char-count/` | 实时统计总字符/不含空格/中文/英文词/句/段，中英日混合语言自动识别，按阅读 400 字/分、朗读 220 字/分（中文）与英文 200/150 wpm 估算时长 |
+| UUID 生成 | `/text/uuid/` | v4（随机）/ v1（时间）/ v5（SHA-1 命名空间哈希），批量 1/10/100 个、大小写切换、一键复制或下载 .txt，内置 URL/DNS/IPv4/OID 标准命名空间 |
 
-另有十七篇 SEO 使用指南（`/guides/`，中英双语）：ICO 文件完全指南、Favicon 完全指南、暗色图标设计指南、图片压缩指南、WebP 格式指南、配色原理指南、App 图标尺寸速查、PNG 转 ICO 指南、Favicon 不显示排查、透明背景图标指南、无障碍对比度指南、二维码扫不出来排查、条形码入门与打印、图片加水印、CSS 渐变设计、强密码、Meta 标签与社交分享。
+另有二十篇 SEO 使用指南（`/guides/`，中英双语）：ICO 文件完全指南、Favicon 完全指南、暗色图标设计指南、图片压缩指南、WebP 格式指南、配色原理指南、App 图标尺寸速查、PNG 转 ICO 指南、Favicon 不显示排查、透明背景图标指南、无障碍对比度指南、二维码扫不出来排查、条形码入门与打印、图片加水印、CSS 渐变设计、强密码、Meta 标签与社交分享、JSON 入门与实用技巧、字数统计与写作时长估算、UUID 版本选择与使用场景。
 
 ## 站点结构
 `dist/` 既是部署产物，也是站点源码（纯静态、零构建、零依赖）：
@@ -38,6 +41,9 @@ dist/
   resize/index.html       # 工具六：图片裁剪与缩放
   contrast/index.html     # 工具七：WCAG 对比度检查器
   qrcode/index.html       # 工具八：二维码生成器（自研 QR 编码器）
+  text/json/index.html    # 工具十四：JSON 格式化
+  text/char-count/index.html  # 工具十五：字数统计
+  text/uuid/index.html    # 工具十六：UUID 生成器（v4/v1/v5）
   guides/                 # SEO 指南（含中英 hreflang）
   assets/css/site.css     # 共享外壳样式 + 全站设计令牌（:root / html.dark）
   assets/js/site.js       # 共享外壳逻辑（导航注入 / 中英双语 / 页脚 / 主题按钮）

@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UUID 版本选择与使用场景：v1/v4/v5 详解 | CATAITO</title>
+<meta name="title-zh" content="UUID 版本选择与使用场景：v1/v4/v5 详解 | CATAITO">
+<meta name="title-en" content="UUID Version Selection: v1/v4/v5 Explained | CATAITO">
+<meta name="description" content="UUID 完整指南：128 位标识符基础、8-4-4-4-12 格式、v1/v4/v5 三种版本的差异与适用场景、碰撞概率、UUID vs ULID vs nanoid 对比、安全考量与常见错误。附免费在线 UUID 生成器（v4/v1/v5），纯浏览器本地生成。">
+<meta name="theme-color" content="#f6f3ec">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="CATAITO 工具箱">
+<meta property="og:title" content="UUID 版本选择与使用场景">
+<meta property="og:description" content="128 位标识符基础、v1/v4/v5 差异与适用场景、UUID vs ULID vs nanoid 对比。附免费本地 UUID 生成器。">
+<meta property="og:url" content="https://tools.cataito.com/guides/uuid-guide/">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:locale:alternate" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="UUID 版本选择与使用场景">
+<meta name="twitter:description" content="128 位标识符基础、v1/v4/v5 差异与适用场景、UUID vs ULID vs nanoid 对比。">
+<link rel="canonical" href="https://tools.cataito.com/guides/uuid-guide/">
+<link rel="icon" type="image/png" href="/assets/img/cataito-logo.png">
+<link rel="stylesheet" href="/assets/css/site.css">
+<script src="/assets/js/theme-init.js"></script>
+<script>
+  (function () {
+    try {
+      var l = localStorage.getItem('cataito-lang');
+      document.documentElement.setAttribute('lang', (l === 'en') ? 'en' : 'zh-CN');
+      if (l === 'en') document.documentElement.classList.add('lang-en');
+    } catch (e) {}
+  })();
+</script>
+<style>
+  .guide-wrap { max-width: 760px; margin: 0; }
+  .guide-meta { font-size: 13px; color: var(--text-3); margin: 0 0 6px; }
+  .page-sub { margin-bottom: 10px; }
+  .article { font-size: 15px; line-height: 1.85; color: var(--text); }
+  .article h2 {
+    font-size: 21px; font-weight: 700; letter-spacing: -.3px;
+    margin: 44px 0 14px; padding-top: 16px; border-top: 1px solid var(--border); color: var(--text);
+  }
+  .article h3 { font-size: 16.5px; font-weight: 650; margin: 26px 0 10px; color: var(--text); }
+  .article p { margin: 0 0 14px; color: var(--text-2); }
+  .article strong { color: var(--text); font-weight: 650; }
+  .article a { color: var(--accent); text-decoration: none; }
+  .article a:hover { text-decoration: underline; }
+  .article ul, .article ol { margin: 0 0 16px; padding-left: 22px; color: var(--text-2); }
+  .article li { margin: 6px 0; }
+  .article code {
+    font-family: var(--font-mono);
+    font-size: 13px; background: var(--card-2); border: 1px solid var(--border);
+    border-radius: 3px; padding: 1px 6px; color: var(--text);
+  }
+  .article pre {
+    background: var(--card-2); border: 1px solid var(--border); border-radius: var(--radius-sm);
+    padding: 14px 16px; margin: 14px 0 18px; overflow-x: auto;
+  }
+  .article pre code { background: none; border: none; padding: 0; font-size: 12.5px; line-height: 1.7; }
+  .article table {
+    width: 100%; border-collapse: collapse; margin: 18px 0 22px;
+    font-size: 13.5px; background: var(--card);
+    border: 1px solid var(--border); border-radius: var(--radius-sm); overflow: hidden;
+  }
+  .article th, .article td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--border); }
+  .article th { background: var(--card-2); color: var(--text); font-weight: 650; white-space: nowrap; }
+  .article td { color: var(--text-2); }
+  .article tr:last-child td { border-bottom: none; }
+  .toc {
+    background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 16px 18px; margin: 20px 0 8px; box-shadow: var(--shadow-sm);
+  }
+  .toc-title { font-size: 13px; font-weight: 650; color: var(--text); margin: 0 0 10px; }
+  .toc ol { margin: 0; padding-left: 20px; font-size: 13.5px; }
+  .toc li { margin: 5px 0; }
+  .toc a { color: var(--text-2); text-decoration: none; }
+  .toc a:hover { color: var(--accent); }
+  .cta-box {
+    background: linear-gradient(135deg, var(--accent-soft), var(--accent-soft-2));
+    border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent); border-radius: var(--radius);
+    padding: 20px 22px; margin: 34px 0 10px; text-align: center;
+  }
+  .cta-box .cta-title { font-size: 17px; font-weight: 700; color: var(--text); margin: 0 0 6px; }
+  .cta-box .cta-sub { font-size: 13.5px; color: var(--text-2); margin: 0 0 14px; }
+  .cta-btn {
+    display: inline-block; background: var(--accent); color: #fff; text-decoration: none;
+    font-size: 14px; font-weight: 600; padding: 11px 26px; border-radius: var(--radius-sm);
+    box-shadow: 0 6px 18px var(--accent-glow); transition: background .15s;
+  }
+  .cta-btn:hover { background: var(--accent-hover); }
+  .article a.cta-btn, .article .cta-btn { color: #fff; text-decoration: none; }
+  .article a.cta-btn:hover { color: #fff; text-decoration: none; background: var(--accent-hover); }
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "UUID 版本选择与使用场景：v1/v4/v5 详解",
+  "description": "详解 UUID 128 位标识符基础、8-4-4-4-12 格式、v1/v4/v5 三种版本的差异与适用场景、碰撞概率、UUID vs ULID vs nanoid 对比、安全考量与常见错误。",
+  "inLanguage": "zh-CN",
+  "datePublished": "2026-09-17",
+  "dateModified": "2026-09-17",
+  "author": { "@type": "Organization", "name": "CATAITO", "url": "https://tools.cataito.com/" },
+  "publisher": { "@type": "Organization", "name": "CATAITO 工具箱", "url": "https://tools.cataito.com/" },
+  "mainEntityOfPage": "https://tools.cataito.com/guides/uuid-guide/"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "UUID 和 GUID 是一回事吗？",
+      "acceptedAnswer": { "@type": "Answer", "text": "UUID 是 RFC 4122 定义的 128 位标识符标准；GUID 是微软的类似概念（Globally Unique Identifier），实际格式和 UUID v4 完全一致。现代语境下两者可互换使用，UUID 更通用。" }
+    },
+    {
+      "@type": "Question",
+      "name": "UUID 会碰撞吗？",
+      "acceptedAnswer": { "@type": "Answer", "text": "v4（纯随机）在数学上几乎不可能碰撞：生成 10 亿个 UUID v4 后任意两个相同的概率约为 1.2×10⁻¹⁶。v1 基于时间戳和机器 ID，同一台机器上如果时钟回拨可能生成重复值；v5 是确定性哈希，同一输入永远同一输出，不存在碰撞但也不存在「随机」。" }
+    },
+    {
+      "@type": "Question",
+      "name": "UUID 适合当主键吗？",
+      "acceptedAnswer": { "@type": "Answer", "text": "UUID v4 适合作为主键（尤其是分布式系统、多写入者场景），但会带来 B+ 树索引的随机写放大问题（每次插入都是随机位置）。对高性能 OLTP 系统，推荐 UUIDv7（RFC 9562，基于时间有序）或 ULID。单机小数据量的关系型数据库用自增整数即可。" }
+    },
+    {
+      "@type": "Question",
+      "name": "什么时候用 UUID v5？",
+      "acceptedAnswer": { "@type": "Answer", "text": "v5 是确定性哈希（SHA-1 命名空间 + 名称），适合「从同一输入稳定生成同一 ID」的场景：从文件名派生 ID、跨服务对同一实体做稳定标识、需要可重复的 ID 而非随机。不需要随机性时用 v5；需要随机性时用 v4。" }
+    },
+    {
+      "@type": "Question",
+      "name": "UUID 有隐私/安全风险吗？",
+      "acceptedAnswer": { "@type": "Answer", "text": "v1 会暴露时间戳和机器 ID（IP/MAC），可被用于追踪生成时间序列；高并发场景下可被反推「这台机器一分钟生成了多少 UUID」。v4 用密码学安全随机源，无信息泄露。对外暴露 ID 时，建议用 UUID v4/v7 或短 ID（如 nanoid），避免可枚举的数字 ID。" }
+    },
+    {
+      "@type": "Question",
+      "name": "UUID 和 ULID、nanoid 怎么选？",
+      "acceptedAnswer": { "@type": "Answer", "text": "UUID v4/v7：通用、跨语言、128 位。ULID：时间有序、可排序、26 字符（URL-safe）、比 UUID 短，适合时间序列主键。nanoid：16 字符左右、URL-safe、适合短 ID（分享链接、票据）。生产环境：主键用 UUID v7 或 ULID；分享链接用 nanoid；跨语言互操作必须用 UUID。" }
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "首页", "item": "https://tools.cataito.com/" },
+    { "@type": "ListItem", "position": 2, "name": "使用指南", "item": "https://tools.cataito.com/guides/" },
+    { "@type": "ListItem", "position": 3, "name": "UUID 版本选择与使用场景", "item": "https://tools.cataito.com/guides/uuid-guide/" }
+  ]
+}
+</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7103529190038161" crossorigin="anonymous"></script>
+</head>
+<body>
+<div id="site-header"></div>
+
+<main class="site-main">
+  <div class="guide-wrap">
+    <nav class="breadcrumb"><a href="/" data-i18n="crumb_home">首页</a><span class="sep">/</span><a href="/guides/" data-i18n="nav_guides">使用指南</a><span class="sep">/</span><span data-i18n="gd_uuid_short">UUID 指南</span></nav>
+    <p class="guide-meta"><span data-i18n="gd_published">发布于</span> 2026-09-17 · CATAITO</p>
+    <h1 class="page-h1" data-i18n="gd_uuid_h1">UUID 版本选择与使用场景</h1>
+    <p class="page-sub" data-i18n="gd_uuid_sub">从 128 位标识符基础，到 v1/v4/v5 的差异与适用场景、碰撞概率、与 ULID/nanoid 的对比。附免费在线 UUID 生成器。</p>
+
+    <div class="article lb-zh">
+      <div class="toc">
+        <p class="toc-title">目录</p>
+        <ol>
+          <li><a href="#what-is-uuid">UUID 是什么</a></li>
+          <li><a href="#versions">v1 / v4 / v5 差异</a></li>
+          <li><a href="#collision">碰撞概率</a></li>
+          <li><a href="#vs-others">与 ULID / nanoid 对比</a></li>
+          <li><a href="#security">隐私与安全考量</a></li>
+          <li><a href="#common-errors">常见错误</a></li>
+          <li><a href="#faq">常见问题</a></li>
+        </ol>
+      </div>
+
+      <h2 id="what-is-uuid">UUID 是什么</h2>
+      <p>UUID（Universally Unique Identifier，通用唯一标识符）是 <a href="https://www.rfc-editor.org/rfc/rfc4122" target="_blank" rel="noopener">RFC 4122</a> 定义的 <strong>128 位标识符</strong>，通常写成 8-4-4-4-12 的十六进制字符串：</p>
+      <pre><code>6ba7b811-9dad-11d1-80b4-00c04fd430c8</code></pre>
+      <p>分组结构：</p>
+      <ul>
+        <li><strong>第 1 段（8 位）</strong>：时间/随机（低 32 位）</li>
+        <li><strong>第 2 段（4 位）</strong>：时间（中 16 位）</li>
+        <li><strong>第 3 段（4 位）</strong>：版本（最高 4 位）+ 时间（高 12 位）</li>
+        <li><strong>第 4 段（4 位）</strong>：变体（最高 2 位）+ 随机</li>
+        <li><strong>第 5 段（12 位）</strong>：节点 ID 或纯随机</li>
+      </ul>
+      <p>核心设计目标：<strong>在不同系统间唯一标识一个对象，不依赖中心分配</strong>——两台不通信的服务器可以同时生成 UUID，几乎不会冲突。</p>
+
+      <h2 id="versions">v1 / v4 / v5 差异</h2>
+      <table>
+        <thead><tr><th>版本</th><th>生成方式</th><th>有序性</th><th>适用场景</th></tr></thead>
+        <tbody>
+          <tr><td>v1</td><td>时间戳 + 机器 ID（MAC/clock_seq）</td><td>时间有序</td><td>需要时间顺序、单机场景</td></tr>
+          <tr><td>v4</td><td>纯随机（122 位）</td><td>无序</td><td>通用主键、分布式 ID、默认选择</td></tr>
+          <tr><td>v5</td><td>SHA-1（命名空间 + 名称）</td><td>确定性</td><td>稳定标识、跨服务 ID 复用</td></tr>
+        </tbody>
+      </table>
+      <p>本站 <a href="/text/uuid/">UUID 生成器</a> 支持这三种版本，v5 还内置了 4 个标准命名空间（URL/DNS/IPv4/OID）。</p>
+      <h3>v1：时间戳 + 机器 ID</h3>
+      <p>v1 用 60 位时间戳（100ns 粒度，从 1582-10-15 起算）加 14 位 clock_seq、48 位节点 ID（通常来自 MAC）拼接而成。<strong>优点</strong>：可排序，可按时间范围索引。<strong>缺点</strong>：泄露时间戳和机器 ID；时钟回拨可能产生重复。</p>
+      <h3>v4：纯随机</h3>
+      <p>v4 从密码学安全随机源取 122 位随机，再固定 4 位版本号和 2 位变体位。<strong>优点</strong>：最简单、无信息泄露、跨语言兼容最好。<strong>缺点</strong>：无序，作主键时数据库 B+ 树索引会有写放大。</p>
+      <h3>v5：确定性哈希</h3>
+      <p>v5 用 SHA-1 对「命名空间 UUID + 名称字符串」求哈希，取前 16 字节。<strong>优点</strong>：同一输入永远同一输出，可用于跨服务稳定标识。<strong>缺点</strong>：无随机性，如果命名空间暴露，可被枚举。</p>
+
+      <h2 id="collision">碰撞概率</h2>
+      <p>UUID v4 的碰撞概率由生日悖论给出。生成 <em>n</em> 个 UUID 后，任意两个相同的概率约：</p>
+      <p><code>P ≈ n² / (2 × 2¹²²)</code></p>
+      <p>实际数字：</p>
+      <table>
+        <thead><tr><th>生成数量</th><th>碰撞概率</th><th>直觉</th></tr></thead>
+        <tbody>
+          <tr><td>10 亿（10⁹）</td><td>≈ 1.2 × 10⁻¹⁶</td><td>宇宙年龄内几乎不可能</td></tr>
+          <tr><td>1 万亿（10¹²）</td><td>≈ 1.2 × 10⁻¹⁰</td><td>依然极低</td></tr>
+          <tr><td>1 千亿亿（10¹⁵）</td><td>≈ 1.2 × 10⁻⁴</td><td>开始可测量</td></tr>
+        </tbody>
+      </table>
+      <p>结论：常规业务量级下 v4 碰撞概率可忽略。真要担心，改用 UUID v7（RFC 9562）+ 主键唯一约束兜底。</p>
+
+      <h2 id="vs-others">与 ULID / nanoid 对比</h2>
+      <p>UUID 不是唯一选择，还有两类常见 ID：</p>
+      <table>
+        <thead><tr><th>格式</th><th>长度</th><th>有序性</th><th>URL-safe</th><th>典型用途</th></tr></thead>
+        <tbody>
+          <tr><td>UUID v4</td><td>36 字符</td><td>无序</td><td>否</td><td>通用主键、分布式 ID</td></tr>
+          <tr><td>UUID v7</td><td>36 字符</td><td>时间有序</td><td>否</td><td>主键（避免 B+ 树写放大）</td></tr>
+          <tr><td>ULID</td><td>26 字符</td><td>时间有序</td><td>是</td><td>时间序列主键、URL</td></tr>
+          <tr><td>nanoid</td><td>16-22 字符</td><td>无序</td><td>是</td><td>分享链接、票据</td></tr>
+          <tr><td>自增整数</td><td>可变</td><td>严格有序</td><td>是</td><td>单机小数据量主键</td></tr>
+        </tbody>
+      </table>
+      <p>选择原则：<strong>跨语言互操作必须用 UUID</strong>；<strong>时间序列主键用 UUID v7 或 ULID</strong>；<strong>短分享链接用 nanoid</strong>；<strong>单机小数据用自增整数</strong>。</p>
+
+      <h2 id="security">隐私与安全考量</h2>
+      <ul>
+        <li><strong>v1 泄露信息</strong>：时间戳和机器 ID（MAC/IP）可被反推「这台机器何时生成了多少 UUID」。对外暴露 ID 时不要用 v1。</li>
+        <li><strong>v4 无信息泄露</strong>：用密码学安全随机源（如 <code>crypto.getRandomValues</code>），无可用信息。</li>
+        <li><strong>v5 可枚举</strong>：如果命名空间和名称空间可猜，攻击者可批量请求验证「这个 UUID 对应什么实体」。</li>
+        <li><strong>避免可枚举 ID</strong>：外部 ID 用 UUID v4/v7 或 nanoid，避免用自增整数（易被遍历爬取）。</li>
+        <li><strong>加密密钥不要用 UUID</strong>：UUID 只有 128 位随机，远低于对称加密密钥强度（128-256 位）。生成密钥用专门的 KDF 或 CSPRNG。</li>
+      </ul>
+
+      <h2 id="common-errors">常见错误</h2>
+      <ol class="t-steps">
+        <li><strong>用 Math.random() 造 UUID</strong>：JavaScript 的 <code>Math.random()</code> 不是密码学安全随机源，生成的 UUID 可被预测。必须用 <code>crypto.getRandomValues()</code>。</li>
+        <li><strong>把 UUID 当加密密钥</strong>：128 位随机不够做对称密钥，需要至少 128 位密钥熵 + 密钥封装协议。</li>
+        <li><strong>v5 命名空间乱写</strong>：命名空间必须是合法 UUID 格式（8-4-4-4-12），自定义前要先验证。</li>
+        <li><strong>大小写混用</strong>：UUID 规范小写，但某些系统接受大写。跨系统时统一小写，避免比较错误。</li>
+        <li><strong>把 UUID 存成数字</strong>：UUID 是 128 位，超出任何语言的整数范围，必须存成字符串。</li>
+      </ol>
+
+      <h2 id="faq">常见问题</h2>
+      <div class="faq-item"><p class="faq-q">Q：UUID 和 GUID 是一回事吗？</p><p class="faq-a">A：UUID 是 RFC 4122 定义的 128 位标识符标准；GUID 是微软的类似概念，格式与 UUID v4 一致。现代语境下可互换，UUID 更通用。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：UUID 会碰撞吗？</p><p class="faq-a">A：v4 在数学上几乎不可能碰撞：生成 10 亿个 v4 后任意两个相同的概率约 1.2×10⁻¹⁶。v1 时钟回拨可能重复；v5 是确定性哈希，同输入永远同输出。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：UUID 适合当主键吗？</p><p class="faq-a">A：v4 适合分布式主键，但会带来 B+ 树索引的随机写放大。高性能 OLTP 推荐 UUID v7（RFC 9562）或 ULID。单机小数据用自增整数即可。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：什么时候用 UUID v5？</p><p class="faq-a">A：v5 是确定性哈希（SHA-1 命名空间 + 名称），适合从同一输入稳定生成同一 ID 的场景。不需要随机性时用 v5，需要随机性时用 v4。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：UUID 有隐私/安全风险吗？</p><p class="faq-a">A：v1 会暴露时间戳和机器 ID，可被追踪；v4 用密码学安全随机源，无信息泄露。对外暴露 ID 建议用 v4/v7 或 nanoid，避免可枚举的数字 ID。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：UUID 和 ULID、nanoid 怎么选？</p><p class="faq-a">A：UUID v4/v7：通用、跨语言、128 位。ULID：时间有序、URL-safe、26 字符。nanoid：16 字符左右、URL-safe、短 ID。主键用 UUID v7 或 ULID；分享链接用 nanoid；跨语言互操作必须用 UUID。</p></div>
+
+      <div class="cta-box">
+        <p class="cta-title">免费生成 UUID v4 / v1 / v5</p>
+        <p class="cta-sub">批量 1/10/100 · 大小写切换 · 命名空间预设 · 纯浏览器本地生成</p>
+        <a class="cta-btn" href="/text/uuid/">打开 UUID 生成器 →</a>
+      </div>
+    </div>
+
+    <div class="article lb-en">
+      <div class="toc">
+        <p class="toc-title">Table of Contents</p>
+        <ol>
+          <li><a href="#what-is-uuid">What UUID Is</a></li>
+          <li><a href="#versions">v1 / v4 / v5 Differences</a></li>
+          <li><a href="#collision">Collision Probability</a></li>
+          <li><a href="#vs-others">vs ULID / nanoid</a></li>
+          <li><a href="#security">Privacy &amp; Security</a></li>
+          <li><a href="#common-errors">Common Mistakes</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ol>
+      </div>
+
+      <h2 id="what-is-uuid">What UUID Is</h2>
+      <p>UUID (Universally Unique Identifier) is a <strong>128-bit identifier</strong> defined by <a href="https://www.rfc-editor.org/rfc/rfc4122" target="_blank" rel="noopener">RFC 4122</a>, typically written as 8-4-4-4-12 hex groups:</p>
+      <pre><code>6ba7b811-9dad-11d1-80b4-00c04fd430c8</code></pre>
+      <p>Group structure:</p>
+      <ul>
+        <li><strong>Group 1 (8 hex)</strong>: time/random (low 32 bits)</li>
+        <li><strong>Group 2 (4 hex)</strong>: time (middle 16 bits)</li>
+        <li><strong>Group 3 (4 hex)</strong>: version (top 4 bits) + time (top 12 bits)</li>
+        <li><strong>Group 4 (4 hex)</strong>: variant (top 2 bits) + random</li>
+        <li><strong>Group 5 (12 hex)</strong>: node ID or pure random</li>
+      </ul>
+      <p>Core design goal: <strong>uniquely identify an object across systems without a central authority</strong> — two non-communicating servers can generate UUIDs simultaneously and almost never collide.</p>
+
+      <h2 id="versions">v1 / v4 / v5 Differences</h2>
+      <table>
+        <thead><tr><th>Version</th><th>Generation</th><th>Ordering</th><th>Use cases</th></tr></thead>
+        <tbody>
+          <tr><td>v1</td><td>Timestamp + machine ID (MAC/clock_seq)</td><td>Time-ordered</td><td>Time-ordering needed, single-host</td></tr>
+          <tr><td>v4</td><td>Pure random (122 bits)</td><td>Unordered</td><td>General PK, distributed IDs, default</td></tr>
+          <tr><td>v5</td><td>SHA-1 (namespace + name)</td><td>Deterministic</td><td>Stable IDs, cross-service reuse</td></tr>
+        </tbody>
+      </table>
+      <p>Our <a href="/text/uuid/">UUID Generator</a> supports all three, with 4 built-in namespaces for v5 (URL/DNS/IPv4/OID).</p>
+      <h3>v1: Timestamp + machine ID</h3>
+      <p>v1 uses a 60-bit timestamp (100ns granularity, since 1582-10-15) plus 14-bit clock_seq and 48-bit node ID (usually from MAC). <strong>Pros</strong>: sortable, indexable by time range. <strong>Cons</strong>: leaks timestamp and machine ID; clock rollback can produce duplicates.</p>
+      <h3>v4: Pure random</h3>
+      <p>v4 pulls 122 random bits from a CSPRNG, then fixes 4 version bits and 2 variant bits. <strong>Pros</strong>: simplest, no info leak, best cross-language compat. <strong>Cons</strong>: unordered; as a PK, causes write amplification in B+ tree indexes.</p>
+      <h3>v5: Deterministic hash</h3>
+      <p>v5 hashes "namespace UUID + name string" with SHA-1 and takes the first 16 bytes. <strong>Pros</strong>: same input always yields same output, useful for stable cross-service IDs. <strong>Cons</strong>: no randomness; if the namespace is exposed, IDs can be enumerated.</p>
+
+      <h2 id="collision">Collision Probability</h2>
+      <p>v4 collision probability follows the birthday paradox. After generating <em>n</em> UUIDs, the probability of any two matching is roughly:</p>
+      <p><code>P ≈ n² / (2 × 2¹²²)</code></p>
+      <p>Concrete numbers:</p>
+      <table>
+        <thead><tr><th>Generated</th><th>Collision probability</th><th>Intuition</th></tr></thead>
+        <tbody>
+          <tr><td>1 billion (10⁹)</td><td>≈ 1.2 × 10⁻¹⁶</td><td>Nearly impossible in the age of the universe</td></tr>
+          <tr><td>1 trillion (10¹²)</td><td>≈ 1.2 × 10⁻¹⁰</td><td>Still very low</td></tr>
+          <tr><td>10¹⁵</td><td>≈ 1.2 × 10⁻⁴</td><td>Measurable</td></tr>
+        </tbody>
+      </table>
+      <p>Bottom line: v4 collisions are negligible at typical business scale. If truly concerned, switch to UUID v7 (RFC 9562) plus a unique constraint as a backstop.</p>
+
+      <h2 id="vs-others">vs ULID / nanoid</h2>
+      <p>UUID isn't the only option. Two other common ID types:</p>
+      <table>
+        <thead><tr><th>Format</th><th>Length</th><th>Ordered</th><th>URL-safe</th><th>Typical use</th></tr></thead>
+        <tbody>
+          <tr><td>UUID v4</td><td>36 chars</td><td>No</td><td>No</td><td>General PK, distributed IDs</td></tr>
+          <tr><td>UUID v7</td><td>36 chars</td><td>Time-ordered</td><td>No</td><td>PK (avoids B+ tree write amplification)</td></tr>
+          <tr><td>ULID</td><td>26 chars</td><td>Time-ordered</td><td>Yes</td><td>Time-series PK, URLs</td></tr>
+          <tr><td>nanoid</td><td>16-22 chars</td><td>No</td><td>Yes</td><td>Share links, tickets</td></tr>
+          <tr><td>Auto-increment int</td><td>Variable</td><td>Strictly ordered</td><td>Yes</td><td>Single-host small-data PK</td></tr>
+        </tbody>
+      </table>
+      <p>Selection rules: <strong>cross-language interop requires UUID</strong>; <strong>time-series PK uses UUID v7 or ULID</strong>; <strong>short share links use nanoid</strong>; <strong>single-host small data uses auto-increment int</strong>.</p>
+
+      <h2 id="security">Privacy &amp; Security</h2>
+      <ul>
+        <li><strong>v1 leaks information</strong>: timestamp and machine ID (MAC/IP) can be reverse-engineered to see "how many UUIDs this machine generated when". Don't expose v1 externally.</li>
+        <li><strong>v4 has no info leak</strong>: uses a CSPRNG (e.g., <code>crypto.getRandomValues</code>), no extractable information.</li>
+        <li><strong>v5 can be enumerated</strong>: if the namespace and naming scheme are guessable, an attacker can batch-request to validate "which entity does this UUID map to".</li>
+        <li><strong>Avoid enumerable IDs</strong>: external IDs should use UUID v4/v7 or nanoid, not auto-increment integers (easy to scrape by enumeration).</li>
+        <li><strong>Don't use UUID as encryption keys</strong>: 128 bits of randomness is far below symmetric-key strength (128-256 bits). Generate keys with a dedicated KDF or CSPRNG.</li>
+      </ul>
+
+      <h2 id="common-errors">Common Mistakes</h2>
+      <ol class="t-steps">
+        <li><strong>Generating UUID with Math.random()</strong>: JavaScript's <code>Math.random()</code> is not a CSPRNG; resulting UUIDs can be predicted. Always use <code>crypto.getRandomValues()</code>.</li>
+        <li><strong>Using UUID as encryption keys</strong>: 128-bit random is insufficient for symmetric keys; you need at least 128 bits of key entropy plus a key-encapsulation protocol.</li>
+        <li><strong>Writing invalid v5 namespaces</strong>: namespace must be a valid UUID (8-4-4-4-12). Validate before using custom ones.</li>
+        <li><strong>Mixed case</strong>: UUID spec is lowercase, but some systems accept uppercase. Standardize on lowercase for cross-system consistency.</li>
+        <li><strong>Storing UUID as a number</strong>: 128 bits exceeds every language's integer range; must be stored as a string.</li>
+      </ol>
+
+      <h2 id="faq">FAQ</h2>
+      <div class="faq-item"><p class="faq-q">Q: Are UUID and GUID the same thing?</p><p class="faq-a">A: UUID is the 128-bit identifier defined by RFC 4122; GUID is Microsoft's similar concept with the same format as UUID v4. Interchangeable in modern usage, UUID is more universal.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: Can UUIDs collide?</p><p class="faq-a">A: v4 is mathematically almost impossible to collide: after generating 1 billion v4s, the probability of any two matching is ≈1.2×10⁻¹⁶. v1 can duplicate if the clock rolls back; v5 is a deterministic hash, same input always gives same output.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: Is UUID suitable as a primary key?</p><p class="faq-a">A: v4 is good for distributed PKs but causes random write amplification in B+ tree indexes. For high-performance OLTP, use UUID v7 (RFC 9562) or ULID. For single-host small data, use auto-increment integers.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: When to use UUID v5?</p><p class="faq-a">A: v5 is a deterministic hash (SHA-1 of namespace + name), suited for "stable ID from same input" scenarios. Use v5 when you don't need randomness; v4 when you do.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: Are there privacy/security risks with UUID?</p><p class="faq-a">A: v1 leaks timestamp and machine ID, allowing tracking; v4 uses a CSPRNG, no information leak. For external IDs, prefer v4/v7 or nanoid, avoiding enumerable numeric IDs.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: How to choose between UUID, ULID, and nanoid?</p><p class="faq-a">A: UUID v4/v7: universal, cross-language, 128 bits. ULID: time-ordered, URL-safe, 26 chars. nanoid: ~16 chars, URL-safe, short IDs. PK: UUID v7 or ULID; share links: nanoid; cross-language interop: UUID.</p></div>
+
+      <div class="cta-box">
+        <p class="cta-title">Free UUID v4 / v1 / v5 Generator</p>
+        <p class="cta-sub">Batch 1/10/100 · Case toggle · Namespace presets · 100% browser-local</p>
+        <a class="cta-btn" href="/text/uuid/">Open UUID Generator →</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<div id="site-footer"></div>
+<script src="/assets/js/site.js" defer></script>
+</body>
+</html>

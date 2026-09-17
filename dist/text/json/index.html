@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JSON 格式化/校验/压缩 — 免费在线 JSON 工具 | CATAITO</title>
+<meta name="title-zh" content="JSON 格式化/校验/压缩 — 免费在线 JSON 工具 | CATAITO">
+<meta name="title-en" content="JSON Formatter/Validator/Minifier — Free Online JSON Tool | CATAITO">
+<meta name="description" content="免费在线 JSON 工具：粘贴 JSON 即可实时校验（含错误位置提示）、格式化（缩进 2/4/Tab 可选）、压缩为单行，显示字符/字节/嵌套深度统计。纯浏览器本地处理，数据不上传。">
+<meta name="theme-color" content="#f6f3ec">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="CATAITO 工具箱">
+<meta property="og:title" content="JSON 格式化/校验/压缩 — 免费在线工具">
+<meta property="og:description" content="粘贴 JSON 即可格式化、校验、压缩，纯浏览器本地处理。">
+<meta property="og:url" content="https://tools.cataito.com/text/json/">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:locale:alternate" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="JSON 格式化/校验/压缩">
+<meta name="twitter:description" content="免费在线 JSON 工具，纯本地处理。">
+<link rel="icon" type="image/png" href="/assets/img/cataito-logo.png">
+<link rel="canonical" href="https://tools.cataito.com/text/json/">
+<link rel="stylesheet" href="/assets/css/site.css">
+<script src="/assets/js/theme-init.js"></script>
+<script>
+  (function () {
+    try {
+      var l = localStorage.getItem('cataito-lang');
+      document.documentElement.setAttribute('lang', (l === 'en') ? 'en' : 'zh-CN');
+    } catch (e) {}
+  })();
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "JSON Formatter",
+  "alternateName": "JSON 格式化/校验/压缩",
+  "applicationCategory": "DeveloperApplication",
+  "operatingSystem": "Any",
+  "url": "https://tools.cataito.com/text/json/",
+  "inLanguage": ["zh-CN", "en"],
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "description": "免费在线 JSON 工具：格式化、校验（含错误位置提示）、压缩，纯浏览器本地处理，数据不上传。"
+}
+</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7103529190038161" crossorigin="anonymous"></script>
+</head>
+<body>
+<div id="site-header"></div>
+<main class="site-main">
+  <div class="t-head">
+    <nav class="breadcrumb"><a href="/" data-i18n="crumb_home">首页</a><span class="sep">/</span><span data-i18n="txt_name">JSON 格式化</span></nav>
+    <h1 class="page-h1" data-i18n="txt_name">JSON 格式化/校验/压缩</h1>
+    <p class="page-sub" data-i18n="txt_desc">粘贴 JSON 立即得到校验、格式化或压缩结果。缩进 2/4/Tab 可选，错误精准定位到行列。纯浏览器本地处理，数据不上传。</p>
+  </div>
+
+  <section class="t-card t-flow">
+    <div class="t-block">
+      <div class="t-field">
+        <div class="t-label">
+          <span data-i18n="txt_input">输入</span>
+          <span class="txt-actions">
+            <button type="button" class="t-icon-btn" id="txt-sample" title="" data-i18n-title="txt_sample" data-i18n-aria="txt_sample">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 13h6M9 17h4"/></svg>
+            </button>
+            <button type="button" class="t-icon-btn" id="txt-clear" title="" data-i18n-title="txt_clear" data-i18n-aria="txt_clear">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+            </button>
+          </span>
+        </div>
+        <textarea id="txt-in" class="txt-area" spellcheck="false" placeholder="{}"></textarea>
+        <div class="t-hint" id="txt-status">—</div>
+      </div>
+    </div>
+
+    <div class="t-block">
+      <div class="t-field">
+        <div class="t-label" data-i18n="txt_output">输出</div>
+        <div class="txt-ctrl">
+          <div class="t-seg" id="txt-mode">
+            <label class="t-seg-item"><input type="radio" name="txt-mode" value="pretty" checked><span data-i18n="txt_mode_pretty">格式化</span></label>
+            <label class="t-seg-item"><input type="radio" name="txt-mode" value="min"><span data-i18n="txt_mode_min">压缩</span></label>
+          </div>
+          <div class="t-field" style="margin:0;flex:0 0 auto;">
+            <div class="t-label" data-i18n="txt_indent">缩进</div>
+            <select id="txt-indent" class="t-select">
+              <option value="2" selected>2 spaces</option>
+              <option value="4">4 spaces</option>
+              <option value="tab">Tab</option>
+            </select>
+          </div>
+          <button type="button" class="t-icon-btn" id="txt-copy" title="" data-i18n-title="txt_copy" data-i18n-aria="txt_copy">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          </button>
+        </div>
+        <textarea id="txt-out" class="txt-area" readonly spellcheck="false" placeholder="—"></textarea>
+      </div>
+    </div>
+
+    <div class="t-block">
+      <div class="txt-stats" id="txt-stats">
+        <div><span data-i18n="txt_stat_chars">字符</span><strong id="txt-chars">0</strong></div>
+        <div><span data-i18n="txt_stat_bytes">字节</span><strong id="txt-bytes">0</strong></div>
+        <div><span data-i18n="txt_stat_depth">嵌套深度</span><strong id="txt-depth">0</strong></div>
+        <div><span data-i18n="txt_stat_keys">键数量</span><strong id="txt-keys">0</strong></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="t-prose">
+    <h2 data-i18n="txt_how_h">怎么用</h2>
+    <ol class="t-steps">
+      <li data-i18n-html="txt_how_1"><strong>粘贴 JSON</strong>：把 JSON 文本贴进上方输入框，下方会实时显示校验状态与错误位置。</li>
+      <li data-i18n-html="txt_how_2"><strong>选输出模式</strong>：「格式化」输出缩进可读的 JSON（可选 2 / 4 空格 / Tab）；「压缩」输出去掉所有多余空白的单行 JSON。</li>
+      <li data-i18n-html="txt_how_3"><strong>校验错误</strong>：JSON 不合法时，状态栏会提示具体行、列和错误原因，方便定位问题。</li>
+      <li data-i18n-html="txt_how_4"><strong>复制结果</strong>：点击输出框右侧的复制按钮，把结果带到编辑器或代码里。</li>
+    </ol>
+
+    <h2 data-i18n="txt_faq_h">常见问题</h2>
+    <div class="t-faq">
+      <div class="t-faq-item">
+        <p class="t-faq-q" data-i18n="txt_faq_1_q">我的数据会被上传吗？</p>
+        <p class="t-faq-a" data-i18n="txt_faq_1_a">不会。校验、格式化、压缩全部在浏览器本地完成（原生 JSON.parse / JSON.stringify），数据不离开你的设备。</p>
+      </div>
+      <div class="t-faq-item">
+        <p class="t-faq-q" data-i18n="txt_faq_2_q">JSON 校验报错怎么定位？</p>
+        <p class="t-faq-a" data-i18n="txt_faq_2_a">状态栏会显示错误位置（行、列）和简短原因，常见的包括缺少引号、多余逗号、括号不匹配等。修正后输入框会实时重新校验。</p>
+      </div>
+      <div class="t-faq-item">
+        <p class="t-faq-q" data-i18n="txt_faq_3_q">格式化与压缩有什么区别？</p>
+        <p class="t-faq-a" data-i18n="txt_faq_3_a">格式化会把 JSON 拆成多行、加缩进（2 / 4 空格或 Tab）便于人工阅读和 diff；压缩把所有空白去掉，得到体积最小的单行 JSON，通常用于存储或传输。</p>
+      </div>
+      <div class="t-faq-item">
+        <p class="t-faq-q" data-i18n="txt_faq_4_q">支持非标准 JSON 吗？</p>
+        <p class="t-faq-a" data-i18n="txt_faq_4_a">不支持。工具遵循 RFC 8259 标准 JSON 规范，JavaScript 对象字面量（未加引号的键、尾随逗号、单引号字符串等）不会通过校验。若需要解析 JS 对象，请先在源头补齐引号或改用 JSON.parse 兼容方案。</p>
+      </div>
+    </div>
+
+    <h2 data-i18n="related_guides">相关工具</h2>
+    <div class="t-guide-links">
+      <a class="t-guide-link" href="/text/char-count/">
+        <p class="t-guide-link-title" data-i18n="cc_name">字数统计器</p>
+        <p class="t-guide-link-desc" data-i18n="cc_desc">粘贴文本即可实时统计字符、词、句、段与阅读时长，中英文混合自动识别。纯浏览器本地处理，文本不上传。</p>
+      </a>
+      <a class="t-guide-link" href="/text/uuid/">
+        <p class="t-guide-link-title" data-i18n="uu_name">UUID 生成器</p>
+        <p class="t-guide-link-desc" data-i18n="uu_desc">支持 v4 / v1 / v5 三种版本，批量生成 1/10/100 个，大小写切换，一键复制或下载 .txt。全部在浏览器本地生成，绝不上传。</p>
+      </a>
+    </div>
+  </section>
+</main>
+
+<div id="site-footer"></div>
+<div id="txt-toast" class="t-toast">
+  <span class="t-toast-ic">
+    <svg class="ic-ok" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+    <svg class="ic-err" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+  </span>
+  <span class="t-toast-title"></span>
+</div>
+
+<script src="/assets/js/site.js" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+(function () {
+  'use strict';
+  var t = function (k, vars) { return (window.CATAITO_I18N && window.CATAITO_I18N.t) ? window.CATAITO_I18N.t(k, vars) : k; };
+
+  var inEl = document.getElementById('txt-in');
+  var outEl = document.getElementById('txt-out');
+  var modeEl = document.getElementById('txt-mode');
+  var indentEl = document.getElementById('txt-indent');
+  var statusEl = document.getElementById('txt-status');
+  var charsEl = document.getElementById('txt-chars');
+  var bytesEl = document.getElementById('txt-bytes');
+  var depthEl = document.getElementById('txt-depth');
+  var keysEl = document.getElementById('txt-keys');
+
+  var SAMPLE = JSON.stringify({
+    name: 'CATAITO Tools',
+    url: 'https://tools.cataito.com',
+    tools: 13,
+    features: {
+      free: true,
+      localOnly: true,
+      i18n: ['zh-CN', 'en']
+    },
+    stack: {
+      runtime: 'Browser',
+      deps: 0
+    }
+  }, null, 2);
+
+  /* ---------- 深度 & 键数量（迭代，避免深嵌套爆栈） ---------- */
+  function analyze(obj) {
+    var maxDepth = 0, cur = 0, keys = 0;
+    var stack = [{ node: obj, d: 1 }];
+    while (stack.length) {
+      var f = stack.pop();
+      if (!f || typeof f.node !== 'object' || f.node === null) continue;
+      if (f.d > maxDepth) maxDepth = f.d;
+      var entries = Array.isArray(f.node) ? f.node : Object.keys(f.node);
+      for (var i = 0; i < entries.length; i++) {
+        var v = Array.isArray(f.node) ? entries[i] : f.node[entries[i]];
+        if (v && typeof v === 'object') {
+          stack.push({ node: v, d: f.d + 1 });
+          keys++;
+        }
+      }
+    }
+    if (obj && typeof obj === 'object' && !Array.isArray(obj)) keys += Object.keys(obj).length;
+    return { depth: maxDepth, keys: keys };
+  }
+
+  /* ---------- 校验并输出 ---------- */
+  function render() {
+    var raw = inEl.value;
+    var mode = (modeEl.querySelector('input:checked') || {}).value || 'pretty';
+    var indentVal = indentEl.value;
+    var indent = indentVal === 'tab' ? '\t' : parseInt(indentVal, 10);
+
+    // 空输入
+    if (!raw.trim()) {
+      outEl.value = '';
+      statusEl.textContent = t('txt_status_empty');
+      statusEl.className = 't-hint';
+      charsEl.textContent = '0'; bytesEl.textContent = '0';
+      depthEl.textContent = '0'; keysEl.textContent = '0';
+      return;
+    }
+
+    // 解析
+    var obj;
+    try {
+      obj = JSON.parse(raw);
+    } catch (e) {
+      outEl.value = '';
+      var msg = String(e.message || e);
+      // 从错误消息提取位置
+      var posMatch = msg.match(/position (\d+)/i) || msg.match(/\((\d+)/i);
+      var pos = posMatch ? parseInt(posMatch[1], 10) : -1;
+      var line, col;
+      if (pos >= 0 && pos < raw.length) {
+        var before = raw.slice(0, pos);
+        line = before.split('\n').length;
+        col = pos - before.lastIndexOf('\n');
+      } else { line = null; col = null; }
+      var loc = (line != null) ? (' ' + t('txt_err_at', { line: line, col: col }) + ' ') : '';
+      var msgOnly = msg.replace(/.*position \d+\.?/i, '').trim() || msg;
+      statusEl.textContent = t('txt_err_prefix') + loc + msgOnly;
+      statusEl.className = 't-hint is-err';
+      // 空结果不统计
+      charsEl.textContent = '0'; bytesEl.textContent = '0';
+      depthEl.textContent = '0'; keysEl.textContent = '0';
+      return;
+    }
+
+    // 生成输出
+    var out;
+    try {
+      out = (mode === 'min') ? JSON.stringify(obj) : JSON.stringify(obj, null, indent);
+    } catch (e) {
+      outEl.value = '';
+      statusEl.textContent = t('txt_err_serialize') + (e.message ? ': ' + e.message : '');
+      statusEl.className = 't-hint is-err';
+      return;
+    }
+
+    outEl.value = out;
+    statusEl.textContent = t('txt_ok', { mode: mode });
+    statusEl.className = 't-hint is-ok';
+
+    // 统计
+    var chars = out.length;
+    var bytes = new TextEncoder().encode(out).length;
+    var info = analyze(obj);
+    charsEl.textContent = chars.toLocaleString();
+    bytesEl.textContent = bytes.toLocaleString();
+    depthEl.textContent = info.depth;
+    keysEl.textContent = info.keys.toLocaleString();
+  }
+
+  /* ---------- Toast ---------- */
+  var toastTimer = null;
+  function showToast(msg, isErr) {
+    var el = document.getElementById('txt-toast');
+    el.querySelector('.t-toast-title').textContent = msg;
+    el.classList.toggle('error', !!isErr);
+    el.classList.add('show');
+    if (toastTimer) clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { el.classList.remove('show'); }, 2400);
+  }
+
+  function copyOut() {
+    var txt = outEl.value;
+    if (!txt) { showToast(t('txt_toast_empty'), true); return; }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(txt).then(function () {
+        showToast(t('txt_toast_copied'));
+      }, function () { fallbackCopy(txt); });
+    } else fallbackCopy(txt);
+  }
+  function fallbackCopy(txt) {
+    var ta = document.createElement('textarea');
+    ta.value = txt;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand('copy'); showToast(t('txt_toast_copied')); }
+    catch (e) { showToast(t('txt_toast_copy_fail'), true); }
+    ta.remove();
+  }
+
+  /* ---------- 事件绑定 ---------- */
+  inEl.addEventListener('input', render);
+  modeEl.addEventListener('change', render);
+  indentEl.addEventListener('change', render);
+  document.getElementById('txt-copy').addEventListener('click', copyOut);
+  document.getElementById('txt-clear').addEventListener('click', function () {
+    inEl.value = ''; render(); inEl.focus();
+  });
+  document.getElementById('txt-sample').addEventListener('click', function () {
+    inEl.value = SAMPLE; render();
+  });
+  document.addEventListener('cataito-lang-change', render);
+
+  // 首屏：加载示例让页面不空
+  inEl.value = SAMPLE;
+  render();
+})();
+});
+</script>
+
+<style>
+  /* 本页专属规则；通用组件复用 site.css 的 .t-* 共享组件层 */
+  .txt-actions { margin-left: 10px; display: inline-flex; gap: 4px; vertical-align: middle; }
+  .txt-area {
+    display: block; width: 100%; box-sizing: border-box;
+    min-height: 180px;
+    padding: 14px 16px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: var(--card-2);
+    color: var(--text);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    line-height: 1.6;
+    resize: vertical;
+    word-break: break-all;
+    tab-size: 4;
+    transition: border-color .15s;
+  }
+  .txt-area:focus { outline: none; border-color: var(--text-3); }
+  .txt-area[readonly] { background: var(--card); }
+  .txt-ctrl {
+    display: flex; align-items: flex-end; gap: 14px;
+    margin-bottom: 10px; flex-wrap: wrap;
+  }
+  .txt-ctrl .t-field { margin: 0; }
+  .txt-ctrl .t-select { min-width: 130px; }
+  .txt-stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px 20px;
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+  }
+  @media (min-width: 640px) {
+    .txt-stats { grid-template-columns: repeat(4, 1fr); }
+  }
+  .txt-stats > div {
+    display: flex; align-items: baseline; gap: 8px;
+    padding: 8px 0;
+    border-top: 1px solid var(--border);
+  }
+  .txt-stats span { color: var(--text-3); }
+  .txt-stats strong { color: var(--text); font-weight: 600; }
+  .t-hint.is-err { color: var(--danger); }
+  .t-hint.is-ok { color: var(--success); }
+</style>
+</body>
+</html>
