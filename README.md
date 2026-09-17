@@ -42,7 +42,8 @@ dist/
   assets/css/site.css     # 共享外壳样式 + 全站设计令牌（:root / html.dark）
   assets/js/site.js       # 共享外壳逻辑（导航注入 / 中英双语 / 页脚 / 主题按钮）
   assets/js/theme-init.js # 全站主题系统（见下）
-  assets/img/icon.svg     # 站点图标
+  assets/img/icon.svg     # 历史方块图标（已废弃，全站改用 cataito-logo.png）
+  assets/img/cataito-logo.png  # 站点 favicon（512×512 RGBA，CATAITO 字标）
   sitemap.xml             # 站点地图（含中英 hreflang 备用链接）
   robots.txt
 ```

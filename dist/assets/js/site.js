@@ -884,14 +884,14 @@
     }
   }
 
-  /* favicon 跟随主题两版切换（亮模式黑描边 / 暗模式白描边） */
+  /* favicon：全站统一用 /assets/img/cataito-logo.png（CATAITO 字标 PNG） */
   function bindFavicon() {
     function set(href) {
       var l = document.querySelector('link[data-cataito-fav]');
       if (!l) {
         l = document.createElement('link');
         l.rel = 'icon';
-        l.type = 'image/svg+xml';
+        l.type = 'image/png';
         l.setAttribute('data-cataito-fav', '1');
         document.head.appendChild(l);
       }
@@ -899,7 +899,7 @@
     }
     function update() {
       var theme = (window.CATAITO_THEME && window.CATAITO_THEME.get) ? window.CATAITO_THEME.get() : 'light';
-      set(theme === 'dark' ? '/assets/logo/cataito-logo-light.svg' : '/assets/logo/cataito-logo-dark.svg');
+      set('/assets/img/cataito-logo.png');
     }
     update();
     document.addEventListener('cataito-theme-change', update);

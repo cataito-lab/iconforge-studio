@@ -23,9 +23,9 @@
 | 文件 | 职责 |
 | --- | --- |
 | `assets/css/site.css` | 设计令牌**唯一源**（`:root` 亮 / `html.dark` 暗）+ `.t-*` 工具页组件层 + 全站外壳样式 |
-| `assets/js/site.js` | 外壳：注入 `#site-header` / `#site-footer`、i18n 词典 `t()`、`?lang=en`、favicon 跟随主题、og:image 兜底、**CF Analytics beacon（bindAnalytics）** |
+| `assets/js/site.js` | 外壳：注入 `#site-header` / `#site-footer`、i18n 词典 `t()`、`?lang=en`、**全站 favicon 统一切换 `/assets/img/cataito-logo.png`**、og:image 兜底、**CF Analytics beacon（bindAnalytics）** |
 | `assets/js/theme-init.js` | `<head>` 同步引入防闪（禁 defer）；`localStorage.cataito-theme`，跟随系统 |
-| 各页 `index.html` | 工具专属逻辑与样式；通用组件一律复用 `.t-*`，页面内只写专属样式 |
+| 各页 `index.html` | 工具专属逻辑与样式；通用组件一律复用 `.t-*`，页面内只写专属样式；**每页 `<head>` 静态声明 `<link rel="icon" type="image/png" href="/assets/img/cataito-logo.png">`**（防首屏闪烁，不依赖 JS） |
 
 ⚠️ **注入容器无类名**：`renderHeader/renderFooter` 只输出 `#site-header` / `#site-footer` 容器（内部是 `.site-header__inner` / `.site-footer__inner`），**顶栏/页脚样式必须写在 ID 上**——历史上写在 `.site-header` / `.site-footer` 类上导致吸顶和页脚样式从未生效（2026-09-05 修复）。
 
