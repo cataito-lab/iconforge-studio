@@ -68,7 +68,8 @@
     { "@type": "ListItem", "position": 13, "item": { "@type": "SoftwareApplication", "name": "Meta Tag Generator", "applicationCategory": "DesignApplication", "operatingSystem": "Any", "url": "https://tools.cataito.com/meta-tags/", "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" } } },
     { "@type": "ListItem", "position": 14, "item": { "@type": "SoftwareApplication", "name": "JSON Formatter", "applicationCategory": "DeveloperApplication", "operatingSystem": "Any", "url": "https://tools.cataito.com/text/json/", "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" } } },
     { "@type": "ListItem", "position": 15, "item": { "@type": "SoftwareApplication", "name": "Word Counter", "applicationCategory": "UtilityApplication", "operatingSystem": "Any", "url": "https://tools.cataito.com/text/char-count/", "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" } } },
-    { "@type": "ListItem", "position": 16, "item": { "@type": "SoftwareApplication", "name": "UUID Generator", "applicationCategory": "DeveloperApplication", "operatingSystem": "Any", "url": "https://tools.cataito.com/text/uuid/", "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" } } }
+    { "@type": "ListItem", "position": 16, "item": { "@type": "SoftwareApplication", "name": "UUID Generator", "applicationCategory": "DeveloperApplication", "operatingSystem": "Any", "url": "https://tools.cataito.com/text/uuid/", "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" } } },
+    { "@type": "ListItem", "position": 17, "item": { "@type": "SoftwareApplication", "name": "Image to PDF Converter", "applicationCategory": "UtilityApplication", "operatingSystem": "Any", "url": "https://tools.cataito.com/pdf/image-to-pdf/", "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" } } }
   ]
 }
 </script>
@@ -107,7 +108,7 @@
     {
       "@type": "Question",
       "name": "目前提供哪些工具？",
-      "acceptedAnswer": { "@type": "Answer", "text": "目前提供图标工坊 IconForge、Favicon 生成器、图片压缩、配色 / 调色板、图片格式转换、图片裁剪与缩放、对比度检查、二维码生成、条形码生成、图片加水印、CSS 渐变、密码生成器、Meta 标签、JSON 格式化、字数统计、UUID 生成十六类工具，均为纯前端实现，后续还会持续增加。" }
+      "acceptedAnswer": { "@type": "Answer", "text": "目前提供图标工坊 IconForge、Favicon 生成器、图片压缩、配色 / 调色板、图片格式转换、图片裁剪与缩放、对比度检查、二维码生成、条形码生成、图片加水印、CSS 渐变、密码生成器、Meta 标签、JSON 格式化、字数统计、UUID 生成、图片转 PDF 十七类工具，均为纯前端实现，后续还会持续增加。" }
     }
   ]
 }
@@ -228,6 +229,8 @@
       <div class="tool-card__top"><span class="tool-card__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h10M4 17h16"/></svg></span><h3 class="tool-card__name" data-i18n="home_tool_txt_cc">字数统计</h3></div><p class="tool-card__desc" data-i18n="home_tool_txt_cc_desc">实时统计字符/词/句/段/阅读与朗读时长，中英日混合自动识别。</p><div class="tool-card__foot"><span class="tool-card__go" data-i18n="use_tool">使用工具 →</span></div></a>
     <a class="tool-card" href="/text/uuid/">
       <div class="tool-card__top"><span class="tool-card__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 8a4 4 0 0 1 4 4v0a4 4 0 0 1-4 4M16 12a4 4 0 0 0-4-4v0a4 4 0 0 0 4 4"/><circle cx="10" cy="10" r="1"/><circle cx="14" cy="14" r="1"/></svg></span><h3 class="tool-card__name" data-i18n="home_tool_txt_uuid">UUID 生成</h3></div><p class="tool-card__desc" data-i18n="home_tool_txt_uuid_desc">v4 / v1 / v5 三种版本，批量生成 1/10/100 个，大小写切换，一键复制或下载。</p><div class="tool-card__foot"><span class="tool-card__go" data-i18n="use_tool">使用工具 →</span></div></a>
+    <a class="tool-card" href="/pdf/image-to-pdf/">
+      <div class="tool-card__top"><span class="tool-card__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></span><h3 class="tool-card__name" data-i18n="home_tool_i2p">图片转 PDF</h3></div><p class="tool-card__desc" data-i18n="home_tool_i2p_desc">多张 JPG / PNG 按顺序合成为一个 PDF，页面尺寸与边距可调，纯本地生成。</p><div class="tool-card__foot"><span class="tool-card__go" data-i18n="use_tool">使用工具 →</span></div></a>
   </div>
 
   <!-- 实用指南（静态真文本 + 指南反链，铁律 11：不依赖 JS 注入） -->
@@ -266,7 +269,7 @@
       <div class="tool-card__top">
         <h3 class="tool-card__name" data-i18n="home_guides_all">全部使用指南</h3>
       </div>
-      <p class="tool-card__desc" data-i18n="home_guides_all_desc">浏览全部 10 篇双语指南：格式原理、尺寸规范、排障排查与最佳实践。</p>
+      <p class="tool-card__desc" data-i18n="home_guides_all_desc">浏览全部 21 篇双语指南：格式原理、尺寸规范、排障排查与最佳实践。</p>
       <div class="tool-card__foot"><span class="tool-card__go" data-i18n="home_read_guide">阅读指南 →</span></div>
     </a>
   </div>
@@ -314,7 +317,7 @@
       </div>
       <div class="faq-item">
         <h3 class="faq-q" data-i18n="hf_faq_3_q">目前提供哪些工具？</h3>
-        <p class="faq-a" data-i18n="hf_faq_3_a">目前提供图标工坊 IconForge、Favicon 生成器、图片压缩、配色 / 调色板、图片格式转换、图片裁剪与缩放、对比度检查、二维码生成、条形码生成、图片加水印、CSS 渐变、密码生成器、Meta 标签十三类工具，均为纯前端实现，后续还会持续增加。</p>
+        <p class="faq-a" data-i18n="hf_faq_3_a">目前提供图标工坊 IconForge、Favicon 生成器、图片压缩、配色 / 调色板、图片格式转换、图片裁剪与缩放、对比度检查、二维码生成、条形码生成、图片加水印、CSS 渐变、密码生成器、Meta 标签、JSON 格式化、字数统计、UUID 生成、图片转 PDF 十七类工具，均为纯前端实现，后续还会持续增加。</p>
       </div>
     </div>
   </section>

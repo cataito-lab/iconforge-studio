@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JPG 转 PDF 完全指南：什么时候转、怎么转最好 | CATAITO</title>
+<meta name="title-zh" content="JPG 转 PDF 完全指南：什么时候转、怎么转最好 | CATAITO">
+<meta name="title-en" content="JPG to PDF Guide: When and How to Convert | CATAITO">
+<meta name="description" content="图片转 PDF 完全指南：哪些场景必须用 PDF、页面尺寸（适配图片 / A4 / Letter）与边距怎么选、画质与体积的取舍、多张图片的排序技巧，以及云上传转换工具的隐私风险。附免费在线图片转 PDF 工具，纯浏览器本地生成。">
+<meta name="theme-color" content="#f6f3ec">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="CATAITO 工具箱">
+<meta property="og:title" content="JPG 转 PDF 完全指南">
+<meta property="og:description" content="哪些场景必须用 PDF、页面尺寸与边距选择、画质与体积取舍、多图排序技巧，以及云上传工具的隐私风险。">
+<meta property="og:url" content="https://tools.cataito.com/guides/jpg-to-pdf-guide/">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:locale:alternate" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="JPG 转 PDF 完全指南">
+<meta name="twitter:description" content="页面尺寸与边距选择、画质与体积取舍、多图排序与隐私考量。">
+<link rel="canonical" href="https://tools.cataito.com/guides/jpg-to-pdf-guide/">
+<link rel="icon" type="image/png" href="/assets/img/cataito-logo.png">
+<link rel="stylesheet" href="/assets/css/site.css">
+<script src="/assets/js/theme-init.js"></script>
+<script>
+  (function () {
+    try {
+      var l = localStorage.getItem('cataito-lang');
+      document.documentElement.setAttribute('lang', (l === 'en') ? 'en' : 'zh-CN');
+      if (l === 'en') document.documentElement.classList.add('lang-en');
+    } catch (e) {}
+  })();
+</script>
+<style>
+  .guide-wrap { max-width: 760px; margin: 0; }
+  .guide-meta { font-size: 13px; color: var(--text-3); margin: 0 0 6px; }
+  .page-sub { margin-bottom: 10px; }
+  .article { font-size: 15px; line-height: 1.85; color: var(--text); }
+  .article h2 {
+    font-size: 21px; font-weight: 700; letter-spacing: -.3px;
+    margin: 44px 0 14px; padding-top: 16px; border-top: 1px solid var(--border); color: var(--text);
+  }
+  .article h3 { font-size: 16.5px; font-weight: 650; margin: 26px 0 10px; color: var(--text); }
+  .article p { margin: 0 0 14px; color: var(--text-2); }
+  .article strong { color: var(--text); font-weight: 650; }
+  .article a { color: var(--accent); text-decoration: none; }
+  .article a:hover { text-decoration: underline; }
+  .article ul, .article ol { margin: 0 0 16px; padding-left: 22px; color: var(--text-2); }
+  .article li { margin: 6px 0; }
+  .article code {
+    font-family: var(--font-mono);
+    font-size: 13px; background: var(--card-2); border: 1px solid var(--border);
+    border-radius: 3px; padding: 1px 6px; color: var(--text);
+  }
+  .article pre {
+    background: var(--card-2); border: 1px solid var(--border); border-radius: var(--radius-sm);
+    padding: 14px 16px; margin: 14px 0 18px; overflow-x: auto;
+  }
+  .article pre code { background: none; border: none; padding: 0; font-size: 12.5px; line-height: 1.7; }
+  .article table {
+    width: 100%; border-collapse: collapse; margin: 18px 0 22px;
+    font-size: 13.5px; background: var(--card);
+    border: 1px solid var(--border); border-radius: var(--radius-sm); overflow: hidden;
+  }
+  .article th, .article td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--border); }
+  .article th { background: var(--card-2); color: var(--text); font-weight: 650; white-space: nowrap; }
+  .article td { color: var(--text-2); }
+  .article tr:last-child td { border-bottom: none; }
+  .toc {
+    background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 16px 18px; margin: 20px 0 8px; box-shadow: var(--shadow-sm);
+  }
+  .toc-title { font-size: 13px; font-weight: 650; color: var(--text); margin: 0 0 10px; }
+  .toc ol { margin: 0; padding-left: 20px; font-size: 13.5px; }
+  .toc li { margin: 5px 0; }
+  .toc a { color: var(--text-2); text-decoration: none; }
+  .toc a:hover { color: var(--accent); }
+  .cta-box {
+    background: linear-gradient(135deg, var(--accent-soft), var(--accent-soft-2));
+    border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent); border-radius: var(--radius);
+    padding: 20px 22px; margin: 34px 0 10px; text-align: center;
+  }
+  .cta-box .cta-title { font-size: 17px; font-weight: 700; color: var(--text); margin: 0 0 6px; }
+  .cta-box .cta-sub { font-size: 13.5px; color: var(--text-2); margin: 0 0 14px; }
+  .cta-btn {
+    display: inline-block; background: var(--accent); color: #fff; text-decoration: none;
+    font-size: 14px; font-weight: 600; padding: 11px 26px; border-radius: var(--radius-sm);
+    box-shadow: 0 6px 18px var(--accent-glow); transition: background .15s;
+  }
+  .cta-btn:hover { background: var(--accent-hover); }
+  .article a.cta-btn, .article .cta-btn { color: #fff; text-decoration: none; }
+  .article a.cta-btn:hover { color: #fff; text-decoration: none; background: var(--accent-hover); }
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "JPG 转 PDF 完全指南：什么时候转、怎么转最好",
+  "description": "详解哪些场景必须用 PDF、页面尺寸（适配图片 / A4 / Letter）与边距怎么选、画质与体积的取舍、多张图片的排序技巧，以及云上传转换工具的隐私风险。",
+  "inLanguage": "zh-CN",
+  "datePublished": "2026-09-27",
+  "dateModified": "2026-09-27",
+  "author": { "@type": "Organization", "name": "CATAITO", "url": "https://tools.cataito.com/" },
+  "publisher": { "@type": "Organization", "name": "CATAITO 工具箱", "url": "https://tools.cataito.com/" },
+  "mainEntityOfPage": "https://tools.cataito.com/guides/jpg-to-pdf-guide/"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "图片转 PDF 会损失画质吗？",
+      "acceptedAnswer": { "@type": "Answer", "text": "转 PDF 本身不会无损保存 PNG 的透明通道，且多数工具会把图片按 JPEG 重新编码（质量 90 肉眼几乎无损）。想控制体积可把质量降到 75–85；对画质有硬要求的扫描件建议用 300 DPI 以上的原图再转换。" }
+    },
+    {
+      "@type": "Question",
+      "name": "页面尺寸选「适配图片」还是 A4？",
+      "acceptedAnswer": { "@type": "Answer", "text": "给人在屏幕上看（邮件附件、聊天发送）选「适配图片」，每页正好一张原图、不出现白边；要打印或正式提交选 A4（国内/欧洲）或 Letter（北美），图片会等比缩放居中放在纸面内，可另选边距。" }
+    },
+    {
+      "@type": "Question",
+      "name": "把证件照片转成 PDF，上传在线工具安全吗？",
+      "acceptedAnswer": { "@type": "Answer", "text": "主流在线转换器（iLovePDF、Smallpdf 等）会把文件上传到服务器处理，证件照片属于高敏感素材，不建议上传。更稳妥的方式是用纯浏览器本地处理的转换工具，文件全程不离开设备。" }
+    },
+    {
+      "@type": "Question",
+      "name": "多张图片的页面顺序由什么决定？",
+      "acceptedAnswer": { "@type": "Answer", "text": "由你添加图片的顺序决定。规范的工具会提供上移/下移按钮逐张调整；上传前把文件名按 01、02、03 编号再批量选择，也能天然得到正确顺序。" }
+    },
+    {
+      "@type": "Question",
+      "name": "PNG 转 PDF 和 JPG 转 PDF 有区别吗？",
+      "acceptedAnswer": { "@type": "Answer", "text": "对工具流程没有区别。差异在源图特性：PNG 截图/图标通常体积大但干净，转 JPEG 编码后反而变小；JPG 照片本身已压缩，重编码后体积可能略有浮动。透明 PNG 会被铺白底，因为 PDF 嵌入的 JPEG 不支持透明。" }
+    },
+    {
+      "@type": "Question",
+      "name": "为什么不能直接把图片改后缀叫 .pdf？",
+      "acceptedAnswer": { "@type": "Answer", "text": "PDF 是一种有目录结构的文档格式（对象、交叉引用表、页树），不是图片格式的别名。直接改后缀的文件大多数查看器打不开或显示异常，必须用真正的转换器生成合法的 PDF 结构。" }
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "首页", "item": "https://tools.cataito.com/" },
+    { "@type": "ListItem", "position": 2, "name": "使用指南", "item": "https://tools.cataito.com/guides/" },
+    { "@type": "ListItem", "position": 3, "name": "JPG 转 PDF 完全指南", "item": "https://tools.cataito.com/guides/jpg-to-pdf-guide/" }
+  ]
+}
+</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7103529190038161" crossorigin="anonymous"></script>
+</head>
+<body>
+<div id="site-header"></div>
+
+<main class="site-main">
+  <div class="guide-wrap">
+    <nav class="breadcrumb"><a href="/" data-i18n="crumb_home">首页</a><span class="sep">/</span><a href="/guides/" data-i18n="nav_guides">使用指南</a><span class="sep">/</span><span data-i18n="gd_i2p_short">JPG 转 PDF 指南</span></nav>
+    <p class="guide-meta"><span data-i18n="gd_published">发布于</span> 2026-09-27 · CATAITO</p>
+    <h1 class="page-h1" data-i18n="gd_i2p_h1">JPG 转 PDF 完全指南</h1>
+    <p class="page-sub" data-i18n="gd_i2p_sub">发证件、交合同、传扫描件，最后一步几乎都是「转成 PDF」。本文讲清哪些场景必须转 PDF、页面尺寸与边距怎么选、画质与体积的取舍、多张图片的排序技巧，以及云上传转换工具的隐私风险。附免费在线图片转 PDF 工具。</p>
+
+    <div class="article lb-zh">
+      <div class="toc">
+        <p class="toc-title">目录</p>
+        <ol>
+          <li><a href="#when">什么时候需要把图片转成 PDF</a></li>
+          <li><a href="#page-size">页面尺寸：适配图片 vs A4 / Letter</a></li>
+          <li><a href="#margin">边距与方向</a></li>
+          <li><a href="#quality">画质与体积的取舍</a></li>
+          <li><a href="#order">多张图片的排序技巧</a></li>
+          <li><a href="#privacy">隐私：云上传 vs 本地转换</a></li>
+          <li><a href="#faq">常见问题</a></li>
+        </ol>
+      </div>
+
+      <h2 id="when">什么时候需要把图片转成 PDF</h2>
+      <p>JPG / PNG 是「图片」，PDF 是「文档」。接收方要的是<strong>一份固定版式的文件</strong>时，就该转 PDF：</p>
+      <ul>
+        <li><strong>证件与材料提交</strong>：政务、银行、学校、签证系统几乎只收 PDF——多张证件照按顺序合成一个文件，一次传完。</li>
+        <li><strong>合同 / 单据回传</strong>：拍照或扫描后的签字页合成 PDF 回传，页序固定、对方无法轻易改动单页。</li>
+        <li><strong>多图打包发送</strong>：十几张截图发给对方，不如一个 PDF——接收方按页翻看，顺序不会乱，也不会被聊天工具二次压缩。</li>
+        <li><strong>打印</strong>：把图片放进 A4 页面再打印，比直接打印图片更可控（页边距、居中、缩放都固定了）。</li>
+      </ul>
+      <p>反过来，如果对方要的是「继续编辑的素材」，请保留原始图片格式，别转 PDF。</p>
+
+      <h2 id="page-size">页面尺寸：适配图片 vs A4 / Letter</h2>
+      <table>
+        <thead><tr><th>选项</th><th>页面大小</th><th>适合场景</th></tr></thead>
+        <tbody>
+          <tr><td>适配图片</td><td>每页正好一张原图</td><td>屏幕阅读：邮件附件、聊天发送、在线提交预览</td></tr>
+          <tr><td>A4</td><td>210×297mm（595×842pt）</td><td>国内/欧洲的打印与正式提交</td></tr>
+          <tr><td>Letter</td><td>216×279mm（612×792pt）</td><td>北美地区的打印与正式提交</td></tr>
+        </tbody>
+      </table>
+      <p>经验法则：<strong>给机器或屏幕看，选适配图片；给打印机或人签字，选 A4 / Letter</strong>。A4 模式下图片会等比缩放放入纸面（不裁切、不变形），横图自动横放，竖图自动竖放。</p>
+
+      <h2 id="margin">边距与方向</h2>
+      <p>固定纸张（A4 / Letter）下，两个参数影响成品观感：</p>
+      <ul>
+        <li><strong>边距</strong>：无边距图片顶满纸边，打印机可能吃掉边缘内容；<strong>10mm 窄边距</strong>适合照片集；<strong>20mm 标准边距</strong>适合要装订或批注的文件。</li>
+        <li><strong>方向</strong>：「按图片自动」最省心——横图横放、竖图竖放；整份文件要统一方向时（例如打印装订）再手动固定竖版或横版。</li>
+      </ul>
+      <p>「适配图片」模式下页面就是图片本身，边距与方向选项不生效。</p>
+
+      <h2 id="quality">画质与体积的取舍</h2>
+      <p>转换器通常把图片按 JPEG 重新编码后嵌入 PDF（这是兼容性最好的做法）：</p>
+      <table>
+        <thead><tr><th>质量档</th><th>典型效果</th><th>适用</th></tr></thead>
+        <tbody>
+          <tr><td>90–100</td><td>肉眼接近无损</td><td>证件、合同、扫描件（默认推荐）</td></tr>
+          <tr><td>75–85</td><td>体积明显减小，轻微细节损失</td><td>邮件附件、聊天发送</td></tr>
+          <tr><td>&lt;70</td><td>可见块状伪影</td><td>仅草稿</td></tr>
+        </tbody>
+      </table>
+      <p>体积规律：<strong>PNG 截图转 PDF 通常变小</strong>（截图大多是无损大文件）；<strong>已高度压缩的 JPG 可能略微变大</strong>，这是重编码的正常代价。对画质有硬要求的场景，用高分辨率原图 + 质量 90。</p>
+
+      <h2 id="order">多张图片的排序技巧</h2>
+      <p>PDF 的页面顺序 = 你添加图片的顺序。两个实用做法：</p>
+      <ol class="t-steps">
+        <li><strong>文件名预排序</strong>：上传前把文件重命名为 <code>01.jpg、02.jpg、03.jpg</code>，批量选择时天然有序（注意 1–9 补零，否则 <code>10.jpg</code> 会排在 <code>2.jpg</code> 前面）。</li>
+        <li><strong>工具内微调</strong>：用每行的上移 / 下移按钮逐张调整，改完核对一遍缩略图顺序再生成。</li>
+      </ol>
+
+      <h2 id="privacy">隐私：云上传 vs 本地转换</h2>
+      <p>主流在线转换器（iLovePDF、Smallpdf、PDF24 等）的工作方式是<strong>把你的文件上传到服务器</strong>，处理完再给你下载链接。转普通照片无所谓，但转的内容如果是证件、合同、医疗单据，就值得三思——你无法控制服务器端那份副本的留存周期。</p>
+      <p>另一条路线是<strong>纯浏览器本地转换</strong>：转换逻辑在你的浏览器里完成，文件全程不离开设备，断网也能用。本站的 <a href="/pdf/image-to-pdf/">图片转 PDF 工具</a>就是这一路线——包括 PDF 文件本身都是浏览器逐字节生成的，适合证件等敏感素材。</p>
+
+      <h2 id="faq">常见问题</h2>
+      <div class="faq-item"><p class="faq-q">Q：图片转 PDF 会损失画质吗？</p><p class="faq-a">A：PNG 的透明通道无法保留（会铺白底），且图片通常按 JPEG 重新编码——质量 90 时肉眼几乎无损。控制体积可降到 75–85。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：页面尺寸选「适配图片」还是 A4？</p><p class="faq-a">A：屏幕上看选适配图片（每页正好一张原图）；打印或正式提交选 A4（国内/欧洲）或 Letter（北美）。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：把证件照片转成 PDF，上传在线工具安全吗？</p><p class="faq-a">A：主流工具会上传到服务器处理，证件类敏感素材不建议。改用纯浏览器本地处理的工具更稳妥。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：多张图片的页面顺序由什么决定？</p><p class="faq-a">A：由添加顺序决定。文件名按 01、02、03 预编号再批量上传，或用工具内的上移/下移按钮调整。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：PNG 转 PDF 和 JPG 转 PDF 有区别吗？</p><p class="faq-a">A：流程无区别。PNG 截图转换后通常变小；已压缩的 JPG 可能略大。透明 PNG 会被铺白底。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：为什么不能直接把图片改后缀叫 .pdf？</p><p class="faq-a">A：PDF 是有目录结构的文档格式（对象、交叉引用表、页树），不是图片格式的别名。改后缀的文件查看器打不开，必须用转换器生成合法结构。</p></div>
+
+      <div class="cta-box">
+        <p class="cta-title">免费在线图片转 PDF</p>
+        <p class="cta-sub">多图合成 · 适配图片 / A4 / Letter · 边距与画质可调 · 纯浏览器本地生成</p>
+        <a class="cta-btn" href="/pdf/image-to-pdf/">打开图片转 PDF 工具 →</a>
+      </div>
+    </div>
+
+    <div class="article lb-en">
+      <div class="toc">
+        <p class="toc-title">Table of Contents</p>
+        <ol>
+          <li><a href="#when">When Images Should Become PDF</a></li>
+          <li><a href="#page-size">Page Size: Fit-to-Image vs A4 / Letter</a></li>
+          <li><a href="#margin">Margins &amp; Orientation</a></li>
+          <li><a href="#quality">Quality vs File Size</a></li>
+          <li><a href="#order">Ordering Multiple Images</a></li>
+          <li><a href="#privacy">Privacy: Cloud Upload vs Local Conversion</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ol>
+      </div>
+
+      <h2 id="when">When Images Should Become PDF</h2>
+      <p>JPG / PNG are "pictures"; PDF is a "document". Convert when the recipient expects <strong>a fixed-layout file</strong>:</p>
+      <ul>
+        <li><strong>ID and document submission</strong>: government, banking, school, and visa systems accept PDF only — combine several ID photos into one file, in order.</li>
+        <li><strong>Contract / receipt return</strong>: combine photographed or scanned signature pages; page order is fixed and single pages can't be swapped easily.</li>
+        <li><strong>Sending many images</strong>: one PDF beats fifteen screenshots — the recipient pages through in order, and chat apps won't re-compress it.</li>
+        <li><strong>Printing</strong>: placing images on A4 pages beats printing raw images — margins, centering, and scaling are all fixed.</li>
+      </ul>
+      <p>Conversely, if the recipient needs editable source material, keep the original image format.</p>
+
+      <h2 id="page-size">Page Size: Fit-to-Image vs A4 / Letter</h2>
+      <table>
+        <thead><tr><th>Option</th><th>Page size</th><th>Best for</th></tr></thead>
+        <tbody>
+          <tr><td>Fit to image</td><td>Each page is exactly one image</td><td>On-screen reading: email attachments, chat, online submission previews</td></tr>
+          <tr><td>A4</td><td>210×297mm (595×842pt)</td><td>Printing and formal submission in Europe/Asia</td></tr>
+          <tr><td>Letter</td><td>216×279mm (612×792pt)</td><td>Printing and formal submission in North America</td></tr>
+        </tbody>
+      </table>
+      <p>Rule of thumb: <strong>for screens and machines, fit to image; for printers and signatures, A4 / Letter</strong>. In A4 mode images are scaled proportionally onto the paper (no cropping, no distortion), landscape images rotate the page automatically.</p>
+
+      <h2 id="margin">Margins &amp; Orientation</h2>
+      <p>For fixed paper (A4 / Letter), two parameters shape the result:</p>
+      <ul>
+        <li><strong>Margins</strong>: zero margins run images to the paper edge, where printers may clip content; <strong>10mm narrow</strong> suits photo collections; <strong>20mm normal</strong> suits files meant for binding or annotation.</li>
+        <li><strong>Orientation</strong>: "Auto per image" is easiest — landscape images get landscape pages; fix portrait or landscape manually when a document must be uniform (e.g., for binding).</li>
+      </ul>
+      <p>In "Fit to image" mode the page is the image itself; margin and orientation options don't apply.</p>
+
+      <h2 id="quality">Quality vs File Size</h2>
+      <p>Converters typically re-encode images as JPEG before embedding (the most compatible approach):</p>
+      <table>
+        <thead><tr><th>Quality</th><th>Typical result</th><th>Use</th></tr></thead>
+        <tbody>
+          <tr><td>90–100</td><td>Visually lossless</td><td>IDs, contracts, scans (default)</td></tr>
+          <tr><td>75–85</td><td>Clearly smaller, minor detail loss</td><td>Email attachments, chat</td></tr>
+          <tr><td>&lt;70</td><td>Visible blocky artifacts</td><td>Drafts only</td></tr>
+        </tbody>
+      </table>
+      <p>Size patterns: <strong>PNG screenshots usually shrink</strong> (lossless files encode well as JPEG); <strong>already-compressed JPGs may grow slightly</strong> — a normal cost of re-encoding. For quality-critical work, use high-resolution originals at quality 90.</p>
+
+      <h2 id="order">Ordering Multiple Images</h2>
+      <p>PDF page order = the order you add images. Two practical habits:</p>
+      <ol class="t-steps">
+        <li><strong>Pre-sort by filename</strong>: rename files to <code>01.jpg, 02.jpg, 03.jpg</code> before batch-selecting (zero-pad 1–9, or <code>10.jpg</code> sorts before <code>2.jpg</code>).</li>
+        <li><strong>Fine-tune in the tool</strong>: use the move-up / move-down buttons per row, then verify thumbnail order before generating.</li>
+      </ol>
+
+      <h2 id="privacy">Privacy: Cloud Upload vs Local Conversion</h2>
+      <p>Mainstream online converters (iLovePDF, Smallpdf, PDF24, etc.) work by <strong>uploading your file to their servers</strong> and handing back a download link. For ordinary photos this doesn't matter — but for IDs, contracts, or medical bills, think twice: you don't control how long the server-side copy is retained.</p>
+      <p>The alternative is <strong>in-browser local conversion</strong>: the conversion logic runs in your browser, files never leave the device, and it works offline. Our <a href="/pdf/image-to-pdf/">Image to PDF tool</a> takes this route — the PDF itself is generated byte-by-byte in your browser, suitable for sensitive material like IDs.</p>
+
+      <h2 id="faq">FAQ</h2>
+      <div class="faq-item"><p class="faq-q">Q: Does converting images to PDF lose quality?</p><p class="faq-a">A: PNG transparency can't survive (transparent areas get a white fill), and images are typically re-encoded as JPEG — quality 90 is visually lossless. Drop to 75–85 to shrink.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: Fit-to-image or A4?</p><p class="faq-a">A: On-screen reading → fit to image (each page is one image). Printing or formal submission → A4 (Europe/Asia) or Letter (North America).</p></div>
+      <div class="faq-item"><p class="faq-q">Q: Is it safe to upload ID photos to an online converter?</p><p class="faq-a">A: Mainstream tools upload files to their servers. For sensitive material like IDs, prefer a tool that runs entirely in your browser.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: What determines the page order of multiple images?</p><p class="faq-a">A: The order you add them. Pre-number filenames 01, 02, 03 before batch upload, or reorder with move-up/move-down buttons.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: PNG to PDF vs JPG to PDF — any difference?</p><p class="faq-a">A: Same workflow. PNG screenshots usually shrink; compressed JPGs may grow slightly. Transparent PNGs get a white fill.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: Why can't I just rename an image to .pdf?</p><p class="faq-a">A: PDF is a structured document format (objects, cross-reference tables, page tree), not an image extension. Renamed files won't open — a real converter must generate valid structure.</p></div>
+
+      <div class="cta-box">
+        <p class="cta-title">Free Online Image to PDF Converter</p>
+        <p class="cta-sub">Multi-image merge · Fit / A4 / Letter · Adjustable margins &amp; quality · 100% browser-local</p>
+        <a class="cta-btn" href="/pdf/image-to-pdf/">Open Image to PDF Tool →</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<div id="site-footer"></div>
+<script src="/assets/js/site.js" defer></script>
+</body>
+</html>

@@ -22,6 +22,7 @@
     nav_gr:         { zh: '渐变', en: 'Gradient' },
     nav_pw:         { zh: '密码', en: 'Password' },
     nav_mt:         { zh: 'Meta', en: 'Meta Tags' },
+    nav_i2p:        { zh: '图片转 PDF', en: 'Image to PDF' },
     nav_more:       { zh: '更多工具', en: 'More tools' },
     nav_guides:     { zh: '指南', en: 'Guides' },
     nav_tools:      { zh: '工具',   en: 'Tools' },
@@ -78,12 +79,14 @@
     home_tool_txt_cc_desc:    { zh: '实时统计字符/词/句/段/阅读与朗读时长，中英日混合自动识别。', en: 'Live character, word, sentence, paragraph and reading-time counts with zh/en/mixed auto-detection.' },
     home_tool_txt_uuid:       { zh: 'UUID 生成', en: 'UUID Generator' },
     home_tool_txt_uuid_desc:  { zh: 'v4 / v1 / v5 三种版本，批量生成 1/10/100 个，大小写切换，一键复制或下载。', en: 'UUID v4 / v1 / v5, batch of 1/10/100, case toggle, one-click copy or download.' },
+    home_tool_i2p:            { zh: '图片转 PDF', en: 'Image to PDF' },
+    home_tool_i2p_desc:       { zh: '多张 JPG / PNG 按顺序合成为一个 PDF，页面尺寸与边距可调，纯本地生成。', en: 'Merge multiple JPG / PNG images into one PDF with adjustable page size and margins — fully local.' },
 
     /* 首页：实用指南区块 */
     home_guides_h:      { zh: '实用指南', en: 'Practical guides' },
     home_read_guide:    { zh: '阅读指南 →', en: 'Read guide →' },
     home_guides_all:    { zh: '全部使用指南', en: 'All guides' },
-    home_guides_all_desc: { zh: '浏览全部 20 篇双语指南：格式原理、尺寸规范、排障排查与最佳实践。', en: 'Browse all 20 bilingual guides: formats, size specs, troubleshooting, and best practices.' },
+    home_guides_all_desc: { zh: '浏览全部 21 篇双语指南：格式原理、尺寸规范、排障排查与最佳实践。', en: 'Browse all 21 bilingual guides: formats, size specs, troubleshooting, and best practices.' },
 
     /* 首页：关于 / 特性 / FAQ */
     about_h:        { zh: '关于 CATAITO', en: 'About CATAITO' },
@@ -104,7 +107,7 @@
     hf_faq_2_q:     { zh: '我的图片会被上传到服务器吗？', en: 'Are my images uploaded to a server?' },
     hf_faq_2_a:     { zh: '不会。所有工具基于浏览器本地运算（Canvas / Web API），文件不经过网络，商业素材和隐私截图都能放心使用。', en: 'No. All tools run on in-browser computation (Canvas / Web API); files never cross the network, so commercial assets and private screenshots are safe to use.' },
     hf_faq_3_q:     { zh: '目前提供哪些工具？', en: 'Which tools are available?' },
-    hf_faq_3_a:     { zh: '目前提供图标工坊 IconForge、Favicon 生成器、图片压缩、配色 / 调色板、图片格式转换、图片裁剪与缩放、对比度检查、二维码生成、条形码生成、图片加水印、CSS 渐变、密码生成器、Meta 标签、JSON 格式化、字数统计、UUID 生成十六类工具，均为纯前端实现，后续还会持续增加。', en: 'Currently sixteen tools: Icon Forge, Favicon Generator, Image Compressor, Color Palette, Image Converter, Crop & Resize, Contrast Checker, QR Code Generator, Barcode Generator, Watermark Tool, CSS Gradient, Password Generator, Meta Tag Generator, JSON Formatter, Word Counter, and UUID Generator — all client-side, with more on the way.' },
+    hf_faq_3_a:     { zh: '目前提供图标工坊 IconForge、Favicon 生成器、图片压缩、配色 / 调色板、图片格式转换、图片裁剪与缩放、对比度检查、二维码生成、条形码生成、图片加水印、CSS 渐变、密码生成器、Meta 标签、JSON 格式化、字数统计、UUID 生成、图片转 PDF 十七类工具，均为纯前端实现，后续还会持续增加。', en: 'Currently seventeen tools: Icon Forge, Favicon Generator, Image Compressor, Color Palette, Image Converter, Crop & Resize, Contrast Checker, QR Code Generator, Barcode Generator, Watermark Tool, CSS Gradient, Password Generator, Meta Tag Generator, JSON Formatter, Word Counter, UUID Generator, and Image to PDF — all client-side, with more on the way.' },
 
     /* 同类工具对比 */
     home_compare_h: { zh: '同类工具对比', en: 'Tool comparisons' },
@@ -428,6 +431,56 @@
     uu_toast_invalid_ns:        { zh: "命名空间需为合法 UUID 格式", en: "Namespace must be a valid UUID" },
     uu_toast_dl_done:           { zh: "已下载 .txt", en: "Downloaded .txt" },
     uu_toast_dl_fail:           { zh: "下载失败", en: "Download failed" },
+
+    /* ===== 图片转 PDF（PDF 工具簇第 1 件，2026-09-27） ===== */
+    ip_name:            { zh: "图片转 PDF", en: "Image to PDF" },
+    ip_desc:            { zh: "把多张 JPG / PNG / WebP 图片按顺序合成为一个 PDF：页面尺寸、边距与画质可调。纯浏览器本地生成，图片绝不上传服务器。", en: "Combine multiple JPG / PNG / WebP images into one PDF in order, with adjustable page size, margins, and quality. Generated entirely in your browser — nothing is uploaded." },
+    ip_upload:          { zh: "点击或拖入图片（可多选，按顺序合成）", en: "Click or drop images (multiple allowed, merged in order)" },
+    ip_dz_hint:         { zh: "JPG / PNG / WebP / GIF / BMP · 全程本地处理，不上传", en: "JPG / PNG / WebP / GIF / BMP · 100% local, never uploaded" },
+    ip_paper:           { zh: "页面尺寸", en: "Page size" },
+    ip_paper_fit:       { zh: "适配图片", en: "Fit to image" },
+    ip_orient:          { zh: "页面方向", en: "Orientation" },
+    ip_orient_auto:     { zh: "按图片自动", en: "Auto per image" },
+    ip_orient_portrait: { zh: "竖版", en: "Portrait" },
+    ip_orient_landscape:{ zh: "横版", en: "Landscape" },
+    ip_margin:          { zh: "页边距", en: "Margin" },
+    ip_margin_none:     { zh: "无", en: "None" },
+    ip_margin_narrow:   { zh: "窄（10mm）", en: "Narrow (10mm)" },
+    ip_margin_normal:   { zh: "标准（20mm）", en: "Normal (20mm)" },
+    ip_quality:         { zh: "图片质量", en: "Image quality" },
+    ip_quality_hint:    { zh: "影响 PDF 内图片的 JPEG 编码质量，默认 90 保画质；调低可明显减小体积。", en: "Affects the JPEG quality of images inside the PDF. Default 90 keeps fidelity; lower it to shrink the file." },
+    ip_empty:           { zh: "还没有图片，先上传几张试试。", en: "No images yet — drop some to start." },
+    ip_bar_stats:       { zh: "共 ${n} 张 · 原图合计 ${size}", en: "${n} images · ${size} total" },
+    ip_add_more:        { zh: "继续添加", en: "Add more" },
+    ip_clear_all:       { zh: "清空全部", en: "Clear all" },
+    ip_gen:             { zh: "生成并下载 PDF", en: "Generate & download PDF" },
+    ip_note:            { zh: "PDF 内图片按 JPEG 编码（PNG 透明区域自动铺白底）；列表顺序即页面顺序，可用 ▲▼ 调整。", en: "Images are JPEG-encoded in the PDF (transparent PNG areas get a white fill); list order = page order, reorder with ▲▼." },
+    ip_remove:          { zh: "移除", en: "Remove" },
+    ip_up:              { zh: "上移", en: "Move up" },
+    ip_dn:              { zh: "下移", en: "Move down" },
+    ip_toast_type:      { zh: "请上传图片文件", en: "Please upload image files" },
+    ip_toast_too_many:  { zh: "一次最多 ${n} 张，超出部分已忽略", en: "Up to ${n} images at once; extras skipped" },
+    ip_toast_empty:     { zh: "请先添加图片", en: "Please add images first" },
+    ip_toast_loading:   { zh: "图片还在加载，稍等一下", en: "Images are still loading — one moment" },
+    ip_toast_done:      { zh: "PDF 已生成（${size}），开始下载", en: "PDF generated (${size}), download started" },
+    ip_how_h:           { zh: "怎么用", en: "How to use" },
+    ip_how_1:           { zh: "<strong>按顺序上传</strong>：点击或拖入图片，一次最多 20 张；列表顺序就是 PDF 页面顺序，可用每行的 ▲▼ 调整。", en: "<strong>Upload in order</strong>: click or drag in up to 20 images; the list order is the page order — reorder with ▲▼ on each row." },
+    ip_how_2:           { zh: "<strong>选页面尺寸</strong>：「适配图片」每页正好一张原图；A4 / Letter 可再选方向与页边距，适合打印。", en: "<strong>Pick page size</strong>: \"Fit to image\" makes each page exactly one image; A4 / Letter add orientation and margin options for printing." },
+    ip_how_3:           { zh: "<strong>调画质</strong>：质量默认 90（高保真）；发邮件或传聊天工具想压体积，可降到 75–85。", en: "<strong>Tune quality</strong>: defaults to 90 (high fidelity); drop to 75–85 when emailing or sending via chat to shrink the file." },
+    ip_how_4:           { zh: "<strong>生成下载</strong>：点「生成并下载 PDF」，几秒内拿到单个 PDF 文件，全程本地完成。", en: "<strong>Generate & download</strong>: click \"Generate & download PDF\" and get a single PDF in seconds, all done locally." },
+    ip_faq_h:           { zh: "常见问题", en: "FAQ" },
+    ip_faq_1_q:         { zh: "图片会被上传到服务器吗？", en: "Are my images uploaded to a server?" },
+    ip_faq_1_a:         { zh: "不会。PDF 在你的浏览器里逐字节生成（Canvas 编码 + 本站自研的 PDF 写入器），图片不经过网络，合同、证件、隐私截图都可以放心转。", en: "No. The PDF is generated byte-by-byte in your browser (Canvas encoding plus our own hand-rolled PDF writer) — images never touch the network, safe for contracts, IDs, and private screenshots." },
+    ip_faq_2_q:         { zh: "PNG 透明背景会怎样？", en: "What happens to transparent PNG areas?" },
+    ip_faq_2_a:         { zh: "PDF 页面没有「透明底」概念（打印是白纸）。工具会把透明区域铺成白色再嵌入，与市面主流转换器行为一致。", en: "PDF pages have no transparent background (printing is on white paper). The tool fills transparent areas with white before embedding — same as mainstream converters." },
+    ip_faq_3_q:         { zh: "为什么生成的 PDF 和原图体积不一样？", en: "Why is the PDF size different from my originals?" },
+    ip_faq_3_a:         { zh: "PDF 内的图片统一按 JPEG 重新编码（质量默认 90）以保证各查看器兼容。PNG 截图转过去通常更小；原本高度压缩的 JPG 可能略大。想缩小就把质量降到 75–85。", en: "Images inside the PDF are re-encoded as JPEG (quality 90 by default) for viewer compatibility. PNG screenshots usually get smaller; already-compressed JPGs may grow slightly. Lower quality to 75–85 to shrink." },
+    ip_faq_4_q:         { zh: "A4 模式下图片会变形或被裁掉吗？", en: "Will images be distorted or cropped in A4 mode?" },
+    ip_faq_4_a:         { zh: "不会。图片始终按原始比例等比缩放放入页面内容区，居中放置，不裁切、不拉伸；「按图片自动」方向会根据每张图的横竖自动选纸向。", en: "No. Images are always scaled proportionally into the page content area and centered — never cropped or stretched. \"Auto per image\" picks portrait or landscape from each image's aspect." },
+    gd_i2p_short:       { zh: "JPG 转 PDF 指南", en: "JPG to PDF Guide" },
+    gd_i2p_h1:          { zh: "JPG 转 PDF 完全指南：什么时候转、怎么转最好", en: "JPG to PDF Guide: When and How to Convert" },
+    gd_i2p_sub:         { zh: "发证件、交合同、传扫描件，最后一步几乎都是「转成 PDF」。本文讲清哪些场景必须转 PDF、页面尺寸与边距怎么选、画质与体积的取舍、多张图片的排序技巧，以及云上传转换工具的隐私风险——推荐方案免费且纯浏览器本地处理。", en: "Sending IDs, submitting contracts, sharing scans — the last step is almost always \"convert to PDF\". When PDF is the right target, how to choose page size and margins, the quality/size trade-off, ordering multiple images, and the privacy risk of upload-based converters — the recommended way is free and runs entirely in your browser." },
+    gd_i2p_card_desc:   { zh: "哪些场景必须用 PDF、页面尺寸与边距选择、画质与体积取舍、多图排序技巧，以及云上传工具的隐私风险。", en: "When PDF is the right format, choosing page size and margins, the quality/size trade-off, ordering tips, and upload-tool privacy risks." },
 
     /* 通用 */
     theme_light:    { zh: '亮色', en: 'Light' },
@@ -963,7 +1016,8 @@
     { href: '/watermark/', key: 'nav_wm', label: '水印' },
     { href: '/gradient/', key: 'nav_gr', label: '渐变' },
     { href: '/password/', key: 'nav_pw', label: '密码' },
-    { href: '/meta-tags/', key: 'nav_mt', label: 'Meta 标签' }
+    { href: '/meta-tags/', key: 'nav_mt', label: 'Meta 标签' },
+    { href: '/pdf/image-to-pdf/', key: 'nav_i2p', label: '图片转PDF' }
   ];
   function MORE_ACTIVE(path) {
     return MORE_ITEMS.some(function (it) { return path.indexOf(it.href) === 0; });

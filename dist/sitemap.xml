@@ -329,4 +329,20 @@
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
+  <url>
+    <loc>https://tools.cataito.com/pdf/image-to-pdf/</loc>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://tools.cataito.com/pdf/image-to-pdf/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tools.cataito.com/pdf/image-to-pdf/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tools.cataito.com/pdf/image-to-pdf/"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://tools.cataito.com/guides/jpg-to-pdf-guide/</loc>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://tools.cataito.com/guides/jpg-to-pdf-guide/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tools.cataito.com/guides/jpg-to-pdf-guide/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tools.cataito.com/guides/jpg-to-pdf-guide/"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
 </urlset>
