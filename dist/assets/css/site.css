@@ -113,7 +113,7 @@ html.dark .brand__logo--light { display: inline-block; }
   transition: color .15s, background .15s;
 }
 .nav a:hover { color: var(--text); background: var(--card-2); }
-.nav a.active { color: var(--text); background: var(--card-2); font-weight: 600; }
+.nav a.active { color: var(--accent); background: var(--accent-soft-2); font-weight: 600; }
 
 /* 类别下拉：纯 CSS hover/focus，未来加工具只改 site.js 的 NAV_CATS */
 .nav-more { position: relative; }
@@ -126,7 +126,7 @@ html.dark .brand__logo--light { display: inline-block; }
 }
 .nav-more-btn::after { content: "▾"; font-size: 10px; }
 .nav-more-btn:hover { color: var(--text); background: var(--card-2); }
-.nav-more.has-active .nav-more-btn { color: var(--text); background: var(--card-2); font-weight: 600; }
+.nav-more.has-active .nav-more-btn { color: var(--accent); background: var(--accent-soft-2); font-weight: 600; }
 .nav-more-menu {
   display: none; position: absolute; top: calc(100% + 4px); left: 0;
   background: var(--card); border: 1px solid var(--border);
@@ -202,21 +202,22 @@ html.dark .theme-switch .ico-sun { display: none; }
 .free-badge {
   display: inline-flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 8px 16px;
   padding: 8px 18px; border-radius: 999px;
-  border: 1px solid var(--border);
-  background: var(--card-2);
-  color: var(--text-2);
-  font-size: 12.5px; font-weight: 500;
+  border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+  background: var(--accent-soft-2);
+  color: var(--accent);
+  font-size: 12.5px; font-weight: 600;
 }
 .free-badge span { display: inline-flex; align-items: center; gap: 6px; }
-.free-badge .dot { width: 5px; height: 5px; border-radius: 999px; background: var(--text-3); }
+.free-badge .dot { width: 5px; height: 5px; border-radius: 999px; background: var(--accent); }
 
 /* ---------- 区块标题与工具卡片网格 ---------- */
 .section-head {
   font-size: 17px; font-weight: 700;
   letter-spacing: -.01em; color: var(--text);
   margin: 40px 0 0;
-  display: flex; align-items: baseline; gap: 10px;
+  display: flex; align-items: center; gap: 10px;
 }
+.section-head::before { content: ""; width: 16px; height: 3px; border-radius: 2px; background: var(--accent); flex: none; }
 .tool-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -269,7 +270,7 @@ html.dark .theme-switch .ico-sun { display: none; }
   border-radius: var(--radius);
   transition: border-color .15s;
 }
-.compare-item:hover { border-color: var(--text-3); }
+.compare-item:hover { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
 .compare-item__tag {
   display: inline-block;
   font-size: 11.5px;
@@ -308,11 +309,11 @@ html.dark .theme-switch .ico-sun { display: none; }
   text-decoration: none; color: inherit;
   transition: border-color .15s ease, box-shadow .15s ease;
 }
-.tool-card:hover { border-color: var(--text-3); box-shadow: var(--shadow-sm); }
+.tool-card:hover { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
 .tool-card__top { display: flex; align-items: center; gap: 12px; min-width: 0; }
 .tool-card__icon {
   width: auto; height: auto; border-radius: 0; flex: none;
-  background: none; display: grid; place-items: center; color: var(--text-2);
+  background: none; display: grid; place-items: center; color: var(--accent);
 }
 .tool-card__name { font-size: 16px; font-weight: 700; color: var(--text); margin: 0; letter-spacing: -.01em; }
 .tool-card__desc { font-size: 13.5px; color: var(--text-2); line-height: 1.6; margin: 0; }
@@ -768,7 +769,7 @@ html.lang-en .lb-en { display: block; }
 
 /* 首页类别分组：分类页入口 */
 .section-head .cat-more {
-  font-size: 13px; font-weight: 400;
-  color: var(--text-3); text-decoration: none;
+  font-size: 13px; font-weight: 500;
+  color: var(--accent); text-decoration: none;
 }
-.section-head .cat-more:hover { color: var(--accent); }
+.section-head .cat-more:hover { text-decoration: underline; }
