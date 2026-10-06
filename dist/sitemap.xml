@@ -345,4 +345,84 @@
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
+  <url>
+    <loc>https://tools.cataito.com/text/</loc>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://tools.cataito.com/text/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tools.cataito.com/text/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tools.cataito.com/text/"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://tools.cataito.com/pdf/</loc>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://tools.cataito.com/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tools.cataito.com/pdf/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tools.cataito.com/pdf/"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://tools.cataito.com/text/diff/</loc>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://tools.cataito.com/text/diff/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tools.cataito.com/text/diff/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tools.cataito.com/text/diff/"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://tools.cataito.com/text/checksum/</loc>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://tools.cataito.com/text/checksum/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tools.cataito.com/text/checksum/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tools.cataito.com/text/checksum/"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://tools.cataito.com/text/base64/</loc>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://tools.cataito.com/text/base64/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tools.cataito.com/text/base64/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tools.cataito.com/text/base64/"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://tools.cataito.com/text/timestamp/</loc>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://tools.cataito.com/text/timestamp/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tools.cataito.com/text/timestamp/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tools.cataito.com/text/timestamp/"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://tools.cataito.com/guides/text-diff-guide/</loc>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://tools.cataito.com/guides/text-diff-guide/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tools.cataito.com/guides/text-diff-guide/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tools.cataito.com/guides/text-diff-guide/"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://tools.cataito.com/guides/checksum-guide/</loc>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://tools.cataito.com/guides/checksum-guide/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tools.cataito.com/guides/checksum-guide/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tools.cataito.com/guides/checksum-guide/"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://tools.cataito.com/guides/base64-guide/</loc>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://tools.cataito.com/guides/base64-guide/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tools.cataito.com/guides/base64-guide/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tools.cataito.com/guides/base64-guide/"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://tools.cataito.com/guides/timestamp-guide/</loc>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://tools.cataito.com/guides/timestamp-guide/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tools.cataito.com/guides/timestamp-guide/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tools.cataito.com/guides/timestamp-guide/"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
 </urlset>

@@ -1,6 +1,6 @@
 # Cataito Tools（tools.cataito.com）
 
-纯前端、零依赖、完全本地运行的在线工具站。已上线十七个工具 + 中英双语 SEO 指南，全部图像与文件处理在浏览器本地完成，**文件不会上传到任何服务器**。
+纯前端、零依赖、完全本地运行的在线工具站。已上线二十一个工具（三类别）+ 中英双语 SEO 指南，全部图像与文件处理在浏览器本地完成，**文件不会上传到任何服务器**。
 
 - 线上地址：<https://tools.cataito.com>
 - 仓库：<https://github.com/cataito-lab/iconforge-studio>（Cloudflare Pages 连接此仓库自动部署）
@@ -26,8 +26,12 @@
 | 字数统计 | `/text/char-count/` | 实时统计总字符/不含空格/中文/英文词/句/段，中英日混合语言自动识别，按阅读 400 字/分、朗读 220 字/分（中文）与英文 200/150 wpm 估算时长 |
 | UUID 生成 | `/text/uuid/` | v4（随机）/ v1（时间）/ v5（SHA-1 命名空间哈希），批量 1/10/100 个、大小写切换、一键复制或下载 .txt，内置 URL/DNS/IPv4/OID 标准命名空间 |
 | 图片转 PDF | `/pdf/image-to-pdf/` | 多张 JPG / PNG / WebP 按顺序合成为一个 PDF（≤20 张），页面尺寸（适配图片 / A4 / Letter）、方向、边距、质量可调，▲▼ 调整页序；自研零依赖 PDF 写入器（Catalog/Pages/Page/内容流/JPEG XObject + xref 表，图片 DCTDecode 直嵌），透明铺白底，纯本地生成 |
+| 文本对比 | `/text/diff/` | 两段文字逐行 LCS 比对：新增绿/删除红/上下文灰三色高亮，双栏行号定位，新增/删除统计，单侧最多 3000 行 |
+| SHA 校验和 | `/text/checksum/` | 文件或文本的 SHA-256/384/512/1 哈希（Web Crypto 原生计算），粘贴期望值一键比对（自动忽略大小写/空格/冒号），验证下载完整性 |
+| Base64 编解码 | `/text/base64/` | Base64 与 URL（%）编码双向转换，UTF-8 中文安全（TextEncoder/TextDecoder），实时输出、结果回填、一键复制，错误智能提示 |
+| 时间戳转换 | `/text/timestamp/` | 当前 Unix 时间戳实时显示（秒/毫秒双显），10/13 位自动识别双向互转，本地时间/UTC/ISO 8601 一次给全，日期选择器反向转换 |
 
-另有二十一篇 SEO 使用指南（`/guides/`，中英双语）：ICO 文件完全指南、Favicon 完全指南、暗色图标设计指南、图片压缩指南、WebP 格式指南、配色原理指南、App 图标尺寸速查、PNG 转 ICO 指南、Favicon 不显示排查、透明背景图标指南、无障碍对比度指南、二维码扫不出来排查、条形码入门与打印、图片加水印、CSS 渐变设计、强密码、Meta 标签与社交分享、JSON 入门与实用技巧、字数统计与写作时长估算、UUID 版本选择与使用场景、JPG 转 PDF 指南。
+另有二十五篇 SEO 使用指南（`/guides/`，中英双语）：ICO 文件完全指南、Favicon 完全指南、暗色图标设计指南、图片压缩指南、WebP 格式指南、配色原理指南、App 图标尺寸速查、PNG 转 ICO 指南、Favicon 不显示排查、透明背景图标指南、无障碍对比度指南、二维码扫不出来排查、条形码入门与打印、图片加水印、CSS 渐变设计、强密码、Meta 标签与社交分享、JSON 入门与实用技巧、字数统计与写作时长估算、UUID 版本选择与使用场景、JPG 转 PDF 指南、文本 diff 使用指南、SHA-256 校验和验证指南、Base64 与 URL 编码指南、Unix 时间戳指南。
 
 ## 站点结构
 `dist/` 既是部署产物，也是站点源码（纯静态、零构建、零依赖）：
@@ -46,6 +50,12 @@ dist/
   text/char-count/index.html  # 工具十五：字数统计
   text/uuid/index.html    # 工具十六：UUID 生成器（v4/v1/v5）
   pdf/image-to-pdf/index.html  # 工具十七：图片转 PDF（自研零依赖 PDF 写入器）
+  text/diff/index.html        # 工具十八：文本对比（LCS 行级比对）
+  text/checksum/index.html    # 工具十九：SHA 校验和（Web Crypto）
+  text/base64/index.html      # 工具二十：Base64 / URL 编解码
+  text/timestamp/index.html   # 工具二十一：Unix 时间戳转换
+  text/index.html             # 分类页：文本与开发者工具（hub）
+  pdf/index.html              # 分类页：PDF 工具（hub）
   guides/                 # SEO 指南（含中英 hreflang）
   assets/css/site.css     # 共享外壳样式 + 全站设计令牌（:root / html.dark）
   assets/js/site.js       # 共享外壳逻辑（导航注入 / 中英双语 / 页脚 / 主题按钮）

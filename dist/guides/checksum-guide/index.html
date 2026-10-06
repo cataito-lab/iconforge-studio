@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SHA-256 校验和验证指南：下载文件完整性怎么验 | CATAITO</title>
+<meta name="title-zh" content="SHA-256 校验和验证指南：下载文件完整性怎么验 | CATAITO">
+<meta name="title-en" content="SHA-256 Checksum Guide: Verifying Download Integrity | CATAITO">
+<meta name="description" content="SHA-256 校验和完全指南：哈希与校验和的原理、为什么下载文件要验哈希、Windows（certutil）/ macOS（shasum）/ Linux（sha256sum）命令行方法、常见不匹配原因与排查顺序。附免费在线校验工具（纯浏览器本地计算）。">
+<meta name="theme-color" content="#f6f3ec">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="CATAITO 工具箱">
+<meta property="og:title" content="SHA-256 校验和验证指南">
+<meta property="og:description" content="SHA-256 原理、三平台命令行校验方法与校验失败排查顺序。">
+<meta property="og:url" content="https://tools.cataito.com/guides/checksum-guide/">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:locale:alternate" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="SHA-256 校验和验证指南">
+<meta name="twitter:description" content="下载文件完整性校验全解。">
+<link rel="canonical" href="https://tools.cataito.com/guides/checksum-guide/">
+<link rel="icon" type="image/png" href="/assets/img/cataito-logo.png">
+<link rel="stylesheet" href="/assets/css/site.css">
+<script src="/assets/js/theme-init.js"></script>
+<script>
+  (function () {
+    try {
+      var l = localStorage.getItem('cataito-lang');
+      document.documentElement.setAttribute('lang', (l === 'en') ? 'en' : 'zh-CN');
+      if (l === 'en') document.documentElement.classList.add('lang-en');
+    } catch (e) {}
+  })();
+</script>
+<style>
+  .guide-wrap { max-width: 760px; margin: 0; }
+  .guide-meta { font-size: 13px; color: var(--text-3); margin: 0 0 6px; }
+  .page-sub { margin-bottom: 10px; }
+  .article { font-size: 15px; line-height: 1.85; color: var(--text); }
+  .article h2 { font-size: 21px; font-weight: 700; letter-spacing: -.3px; margin: 44px 0 14px; padding-top: 16px; border-top: 1px solid var(--border); color: var(--text); }
+  .article h3 { font-size: 16.5px; font-weight: 650; margin: 26px 0 10px; color: var(--text); }
+  .article p { margin: 0 0 14px; color: var(--text-2); }
+  .article strong { color: var(--text); font-weight: 650; }
+  .article a { color: var(--accent); text-decoration: none; }
+  .article a:hover { text-decoration: underline; }
+  .article ul, .article ol { margin: 0 0 16px; padding-left: 22px; color: var(--text-2); }
+  .article li { margin: 6px 0; }
+  .article code { font-family: var(--font-mono); font-size: 13px; background: var(--card-2); border: 1px solid var(--border); border-radius: 3px; padding: 1px 6px; color: var(--text); }
+  .article pre { background: var(--card-2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px 16px; margin: 14px 0 18px; overflow-x: auto; }
+  .article pre code { background: none; border: none; padding: 0; font-size: 12.5px; line-height: 1.7; }
+  .article table { width: 100%; border-collapse: collapse; margin: 18px 0 22px; font-size: 13.5px; background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-sm); overflow: hidden; }
+  .article th, .article td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--border); }
+  .article th { background: var(--card-2); color: var(--text); font-weight: 650; white-space: nowrap; }
+  .article td { color: var(--text-2); }
+  .article tr:last-child td { border-bottom: none; }
+  .toc { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 18px; margin: 20px 0 8px; box-shadow: var(--shadow-sm); }
+  .toc-title { font-size: 13px; font-weight: 650; color: var(--text); margin: 0 0 10px; }
+  .toc ol { margin: 0; padding-left: 20px; font-size: 13.5px; }
+  .toc li { margin: 5px 0; }
+  .toc a { color: var(--text-2); text-decoration: none; }
+  .toc a:hover { color: var(--accent); }
+  .cta-box { background: linear-gradient(135deg, var(--accent-soft), var(--accent-soft-2)); border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent); border-radius: var(--radius); padding: 20px 22px; margin: 34px 0 10px; text-align: center; }
+  .cta-box .cta-title { font-size: 17px; font-weight: 700; color: var(--text); margin: 0 0 6px; }
+  .cta-box .cta-sub { font-size: 13.5px; color: var(--text-2); margin: 0 0 14px; }
+  .cta-btn { display: inline-block; background: var(--accent); color: #fff; text-decoration: none; font-size: 14px; font-weight: 600; padding: 11px 26px; border-radius: var(--radius-sm); box-shadow: 0 6px 18px var(--accent-glow); transition: background .15s; }
+  .cta-btn:hover { background: var(--accent-hover); }
+  .article a.cta-btn, .article .cta-btn { color: #fff; text-decoration: none; }
+  .article a.cta-btn:hover { color: #fff; text-decoration: none; background: var(--accent-hover); }
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "SHA-256 校验和验证指南：下载文件完整性怎么验",
+  "description": "详解哈希与校验和的原理、为什么下载文件要验哈希、Windows certutil / macOS shasum / Linux sha256sum 命令行方法、常见不匹配原因与排查顺序。",
+  "inLanguage": "zh-CN",
+  "datePublished": "2026-09-27",
+  "dateModified": "2026-09-27",
+  "author": { "@type": "Organization", "name": "CATAITO", "url": "https://tools.cataito.com/" },
+  "publisher": { "@type": "Organization", "name": "CATAITO 工具箱", "url": "https://tools.cataito.com/" },
+  "mainEntityOfPage": "https://tools.cataito.com/guides/checksum-guide/"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "哈希和校验和是一回事吗？",
+      "acceptedAnswer": { "@type": "Answer", "text": "校验和是泛指（任何用来校验完整性的值都算，包括简单的字节求和），哈希特指 SHA-256 这类密码学散列函数的输出。日常语境下「校验和」基本都指 SHA-256 这类哈希值；哈希的抗碰撞性远强于旧式求和校验。" }
+    },
+    {
+      "@type": "Question",
+      "name": "SHA-1 和 SHA-256 有什么区别？该用哪个？",
+      "acceptedAnswer": { "@type": "Answer", "text": "输出长度不同（160 位 vs 256 位），安全强度也不同：SHA-1 已被实际攻破（谷歌 2017 年展示了碰撞实例），只用于兼容老清单；验证下载完整性一律优先 SHA-256 或更高。关键是与发布方公布的算法保持一致——SHA-1 的值永远不可能与 SHA-256 匹配。" }
+    },
+    {
+      "@type": "Question",
+      "name": "Windows 上怎么算文件的 SHA-256？",
+      "acceptedAnswer": { "@type": "Answer", "text": "PowerShell：Get-FileHash 文件名 -Algorithm SHA256；或命令提示符：certutil -hashfile 文件名 SHA256。不想敲命令可以用纯浏览器本地处理的在线校验工具，把文件拖进去即可，文件不上传。" }
+    },
+    {
+      "@type": "Question",
+      "name": "校验和匹配就代表文件绝对安全吗？",
+      "acceptedAnswer": { "@type": "Answer", "text": "只能证明「你拿到的文件和发布方生成哈希时的文件字节一致」。如果发布方官网本身被入侵、哈希也被替换，校验和会「正确地」匹配一个恶意文件。所以重要软件尽量从官方渠道获取哈希，或用 GPG 签名做更强的验证。" }
+    },
+    {
+      "@type": "Question",
+      "name": "为什么同一个文件在不同工具里算出的哈希不一样？",
+      "acceptedAnswer": { "@type": "Answer", "text": "最常见原因是算法不一致（把 SHA-1 的值当成 SHA-256 比较），其次是一些在线工具对文本先做了编码转换（换行 CRLF/LF、BOM）再计算。校验文件时永远用文件本体计算；比对时忽略大小写与空格即可。" }
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "首页", "item": "https://tools.cataito.com/" },
+    { "@type": "ListItem", "position": 2, "name": "使用指南", "item": "https://tools.cataito.com/guides/" },
+    { "@type": "ListItem", "position": 3, "name": "SHA-256 校验和验证指南", "item": "https://tools.cataito.com/guides/checksum-guide/" }
+  ]
+}
+</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7103529190038161" crossorigin="anonymous"></script>
+</head>
+<body>
+<div id="site-header"></div>
+
+<main class="site-main">
+  <div class="guide-wrap">
+    <nav class="breadcrumb"><a href="/" data-i18n="crumb_home">首页</a><span class="sep">/</span><a href="/guides/" data-i18n="nav_guides">使用指南</a><span class="sep">/</span><span data-i18n="gd_ck_short">校验和指南</span></nav>
+    <p class="guide-meta"><span data-i18n="gd_published">发布于</span> 2026-09-27 · CATAITO</p>
+    <h1 class="page-h1" data-i18n="gd_ck_h1">SHA-256 校验和验证指南</h1>
+    <p class="page-sub" data-i18n="gd_ck_sub">安装包、系统镜像、开源软件的下载页都写着一行 SHA-256——它是防止文件被篡改或下载不完整的指纹锁。本文讲清原理、三平台命令行方法与排查顺序。附免费在线校验工具（纯本地计算）。</p>
+
+    <div class="article lb-zh">
+      <div class="toc">
+        <p class="toc-title">目录</p>
+        <ol>
+          <li><a href="#what">校验和是什么</a></li>
+          <li><a href="#why">为什么下载要验哈希</a></li>
+          <li><a href="#cli">三平台命令行方法</a></li>
+          <li><a href="#online">不想敲命令：本地在线工具</a></li>
+          <li><a href="#troubleshoot">校验失败排查顺序</a></li>
+          <li><a href="#faq">常见问题</a></li>
+        </ol>
+      </div>
+
+      <h2 id="what">校验和是什么</h2>
+      <p>SHA-256 是一种<strong>密码学散列函数</strong>：对任意大小的输入（一个文件、一段文本）计算出一个固定 64 个十六进制字符的「指纹」：</p>
+      <pre><code>e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855</code></pre>
+      <p>它有三个关键性质：</p>
+      <ul>
+        <li><strong>确定性</strong>：同样的输入永远得到同样的输出——所以能当指纹</li>
+        <li><strong>雪崩效应</strong>：改动文件里 1 个字节，指纹面目全非——所以能发现篡改</li>
+        <li><strong>不可逆与抗碰撞</strong>：无法从指纹反推文件，也几乎找不到两个文件同指纹——所以难以伪造</li>
+      </ul>
+
+      <h2 id="why">为什么下载要验哈希</h2>
+      <ul>
+        <li><strong>下载不完整</strong>：大文件传输中断，残缺文件装不上或行为诡异——哈希一验便知</li>
+        <li><strong>传输被篡改</strong>：镜像站、内网代理、被入侵的 CDN 都可能递给你修改过的文件</li>
+        <li><strong>供应链攻击</strong>：软件更新通道被劫持时，官方公布的哈希是最后一道比对标准</li>
+      </ul>
+      <p>做法很简单：发布方公布 <code>文件 + SHA-256 值</code>，你本地对下载的文件算一遍，两边一致才安装。</p>
+
+      <h2 id="cli">三平台命令行方法</h2>
+      <table>
+        <thead><tr><th>平台</th><th>命令</th></tr></thead>
+        <tbody>
+          <tr><td>Windows (PowerShell)</td><td><code>Get-FileHash 文件名 -Algorithm SHA256</code></td></tr>
+          <tr><td>Windows (CMD)</td><td><code>certutil -hashfile 文件名 SHA256</code></td></tr>
+          <tr><td>macOS / Linux</td><td><code>shasum -a 256 文件名</code> 或 <code>sha256sum 文件名</code></td></tr>
+        </tbody>
+      </table>
+      <p>注意：Windows 的 <code>Get-FileHash</code> 支持 SHA1 / SHA256 / SHA384 / SHA512 / MD5；<code>certutil</code> 的算法名大小写敏感度随版本不同，写 <code>SHA256</code> 最稳。</p>
+
+      <h2 id="online">不想敲命令：本地在线工具</h2>
+      <p>命令行之外的图形化选择：用<strong>纯浏览器本地处理</strong>的在线校验工具（如 <a href="/text/checksum/">本站 SHA 校验和工具</a>），把文件拖进去就出哈希，再贴上期望值自动比对——文件不上传，与命令行同等安全，对大文件（几 GB 镜像）也适用。</p>
+
+      <h2 id="troubleshoot">校验失败排查顺序</h2>
+      <ol class="t-steps">
+        <li><strong>算法一致吗</strong>：把 SHA-1 的值粘到 SHA-256 框必然不匹配，先核对发布方公布的算法名。</li>
+        <li><strong>复制的值干净吗</strong>：网页复制常混入空格、换行、大小写差异——本站工具比对时自动忽略，别的工具未必。</li>
+        <li><strong>文件完整吗</strong>：对比文件大小与发布页标注是否一致；浏览器下载中断常产生截断文件。</li>
+        <li><strong>换源重下</strong>：以上都排除仍不匹配，说明文件本身有问题——不要安装运行，换官方主源重新下载。</li>
+      </ol>
+
+      <h2 id="faq">常见问题</h2>
+      <div class="faq-item"><p class="faq-q">Q：哈希和校验和是一回事吗？</p><p class="faq-a">A：校验和是泛指，哈希特指 SHA-256 这类密码学散列。日常语境基本同义，但哈希的抗碰撞性远强于旧式求和校验。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：SHA-1 和 SHA-256 该用哪个？</p><p class="faq-a">A：一律优先 SHA-256；SHA-1 已被实际攻破，只用于兼容旧清单。关键是与发布方公布的算法一致。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：Windows 上怎么算 SHA-256？</p><p class="faq-a">A：PowerShell 用 Get-FileHash 文件名 -Algorithm SHA256，CMD 用 certutil -hashfile 文件名 SHA256；或用本地在线工具拖文件。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：校验和匹配就绝对安全吗？</p><p class="faq-a">A：只证明文件与发布方算哈希时的字节一致。官网本身被入侵时哈希也会被替换——重要软件用 GPG 签名做更强验证。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：为什么不同工具算出的哈希不一样？</p><p class="faq-a">A：最常见是算法不一致，其次是文本被编码转换（CRLF/LF、BOM）后再计算。校验文件永远用文件本体计算。</p></div>
+
+      <div class="cta-box">
+        <p class="cta-title">免费在线 SHA 校验和工具</p>
+        <p class="cta-sub">SHA-256/384/512/1 · 文件与文本 · 期望值一键比对 · Web Crypto 纯本地计算</p>
+        <a class="cta-btn" href="/text/checksum/">打开校验和工具 →</a>
+      </div>
+    </div>
+
+    <div class="article lb-en">
+      <div class="toc">
+        <p class="toc-title">Table of Contents</p>
+        <ol>
+          <li><a href="#what">What a checksum is</a></li>
+          <li><a href="#why">Why verify downloads</a></li>
+          <li><a href="#cli">Command line on three platforms</a></li>
+          <li><a href="#online">No terminal? Local online tools</a></li>
+          <li><a href="#troubleshoot">Troubleshooting failed checks</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ol>
+      </div>
+
+      <h2 id="what">What a checksum is</h2>
+      <p>SHA-256 is a <strong>cryptographic hash function</strong>: it maps any input (a file, a text) to a fixed 64-hex-character "fingerprint":</p>
+      <pre><code>e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855</code></pre>
+      <p>Three key properties:</p>
+      <ul>
+        <li><strong>Deterministic</strong>: same input always yields the same output — hence a fingerprint</li>
+        <li><strong>Avalanche effect</strong>: flipping 1 byte changes the fingerprint completely — hence tamper detection</li>
+        <li><strong>Irreversible &amp; collision-resistant</strong>: can't reverse the fingerprint, and finding two files with one fingerprint is practically impossible — hence hard to forge</li>
+      </ul>
+
+      <h2 id="why">Why verify downloads</h2>
+      <ul>
+        <li><strong>Incomplete downloads</strong>: big-file transfers break; a truncated installer fails oddly — a hash check reveals it instantly</li>
+        <li><strong>Tampering in transit</strong>: mirrors, internal proxies, or compromised CDNs can hand you modified files</li>
+        <li><strong>Supply-chain attacks</strong>: when update channels get hijacked, the officially published hash is the final line of comparison</li>
+      </ul>
+      <p>The workflow is simple: the publisher announces <code>file + SHA-256</code>; you hash your downloaded file locally and install only when the two match.</p>
+
+      <h2 id="cli">Command line on three platforms</h2>
+      <table>
+        <thead><tr><th>Platform</th><th>Command</th></tr></thead>
+        <tbody>
+          <tr><td>Windows (PowerShell)</td><td><code>Get-FileHash filename -Algorithm SHA256</code></td></tr>
+          <tr><td>Windows (CMD)</td><td><code>certutil -hashfile filename SHA256</code></td></tr>
+          <tr><td>macOS / Linux</td><td><code>shasum -a 256 filename</code> or <code>sha256sum filename</code></td></tr>
+        </tbody>
+      </table>
+      <p>Note: <code>Get-FileHash</code> supports SHA1/SHA256/SHA384/SHA512/MD5; <code>certutil</code> algorithm-name casing varies by version — <code>SHA256</code> is the safe spelling.</p>
+
+      <h2 id="online">No terminal? Local online tools</h2>
+      <p>For a graphical option, use a <strong>browser-local</strong> checker (like our <a href="/text/checksum/">SHA Checksum tool</a>): drop the file in for an instant digest, paste the expected value for auto-comparison — files are never uploaded, as safe as the command line, and it handles multi-GB images.</p>
+
+      <h2 id="troubleshoot">Troubleshooting failed checks</h2>
+      <ol class="t-steps">
+        <li><strong>Same algorithm?</strong> A SHA-1 value never matches a SHA-256 field — check the published algorithm name first.</li>
+        <li><strong>Clean copy?</strong> Web copies often carry spaces, line breaks, and case differences — our tool ignores them; others may not.</li>
+        <li><strong>File complete?</strong> Compare file size with the download page; interrupted browser downloads often truncate.</li>
+        <li><strong>Re-download from the official source</strong>: if all else is ruled out, the file itself is bad — don't install or run it.</li>
+      </ol>
+
+      <h2 id="faq">FAQ</h2>
+      <div class="faq-item"><p class="faq-q">Q: Are hash and checksum the same thing?</p><p class="faq-a">A: "Checksum" is the umbrella term; "hash" specifically means cryptographic digests like SHA-256. In daily use they're interchangeable, but hashes are far stronger than legacy summation checks.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: SHA-1 or SHA-256?</p><p class="faq-a">A: Prefer SHA-256; SHA-1 is broken and only for legacy manifests. Always match the publisher's published algorithm.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: How do I compute SHA-256 on Windows?</p><p class="faq-a">A: PowerShell: Get-FileHash filename -Algorithm SHA256; CMD: certutil -hashfile filename SHA256; or drop the file into a local browser tool.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: Does a matching checksum mean the file is absolutely safe?</p><p class="faq-a">A: It proves your bytes match what the publisher hashed. If the official site itself is breached, the hash is replaced too — use GPG signatures for stronger assurance.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: Why do different tools give different hashes?</p><p class="faq-a">A: Usually algorithm mismatch; for text, encoding conversion (CRLF/LF, BOM) before hashing. Always hash the file itself.</p></div>
+
+      <div class="cta-box">
+        <p class="cta-title">Free Online SHA Checksum Tool</p>
+        <p class="cta-sub">SHA-256/384/512/1 · Files &amp; text · One-click compare · Web Crypto, fully local</p>
+        <a class="cta-btn" href="/text/checksum/">Open Checksum Tool →</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<div id="site-footer"></div>
+<script src="/assets/js/site.js" defer></script>
+</body>
+</html>

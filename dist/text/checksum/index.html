@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SHA 校验和 — 免费在线文件/文本 SHA-256 校验 | CATAITO</title>
+<meta name="title-zh" content="SHA 校验和 — 免费在线文件/文本 SHA-256 校验 | CATAITO">
+<meta name="title-en" content="SHA Checksum — Free Online File/Text SHA-256 | CATAITO">
+<meta name="description" content="免费在线校验和工具：计算文件或文本的 SHA-256 / SHA-384 / SHA-512 / SHA-1 哈希值，粘贴期望值一键比对，验证下载文件完整性。纯浏览器本地处理（Web Crypto），文件不上传。">
+<meta name="theme-color" content="#f6f3ec">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="CATAITO 工具箱">
+<meta property="og:title" content="SHA 校验和 — 免费在线文件完整性校验">
+<meta property="og:description" content="SHA-256/512 文件与文本哈希，一键比对期望值，纯本地处理。">
+<meta property="og:url" content="https://tools.cataito.com/text/checksum/">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:locale:alternate" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="SHA 校验和">
+<meta name="twitter:description" content="免费在线文件完整性校验，纯本地处理。">
+<link rel="icon" type="image/png" href="/assets/img/cataito-logo.png">
+<link rel="canonical" href="https://tools.cataito.com/text/checksum/">
+<link rel="stylesheet" href="/assets/css/site.css">
+<script src="/assets/js/theme-init.js"></script>
+<script>
+  (function () {
+    try {
+      var l = localStorage.getItem('cataito-lang');
+      document.documentElement.setAttribute('lang', (l === 'en') ? 'en' : 'zh-CN');
+    } catch (e) {}
+  })();
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "SHA Checksum Tool",
+  "alternateName": "SHA 校验和",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "Any",
+  "url": "https://tools.cataito.com/text/checksum/",
+  "inLanguage": ["zh-CN", "en"],
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "description": "免费在线校验和工具：SHA-256/384/512/1 文件与文本哈希，一键比对，纯浏览器本地处理。"
+}
+</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7103529190038161" crossorigin="anonymous"></script>
+</head>
+<body>
+<div id="site-header"></div>
+<main class="site-main">
+  <div class="t-head">
+    <nav class="breadcrumb"><a href="/" data-i18n="crumb_home">首页</a><span class="sep">/</span><span data-i18n="ck_name">SHA 校验和</span></nav>
+    <h1 class="page-h1" data-i18n="ck_name">SHA 校验和</h1>
+    <p class="page-sub" data-i18n="ck_desc">计算文件或文本的 SHA-256 / SHA-384 / SHA-512 / SHA-1 哈希，粘贴期望值一键比对。基于浏览器原生 Web Crypto，文件不上传。</p>
+  </div>
+
+  <section class="t-card t-flow">
+    <div class="t-field">
+      <div class="t-label" data-i18n="ck_source">输入源</div>
+      <div class="t-seg" id="ck-source">
+        <label class="t-seg-item"><input type="radio" name="ck-source" value="file" checked><span data-i18n="ck_source_file">文件</span></label>
+        <label class="t-seg-item"><input type="radio" name="ck-source" value="text"><span data-i18n="ck_source_text">文本</span></label>
+      </div>
+    </div>
+
+    <div id="ck-file-zone">
+      <div id="ck-dropzone" class="t-drop compact" tabindex="0">
+        <input type="file" id="ck-file" hidden>
+        <span class="t-drop-title" data-i18n="ck_upload">点击或拖入文件</span>
+        <span class="t-drop-hint" data-i18n="ck_dz_hint">任意类型 · 全程本地计算，不上传</span>
+      </div>
+    </div>
+
+    <div id="ck-text-zone" hidden>
+      <textarea id="ck-text" class="t-input ck-area" rows="6" spellcheck="false" data-i18n-placeholder="ck_ph" placeholder="在此粘贴要计算哈希的文本…"></textarea>
+    </div>
+
+    <div class="t-field">
+      <div class="t-label" data-i18n="ck_algo">哈希算法</div>
+      <div class="t-seg" id="ck-algo">
+        <label class="t-seg-item"><input type="radio" name="ck-algo" value="SHA-256" checked><span>SHA-256</span></label>
+        <label class="t-seg-item"><input type="radio" name="ck-algo" value="SHA-384"><span>SHA-384</span></label>
+        <label class="t-seg-item"><input type="radio" name="ck-algo" value="SHA-512"><span>SHA-512</span></label>
+        <label class="t-seg-item"><input type="radio" name="ck-algo" value="SHA-1"><span>SHA-1</span></label>
+      </div>
+      <div class="t-hint" data-i18n="ck_algo_hint">下载文件完整性校验通常用 SHA-256；SHA-1 已不安全，仅用于兼容旧清单。</div>
+    </div>
+
+    <div class="t-block" id="ck-result-block" hidden>
+      <div class="t-field">
+        <div class="t-label"><span data-i18n="ck_result">计算结果</span><button type="button" class="t-icon-btn" id="ck-copy" data-i18n-title="ck_copy" style="margin-left:8px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></button></div>
+        <div class="ck-hash" id="ck-hash"></div>
+      </div>
+      <div class="t-field">
+        <div class="t-label" data-i18n="ck_expected">期望的校验和（可选，一键比对）</div>
+        <input type="text" id="ck-expected" class="t-input" spellcheck="false" autocomplete="off" placeholder="粘贴发布页提供的 SHA-256 值…">
+        <div class="ck-verdict" id="ck-verdict" hidden></div>
+      </div>
+    </div>
+    <p id="ck-empty" class="t-empty" data-i18n="ck_empty">选择文件或输入文本后，这里显示哈希值。</p>
+    <p class="t-note" data-i18n="ck_note">比对时自动忽略大小写、空格与冒号分隔符；Web Crypto 原生不含 MD5（已不安全，也不适合校验完整性）。</p>
+  </section>
+
+  <section class="t-prose">
+    <h2 data-i18n="ck_how_h">怎么用</h2>
+    <ol class="t-steps">
+      <li data-i18n-html="ck_how_1"><strong>选输入源</strong>：「文件」模式拖入下载的安装包 / 镜像 / 压缩包；「文本」模式粘贴任意文字。</li>
+      <li data-i18n-html="ck_how_2"><strong>选算法</strong>：跟发布方保持一致——官网给 SHA-256 就选 SHA-256，哈希值和算法必须成对。</li>
+      <li data-i18n-html="ck_how_3"><strong>复制或比对</strong>：点复制按钮拿到哈希；把发布页提供的期望值贴进「期望的校验和」框，绿色 MATCH 即通过。</li>
+    </ol>
+
+    <h2 data-i18n="ck_faq_h">常见问题</h2>
+    <div class="t-faq">
+      <div class="t-faq-item">
+        <p class="t-faq-q" data-i18n="ck_faq_1_q">文件会被上传吗？</p>
+        <p class="t-faq-a" data-i18n="ck_faq_1_a">不会。哈希用浏览器原生 Web Crypto API（crypto.subtle.digest）在本地计算，文件不经过网络，几个 GB 的镜像也能算。</p>
+      </div>
+      <div class="t-faq-item">
+        <p class="t-faq-q" data-i18n="ck_faq_2_q">为什么没有 MD5？</p>
+        <p class="t-faq-a" data-i18n="ck_faq_2_a">Web Crypto 标准不提供 MD5，且 MD5 已被证明可伪造，不再适合完整性校验。老下载页只给 MD5 时，建议向发布方确认 SHA-256 值。</p>
+      </div>
+      <div class="t-faq-item">
+        <p class="t-faq-q" data-i18n="ck_faq_3_q">校验和不匹配怎么办？</p>
+        <p class="t-faq-a" data-i18n="ck_faq_3_a">先确认算法一致（SHA-1 的值粘到 SHA-256 框必然不匹配）、再排除复制时混入的空格（本工具已自动忽略）。仍不匹配说明文件被改动或下载不完整——不要安装/运行，重新下载。</p>
+      </div>
+      <div class="t-faq-item">
+        <p class="t-faq-q" data-i18n="ck_faq_4_q">同一文件每次算出的值一样吗？</p>
+        <p class="t-faq-a" data-i18n="ck_faq_4_a">一样。SHA 是确定性哈希：同一文件的字节内容不变，任何时候任何设备算出的哈希都完全相同，这正是它能做完整性指纹的原因。</p>
+      </div>
+    </div>
+
+    <h2 data-i18n="related_guides">相关指南</h2>
+    <div class="t-guide-links">
+      <a class="t-guide-link" href="/guides/checksum-guide/">
+        <p class="t-guide-link-title" data-i18n="gd_ck_short">校验和验证指南</p>
+        <p class="t-guide-link-desc" data-i18n="gd_ck_card_desc">SHA-256 是什么、为什么下载文件要验哈希、Windows/macOS/Linux 命令行校验方法，以及校验失败时的排查顺序。</p>
+      </a>
+      <a class="t-guide-link" href="/guides/password-guide/">
+        <p class="t-guide-link-title" data-i18n="gd_pwd_short">强密码指南</p>
+        <p class="t-guide-link-desc" data-i18n="gd_pwd_card_desc">强密码三要素、熵的计算、管理器配合与易混淆字符说明，附免费本地密码生成器。</p>
+      </a>
+    </div>
+  </section>
+</main>
+
+<div id="site-footer"></div>
+<div id="ck-toast" class="t-toast">
+  <span class="t-toast-ic">
+    <svg class="ic-ok" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+    <svg class="ic-err" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+  </span>
+  <span class="t-toast-title"></span>
+</div>
+
+<script src="/assets/js/site.js" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+(function () {
+  'use strict';
+  var t = function (k, vars) { return (window.CATAITO_I18N && window.CATAITO_I18N.t) ? window.CATAITO_I18N.t(k, vars) : k; };
+  var file = null;        /* 当前 File 对象 */
+  var fileText = '';      /* 缓存文件名+大小展示 */
+  var current = { hex: '', algo: '' };
+
+  function currentSource() { return (document.querySelector('input[name="ck-source"]:checked') || {}).value || 'file'; }
+  function currentAlgo() { return (document.querySelector('input[name="ck-algo"]:checked') || {}).value || 'SHA-256'; }
+
+  function syncSourceUI() {
+    var isFile = currentSource() === 'file';
+    document.getElementById('ck-file-zone').hidden = !isFile;
+    document.getElementById('ck-text-zone').hidden = isFile;
+  }
+
+  function hex(buf) {
+    var v = new Uint8Array(buf), s = '';
+    for (var i = 0; i < v.length; i++) s += (v[i] < 16 ? '0' : '') + v[i].toString(16);
+    return s;
+  }
+  function fmtSize(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    if (bytes < 1024 * 1024 * 1024) return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+    return (bytes / 1024 / 1024 / 1024).toFixed(2) + ' GB';
+  }
+
+  async function getSourceBytes() {
+    if (currentSource() === 'file') {
+      if (!file) return null;
+      return new Uint8Array(await file.arrayBuffer());
+    }
+    var txt = document.getElementById('ck-text').value;
+    if (txt === '') return null;
+    return new TextEncoder().encode(txt);
+  }
+
+  async function run() {
+    var algo = currentAlgo();
+    var bytes = await getSourceBytes();
+    var block = document.getElementById('ck-result-block');
+    var empty = document.getElementById('ck-empty');
+    if (!bytes) {
+      block.hidden = true; empty.style.display = '';
+      return;
+    }
+    var tag = currentSource() === 'file'
+      ? esc(file.name) + ' · ' + fmtSize(file.size)
+      : t('ck_text_src', { n: bytes.length });
+    empty.style.display = 'none';
+    block.hidden = false;
+    var hashEl = document.getElementById('ck-hash');
+    hashEl.textContent = '…';
+    try {
+      var buf = await crypto.subtle.digest(algo, bytes);
+      var h = hex(buf);
+      current = { hex: h, algo: algo };
+      hashEl.innerHTML = '<span class="ck-algo-tag">' + algo + '</span>' + h +
+        '<div class="ck-src">' + tag + '</div>';
+      verify();
+    } catch (e) {
+      hashEl.textContent = t('ck_toast_fail');
+    }
+  }
+
+  function normalize(s) {
+    return String(s || '').toLowerCase().replace(/[\s:]/g, '');
+  }
+  function verify() {
+    var v = document.getElementById('ck-verdict');
+    var expect = normalize(document.getElementById('ck-expected').value);
+    if (!expect || !current.hex) { v.hidden = true; return; }
+    var ok = expect === current.hex;
+    v.hidden = false;
+    v.textContent = ok ? t('ck_match') : t('ck_mismatch', { algo: current.algo });
+    v.className = 'ck-verdict ' + (ok ? 'ok' : 'bad');
+  }
+
+  var toastTimer = null;
+  function showToast(msg, isErr) {
+    var el = document.getElementById('ck-toast');
+    el.querySelector('.t-toast-title').textContent = msg;
+    el.classList.toggle('error', !!isErr);
+    el.classList.add('show');
+    if (toastTimer) clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { el.classList.remove('show'); }, 2600);
+  }
+
+  /* 文件选择 */
+  var dz = document.getElementById('ck-dropzone');
+  var fileInput = document.getElementById('ck-file');
+  dz.addEventListener('click', function () { fileInput.click(); });
+  dz.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fileInput.click(); } });
+  fileInput.addEventListener('change', function (e) {
+    if (e.target.files && e.target.files[0]) { file = e.target.files[0]; run(); }
+    fileInput.value = '';
+  });
+  ['dragenter', 'dragover'].forEach(function (ev) {
+    dz.addEventListener(ev, function (e) { e.preventDefault(); dz.classList.add('is-over'); });
+  });
+  ['dragleave', 'drop'].forEach(function (ev) {
+    dz.addEventListener(ev, function (e) { e.preventDefault(); dz.classList.remove('is-over'); });
+  });
+  dz.addEventListener('drop', function (e) {
+    var dt = e.dataTransfer;
+    if (dt && dt.files && dt.files[0]) { file = dt.files[0]; run(); }
+  });
+
+  /* 文本输入 */
+  var textTimer = null;
+  document.getElementById('ck-text').addEventListener('input', function () {
+    if (textTimer) clearTimeout(textTimer);
+    textTimer = setTimeout(run, 250);
+  });
+
+  document.getElementById('ck-source').addEventListener('change', function () { syncSourceUI(); run(); });
+  document.getElementById('ck-algo').addEventListener('change', run);
+  document.getElementById('ck-expected').addEventListener('input', verify);
+
+  document.getElementById('ck-copy').addEventListener('click', function () {
+    if (!current.hex) { showToast(t('ck_toast_empty'), true); return; }
+    (navigator.clipboard ? navigator.clipboard.writeText(current.algo + ': ' + current.hex) : Promise.reject())
+      .then(function () { showToast(t('ck_toast_copied')); })
+      .catch(function () {
+        var ta = document.createElement('textarea');
+        ta.value = current.hex; document.body.appendChild(ta); ta.select();
+        document.execCommand('copy'); ta.remove();
+        showToast(t('ck_toast_copied'));
+      });
+  });
+
+  document.addEventListener('cataito-lang-change', function () { run(); });
+})();
+});
+</script>
+
+<style>
+  /* 本页专属规则；通用组件复用 /assets/css/site.css 的 .t-* 共享组件层 */
+  .ck-area { font-family: var(--font-mono); font-size: 13px; resize: vertical; }
+  .ck-hash { font-family: var(--font-mono); font-size: 13px; word-break: break-all; background: var(--card-2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 12px 14px; color: var(--text); }
+  .ck-algo-tag { display: inline-block; font-size: 11px; color: var(--accent); border: 1px solid var(--accent); border-radius: 2px; padding: 0 5px; margin-right: 8px; vertical-align: 1px; }
+  .ck-src { margin-top: 8px; font-size: 12px; color: var(--text-3); }
+  .ck-verdict { margin-top: 8px; font-size: 13.5px; font-weight: 650; padding: 9px 12px; border-radius: var(--radius-sm); }
+  .ck-verdict.ok { color: var(--success); background: rgba(61,122,80,.12); }
+  .ck-verdict.bad { color: var(--danger); background: rgba(179,54,42,.10); }
+</style>
+</body>
+</html>

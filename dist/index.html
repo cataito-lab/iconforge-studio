@@ -69,7 +69,11 @@
     { "@type": "ListItem", "position": 14, "item": { "@type": "SoftwareApplication", "name": "JSON Formatter", "applicationCategory": "DeveloperApplication", "operatingSystem": "Any", "url": "https://tools.cataito.com/text/json/", "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" } } },
     { "@type": "ListItem", "position": 15, "item": { "@type": "SoftwareApplication", "name": "Word Counter", "applicationCategory": "UtilityApplication", "operatingSystem": "Any", "url": "https://tools.cataito.com/text/char-count/", "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" } } },
     { "@type": "ListItem", "position": 16, "item": { "@type": "SoftwareApplication", "name": "UUID Generator", "applicationCategory": "DeveloperApplication", "operatingSystem": "Any", "url": "https://tools.cataito.com/text/uuid/", "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" } } },
-    { "@type": "ListItem", "position": 17, "item": { "@type": "SoftwareApplication", "name": "Image to PDF Converter", "applicationCategory": "UtilityApplication", "operatingSystem": "Any", "url": "https://tools.cataito.com/pdf/image-to-pdf/", "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" } } }
+    { "@type": "ListItem", "position": 17, "item": { "@type": "SoftwareApplication", "name": "Image to PDF Converter", "applicationCategory": "UtilityApplication", "operatingSystem": "Any", "url": "https://tools.cataito.com/pdf/image-to-pdf/", "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" } } },
+    { "@type": "ListItem", "position": 18, "item": { "@type": "SoftwareApplication", "name": "Text Diff Checker", "applicationCategory": "DeveloperApplication", "operatingSystem": "Any", "url": "https://tools.cataito.com/text/diff/", "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" } } },
+    { "@type": "ListItem", "position": 19, "item": { "@type": "SoftwareApplication", "name": "SHA Checksum Tool", "applicationCategory": "UtilityApplication", "operatingSystem": "Any", "url": "https://tools.cataito.com/text/checksum/", "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" } } },
+    { "@type": "ListItem", "position": 20, "item": { "@type": "SoftwareApplication", "name": "Base64 URL Encoder Decoder", "applicationCategory": "DeveloperApplication", "operatingSystem": "Any", "url": "https://tools.cataito.com/text/base64/", "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" } } },
+    { "@type": "ListItem", "position": 21, "item": { "@type": "SoftwareApplication", "name": "Unix Timestamp Converter", "applicationCategory": "DeveloperApplication", "operatingSystem": "Any", "url": "https://tools.cataito.com/text/timestamp/", "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" } } }
   ]
 }
 </script>
@@ -108,7 +112,7 @@
     {
       "@type": "Question",
       "name": "目前提供哪些工具？",
-      "acceptedAnswer": { "@type": "Answer", "text": "目前提供图标工坊 IconForge、Favicon 生成器、图片压缩、配色 / 调色板、图片格式转换、图片裁剪与缩放、对比度检查、二维码生成、条形码生成、图片加水印、CSS 渐变、密码生成器、Meta 标签、JSON 格式化、字数统计、UUID 生成、图片转 PDF 十七类工具，均为纯前端实现，后续还会持续增加。" }
+      "acceptedAnswer": { "@type": "Answer", "text": "目前提供图标工坊 IconForge、Favicon 生成器、图片压缩、配色 / 调色板、图片格式转换、图片裁剪与缩放、对比度检查、二维码生成、条形码生成、图片加水印、CSS 渐变、密码生成器、Meta 标签、JSON 格式化、字数统计、UUID 生成、图片转 PDF、文本对比、SHA 校验和、Base64 编解码、时间戳转换二十一类工具，均为纯前端实现，后续还会持续增加。" }
     }
   ]
 }
@@ -124,9 +128,10 @@
     <div class="free-badge" data-i18n="free_badge">100% 免费 · 无需注册 · 浏览器本地处理</div>
   </section>
 
-  <h2 class="section-head" data-i18n="home_tools">全部工具</h2>
+  <!-- 全部工具（≥21 触发类别分组改版：图片与设计 / 文本与开发者 / PDF 文档） -->
+<h2 class="section-head" data-i18n="home_cat_image">图片与设计</h2>
   <div class="tool-grid">
-    <a class="tool-card" href="/icon-forge/">
+<a class="tool-card" href="/icon-forge/">
       <div class="tool-card__top">
         <span class="tool-card__icon">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="8" height="8" rx="1.5"/><rect x="13" y="3" width="8" height="8" rx="1.5" opacity=".5"/><rect x="3" y="13" width="8" height="8" rx="1.5" opacity=".5"/><rect x="13" y="13" width="8" height="8" rx="1.5" opacity=".3"/></svg>
@@ -136,8 +141,7 @@
       <p class="tool-card__desc" data-i18n="if_desc">上传 Logo，一键导出多尺寸 ICO / PNG / favicon（Light &amp; Dark 双主题）。</p>
       <div class="tool-card__foot"><span class="tool-card__go" data-i18n="use_tool">使用工具 →</span></div>
     </a>
-
-    <a class="tool-card" href="/favicon/">
+<a class="tool-card" href="/favicon/">
       <div class="tool-card__top">
         <span class="tool-card__icon">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>
@@ -147,8 +151,7 @@
       <p class="tool-card__desc" data-i18n="fv_desc">将任意图片生成多尺寸 .ico / .png favicon 包。</p>
       <div class="tool-card__foot"><span class="tool-card__go" data-i18n="use_tool">使用工具 →</span></div>
     </a>
-
-    <a class="tool-card" href="/compress/">
+<a class="tool-card" href="/compress/">
       <div class="tool-card__top">
         <span class="tool-card__icon">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 16l5-5 4 4 7-7"/><path d="M4 20h16"/></svg>
@@ -158,8 +161,7 @@
       <p class="tool-card__desc" data-i18n="home_tool_compress_desc">在线压缩 PNG / JPG / WebP，体积更小、画质可控。</p>
       <div class="tool-card__foot"><span class="tool-card__go" data-i18n="use_tool">使用工具 →</span></div>
     </a>
-
-    <a class="tool-card" href="/palette/">
+<a class="tool-card" href="/palette/">
       <div class="tool-card__top">
         <span class="tool-card__icon">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 9h18M9 3v18"/></svg>
@@ -169,8 +171,7 @@
       <p class="tool-card__desc" data-i18n="home_tool_palette_desc">从图片提取配色，或生成协调的调色板方案。</p>
       <div class="tool-card__foot"><span class="tool-card__go" data-i18n="use_tool">使用工具 →</span></div>
     </a>
-
-    <a class="tool-card" href="/convert/">
+<a class="tool-card" href="/convert/">
       <div class="tool-card__top">
         <span class="tool-card__icon">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h11"/><path d="m11 3 4 4-4 4"/><path d="M20 17H9"/><path d="m13 13-4 4 4 4"/></svg>
@@ -180,8 +181,7 @@
       <p class="tool-card__desc" data-i18n="home_tool_convert_desc">PNG / JPEG / WebP 在线互转，保留透明、可调质量，批量打包下载。</p>
       <div class="tool-card__foot"><span class="tool-card__go" data-i18n="use_tool">使用工具 →</span></div>
     </a>
-
-    <a class="tool-card" href="/resize/">
+<a class="tool-card" href="/resize/">
       <div class="tool-card__top">
         <span class="tool-card__icon">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2v14a2 2 0 0 0 2 2h14"/><path d="M18 22V8a2 2 0 0 0-2-2H2"/></svg>
@@ -191,8 +191,7 @@
       <p class="tool-card__desc" data-i18n="home_tool_resize_desc">批量居中裁切 1:1 / 16:9 等比例，按最长边缩放，保持原格式导出。</p>
       <div class="tool-card__foot"><span class="tool-card__go" data-i18n="use_tool">使用工具 →</span></div>
     </a>
-
-    <a class="tool-card" href="/contrast/">
+<a class="tool-card" href="/contrast/">
       <div class="tool-card__top">
         <span class="tool-card__icon">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor" stroke="none"/></svg>
@@ -202,8 +201,7 @@
       <p class="tool-card__desc" data-i18n="home_tool_contrast_desc">WCAG 对比度实时计算，AA / AAA 达标判定与一键自动调整。</p>
       <div class="tool-card__foot"><span class="tool-card__go" data-i18n="use_tool">使用工具 →</span></div>
     </a>
-
-    <a class="tool-card" href="/qrcode/">
+<a class="tool-card" href="/qrcode/">
       <div class="tool-card__top">
         <span class="tool-card__icon">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3h-3zM20 14h1M14 20h1M18 18h3v3h-3z"/></svg>
@@ -213,27 +211,43 @@
       <p class="tool-card__desc" data-i18n="home_tool_qrcode_desc">文字 / 网址即时生成二维码，纠错与颜色可调，下载高清 PNG。</p>
       <div class="tool-card__foot"><span class="tool-card__go" data-i18n="use_tool">使用工具 →</span></div>
     </a>
-    <a class="tool-card" href="/barcode/">
+<a class="tool-card" href="/barcode/">
       <div class="tool-card__top"><span class="tool-card__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5v14M6 5v14M9 5v14M13 5v14M16 5v14M19 5v14"/></svg></span><h3 class="tool-card__name" data-i18n="home_tool_barcode">条形码生成</h3></div><p class="tool-card__desc" data-i18n="home_tool_barcode_desc">Code128 / EAN-13 / UPC-A 条码在线生成，自动补校验位，PNG 下载。</p><div class="tool-card__foot"><span class="tool-card__go" data-i18n="use_tool">使用工具 →</span></div></a>
-    <a class="tool-card" href="/watermark/">
+<a class="tool-card" href="/watermark/">
       <div class="tool-card__top"><span class="tool-card__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v8m0 0L8 6m4 4 4-4M5 16h14v5H5z"/></svg></span><h3 class="tool-card__name" data-i18n="home_tool_watermark">图片加水印</h3></div><p class="tool-card__desc" data-i18n="home_tool_watermark_desc">批量给图片加文字水印，位置/透明度/平铺可调，ZIP 打包下载。</p><div class="tool-card__foot"><span class="tool-card__go" data-i18n="use_tool">使用工具 →</span></div></a>
-    <a class="tool-card" href="/gradient/">
+<a class="tool-card" href="/gradient/">
       <div class="tool-card__top"><span class="tool-card__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><defs><linearGradient id="g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="currentColor" stop-opacity="1"/><stop offset="1" stop-color="currentColor" stop-opacity="0"/></linearGradient></defs><rect x="3" y="3" width="18" height="18" rx="3" fill="url(#g1)" stroke="none"/></svg></span><h3 class="tool-card__name" data-i18n="home_tool_gradient">CSS 渐变</h3></div><p class="tool-card__desc" data-i18n="home_tool_gradient_desc">线性 / 径向渐变生成器，最多 4 色标，实时预览，一键复制 CSS。</p><div class="tool-card__foot"><span class="tool-card__go" data-i18n="use_tool">使用工具 →</span></div></a>
-    <a class="tool-card" href="/password/">
+<a class="tool-card" href="/password/">
       <div class="tool-card__top"><span class="tool-card__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 1 1 8 0v3"/></svg></span><h3 class="tool-card__name" data-i18n="home_tool_password">密码生成器</h3></div><p class="tool-card__desc" data-i18n="home_tool_password_desc">crypto 安全随机生成密码，强度熵显示，批量备选，一键复制。</p><div class="tool-card__foot"><span class="tool-card__go" data-i18n="use_tool">使用工具 →</span></div></a>
-    <a class="tool-card" href="/meta-tags/">
+<a class="tool-card" href="/meta-tags/">
       <div class="tool-card__top"><span class="tool-card__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9l8-6 8 6M6 8v10h12V8M10 13h4"/></svg></span><h3 class="tool-card__name" data-i18n="home_tool_meta">Meta 标签</h3></div><p class="tool-card__desc" data-i18n="home_tool_meta_desc">填写标题描述图片，实时预览微信/Twitter 分享卡片，生成 OG 代码。</p><div class="tool-card__foot"><span class="tool-card__go" data-i18n="use_tool">使用工具 →</span></div></a>
-    <a class="tool-card" href="/text/json/">
+  </div>
+
+<h2 class="section-head"><span data-i18n="home_cat_text">文本与开发者</span> <a class="cat-more" href="/text/" data-i18n="cat_more">分类页 →</a></h2>
+  <div class="tool-grid">
+<a class="tool-card" href="/text/json/">
       <div class="tool-card__top"><span class="tool-card__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4c-2 0-2 2-2 4v0c0 2 0 4-2 4 2 0 2 2 2 4v0c0 2 0 4 2 4M16 4c2 0 2 2 2 4v0c0 2 0 4 2 4-2 0-2 2-2 4v0c0 2 0 4-2 4"/></svg></span><h3 class="tool-card__name" data-i18n="home_tool_txt_json">JSON 格式化</h3></div><p class="tool-card__desc" data-i18n="home_tool_txt_json_desc">粘贴 JSON 实时校验、格式化或压缩，错误定位到行列，缩进 2/4/Tab 可选。</p><div class="tool-card__foot"><span class="tool-card__go" data-i18n="use_tool">使用工具 →</span></div></a>
-    <a class="tool-card" href="/text/char-count/">
+<a class="tool-card" href="/text/char-count/">
       <div class="tool-card__top"><span class="tool-card__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h10M4 17h16"/></svg></span><h3 class="tool-card__name" data-i18n="home_tool_txt_cc">字数统计</h3></div><p class="tool-card__desc" data-i18n="home_tool_txt_cc_desc">实时统计字符/词/句/段/阅读与朗读时长，中英日混合自动识别。</p><div class="tool-card__foot"><span class="tool-card__go" data-i18n="use_tool">使用工具 →</span></div></a>
-    <a class="tool-card" href="/text/uuid/">
+<a class="tool-card" href="/text/uuid/">
       <div class="tool-card__top"><span class="tool-card__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 8a4 4 0 0 1 4 4v0a4 4 0 0 1-4 4M16 12a4 4 0 0 0-4-4v0a4 4 0 0 0 4 4"/><circle cx="10" cy="10" r="1"/><circle cx="14" cy="14" r="1"/></svg></span><h3 class="tool-card__name" data-i18n="home_tool_txt_uuid">UUID 生成</h3></div><p class="tool-card__desc" data-i18n="home_tool_txt_uuid_desc">v4 / v1 / v5 三种版本，批量生成 1/10/100 个，大小写切换，一键复制或下载。</p><div class="tool-card__foot"><span class="tool-card__go" data-i18n="use_tool">使用工具 →</span></div></a>
-    <a class="tool-card" href="/pdf/image-to-pdf/">
+    <a class="tool-card" href="/text/diff/">
+      <div class="tool-card__top"><span class="tool-card__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3v18M3 6h6"/><path d="M14 8h7M14 12h7M14 16h7" opacity=".55"/><path d="m17.5 5.5 3 3-3 3" opacity="0"/></svg></span><h3 class="tool-card__name" data-i18n="home_tool_diff">文本对比</h3></div><p class="tool-card__desc" data-i18n="home_tool_diff_desc"></p><div class="tool-card__foot"><span class="tool-card__go" data-i18n="use_tool">使用工具 →</span></div></a>
+    <a class="tool-card" href="/text/checksum/">
+      <div class="tool-card__top"><span class="tool-card__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/><path d="M12 3a9 9 0 1 0 9 9" opacity=".4"/></svg></span><h3 class="tool-card__name" data-i18n="home_tool_ck">SHA 校验和</h3></div><p class="tool-card__desc" data-i18n="home_tool_ck_desc"></p><div class="tool-card__foot"><span class="tool-card__go" data-i18n="use_tool">使用工具 →</span></div></a>
+    <a class="tool-card" href="/text/base64/">
+      <div class="tool-card__top"><span class="tool-card__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3 5 21M16 3l-3 18M4 9h17M3 15h17"/></svg></span><h3 class="tool-card__name" data-i18n="home_tool_b64">Base64 编解码</h3></div><p class="tool-card__desc" data-i18n="home_tool_b64_desc"></p><div class="tool-card__foot"><span class="tool-card__go" data-i18n="use_tool">使用工具 →</span></div></a>
+    <a class="tool-card" href="/text/timestamp/">
+      <div class="tool-card__top"><span class="tool-card__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></span><h3 class="tool-card__name" data-i18n="home_tool_ts">时间戳转换</h3></div><p class="tool-card__desc" data-i18n="home_tool_ts_desc"></p><div class="tool-card__foot"><span class="tool-card__go" data-i18n="use_tool">使用工具 →</span></div></a>
+  </div>
+
+<h2 class="section-head"><span data-i18n="home_cat_pdf">PDF 文档</span> <a class="cat-more" href="/pdf/" data-i18n="cat_more">分类页 →</a></h2>
+  <div class="tool-grid">
+<a class="tool-card" href="/pdf/image-to-pdf/">
       <div class="tool-card__top"><span class="tool-card__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></span><h3 class="tool-card__name" data-i18n="home_tool_i2p">图片转 PDF</h3></div><p class="tool-card__desc" data-i18n="home_tool_i2p_desc">多张 JPG / PNG 按顺序合成为一个 PDF，页面尺寸与边距可调，纯本地生成。</p><div class="tool-card__foot"><span class="tool-card__go" data-i18n="use_tool">使用工具 →</span></div></a>
   </div>
 
-  <!-- 实用指南（静态真文本 + 指南反链，铁律 11：不依赖 JS 注入） -->
+<!-- 实用指南（静态真文本 + 指南反链，铁律 11：不依赖 JS 注入） -->
   <h2 class="section-head" data-i18n="home_guides_h">实用指南</h2>
   <div class="tool-grid">
     <a class="tool-card" href="/guides/ico-file-guide/">
@@ -269,7 +283,7 @@
       <div class="tool-card__top">
         <h3 class="tool-card__name" data-i18n="home_guides_all">全部使用指南</h3>
       </div>
-      <p class="tool-card__desc" data-i18n="home_guides_all_desc">浏览全部 21 篇双语指南：格式原理、尺寸规范、排障排查与最佳实践。</p>
+      <p class="tool-card__desc" data-i18n="home_guides_all_desc">浏览全部 25 篇双语指南：格式原理、尺寸规范、排障排查与最佳实践。</p>
       <div class="tool-card__foot"><span class="tool-card__go" data-i18n="home_read_guide">阅读指南 →</span></div>
     </a>
   </div>
@@ -317,7 +331,7 @@
       </div>
       <div class="faq-item">
         <h3 class="faq-q" data-i18n="hf_faq_3_q">目前提供哪些工具？</h3>
-        <p class="faq-a" data-i18n="hf_faq_3_a">目前提供图标工坊 IconForge、Favicon 生成器、图片压缩、配色 / 调色板、图片格式转换、图片裁剪与缩放、对比度检查、二维码生成、条形码生成、图片加水印、CSS 渐变、密码生成器、Meta 标签、JSON 格式化、字数统计、UUID 生成、图片转 PDF 十七类工具，均为纯前端实现，后续还会持续增加。</p>
+        <p class="faq-a" data-i18n="hf_faq_3_a">目前提供图标工坊 IconForge、Favicon 生成器、图片压缩、配色 / 调色板、图片格式转换、图片裁剪与缩放、对比度检查、二维码生成、条形码生成、图片加水印、CSS 渐变、密码生成器、Meta 标签、JSON 格式化、字数统计、UUID 生成、图片转 PDF、文本对比、SHA 校验和、Base64 编解码、时间戳转换二十一类工具，均为纯前端实现，后续还会持续增加。</p>
       </div>
     </div>
   </section>

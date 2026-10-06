@@ -35,12 +35,12 @@
 
 ## 五、内容清单与新增 checklist
 
-- 工具 17：`/icon-forge/`（ICO/PNG 图标）、`/favicon/`、`/compress/`（≤20 张批量）、`/palette/`、`/convert/`（PNG/JPEG/WebP 互转，转 JPEG 铺白底、WebP/PNG 保透明）、`/resize/`（居中裁切 1:1/4:3/16:9/9:16 + 最长边缩放，默认保持原格式）、`/contrast/`（WCAG 对比度检查 + 自动调整）、`/qrcode/`（自研 QR 编码器，字节模式 v1-40，矩阵级验证）、`/barcode/`（Code128/EAN-13/UPC-A/EAN-8）、`/watermark/`、`/gradient/`、`/password/`、`/meta-tags/`、`/text/json/`（JSON 格式化/校验/压缩）、`/text/char-count/`（字数统计 + 阅读时长）、`/text/uuid/`（v4/v1/v5 UUID）、`/pdf/image-to-pdf/`（图片转 PDF，自研零依赖 PDF 写入器：JPEG DCTDecode 直嵌 + xref 表，适配图片/A4/Letter + 方向/边距/质量，透明铺白底）
-- 指南 21：ico-file-guide、favicon-guide、dark-mode-icons、image-compression-guide、webp-guide、color-guide、app-icon-sizes、png-to-ico-guide、favicon-not-showing-guide、transparent-icon-guide、accessibility-contrast-guide、qr-not-scanning-guide、barcode-guide、watermark-guide、gradient-guide、password-guide、meta-tags-guide、json-guide、word-count-guide、uuid-guide、jpg-to-pdf-guide（均中英双语 `.lb-zh`/`.lb-en` 双块）
+- 工具 21：`/icon-forge/`（ICO/PNG 图标）、`/favicon/`、`/compress/`（≤20 张批量）、`/palette/`、`/convert/`（PNG/JPEG/WebP 互转，转 JPEG 铺白底、WebP/PNG 保透明）、`/resize/`（居中裁切 1:1/4:3/16:9/9:16 + 最长边缩放，默认保持原格式）、`/contrast/`（WCAG 对比度检查 + 自动调整）、`/qrcode/`（自研 QR 编码器，字节模式 v1-40，矩阵级验证）、`/barcode/`（Code128/EAN-13/UPC-A/EAN-8）、`/watermark/`、`/gradient/`、`/password/`、`/meta-tags/`、`/text/json/`（JSON 格式化/校验/压缩）、`/text/char-count/`（字数统计 + 阅读时长）、`/text/uuid/`（v4/v1/v5 UUID）、`/pdf/image-to-pdf/`（图片转 PDF，自研零依赖 PDF 写入器：JPEG DCTDecode 直嵌 + xref 表，适配图片/A4/Letter + 方向/边距/质量，透明铺白底）、`/text/diff/`（LCS 行级对比，三色高亮 + 行号 + 统计）、`/text/checksum/`（SHA-256/384/512/1，Web Crypto，期望值一键比对）、`/text/base64/`（Base64/URL 双向编解码，UTF-8 安全）、`/text/timestamp/`（当前时间戳实时 + 秒/毫秒与日期双向互转）
+- 指南 25：ico-file-guide、favicon-guide、dark-mode-icons、image-compression-guide、webp-guide、color-guide、app-icon-sizes、png-to-ico-guide、favicon-not-showing-guide、transparent-icon-guide、accessibility-contrast-guide、qr-not-scanning-guide、barcode-guide、watermark-guide、gradient-guide、password-guide、meta-tags-guide、json-guide、word-count-guide、uuid-guide、jpg-to-pdf-guide、text-diff-guide、checksum-guide、base64-guide、timestamp-guide（均中英双语 `.lb-zh`/`.lb-en` 双块）
 - 信任页：about / privacy / contact + 404（noindex）
 
 **新增页面 checklist**：`sitemap.xml`（hreflang 三连 zh-CN/en/x-default + priority）→ `llms.txt` → guides 索引卡（如指南）→ `site.js` 词典（`gd_*` 键）→ 相关工具页反向内链 → `<title>` 双语 meta + JSON-LD。⚠️ 每新增一篇指南，首页「实用指南」区块（4 篇轮换 + 全部入口）与指南间互链网络也要同步评估（2026-09-05 B3 内链加固后建立的网络基线见 HANDOFF）。
-- sitemap 现共 43 URL（首页 + 17 工具 + about/privacy/contact + /guides/ + 21 指南）；首页有「实用指南」编号目录区块（4 篇支柱 + 全部入口）；guides 索引页收齐 21 卡。导航为短标签（`nav_*` 词典键），完整名称在页面 h1 与首页卡。
+- sitemap 现共 53 URL（首页 + 21 工具 + /text/ 与 /pdf/ 分类页 + about/privacy/contact + /guides/ + 25 指南）；首页工具区按「图片与设计 / 文本与开发者 / PDF 文档」三类别分组（分类页入口在区标题右侧）；guides 索引页收齐 25 卡。导航为短标签（`nav_*` 词典键），完整名称在页面 h1 与首页卡。图片类无统一路径前缀，暂无独立分类页（13 工具在首页直出），后续需要时补 `/image-tools/`。
 
 ## 六、数据与统计
 
@@ -76,7 +76,7 @@
 
 ## 十、首页改版触发条件（2026-09-17 锚点）
 
-**当前状态**：16 工具用「印刷工具目录」设计语言（米纸/墨色/朱砂 + 编号目录行 + 规则线）恰好合适，**不主动改版**。JSON-LD 已在 2026-09-17 修掉 ItemList 第 64 行损坏重复条目。阶段 A 试点（3 个文本工具 + 3 篇配套指南）已落地，首页工具数 13→16、指南数 17→20、sitemap 30→41 URL。
+**当前状态（2026-09-27 更新）**：工具数已达 21，**「工具数 ≥ 20」触发条件已满足并执行改版**：首页工具区按三类别分组（图片与设计 13 / 文本与开发者 7 / PDF 文档 1），`/text/` 与 `/pdf/` 分类 hub 页上线（CollectionPage JSON-LD，sitemap 收录）。印刷工具目录设计语言保持不变，只加分区标题与分类页入口链接。剩余触发条件：工具数 ≥ 30（加搜索框 + 导航重设计）、跳出率 > 70%（加「最近用过的工具」区块）等。
 
 **任一条件满足即启动首页改版（一次性做完）**：
 

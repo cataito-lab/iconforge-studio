@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>文本 diff 使用指南：行级比对原理与最佳实践 | CATAITO</title>
+<meta name="title-zh" content="文本 diff 使用指南：行级比对原理与最佳实践 | CATAITO">
+<meta name="title-en" content="Text Diff Guide: Line Comparison and Best Practices | CATAITO">
+<meta name="description" content="文本 diff 完全指南：行级/词级/字符级三种粒度的差异、LCS 最长公共子序列算法原理、git diff 符号读法、合并单元格式，以及合同与代码比对的最佳实践。附免费在线文本对比工具，纯浏览器本地处理。">
+<meta name="theme-color" content="#f6f3ec">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="CATAITO 工具箱">
+<meta property="og:title" content="文本 diff 使用指南">
+<meta property="og:description" content="diff 三种粒度的差异、LCS 算法原理、git diff 符号读法，以及合同与代码比对的最佳实践。">
+<meta property="og:url" content="https://tools.cataito.com/guides/text-diff-guide/">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:locale:alternate" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="文本 diff 使用指南">
+<meta name="twitter:description" content="diff 粒度、LCS 原理与比对最佳实践。">
+<link rel="canonical" href="https://tools.cataito.com/guides/text-diff-guide/">
+<link rel="icon" type="image/png" href="/assets/img/cataito-logo.png">
+<link rel="stylesheet" href="/assets/css/site.css">
+<script src="/assets/js/theme-init.js"></script>
+<script>
+  (function () {
+    try {
+      var l = localStorage.getItem('cataito-lang');
+      document.documentElement.setAttribute('lang', (l === 'en') ? 'en' : 'zh-CN');
+      if (l === 'en') document.documentElement.classList.add('lang-en');
+    } catch (e) {}
+  })();
+</script>
+<style>
+  .guide-wrap { max-width: 760px; margin: 0; }
+  .guide-meta { font-size: 13px; color: var(--text-3); margin: 0 0 6px; }
+  .page-sub { margin-bottom: 10px; }
+  .article { font-size: 15px; line-height: 1.85; color: var(--text); }
+  .article h2 { font-size: 21px; font-weight: 700; letter-spacing: -.3px; margin: 44px 0 14px; padding-top: 16px; border-top: 1px solid var(--border); color: var(--text); }
+  .article h3 { font-size: 16.5px; font-weight: 650; margin: 26px 0 10px; color: var(--text); }
+  .article p { margin: 0 0 14px; color: var(--text-2); }
+  .article strong { color: var(--text); font-weight: 650; }
+  .article a { color: var(--accent); text-decoration: none; }
+  .article a:hover { text-decoration: underline; }
+  .article ul, .article ol { margin: 0 0 16px; padding-left: 22px; color: var(--text-2); }
+  .article li { margin: 6px 0; }
+  .article code { font-family: var(--font-mono); font-size: 13px; background: var(--card-2); border: 1px solid var(--border); border-radius: 3px; padding: 1px 6px; color: var(--text); }
+  .article pre { background: var(--card-2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px 16px; margin: 14px 0 18px; overflow-x: auto; }
+  .article pre code { background: none; border: none; padding: 0; font-size: 12.5px; line-height: 1.7; }
+  .article table { width: 100%; border-collapse: collapse; margin: 18px 0 22px; font-size: 13.5px; background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-sm); overflow: hidden; }
+  .article th, .article td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--border); }
+  .article th { background: var(--card-2); color: var(--text); font-weight: 650; white-space: nowrap; }
+  .article td { color: var(--text-2); }
+  .article tr:last-child td { border-bottom: none; }
+  .toc { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 18px; margin: 20px 0 8px; box-shadow: var(--shadow-sm); }
+  .toc-title { font-size: 13px; font-weight: 650; color: var(--text); margin: 0 0 10px; }
+  .toc ol { margin: 0; padding-left: 20px; font-size: 13.5px; }
+  .toc li { margin: 5px 0; }
+  .toc a { color: var(--text-2); text-decoration: none; }
+  .toc a:hover { color: var(--accent); }
+  .cta-box { background: linear-gradient(135deg, var(--accent-soft), var(--accent-soft-2)); border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent); border-radius: var(--radius); padding: 20px 22px; margin: 34px 0 10px; text-align: center; }
+  .cta-box .cta-title { font-size: 17px; font-weight: 700; color: var(--text); margin: 0 0 6px; }
+  .cta-box .cta-sub { font-size: 13.5px; color: var(--text-2); margin: 0 0 14px; }
+  .cta-btn { display: inline-block; background: var(--accent); color: #fff; text-decoration: none; font-size: 14px; font-weight: 600; padding: 11px 26px; border-radius: var(--radius-sm); box-shadow: 0 6px 18px var(--accent-glow); transition: background .15s; }
+  .cta-btn:hover { background: var(--accent-hover); }
+  .article a.cta-btn, .article .cta-btn { color: #fff; text-decoration: none; }
+  .article a.cta-btn:hover { color: #fff; text-decoration: none; background: var(--accent-hover); }
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "文本 diff 使用指南：行级比对原理与最佳实践",
+  "description": "详解 diff 的行级/词级/字符级三种粒度、LCS 最长公共子序列算法原理、git diff 符号读法、合并单元格式，以及合同与代码比对的最佳实践。",
+  "inLanguage": "zh-CN",
+  "datePublished": "2026-09-27",
+  "dateModified": "2026-09-27",
+  "author": { "@type": "Organization", "name": "CATAITO", "url": "https://tools.cataito.com/" },
+  "publisher": { "@type": "Organization", "name": "CATAITO 工具箱", "url": "https://tools.cataito.com/" },
+  "mainEntityOfPage": "https://tools.cataito.com/guides/text-diff-guide/"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "diff 的行级、词级、字符级有什么区别？",
+      "acceptedAnswer": { "@type": "Answer", "text": "行级以整行为最小单位（git diff 和代码审查的默认粒度），适合回答「改了哪些地方」；词级把行内单词作为单位，能看出句子里改了哪个词；字符级最细，适合核对单行内的细微修改。粒度越细结果越啰嗦，日常找不同用行级就够。" }
+    },
+    {
+      "@type": "Question",
+      "name": "LCS 算法是怎么找差异的？",
+      "acceptedAnswer": { "@type": "Answer", "text": "LCS（最长公共子序列）在两段文本的所有行中找出「按原顺序出现且最长的公共行序列」，保留下来的就是未变部分，其余行按出现位置标记为删除或新增。这是 git diff、GNU diff 等主流工具的底层算法，时间复杂度 O(n×m)，几千行文本在浏览器里也是毫秒级。" }
+    },
+    {
+      "@type": "Question",
+      "name": "git diff 里的 +、-、@@ 符号怎么读？",
+      "acceptedAnswer": { "@type": "Answer", "text": "+ 开头的行是新增（只在新版本存在），- 开头的行是删除（只在旧版本存在），无符号行是两边一致的上下文；@@ -1,4 +1,5 @@ 是 hunk 头，表示这段差异从旧版第 1 行起 4 行、新版第 1 行起 5 行。" }
+    },
+    {
+      "@type": "Question",
+      "name": "比对合同或法律文本要注意什么？",
+      "acceptedAnswer": { "@type": "Answer", "text": "先确认两份文本的格式完全一致（Word 导出 PDF 再复制，可能引入空格和换行差异）；逐行 diff 后重点看条款编号有没有整体位移——一条插入会让后面所有条款错位，容易漏看；最后用「新增/删除行数统计」交叉确认改动幅度与对方声称的一致。" }
+    },
+    {
+      "@type": "Question",
+      "name": "为什么同一次修改有时显示一行改动、有时显示一行删加一行增？",
+      "acceptedAnswer": { "@type": "Answer", "text": "行级 diff 的最小单位是整行：只要行内有一个字符不同，这一行就会被记为「删除旧行 + 新增新行」两条记录。想看到行内的细粒度差异，可以再把相关的两行单独贴出来做小范围比对。" }
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "首页", "item": "https://tools.cataito.com/" },
+    { "@type": "ListItem", "position": 2, "name": "使用指南", "item": "https://tools.cataito.com/guides/" },
+    { "@type": "ListItem", "position": 3, "name": "文本 diff 使用指南", "item": "https://tools.cataito.com/guides/text-diff-guide/" }
+  ]
+}
+</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7103529190038161" crossorigin="anonymous"></script>
+</head>
+<body>
+<div id="site-header"></div>
+
+<main class="site-main">
+  <div class="guide-wrap">
+    <nav class="breadcrumb"><a href="/" data-i18n="crumb_home">首页</a><span class="sep">/</span><a href="/guides/" data-i18n="nav_guides">使用指南</a><span class="sep">/</span><span data-i18n="gd_dif_short">文本 diff 指南</span></nav>
+    <p class="guide-meta"><span data-i18n="gd_published">发布于</span> 2026-09-27 · CATAITO</p>
+    <h1 class="page-h1" data-i18n="gd_dif_h1">文本 diff 使用指南</h1>
+    <p class="page-sub" data-i18n="gd_dif_sub">「这两段文字到底差在哪」是文案、代码、配置日常都要回答的问题。本文讲清 diff 的三种粒度、LCS 算法原理、git diff 符号读法，以及合同与代码比对的最佳实践。附免费在线文本对比工具。</p>
+
+    <div class="article lb-zh">
+      <div class="toc">
+        <p class="toc-title">目录</p>
+        <ol>
+          <li><a href="#granularity">三种粒度：行 / 词 / 字符</a></li>
+          <li><a href="#lcs">LCS 算法原理</a></li>
+          <li><a href="#git-diff">git diff 符号怎么读</a></li>
+          <li><a href="#contract">合同与文档比对实践</a></li>
+          <li><a href="#code">代码与配置比对实践</a></li>
+          <li><a href="#faq">常见问题</a></li>
+        </ol>
+      </div>
+
+      <h2 id="granularity">三种粒度：行 / 词 / 字符</h2>
+      <table>
+        <thead><tr><th>粒度</th><th>最小单位</th><th>适合</th></tr></thead>
+        <tbody>
+          <tr><td>行级</td><td>一整行</td><td>找不同：代码、配置、清单、合同条款（git diff 默认）</td></tr>
+          <tr><td>词级</td><td>单词</td><td>文章润色对比：句子里改了哪个词</td></tr>
+          <tr><td>字符级</td><td>字符</td><td>单行内的细微修改、排版校对</td></tr>
+        </tbody>
+      </table>
+      <p>粒度越细，结果越啰嗦。<strong>日常「找不同」选行级</strong>——这也是 <a href="/text/diff/">本站文本对比工具</a>采用的粒度：它把行内字符级微调显示为一行删 + 一行增，配合行号一眼定位。</p>
+
+      <h2 id="lcs">LCS 算法原理</h2>
+      <p>主流 diff 工具（GNU diff、git、各在线工具）底层都是 <strong>LCS（最长公共子序列）</strong>：在两段文本的所有行里，找出「按原顺序出现、且总长度最长」的公共行序列。</p>
+      <ul>
+        <li>被 LCS 保留的行 = 两边一致的<strong>上下文</strong>（灰色）</li>
+        <li>旧版有、LCS 没有的行 = <strong>删除</strong>（红色 −）</li>
+        <li>新版有、LCS 没有的行 = <strong>新增</strong>（绿色 +）</li>
+      </ul>
+      <p>复杂度 O(n×m)，两段各 3000 行的文本在浏览器里也是毫秒级完成；再长就有必要先截取相关段落。</p>
+
+      <h2 id="git-diff">git diff 符号怎么读</h2>
+      <pre><code>@@ -12,4 +12,5 @@
+   timeout = 30
+-  max_retries = 3
++  max_retries = 5
++  cache_enabled = true</code></pre>
+      <ul>
+        <li><code>-</code> 开头：只存在于旧版本（删除）</li>
+        <li><code>+</code> 开头：只存在于新版本（新增）</li>
+        <li>空格开头：两边一致的上下文</li>
+        <li><code>@@ -12,4 +12,5 @@</code>：hunk 头——旧版从第 12 行起 4 行、新版从第 12 行起 5 行</li>
+      </ul>
+      <p>在线 diff 工具的颜色约定与 git 一致：绿加红减。会用一处，处处都会。</p>
+
+      <h2 id="contract">合同与文档比对实践</h2>
+      <ol class="t-steps">
+        <li><strong>统一格式再比</strong>：Word 转 PDF 再复制、或从邮件正文复制，都可能引入空格、换行差异，先把两份文本清洗成纯文本。</li>
+        <li><strong>警惕条款位移</strong>：插入一条新条款会让后面所有编号错位，逐行 diff 时注意大段连续「删+增」——很可能是位移而不是重写。</li>
+        <li><strong>统计交叉确认</strong>：比对完看新增/删除行数，与对方声称的改动幅度对一下，防止漏看整段被删。</li>
+      </ol>
+      <p>敏感合同不适合上传到云转换工具——用 <a href="/text/diff/">纯本地处理的对比工具</a>，文本不出浏览器。</p>
+
+      <h2 id="code">代码与配置比对实践</h2>
+      <ul>
+        <li><strong>提交前自查</strong>：把改动前后的配置贴进 diff，确认没有把调试开关、密钥带进提交。</li>
+        <li><strong>环境差异定位</strong>：测试环境与生产环境的配置文件做 diff，是排查「本地好好的、线上出问题」的第一步。</li>
+        <li><strong>注意行尾空格</strong>：肉眼不可见但 diff 可见，很多「明明一样」的行其实差在行尾。</li>
+      </ul>
+
+      <h2 id="faq">常见问题</h2>
+      <div class="faq-item"><p class="faq-q">Q：diff 的行级、词级、字符级有什么区别？</p><p class="faq-a">A：行级以整行为单位（git diff 默认），适合找不同；词级看行内改词；字符级最细。粒度越细越啰嗦，日常用行级。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：LCS 算法是怎么找差异的？</p><p class="faq-a">A：找出两段文本中「按原顺序出现且最长」的公共行序列作为未变部分，其余按位置标为删除或新增。git 与 GNU diff 同源。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：git diff 里的 +、-、@@ 符号怎么读？</p><p class="faq-a">A：+ 新增、- 删除、空格上下文；@@ 是 hunk 头，标注差异区在两版中的行号范围。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：比对合同或法律文本要注意什么？</p><p class="faq-a">A：先统一格式再比；警惕条款编号整体位移；用统计交叉确认改动幅度。敏感文本用本地工具比对。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：为什么同一次修改有时显示一行删加一行增？</p><p class="faq-a">A：行级 diff 的最小单位是整行，行内一个字符不同就会记为删旧行 + 增新行。要细看可把相关行单独再比。</p></div>
+
+      <div class="cta-box">
+        <p class="cta-title">免费在线文本对比</p>
+        <p class="cta-sub">LCS 行级比对 · 行号定位 · 新增/删除高亮 · 纯浏览器本地处理</p>
+        <a class="cta-btn" href="/text/diff/">打开文本对比工具 →</a>
+      </div>
+    </div>
+
+    <div class="article lb-en">
+      <div class="toc">
+        <p class="toc-title">Table of Contents</p>
+        <ol>
+          <li><a href="#granularity">Three granularities: line / word / char</a></li>
+          <li><a href="#lcs">How the LCS algorithm works</a></li>
+          <li><a href="#git-diff">Reading git diff markers</a></li>
+          <li><a href="#contract">Comparing contracts &amp; documents</a></li>
+          <li><a href="#code">Comparing code &amp; config</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ol>
+      </div>
+
+      <h2 id="granularity">Three granularities: line / word / char</h2>
+      <table>
+        <thead><tr><th>Granularity</th><th>Unit</th><th>Best for</th></tr></thead>
+        <tbody>
+          <tr><td>Line</td><td>A whole line</td><td>Spotting changes: code, config, lists, contract clauses (git diff default)</td></tr>
+          <tr><td>Word</td><td>A word</td><td>Prose editing: which word changed in a sentence</td></tr>
+          <tr><td>Character</td><td>A character</td><td>Subtle edits within a line, proofreading</td></tr>
+        </tbody>
+      </table>
+      <p>Finer granularity means noisier output. <strong>Line-level is the daily default</strong> — our <a href="/text/diff/">Text Diff tool</a> uses it: character-level edits show as one deletion plus one addition, with line numbers for quick location.</p>
+
+      <h2 id="lcs">How the LCS algorithm works</h2>
+      <p>Mainstream diff tools (GNU diff, git, online checkers) are all built on <strong>LCS (Longest Common Subsequence)</strong>: find the longest sequence of lines that appears in both texts in order.</p>
+      <ul>
+        <li>Lines kept by the LCS = shared <strong>context</strong> (gray)</li>
+        <li>In the old version but not the LCS = <strong>removed</strong> (red −)</li>
+        <li>In the new version but not the LCS = <strong>added</strong> (green +)</li>
+      </ul>
+      <p>Complexity is O(n×m); two 3,000-line texts still finish in milliseconds in a browser. For longer inputs, extract the relevant sections first.</p>
+
+      <h2 id="git-diff">Reading git diff markers</h2>
+      <pre><code>@@ -12,4 +12,5 @@
+   timeout = 30
+-  max_retries = 3
++  max_retries = 5
++  cache_enabled = true</code></pre>
+      <ul>
+        <li><code>-</code> prefix: only in the old version (removed)</li>
+        <li><code>+</code> prefix: only in the new version (added)</li>
+        <li>Space prefix: shared context</li>
+        <li><code>@@ -12,4 +12,5 @@</code>: hunk header — old version 4 lines from line 12, new version 5 lines from line 12</li>
+      </ul>
+      <p>Online diff tools follow the same color convention as git: green adds, red removes. Learn it once, use it everywhere.</p>
+
+      <h2 id="contract">Comparing contracts &amp; documents</h2>
+      <ol class="t-steps">
+        <li><strong>Normalize formats first</strong>: Word→PDF→copy or email bodies can introduce whitespace and line-break differences; clean both sides to plain text.</li>
+        <li><strong>Watch for clause shifts</strong>: inserting one clause renumbers everything after it — long runs of paired deletions/additions are usually shifts, not rewrites.</li>
+        <li><strong>Cross-check the stats</strong>: compare the add/remove counts against what the other side claims, so a deleted paragraph can't slip through.</li>
+      </ol>
+      <p>Sensitive contracts shouldn't go through cloud upload tools — use a <a href="/text/diff/">fully local diff tool</a>; text never leaves the browser.</p>
+
+      <h2 id="code">Comparing code &amp; config</h2>
+      <ul>
+        <li><strong>Pre-commit self-check</strong>: diff your config before/after to ensure debug flags and secrets don't slip into the commit.</li>
+        <li><strong>Environment drift</strong>: diffing test vs production config files is step one of "works locally, breaks in prod".</li>
+        <li><strong>Trailing spaces</strong>: invisible to the eye but visible to diff — many "identical" lines differ only at the end.</li>
+      </ul>
+
+      <h2 id="faq">FAQ</h2>
+      <div class="faq-item"><p class="faq-q">Q: Line vs word vs character diff?</p><p class="faq-a">A: Line-level (git diff default) for spotting changes; word-level for edits within sentences; character-level for the finest detail. Finer = noisier; line is the daily choice.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: How does the LCS algorithm work?</p><p class="faq-a">A: It finds the longest in-order sequence of common lines as the unchanged part; the rest is marked as removals or additions by position. Same basis as git and GNU diff.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: How to read +, -, @@ in git diff?</p><p class="faq-a">A: + added, - removed, space context; @@ is a hunk header showing line ranges in both versions.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: Anything special about comparing contracts?</p><p class="faq-a">A: Normalize formats first; watch for clause renumbering shifts; cross-check with the add/remove stats. Use a local tool for sensitive texts.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: Why does one edit sometimes show as a delete plus an add?</p><p class="faq-a">A: Line diff's unit is the whole line — one changed character makes it a removal + addition pair. Diff the two lines separately for detail.</p></div>
+
+      <div class="cta-box">
+        <p class="cta-title">Free Online Text Diff</p>
+        <p class="cta-sub">LCS line comparison · Line numbers · Add/remove highlights · 100% browser-local</p>
+        <a class="cta-btn" href="/text/diff/">Open Text Diff Tool →</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<div id="site-footer"></div>
+<script src="/assets/js/site.js" defer></script>
+</body>
+</html>

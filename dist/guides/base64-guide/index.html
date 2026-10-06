@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Base64 与 URL 编码指南：原理、变体与选型 | CATAITO</title>
+<meta name="title-zh" content="Base64 与 URL 编码指南：原理、变体与选型 | CATAITO">
+<meta name="title-en" content="Base64 & URL Encoding Guide: How They Work and When to Use Each | CATAITO">
+<meta name="description" content="Base64 与 URL 编码完全指南：3 字节→4 字符的映射原理、= 补位、URL-safe 变体差异、Data URL 与 JWT 里的实际应用、URL 编码的转义规则，以及两者怎么选。附免费在线编解码工具（UTF-8 中文安全）。">
+<meta name="theme-color" content="#f6f3ec">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="CATAITO 工具箱">
+<meta property="og:title" content="Base64 与 URL 编码指南">
+<meta property="og:description" content="Base64 原理、URL-safe 变体、Data URL 与 JWT 应用，以及与 URL 编码的选型区别。">
+<meta property="og:url" content="https://tools.cataito.com/guides/base64-guide/">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:locale:alternate" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Base64 与 URL 编码指南">
+<meta name="twitter:description" content="原理、变体与选型全解。">
+<link rel="canonical" href="https://tools.cataito.com/guides/base64-guide/">
+<link rel="icon" type="image/png" href="/assets/img/cataito-logo.png">
+<link rel="stylesheet" href="/assets/css/site.css">
+<script src="/assets/js/theme-init.js"></script>
+<script>
+  (function () {
+    try {
+      var l = localStorage.getItem('cataito-lang');
+      document.documentElement.setAttribute('lang', (l === 'en') ? 'en' : 'zh-CN');
+      if (l === 'en') document.documentElement.classList.add('lang-en');
+    } catch (e) {}
+  })();
+</script>
+<style>
+  .guide-wrap { max-width: 760px; margin: 0; }
+  .guide-meta { font-size: 13px; color: var(--text-3); margin: 0 0 6px; }
+  .page-sub { margin-bottom: 10px; }
+  .article { font-size: 15px; line-height: 1.85; color: var(--text); }
+  .article h2 { font-size: 21px; font-weight: 700; letter-spacing: -.3px; margin: 44px 0 14px; padding-top: 16px; border-top: 1px solid var(--border); color: var(--text); }
+  .article h3 { font-size: 16.5px; font-weight: 650; margin: 26px 0 10px; color: var(--text); }
+  .article p { margin: 0 0 14px; color: var(--text-2); }
+  .article strong { color: var(--text); font-weight: 650; }
+  .article a { color: var(--accent); text-decoration: none; }
+  .article a:hover { text-decoration: underline; }
+  .article ul, .article ol { margin: 0 0 16px; padding-left: 22px; color: var(--text-2); }
+  .article li { margin: 6px 0; }
+  .article code { font-family: var(--font-mono); font-size: 13px; background: var(--card-2); border: 1px solid var(--border); border-radius: 3px; padding: 1px 6px; color: var(--text); }
+  .article pre { background: var(--card-2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px 16px; margin: 14px 0 18px; overflow-x: auto; }
+  .article pre code { background: none; border: none; padding: 0; font-size: 12.5px; line-height: 1.7; }
+  .article table { width: 100%; border-collapse: collapse; margin: 18px 0 22px; font-size: 13.5px; background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-sm); overflow: hidden; }
+  .article th, .article td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--border); }
+  .article th { background: var(--card-2); color: var(--text); font-weight: 650; white-space: nowrap; }
+  .article td { color: var(--text-2); }
+  .article tr:last-child td { border-bottom: none; }
+  .toc { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 18px; margin: 20px 0 8px; box-shadow: var(--shadow-sm); }
+  .toc-title { font-size: 13px; font-weight: 650; color: var(--text); margin: 0 0 10px; }
+  .toc ol { margin: 0; padding-left: 20px; font-size: 13.5px; }
+  .toc li { margin: 5px 0; }
+  .toc a { color: var(--text-2); text-decoration: none; }
+  .toc a:hover { color: var(--accent); }
+  .cta-box { background: linear-gradient(135deg, var(--accent-soft), var(--accent-soft-2)); border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent); border-radius: var(--radius); padding: 20px 22px; margin: 34px 0 10px; text-align: center; }
+  .cta-box .cta-title { font-size: 17px; font-weight: 700; color: var(--text); margin: 0 0 6px; }
+  .cta-box .cta-sub { font-size: 13.5px; color: var(--text-2); margin: 0 0 14px; }
+  .cta-btn { display: inline-block; background: var(--accent); color: #fff; text-decoration: none; font-size: 14px; font-weight: 600; padding: 11px 26px; border-radius: var(--radius-sm); box-shadow: 0 6px 18px var(--accent-glow); transition: background .15s; }
+  .cta-btn:hover { background: var(--accent-hover); }
+  .article a.cta-btn, .article .cta-btn { color: #fff; text-decoration: none; }
+  .article a.cta-btn:hover { color: #fff; text-decoration: none; background: var(--accent-hover); }
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Base64 与 URL 编码指南：原理、变体与选型",
+  "description": "详解 Base64 的 3 字节→4 字符映射与 = 补位、URL-safe 变体差异、Data URL 与 JWT 里的实际应用、URL 编码的转义规则，以及两者怎么选。",
+  "inLanguage": "zh-CN",
+  "datePublished": "2026-09-27",
+  "dateModified": "2026-09-27",
+  "author": { "@type": "Organization", "name": "CATAITO", "url": "https://tools.cataito.com/" },
+  "publisher": { "@type": "Organization", "name": "CATAITO 工具箱", "url": "https://tools.cataito.com/" },
+  "mainEntityOfPage": "https://tools.cataito.com/guides/base64-guide/"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Base64 为什么会让数据变大 33%？",
+      "acceptedAnswer": { "@type": "Answer", "text": "Base64 把每 3 个字节（24 位）重排成 4 个字符（每个字符承载 6 位），数据位没有损失但载体变多了：4 字符替代 3 字节，体积固定膨胀 4/3 ≈ 133%。加上换行符（MIME 场景）可能更多。" }
+    },
+    {
+      "@type": "Question",
+      "name": "Base64 末尾的 = 号是什么？",
+      "acceptedAnswer": { "@type": "Answer", "text": "补位符。Base64 以 3 字节为一组编码，长度不是 3 的倍数时用 = 补齐到 4 字符的整数倍：余 1 字节补 ==，余 2 字节补 =。它不携带数据，只保证长度可整除，解析器据此还原原始长度。" }
+    },
+    {
+      "@type": "Question",
+      "name": "URL-safe Base64 和标准 Base64 有什么区别？",
+      "acceptedAnswer": { "@type": "Answer", "text": "标准 Base64 用 + 和 /，在 URL 里是特殊字符；URL-safe 变体把它们换成 - 和 _，并且通常省略尾部 =。JWT（JSON Web Token）用的就是 URL-safe 变体。两者可以无损互转（-↔+、_↔/、补回 =）。" }
+    },
+    {
+      "@type": "Question",
+      "name": "Base64 和 URL 编码（百分号编码）分别什么时候用？",
+      "acceptedAnswer": { "@type": "Answer", "text": "URL 编码只转义 URL 语法不允许的字符（空格、中文、& 等），原文大部分可读，用于 query 参数和路径；Base64 把任意字节整体重编成 64 个安全字符，完全不可读，用于二进制数据走文本通道（Data URL、邮件附件、JWT）。" }
+    },
+    {
+      "@type": "Question",
+      "name": "为什么我的 Base64 解出来是乱码？",
+      "acceptedAnswer": { "@type": "Answer", "text": "多数情况是编码侧不是 UTF-8：老系统用 latin1 或 GBK 编码中文再转 Base64，UTF-8 解码自然乱码。确认发送方编码为 UTF-8 后重编即可；纯二进制数据（如图片）解成文本本来就是乱码，应解成文件保存。" }
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "首页", "item": "https://tools.cataito.com/" },
+    { "@type": "ListItem", "position": 2, "name": "使用指南", "item": "https://tools.cataito.com/guides/" },
+    { "@type": "ListItem", "position": 3, "name": "Base64 与 URL 编码指南", "item": "https://tools.cataito.com/guides/base64-guide/" }
+  ]
+}
+</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7103529190038161" crossorigin="anonymous"></script>
+</head>
+<body>
+<div id="site-header"></div>
+
+<main class="site-main">
+  <div class="guide-wrap">
+    <nav class="breadcrumb"><a href="/" data-i18n="crumb_home">首页</a><span class="sep">/</span><a href="/guides/" data-i18n="nav_guides">使用指南</a><span class="sep">/</span><span data-i18n="gd_b64_short">Base64 指南</span></nav>
+    <p class="guide-meta"><span data-i18n="gd_published">发布于</span> 2026-09-27 · CATAITO</p>
+    <h1 class="page-h1" data-i18n="gd_b64_h1">Base64 与 URL 编码指南</h1>
+    <p class="page-sub" data-i18n="gd_b64_sub">Base64 和 URL 编码无处不在：图片 Data URL、JWT、邮件附件、链接参数。本文讲清原理、变体与选型。附免费在线编解码工具。</p>
+
+    <div class="article lb-zh">
+      <div class="toc">
+        <p class="toc-title">目录</p>
+        <ol>
+          <li><a href="#principle">Base64 的 3 字节→4 字符原理</a></li>
+          <li><a href="#variants">URL-safe 变体</a></li>
+          <li><a href="#uses">常见应用：Data URL / JWT / 邮件</a></li>
+          <li><a href="#url-encoding">URL 编码（百分号编码）</a></li>
+          <li><a href="#choosing">怎么选</a></li>
+          <li><a href="#faq">常见问题</a></li>
+        </ol>
+      </div>
+
+      <h2 id="principle">Base64 的 3 字节→4 字符原理</h2>
+      <p>Base64 解决的问题是：<strong>让任意二进制数据安全地通过只认文本的通道</strong>。它把 64 个字符（A–Z、a–z、0–9、+、/）编成一个「字母表」，每 3 个字节（24 位）拆成 4 组、各 6 位，每组映射到字母表里的一个字符：</p>
+      <pre><code>字节数据:  0xE4  0xB8  0xAD        （"中" 的 UTF-8 前三字节）
+二进制:    11100100 10111000 10101101
+6 位分组:  111001 | 001011 | 100010 | 101101
+查表:      5        11       34       45
+Base64:    5        L        i        t   →  "5Lit"</code></pre>
+      <p>两件衍生物：</p>
+      <ul>
+        <li><strong>= 补位</strong>：输入长度不是 3 的倍数时补 <code>=</code> 凑整（余 1 补 <code>==</code>，余 2 补 <code>=</code>）</li>
+        <li><strong>体积 +33%</strong>：3 字节变 4 字符，固定膨胀 4/3</li>
+      </ul>
+      <p>想动手验证，用 <a href="/text/base64/">本站 Base64 编解码工具</a>输入「中」看输出 <code>5Lit</code>。</p>
+
+      <h2 id="variants">URL-safe 变体</h2>
+      <p>标准 Base64 的 <code>+</code> 和 <code>/</code> 在 URL 里有语法含义，放进链接会被误解。URL-safe 变体做两个替换：</p>
+      <table>
+        <thead><tr><th>标准</th><th>URL-safe</th></tr></thead>
+        <tbody>
+          <tr><td><code>+</code></td><td><code>-</code></td></tr>
+          <tr><td><code>/</code></td><td><code>_</code></td></tr>
+          <tr><td>尾部 <code>=</code></td><td>通常省略</td></tr>
+        </tbody>
+      </table>
+      <p>两者无损互转。看到「既没有 + 也没有 / 的 Base64」，基本就是 URL-safe 变体。</p>
+
+      <h2 id="uses">常见应用：Data URL / JWT / 邮件</h2>
+      <ul>
+        <li><strong>Data URL</strong>：<code>data:image/png;base64,iVBOR...</code> 把图片直接内嵌进 HTML/CSS，省一次请求，代价是 HTML 变大且无法单独缓存</li>
+        <li><strong>JWT</strong>：三段式 header.payload.signature，前两段是 URL-safe Base64 编码的 JSON，所以你能在 jwt.io 直接「看懂」你的 token——也说明 <strong>JWT 默认不加密</strong>，敏感信息别放 payload</li>
+        <li><strong>邮件 MIME</strong>：附件二进制走 Base64 才能在 SMTP 文本协议里传输</li>
+      </ul>
+
+      <h2 id="url-encoding">URL 编码（百分号编码）</h2>
+      <p>URL 只允许一小部分字符出现，其余都要转义成 <code>%XX</code> 字节序列：</p>
+      <pre><code>空格:    → %20
+中:      → %E4%B8%AD   （UTF-8 的三个字节各转一个 %XX）
+&:       → %26         （在参数值里要转义，否则被当成参数分隔符）</code></pre>
+      <p>它和 Base64 的根本区别：<strong>URL 编码逐字符转义、原文大多可读；Base64 整体重编、完全不可读</strong>。</p>
+
+      <h2 id="choosing">怎么选</h2>
+      <table>
+        <thead><tr><th>场景</th><th>选什么</th></tr></thead>
+        <tbody>
+          <tr><td>链接参数、路径里的中文/特殊字符</td><td>URL 编码</td></tr>
+          <tr><td>图片内嵌进 HTML/CSS</td><td>Base64（Data URL）</td></tr>
+          <tr><td>token / 签名放 URL</td><td>URL-safe Base64</td></tr>
+          <tr><td>邮件附件</td><td>Base64（MIME 规定）</td></tr>
+          <tr><td>「加密」敏感信息</td><td>都不是——用真正的加密</td></tr>
+        </tbody>
+      </table>
+
+      <h2 id="faq">常见问题</h2>
+      <div class="faq-item"><p class="faq-q">Q：Base64 为什么会让数据变大 33%？</p><p class="faq-a">A：每 3 字节（24 位）重排成 4 字符（各承载 6 位），4/3 ≈ 133%，固定膨胀。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：末尾的 = 是什么？</p><p class="faq-a">A：补位符，不携带数据，只把长度补齐到 4 字符的整数倍，解析器据此还原原始长度。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：URL-safe Base64 和标准 Base64 的区别？</p><p class="faq-a">A：+ 换 -、/ 换 _、通常省略尾部 =。JWT 用的就是它。两者可无损互转。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：Base64 和 URL 编码分别什么时候用？</p><p class="faq-a">A：URL 参数用 URL 编码（逐字符转义、可读）；二进制走文本通道用 Base64（整体重编、不可读）。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：为什么解出来是乱码？</p><p class="faq-a">A：多半是发送方不是 UTF-8（latin1/GBK 编码后再转的）；或解码对象本来就是二进制（如图片），应存成文件而非当文本。</p></div>
+
+      <div class="cta-box">
+        <p class="cta-title">免费在线 Base64 / URL 编解码</p>
+        <p class="cta-sub">双向转换 · UTF-8 中文安全 · 实时输出 · 纯浏览器本地处理</p>
+        <a class="cta-btn" href="/text/base64/">打开编解码工具 →</a>
+      </div>
+    </div>
+
+    <div class="article lb-en">
+      <div class="toc">
+        <p class="toc-title">Table of Contents</p>
+        <ol>
+          <li><a href="#principle">The 3-byte → 4-character principle</a></li>
+          <li><a href="#variants">The URL-safe variant</a></li>
+          <li><a href="#uses">Common uses: Data URL / JWT / email</a></li>
+          <li><a href="#url-encoding">URL encoding (percent-encoding)</a></li>
+          <li><a href="#choosing">How to choose</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ol>
+      </div>
+
+      <h2 id="principle">The 3-byte → 4-character principle</h2>
+      <p>Base64 solves one problem: <strong>carrying arbitrary binary safely through text-only channels</strong>. It maps 64 characters (A–Z, a–z, 0–9, +, /) as an alphabet; every 3 bytes (24 bits) split into 4 groups of 6 bits, each mapped to one character:</p>
+      <pre><code>bytes:     0xE4  0xB8  0xAD        (first 3 UTF-8 bytes of "中")
+binary:    11100100 10111000 10101101
+6-bit:     111001 | 001011 | 100010 | 101101
+index:     5        11       34       45
+Base64:    5        L        i        t   →  "5Lit"</code></pre>
+      <p>Two consequences:</p>
+      <ul>
+        <li><strong>= padding</strong>: inputs not divisible by 3 get <code>=</code> padding (1 leftover → <code>==</code>, 2 → <code>=</code>)</li>
+        <li><strong>+33% size</strong>: 3 bytes become 4 characters, a fixed 4/3 expansion</li>
+      </ul>
+      <p>Verify it yourself: type「中」into our <a href="/text/base64/">Base64 tool</a> and you'll get <code>5Lit</code>.</p>
+
+      <h2 id="variants">The URL-safe variant</h2>
+      <p>Standard Base64 uses <code>+</code> and <code>/</code>, which have special meaning in URLs. The URL-safe variant swaps two characters:</p>
+      <table>
+        <thead><tr><th>Standard</th><th>URL-safe</th></tr></thead>
+        <tbody>
+          <tr><td><code>+</code></td><td><code>-</code></td></tr>
+          <tr><td><code>/</code></td><td><code>_</code></td></tr>
+          <tr><td>trailing <code>=</code></td><td>usually omitted</td></tr>
+        </tbody>
+      </table>
+      <p>They convert losslessly. A "Base64 without + or /" is almost always the URL-safe variant.</p>
+
+      <h2 id="uses">Common uses: Data URL / JWT / email</h2>
+      <ul>
+        <li><strong>Data URLs</strong>: <code>data:image/png;base64,iVBOR...</code> embeds an image right in HTML/CSS — one fewer request, at the cost of bigger HTML and no separate caching</li>
+        <li><strong>JWT</strong>: the header.payload.signature segments are URL-safe Base64 of JSON — which is why you can "read" your token on jwt.io, and why <strong>JWTs are not encrypted by default</strong>: keep secrets out of the payload</li>
+        <li><strong>Email MIME</strong>: attachments travel as Base64 through the text-only SMTP protocol</li>
+      </ul>
+
+      <h2 id="url-encoding">URL encoding (percent-encoding)</h2>
+      <p>URLs permit only a small character set; everything else is escaped as <code>%XX</code> byte sequences:</p>
+      <pre><code>space:   → %20
+中:      → %E4%B8%AD   (each of the 3 UTF-8 bytes)
+&:       → %26         (escaped inside parameter values)</code></pre>
+      <p>The fundamental difference from Base64: <strong>URL encoding escapes character-by-character and stays mostly readable; Base64 rewrites everything and is fully unreadable</strong>.</p>
+
+      <h2 id="choosing">How to choose</h2>
+      <table>
+        <thead><tr><th>Scenario</th><th>Use</th></tr></thead>
+        <tbody>
+          <tr><td>Chinese/special chars in query params or paths</td><td>URL encoding</td></tr>
+          <tr><td>Images embedded in HTML/CSS</td><td>Base64 (Data URL)</td></tr>
+          <tr><td>Tokens / signatures in URLs</td><td>URL-safe Base64</td></tr>
+          <tr><td>Email attachments</td><td>Base64 (MIME mandate)</td></tr>
+          <tr><td>"Hiding" secrets</td><td>Neither — use real encryption</td></tr>
+        </tbody>
+      </table>
+
+      <h2 id="faq">FAQ</h2>
+      <div class="faq-item"><p class="faq-q">Q: Why does Base64 inflate data by 33%?</p><p class="faq-a">A: Every 3 bytes (24 bits) become 4 characters (6 bits each): a fixed 4/3 ≈ 133% expansion.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: What's the trailing = for?</p><p class="faq-a">A: Padding. It carries no data; it rounds the length to a multiple of 4 so parsers recover the original length.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: URL-safe vs standard Base64?</p><p class="faq-a">A: + → -, / → _, padding usually omitted; JWTs use it. They convert losslessly.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: When to use Base64 vs URL encoding?</p><p class="faq-a">A: URL params → URL encoding (per-character escaping, readable); binary over text channels → Base64 (full rewrite, unreadable).</p></div>
+      <div class="faq-item"><p class="faq-q">Q: Why does my Base64 decode to garbage?</p><p class="faq-a">A: Usually the sender didn't use UTF-8 (latin1/GBK before Base64); or the source was binary (like an image) and should be saved as a file, not read as text.</p></div>
+
+      <div class="cta-box">
+        <p class="cta-title">Free Online Base64 / URL Tool</p>
+        <p class="cta-sub">Bidirectional · UTF-8-safe · Live output · 100% browser-local</p>
+        <a class="cta-btn" href="/text/base64/">Open the Tool →</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<div id="site-footer"></div>
+<script src="/assets/js/site.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Base64 / URL 编解码 — 免费在线转换工具 | CATAITO</title>
+<meta name="title-zh" content="Base64 / URL 编解码 — 免费在线转换工具 | CATAITO">
+<meta name="title-en" content="Base64 / URL Encoder-Decoder — Free Online | CATAITO">
+<meta name="description" content="免费在线 Base64 与 URL 编解码：文本双向转换，UTF-8 中文安全，URL 编码支持中文与特殊字符，错误输入智能提示。纯浏览器本地处理。">
+<meta name="theme-color" content="#f6f3ec">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="CATAITO 工具箱">
+<meta property="og:title" content="Base64 / URL 编解码 — 免费在线转换工具">
+<meta property="og:description" content="Base64 与 URL 双向编解码，UTF-8 中文安全，纯本地处理。">
+<meta property="og:url" content="https://tools.cataito.com/text/base64/">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:locale:alternate" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Base64 / URL 编解码">
+<meta name="twitter:description" content="免费在线双向编解码，纯本地处理。">
+<link rel="icon" type="image/png" href="/assets/img/cataito-logo.png">
+<link rel="canonical" href="https://tools.cataito.com/text/base64/">
+<link rel="stylesheet" href="/assets/css/site.css">
+<script src="/assets/js/theme-init.js"></script>
+<script>
+  (function () {
+    try {
+      var l = localStorage.getItem('cataito-lang');
+      document.documentElement.setAttribute('lang', (l === 'en') ? 'en' : 'zh-CN');
+    } catch (e) {}
+  })();
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Base64 / URL Encoder-Decoder",
+  "alternateName": "Base64 URL 编解码",
+  "applicationCategory": "DeveloperApplication",
+  "operatingSystem": "Any",
+  "url": "https://tools.cataito.com/text/base64/",
+  "inLanguage": ["zh-CN", "en"],
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "description": "免费在线 Base64 与 URL 编解码，UTF-8 中文安全，纯浏览器本地处理。"
+}
+</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7103529190038161" crossorigin="anonymous"></script>
+</head>
+<body>
+<div id="site-header"></div>
+<main class="site-main">
+  <div class="t-head">
+    <nav class="breadcrumb"><a href="/" data-i18n="crumb_home">首页</a><span class="sep">/</span><span data-i18n="b64_name">Base64 / URL 编解码</span></nav>
+    <h1 class="page-h1" data-i18n="b64_name">Base64 / URL 编解码</h1>
+    <p class="page-sub" data-i18n="b64_desc">文本在 Base64 与 URL 编码间双向转换，UTF-8 中文安全。纯浏览器本地处理，内容不上传。</p>
+  </div>
+
+  <section class="t-card t-flow">
+    <div class="t-field">
+      <div class="t-label" data-i18n="b64_scheme">编码方案</div>
+      <div class="t-seg" id="b64-scheme">
+        <label class="t-seg-item"><input type="radio" name="b64-scheme" value="base64" checked><span>Base64</span></label>
+        <label class="t-seg-item"><input type="radio" name="b64-scheme" value="url"><span data-i18n="b64_scheme_url">URL（% 转义）</span></label>
+      </div>
+    </div>
+
+    <div class="t-field">
+      <div class="t-label" data-i18n="b64_dir">方向</div>
+      <div class="t-seg" id="b64-dir">
+        <label class="t-seg-item"><input type="radio" name="b64-dir" value="enc" checked><span data-i18n="b64_enc">编码（文本 → 密文）</span></label>
+        <label class="t-seg-item"><input type="radio" name="b64-dir" value="dec"><span data-i18n="b64_dec">解码（密文 → 文本）</span></label>
+      </div>
+    </div>
+
+    <div class="t-field">
+      <div class="t-label" data-i18n="b64_input">输入</div>
+      <textarea id="b64-in" class="t-input b64-area" rows="6" spellcheck="false" data-i18n-placeholder="b64_ph" placeholder="在此输入文本…"></textarea>
+    </div>
+
+    <div class="t-field">
+      <div class="t-label"><span data-i18n="b64_output">输出</span>
+        <span class="b64-actions">
+          <button type="button" class="t-btn" id="b64-swap" data-i18n="b64_swap">结果填回输入</button>
+          <button type="button" class="t-btn" id="b64-copy" data-i18n="b64_copy">复制结果</button>
+        </span>
+      </div>
+      <textarea id="b64-out" class="t-input b64-area" rows="6" readonly spellcheck="false"></textarea>
+      <div class="t-hint" id="b64-hint"></div>
+    </div>
+    <p class="t-note" data-i18n="b64_note">Base64 是编码不是加密——任何人都能解码，不要用来「藏」敏感信息。URL 编码用于把中文/空格/特殊字符转成可安全传输的 % 转义形式。</p>
+  </section>
+
+  <section class="t-prose">
+    <h2 data-i18n="b64_how_h">怎么用</h2>
+    <ol class="t-steps">
+      <li data-i18n-html="b64_how_1"><strong>选方案与方向</strong>：Base64 常见于邮件附件、Data URL、JWT 载荷；URL 编码常见于链接参数（<code>%20</code> 空格、中文转 <code>%E4%B8%AD</code>）。</li>
+      <li data-i18n-html="b64_how_2"><strong>输入即出结果</strong>：左侧输入框输入内容，下方输出框实时给出转换结果，支持中文等多字节字符。</li>
+      <li data-i18n-html="b64_how_3"><strong>结果再利用</strong>：「结果填回输入」把输出转成下一轮输入（连着编两轮很方便）；「复制结果」直接进剪贴板。</li>
+    </ol>
+
+    <h2 data-i18n="b64_faq_h">常见问题</h2>
+    <div class="t-faq">
+      <div class="t-faq-item">
+        <p class="t-faq-q" data-i18n="b64_faq_1_q">Base64 能当加密用吗？</p>
+        <p class="t-faq-a" data-i18n="b64_faq_1_a">不能。Base64 是公开标准的可逆编码，没有密钥，任何人拿到字符串都能还原。它只解决「二进制数据走文本通道」的问题，机密内容请用真正的加密方案。</p>
+      </div>
+      <div class="t-faq-item">
+        <p class="t-faq-q" data-i18n="b64_faq_2_q">解码报错是怎么回事？</p>
+        <p class="t-faq-a" data-i18n="b64_faq_2_a">Base64 合法字符只有 A–Z、a–z、0–9、+、/ 和补位 =。出现其它字符（换行除外）或长度不对会解码失败；提示「不是合法 UTF-8」说明密文原文不是文本数据（比如图片二进制）。</p>
+      </div>
+      <div class="t-faq-item">
+        <p class="t-faq-q" data-i18n="b64_faq_3_q">URL 编码和 Base64 有什么区别？</p>
+        <p class="t-faq-a" data-i18n="b64_faq_3_a">URL 编码只转义 URL 里不合法的字符（空格、中文、&、= 等），原文基本可读；Base64 把全部数据重编成 64 个安全字符，完全不可读。URL 参数用 URL 编码，二进制走文本通道用 Base64。</p>
+      </div>
+      <div class="t-faq-item">
+        <p class="t-faq-q" data-i18n="b64_faq_4_q">中文会乱码吗？</p>
+        <p class="t-faq-a" data-i18n="b64_faq_4_a">不会。编解码都走 UTF-8（TextEncoder / TextDecoder），中英日韩、emoji 都能正确往返。乱码通常发生在用 latin1 老代码处理中文的场景。</p>
+      </div>
+    </div>
+
+    <h2 data-i18n="related_guides">相关指南</h2>
+    <div class="t-guide-links">
+      <a class="t-guide-link" href="/guides/base64-guide/">
+        <p class="t-guide-link-title" data-i18n="gd_b64_short">Base64 与 URL 编码指南</p>
+        <p class="t-guide-link-desc" data-i18n="gd_b64_card_desc">Base64 的 3 字节→4 字符原理、= 补位、URL-safe 变体、Data URL 与 JWT 里的应用，以及它与 URL 编码的选型区别。</p>
+      </a>
+      <a class="t-guide-link" href="/guides/json-guide/">
+        <p class="t-guide-link-title" data-i18n="gd_json_short">JSON 入门与实用技巧</p>
+        <p class="t-guide-link-desc" data-i18n="gd_json_card_desc">JSON 是什么、与 YAML/TOML/CSV 的区别、语法规范、常见错误排查与工具使用建议。</p>
+      </a>
+    </div>
+  </section>
+</main>
+
+<div id="site-footer"></div>
+<div id="b64-toast" class="t-toast">
+  <span class="t-toast-ic">
+    <svg class="ic-ok" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+    <svg class="ic-err" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+  </span>
+  <span class="t-toast-title"></span>
+</div>
+
+<script src="/assets/js/site.js" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+(function () {
+  'use strict';
+  var t = function (k, vars) { return (window.CATAITO_I18N && window.CATAITO_I18N.t) ? window.CATAITO_I18N.t(k, vars) : k; };
+  var input = document.getElementById('b64-in');
+  var output = document.getElementById('b64-out');
+  var hint = document.getElementById('b64-hint');
+  var timer = null;
+
+  /* UTF-8 安全的 Base64：TextEncoder → btoa；atob → TextDecoder */
+  function b64encode(str) {
+    var bytes = new TextEncoder().encode(str);
+    var bin = '';
+    for (var i = 0; i < bytes.length; i += 0x8000) {
+      bin += String.fromCharCode.apply(null, bytes.subarray(i, i + 0x8000));
+    }
+    return btoa(bin);
+  }
+  function b64decode(str) {
+    var bin = atob(str.replace(/\s+/g, ''));
+    var bytes = new Uint8Array(bin.length);
+    for (var i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+    return new TextDecoder('utf-8', { fatal: true }).decode(bytes);
+  }
+
+  function run() {
+    var scheme = (document.querySelector('input[name="b64-scheme"]:checked') || {}).value || 'base64';
+    var dir = (document.querySelector('input[name="b64-dir"]:checked') || {}).value || 'enc';
+    var src = input.value;
+    hint.textContent = '';
+    output.value = '';
+    if (src === '') return;
+    try {
+      if (scheme === 'base64') {
+        output.value = dir === 'enc' ? b64encode(src) : b64decode(src);
+      } else {
+        output.value = dir === 'enc' ? encodeURIComponent(src) : decodeURIComponent(src.replace(/\+/g, '%20'));
+      }
+      hint.textContent = dir === 'enc'
+        ? t('b64_len_out', { n: output.value.length })
+        : t('b64_len_in', { n: new TextEncoder().encode(output.value).length });
+    } catch (e) {
+      hint.textContent = scheme === 'base64'
+        ? t('b64_err_b64')
+        : t('b64_err_url');
+    }
+  }
+
+  var toastTimer = null;
+  function showToast(msg, isErr) {
+    var el = document.getElementById('b64-toast');
+    el.querySelector('.t-toast-title').textContent = msg;
+    el.classList.toggle('error', !!isErr);
+    el.classList.add('show');
+    if (toastTimer) clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { el.classList.remove('show'); }, 2600);
+  }
+
+  input.addEventListener('input', function () {
+    if (timer) clearTimeout(timer);
+    timer = setTimeout(run, 150);
+  });
+  ['change'].forEach(function (ev) {
+    document.getElementById('b64-scheme').addEventListener(ev, run);
+    document.getElementById('b64-dir').addEventListener(ev, run);
+  });
+
+  document.getElementById('b64-swap').addEventListener('click', function () {
+    if (!output.value) { showToast(t('b64_toast_empty'), true); return; }
+    input.value = output.value;
+    output.value = '';
+    run();
+  });
+  document.getElementById('b64-copy').addEventListener('click', function () {
+    if (!output.value) { showToast(t('b64_toast_empty'), true); return; }
+    (navigator.clipboard ? navigator.clipboard.writeText(output.value) : Promise.reject())
+      .then(function () { showToast(t('b64_toast_copied')); })
+      .catch(function () {
+        var ta = document.createElement('textarea');
+        ta.value = output.value; document.body.appendChild(ta); ta.select();
+        document.execCommand('copy'); ta.remove();
+        showToast(t('b64_toast_copied'));
+      });
+  });
+
+  document.addEventListener('cataito-lang-change', function () { run(); });
+})();
+});
+</script>
+
+<style>
+  /* 本页专属规则；通用组件复用 /assets/css/site.css 的 .t-* 共享组件层 */
+  .b64-area { font-family: var(--font-mono); font-size: 13px; resize: vertical; }
+  .b64-actions { float: right; display: flex; gap: 8px; }
+  .b64-actions .t-btn { padding: 4px 12px; font-size: 12.5px; }
+</style>
+</body>
+</html>

@@ -827,3 +827,10 @@ html.lang-en .lb-en { display: block; }
 
 /* ---------- :has() 降级（Firefox 121 以下看不到选中态） ---------- */
 /* 由 site.js 的 initHasFallback 统一加 .checked 类兜底 */
+
+/* 首页类别分组：分类页入口（印刷风等宽小字） */
+.section-head .cat-more {
+  font-family: var(--font-mono); font-size: 12px; font-weight: 400;
+  color: var(--text-3); text-decoration: none; margin-left: 10px;
+}
+.section-head .cat-more:hover { color: var(--accent); }

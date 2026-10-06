@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>文本对比 Diff — 免费在线两段文字差异比对 | CATAITO</title>
+<meta name="title-zh" content="文本对比 Diff — 免费在线两段文字差异比对 | CATAITO">
+<meta name="title-en" content="Text Diff — Free Online Text Comparison | CATAITO">
+<meta name="description" content="免费在线文本对比：粘贴两段文字即时比对逐行差异，新增/删除/未变三种高亮，行号定位、差异统计，纯浏览器本地处理。">
+<meta name="theme-color" content="#f6f3ec">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="CATAITO 工具箱">
+<meta property="og:title" content="文本对比 Diff — 免费在线两段文字差异比对">
+<meta property="og:description" content="逐行比对两段文字，新增/删除高亮，行号与统计，纯本地处理。">
+<meta property="og:url" content="https://tools.cataito.com/text/diff/">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:locale:alternate" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="文本对比 Diff">
+<meta name="twitter:description" content="免费在线文本差异比对，纯本地处理。">
+<link rel="icon" type="image/png" href="/assets/img/cataito-logo.png">
+<link rel="canonical" href="https://tools.cataito.com/text/diff/">
+<link rel="stylesheet" href="/assets/css/site.css">
+<script src="/assets/js/theme-init.js"></script>
+<script>
+  (function () {
+    try {
+      var l = localStorage.getItem('cataito-lang');
+      document.documentElement.setAttribute('lang', (l === 'en') ? 'en' : 'zh-CN');
+    } catch (e) {}
+  })();
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Text Diff Checker",
+  "alternateName": "文本对比",
+  "applicationCategory": "DeveloperApplication",
+  "operatingSystem": "Any",
+  "url": "https://tools.cataito.com/text/diff/",
+  "inLanguage": ["zh-CN", "en"],
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "description": "免费在线文本对比：逐行比对两段文字差异，新增/删除高亮，纯浏览器本地处理。"
+}
+</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7103529190038161" crossorigin="anonymous"></script>
+</head>
+<body>
+<div id="site-header"></div>
+<main class="site-main">
+  <div class="t-head">
+    <nav class="breadcrumb"><a href="/" data-i18n="crumb_home">首页</a><span class="sep">/</span><span data-i18n="df_name">文本对比</span></nav>
+    <h1 class="page-h1" data-i18n="df_name">文本对比</h1>
+    <p class="page-sub" data-i18n="df_desc">粘贴两段文字，即时逐行比对差异：新增绿色、删除红色、未变灰显。纯浏览器本地处理，文本不上传。</p>
+  </div>
+
+  <section class="t-card t-flow">
+    <div class="df-inputs">
+      <div class="df-input-col">
+        <div class="t-label"><span data-i18n="df_left">原文（A）</span><span class="df-count" id="df-count-a"></span></div>
+        <textarea id="df-a" class="t-input df-area" rows="10" spellcheck="false" data-i18n-placeholder="df_ph" placeholder="在此粘贴原始文本…"></textarea>
+      </div>
+      <div class="df-input-col">
+        <div class="t-label"><span data-i18n="df_right">新文（B）</span><span class="df-count" id="df-count-b"></span></div>
+        <textarea id="df-b" class="t-input df-area" rows="10" spellcheck="false" data-i18n-placeholder="df_ph" placeholder="在此粘贴修改后的文本…"></textarea>
+      </div>
+    </div>
+
+    <div class="t-field df-sample-row">
+      <button type="button" class="t-btn" id="df-sample" data-i18n="df_sample">加载示例</button>
+      <button type="button" class="t-btn" id="df-clear" data-i18n="df_clear">清空</button>
+    </div>
+
+    <div class="t-block" id="df-result-block" hidden>
+      <div class="df-stats" id="df-stats"></div>
+      <div class="df-output" id="df-output"></div>
+    </div>
+    <p id="df-empty" class="t-empty" data-i18n="df_empty">两侧都输入内容后，这里会显示逐行差异。</p>
+    <p class="t-note" data-i18n="df_note">按整行比对（LCS 算法），单侧最多 3000 行；比对在浏览器本地完成，文本不上传。</p>
+  </section>
+
+  <section class="t-prose">
+    <h2 data-i18n="df_how_h">怎么用</h2>
+    <ol class="t-steps">
+      <li data-i18n-html="df_how_1"><strong>贴两段文本</strong>：左边贴原文（A），右边贴新文（B），结果实时刷新，无需点按钮。</li>
+      <li data-i18n-html="df_how_2"><strong>读差异</strong>：绿色 <code>+</code> 是 B 新增的行，红色 <code>−</code> 是 A 被删掉的行，灰行是两边一致的上下文。</li>
+      <li data-i18n-html="df_how_3"><strong>看统计</strong>：顶部汇总新增/删除行数，快速判断改动幅度。</li>
+      <li data-i18n-html="df_how_4"><strong>典型场景</strong>：核对合同改了哪句、配置文件改了哪行、代码提交前自查、两份清单找不同。</li>
+    </ol>
+
+    <h2 data-i18n="df_faq_h">常见问题</h2>
+    <div class="t-faq">
+      <div class="t-faq-item">
+        <p class="t-faq-q" data-i18n="df_faq_1_q">文本会被上传到服务器吗？</p>
+        <p class="t-faq-a" data-i18n="df_faq_1_a">不会。比对用 LCS 算法在浏览器本地完成，不发生任何网络请求，合同草稿、内部代码都可以放心比对。</p>
+      </div>
+      <div class="t-faq-item">
+        <p class="t-faq-q" data-i18n="df_faq_2_q">能按字符或单词比对吗？</p>
+        <p class="t-faq-a" data-i18n="df_faq_2_a">当前按整行比对，这也是 git diff / 代码审查的默认粒度，最适合「找不同」。行内字符级微调会显示为一行删 + 一行增。</p>
+      </div>
+      <div class="t-faq-item">
+        <p class="t-faq-q" data-i18n="df_faq_3_q">空行和空格差异算改动吗？</p>
+        <p class="t-faq-a" data-i18n="df_faq_3_a">算。行内容（含行首行尾空格）完全一致才算未变。粘贴前如果不确定，先留意行尾空格。</p>
+      </div>
+      <div class="t-faq-item">
+        <p class="t-faq-q" data-i18n="df_faq_4_q">文本很长会卡吗？</p>
+        <p class="t-faq-a" data-i18n="df_faq_4_a">单侧支持到 3000 行（超出截断提示）。LCS 是 O(n×m) 算法，两段各几千行在浏览器里仍是毫秒级。</p>
+      </div>
+    </div>
+
+    <h2 data-i18n="related_guides">相关指南</h2>
+    <div class="t-guide-links">
+      <a class="t-guide-link" href="/guides/text-diff-guide/">
+        <p class="t-guide-link-title" data-i18n="gd_dif_short">文本 diff 使用指南</p>
+        <p class="t-guide-link-desc" data-i18n="gd_dif_card_desc">diff 的行级/词级/字符级粒度差异、LCS 算法原理、git diff 里的符号含义，以及合同与代码比对的最佳实践。</p>
+      </a>
+      <a class="t-guide-link" href="/guides/json-guide/">
+        <p class="t-guide-link-title" data-i18n="gd_json_short">JSON 入门与实用技巧</p>
+        <p class="t-guide-link-desc" data-i18n="gd_json_card_desc">JSON 是什么、与 YAML/TOML/CSV 的区别、语法规范、常见错误排查与工具使用建议。</p>
+      </a>
+    </div>
+  </section>
+</main>
+
+<div id="site-footer"></div>
+<div id="df-toast" class="t-toast">
+  <span class="t-toast-ic">
+    <svg class="ic-ok" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+    <svg class="ic-err" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+  </span>
+  <span class="t-toast-title"></span>
+</div>
+
+<script src="/assets/js/site.js" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+(function () {
+  'use strict';
+  var t = function (k, vars) { return (window.CATAITO_I18N && window.CATAITO_I18N.t) ? window.CATAITO_I18N.t(k, vars) : k; };
+  var MAX_LINES = 3000;
+  var ta = document.getElementById('df-a');
+  var tb = document.getElementById('df-b');
+  var timer = null;
+
+  /* LCS 逐行差异（O(n×m)，3000×3000 在毫秒级） */
+  function diffLines(a, b) {
+    var n = a.length, m = b.length;
+    /* dp[i][j] = a[i..] 与 b[j..] 的最长公共子序列长度；用 Uint32Array 滚动数组防大对象 */
+    var dp = new Array(n + 1);
+    for (var i = 0; i <= n; i++) dp[i] = new Uint32Array(m + 1);
+    for (var i2 = n - 1; i2 >= 0; i2--) {
+      for (var j2 = m - 1; j2 >= 0; j2--) {
+        dp[i2][j2] = (a[i2] === b[j2]) ? dp[i2 + 1][j2 + 1] + 1 : Math.max(dp[i2 + 1][j2], dp[i2][j2 + 1]);
+      }
+    }
+    var out = [];
+    var i3 = 0, j3 = 0;
+    while (i3 < n && j3 < m) {
+      if (a[i3] === b[j3]) { out.push({ type: 'same', line: a[i3], lnA: i3 + 1, lnB: j3 + 1 }); i3++; j3++; }
+      else if (dp[i3 + 1][j3] >= dp[i3][j3 + 1]) { out.push({ type: 'del', line: a[i3], lnA: i3 + 1 }); i3++; }
+      else { out.push({ type: 'add', line: b[j3], lnB: j3 + 1 }); j3++; }
+    }
+    while (i3 < n) { out.push({ type: 'del', line: a[i3], lnA: i3 + 1 }); i3++; }
+    while (j3 < m) { out.push({ type: 'add', line: b[j3], lnB: j3 + 1 }); j3++; }
+    return out;
+  }
+
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+
+  function splitLines(text) {
+    var lines = text.split(/\r\n|\r|\n/);
+    if (lines.length && lines[lines.length - 1] === '' && text !== '') lines.pop(); /* 末尾换行不产生空行 */
+    return lines;
+  }
+
+  function run() {
+    var a = splitLines(ta.value), b = splitLines(tb.value);
+    document.getElementById('df-count-a').textContent = t('df_lines', { n: a.length });
+    document.getElementById('df-count-b').textContent = t('df_lines', { n: b.length });
+    var trunc = false;
+    if (a.length > MAX_LINES) { a = a.slice(0, MAX_LINES); trunc = true; }
+    if (b.length > MAX_LINES) { b = b.slice(0, MAX_LINES); trunc = true; }
+
+    var hasInput = ta.value !== '' || tb.value !== '';
+    document.getElementById('df-result-block').hidden = !hasInput;
+    document.getElementById('df-empty').style.display = hasInput ? 'none' : '';
+    if (!hasInput) return;
+
+    var ops = diffLines(a, b);
+    var adds = 0, dels = 0, html = '';
+    for (var k = 0; k < ops.length; k++) {
+      var op = ops[k];
+      if (op.type === 'add') adds++;
+      if (op.type === 'del') dels++;
+      html += '<div class="df-line df-' + op.type + '">' +
+        '<span class="df-ln">' + (op.lnA || '') + '</span>' +
+        '<span class="df-ln">' + (op.lnB || '') + '</span>' +
+        '<span class="df-sign">' + (op.type === 'add' ? '+' : op.type === 'del' ? '−' : '&nbsp;') + '</span>' +
+        '<span class="df-text">' + (op.line === '' ? '&nbsp;' : esc(op.line)) + '</span>' +
+      '</div>';
+    }
+    document.getElementById('df-stats').textContent = t('df_stats', { add: adds, del: dels }) + (trunc ? ' · ' + t('df_trunc', { n: MAX_LINES }) : '');
+    document.getElementById('df-output').innerHTML = html;
+  }
+
+  function schedule() {
+    if (timer) clearTimeout(timer);
+    timer = setTimeout(run, 200);
+  }
+  ta.addEventListener('input', schedule);
+  tb.addEventListener('input', schedule);
+
+  document.getElementById('df-sample').addEventListener('click', function () {
+    ta.value = t('df_sample_a');
+    tb.value = t('df_sample_b');
+    run();
+  });
+  document.getElementById('df-clear').addEventListener('click', function () {
+    ta.value = ''; tb.value = '';
+    run();
+  });
+
+  document.addEventListener('cataito-lang-change', function () { run(); });
+})();
+});
+</script>
+
+<style>
+  /* 本页专属规则；通用组件复用 /assets/css/site.css 的 .t-* 共享组件层 */
+  .df-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-4); }
+  .df-area { font-family: var(--font-mono); font-size: 13px; line-height: 1.6; resize: vertical; min-height: 180px; white-space: pre; overflow-x: auto; }
+  .df-count { margin-left: 8px; font-family: var(--font-mono); font-size: 12px; color: var(--text-3); }
+  .df-sample-row { display: flex; gap: var(--sp-2); }
+  .df-stats { font-family: var(--font-mono); font-size: 13px; color: var(--text-2); margin-bottom: 10px; }
+  .df-output { font-family: var(--font-mono); font-size: 12.5px; line-height: 1.7; border: 1px solid var(--border); border-radius: var(--radius-sm); overflow-x: auto; background: var(--card-2); }
+  .df-line { display: flex; min-width: max-content; }
+  .df-ln { flex: none; width: 44px; padding: 0 6px; text-align: right; color: var(--text-3); user-select: none; border-right: 1px solid var(--border); }
+  .df-sign { flex: none; width: 22px; text-align: center; user-select: none; font-weight: 700; }
+  .df-text { padding: 0 10px; white-space: pre; }
+  .df-add { background: rgba(61, 122, 80, .12); color: var(--text); }
+  .df-add .df-sign { color: var(--success); }
+  .df-del { background: rgba(179, 54, 42, .10); color: var(--text); text-decoration: line-through; text-decoration-color: rgba(179,54,42,.5); }
+  .df-del .df-sign { color: var(--danger); }
+  .df-same { color: var(--text-3); }
+  @media (max-width: 640px) {
+    .df-inputs { grid-template-columns: 1fr; }
+  }
+</style>
+</body>
+</html>

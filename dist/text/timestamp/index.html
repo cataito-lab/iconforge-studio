@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unix 时间戳转换 — 免费在线秒/毫秒互转日期 | CATAITO</title>
+<meta name="title-zh" content="Unix 时间戳转换 — 免费在线秒/毫秒互转日期 | CATAITO">
+<meta name="title-en" content="Unix Timestamp Converter — Free Online | CATAITO">
+<meta name="description" content="免费在线 Unix 时间戳转换：实时当前时间戳（秒/毫秒）、时间戳转日期（本地/UTC/ISO 8601）、日期转时间戳，双向互转。纯浏览器本地处理。">
+<meta name="theme-color" content="#f6f3ec">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="CATAITO 工具箱">
+<meta property="og:title" content="Unix 时间戳转换 — 免费在线秒/毫秒互转日期">
+<meta property="og:description" content="当前时间戳实时显示，时间戳与日期双向互转，纯本地处理。">
+<meta property="og:url" content="https://tools.cataito.com/text/timestamp/">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:locale:alternate" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Unix 时间戳转换">
+<meta name="twitter:description" content="免费在线时间戳双向转换，纯本地处理。">
+<link rel="icon" type="image/png" href="/assets/img/cataito-logo.png">
+<link rel="canonical" href="https://tools.cataito.com/text/timestamp/">
+<link rel="stylesheet" href="/assets/css/site.css">
+<script src="/assets/js/theme-init.js"></script>
+<script>
+  (function () {
+    try {
+      var l = localStorage.getItem('cataito-lang');
+      document.documentElement.setAttribute('lang', (l === 'en') ? 'en' : 'zh-CN');
+    } catch (e) {}
+  })();
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Unix Timestamp Converter",
+  "alternateName": "Unix 时间戳转换",
+  "applicationCategory": "DeveloperApplication",
+  "operatingSystem": "Any",
+  "url": "https://tools.cataito.com/text/timestamp/",
+  "inLanguage": ["zh-CN", "en"],
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "description": "免费在线 Unix 时间戳转换：当前时间戳实时显示，秒/毫秒与日期双向互转，纯本地处理。"
+}
+</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7103529190038161" crossorigin="anonymous"></script>
+</head>
+<body>
+<div id="site-header"></div>
+<main class="site-main">
+  <div class="t-head">
+    <nav class="breadcrumb"><a href="/" data-i18n="crumb_home">首页</a><span class="sep">/</span><span data-i18n="ts_name">时间戳转换</span></nav>
+    <h1 class="page-h1" data-i18n="ts_name">Unix 时间戳转换</h1>
+    <p class="page-sub" data-i18n="ts_desc">当前时间戳实时显示；时间戳 ↔ 日期双向互转，本地时区 / UTC / ISO 8601 一次给全。纯浏览器本地处理。</p>
+  </div>
+
+  <section class="t-card t-flow">
+    <div class="t-block">
+      <div class="t-label" data-i18n="ts_now">当前 Unix 时间戳（每秒刷新）</div>
+      <div class="ts-now">
+        <div class="ts-now-item"><span class="ts-now-val" id="ts-now-s">—</span><span class="ts-now-unit" data-i18n="ts_unit_s">秒</span><button type="button" class="t-icon-btn" id="ts-copy-s" data-i18n-title="ts_copy"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></button></div>
+        <div class="ts-now-item"><span class="ts-now-val" id="ts-now-ms">—</span><span class="ts-now-unit" data-i18n="ts_unit_ms">毫秒</span><button type="button" class="t-icon-btn" id="ts-copy-ms" data-i18n-title="ts_copy"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></button></div>
+      </div>
+    </div>
+
+    <div class="t-block">
+      <div class="t-field">
+        <div class="t-label" data-i18n="ts_to_date">时间戳 → 日期</div>
+        <div class="ts-row">
+          <input type="text" id="ts-in" class="t-input ts-mono" inputmode="numeric" spellcheck="false" autocomplete="off" data-i18n-placeholder="ts_ph" placeholder="例如 1780000000 或 1780000000000">
+          <button type="button" class="t-btn" id="ts-fill" data-i18n="ts_fill_now">填入当前</button>
+          <button type="button" class="t-btn" id="ts-clear" data-i18n="ts_clear">清除</button>
+        </div>
+        <div class="t-hint" data-i18n="ts_hint">自动识别秒（10 位）与毫秒（13 位），也可手动指定。</div>
+        <div class="t-seg ts-unit-seg" id="ts-in-unit" hidden>
+          <label class="t-seg-item"><input type="radio" name="ts-unit" value="s"><span data-i18n="ts_unit_s">秒</span></label>
+          <label class="t-seg-item"><input type="radio" name="ts-unit" value="ms"><span data-i18n="ts_unit_ms">毫秒</span></label>
+        </div>
+        <div id="ts-date-out" class="ts-out" hidden></div>
+      </div>
+    </div>
+
+    <div class="t-block">
+      <div class="t-field">
+        <div class="t-label" data-i18n="ts_date_to">日期 → 时间戳</div>
+        <div class="ts-row">
+          <input type="datetime-local" id="ts-dt" class="t-input ts-mono" step="1">
+          <button type="button" class="t-btn" id="ts-dt-now" data-i18n="ts_fill_now">填入当前</button>
+        </div>
+        <div id="ts-ts-out" class="ts-out" hidden></div>
+      </div>
+    </div>
+    <p class="t-note" data-i18n="ts_note">Unix 时间戳是从 1970-01-01 00:00:00 UTC 起经过的秒数/毫秒数，与时区无关；同一时间戳在全球任何设备上指向同一时刻。</p>
+  </section>
+
+  <section class="t-prose">
+    <h2 data-i18n="ts_how_h">怎么用</h2>
+    <ol class="t-steps">
+      <li data-i18n-html="ts_how_1"><strong>拿当前时间戳</strong>：顶部实时显示秒级（10 位）与毫秒级（13 位）两个值，点复制按钮即取用。</li>
+      <li data-i18n-html="ts_how_2"><strong>时间戳转日期</strong>：粘贴时间戳（10 位按秒、13 位按毫秒自动识别），下方给出本地时间、UTC 与 ISO 8601 三种表示。</li>
+      <li data-i18n-html="ts_how_3"><strong>日期转时间戳</strong>：用日期时间选择器选一个时刻（或「填入当前」），秒级与毫秒级时间戳同时给出。</li>
+    </ol>
+
+    <h2 data-i18n="ts_faq_h">常见问题</h2>
+    <div class="t-faq">
+      <div class="t-faq-item">
+        <p class="t-faq-q" data-i18n="ts_faq_1_q">10 位和 13 位时间戳有什么区别？</p>
+        <p class="t-faq-a" data-i18n="ts_faq_1_a">只是单位不同：10 位是秒，13 位是毫秒。1780000000（秒）和 1780000000000（毫秒）是同一时刻。JavaScript 的 Date.now() 返回毫秒，多数系统日志用秒。</p>
+      </div>
+      <div class="t-faq-item">
+        <p class="t-faq-q" data-i18n="ts_faq_2_q">时间戳受时区影响吗？</p>
+        <p class="t-faq-a" data-i18n="ts_faq_2_a">时间戳本身是 UTC 起点的绝对时长，与 时区无关；显示成「2026-09-27 14:00」才有本地时区参与。所以跨时区传时间永远传时间戳，不要传「日期字符串」。</p>
+      </div>
+      <div class="t-faq-item">
+        <p class="t-faq-q" data-i18n="ts_faq_3_q">为什么转出来的日期差了 8 小时？</p>
+        <p class="t-faq-a" data-i18n="ts_faq_3_a">那是 UTC 与北京时间（UTC+8）的差异，不是错误。看结果区的「UTC」行与世界协调时间对齐，「本地时间」行与设备时区对齐，对照源系统的时区选对的那个。</p>
+      </div>
+      <div class="t-faq-item">
+        <p class="t-faq-q" data-i18n="ts_faq_4_q">2038 年问题是什么？</p>
+        <p class="t-faq-a" data-i18n="ts_faq_4_a">32 位有符号整数最多表示到 2038-01-19 的秒级时间戳，再往后会溢出。64 位系统（现在的手机/电脑）和毫秒级时间戳都不受影响，只有老旧 32 位嵌入式设备需要注意。</p>
+      </div>
+    </div>
+
+    <h2 data-i18n="related_guides">相关指南</h2>
+    <div class="t-guide-links">
+      <a class="t-guide-link" href="/guides/timestamp-guide/">
+        <p class="t-guide-link-title" data-i18n="gd_ts_short">Unix 时间戳指南</p>
+        <p class="t-guide-link-desc" data-i18n="gd_ts_card_desc">时间戳的由来与表示范围、秒/毫秒的换算、时区陷阱与 ISO 8601 写法，以及各语言取时间戳的代码速查。</p>
+      </a>
+      <a class="t-guide-link" href="/guides/json-guide/">
+        <p class="t-guide-link-title" data-i18n="gd_json_short">JSON 入门与实用技巧</p>
+        <p class="t-guide-link-desc" data-i18n="gd_json_card_desc">JSON 是什么、与 YAML/TOML/CSV 的区别、语法规范、常见错误排查与工具使用建议。</p>
+      </a>
+    </div>
+  </section>
+</main>
+
+<div id="site-footer"></div>
+<div id="ts-toast" class="t-toast">
+  <span class="t-toast-ic">
+    <svg class="ic-ok" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+    <svg class="ic-err" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+  </span>
+  <span class="t-toast-title"></span>
+</div>
+
+<script src="/assets/js/site.js" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+(function () {
+  'use strict';
+  var t = function (k, vars) { return (window.CATAITO_I18N && window.CATAITO_I18N.t) ? window.CATAITO_I18N.t(k, vars) : k; };
+
+  /* 当前时间戳，每秒刷新 */
+  function tick() {
+    var now = Date.now();
+    document.getElementById('ts-now-s').textContent = String(Math.floor(now / 1000));
+    document.getElementById('ts-now-ms').textContent = String(now);
+  }
+  tick();
+  setInterval(tick, 1000);
+
+  var toastTimer = null;
+  function showToast(msg, isErr) {
+    var el = document.getElementById('ts-toast');
+    el.querySelector('.t-toast-title').textContent = msg;
+    el.classList.toggle('error', !!isErr);
+    el.classList.add('show');
+    if (toastTimer) clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { el.classList.remove('show'); }, 2600);
+  }
+  function copyText(v, label) {
+    (navigator.clipboard ? navigator.clipboard.writeText(v) : Promise.reject())
+      .then(function () { showToast(label || t('ts_toast_copied')); })
+      .catch(function () {
+        var ta = document.createElement('textarea');
+        ta.value = v; document.body.appendChild(ta); ta.select();
+        document.execCommand('copy'); ta.remove();
+        showToast(label || t('ts_toast_copied'));
+      });
+  }
+  document.getElementById('ts-copy-s').addEventListener('click', function () { copyText(document.getElementById('ts-now-s').textContent); });
+  document.getElementById('ts-copy-ms').addEventListener('click', function () { copyText(document.getElementById('ts-now-ms').textContent); });
+
+  /* ---------- 时间戳 → 日期 ---------- */
+  var tsIn = document.getElementById('ts-in');
+  var outBox = document.getElementById('ts-date-out');
+  var unitSeg = document.getElementById('ts-in-unit');
+  var timer = null;
+
+  function pad(n) { return (n < 10 ? '0' : '') + n; }
+  function tzName(d) {
+    var off = -d.getTimezoneOffset();
+    var sign = off >= 0 ? '+' : '-';
+    var ao = Math.abs(off);
+    return 'UTC' + sign + pad(Math.floor(ao / 60)) + ':' + pad(ao % 60);
+  }
+  function renderTsOut(ms) {
+    var d = new Date(ms);
+    if (isNaN(d.getTime())) { outBox.hidden = true; return; }
+    var local = d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()) + ' ' + pad(d.getHours()) + ':' + pad(d.getMinutes()) + ':' + pad(d.getSeconds());
+    var utc = d.getUTCFullYear() + '-' + pad(d.getUTCMonth() + 1) + '-' + pad(d.getUTCDate()) + ' ' + pad(d.getUTCHours()) + ':' + pad(d.getUTCMinutes()) + ':' + pad(d.getUTCSeconds());
+    var weekLocal = d.toLocaleDateString(undefined, { weekday: 'long' });
+    outBox.innerHTML =
+      '<div class="ts-out-row"><span class="ts-out-k" data-i18n="ts_local">本地时间</span><span class="ts-out-v">' + local + ' <em>' + tzName(d) + ' · ' + esc(weekLocal) + '</em></span></div>' +
+      '<div class="ts-out-row"><span class="ts-out-k">UTC</span><span class="ts-out-v">' + utc + '</span></div>' +
+      '<div class="ts-out-row"><span class="ts-out-k">ISO 8601</span><span class="ts-out-v">' + esc(d.toISOString()) + '</span></div>';
+    outBox.hidden = false;
+    if (window.CATAITO_I18N) window.CATAITO_I18N.apply();
+  }
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+  function detectUnit(v) {
+    var digits = v.replace(/\D/g, '');
+    if (!digits) return null;
+    /* ≥ 11 位按毫秒，≤ 10 位按秒；手动切换单位可覆盖 */
+    return digits.length >= 11 ? 'ms' : 's';
+  }
+  function runTsTo() {
+    var raw = tsIn.value.replace(/\s/g, '');
+    if (!/\d/.test(raw)) { outBox.hidden = true; unitSeg.hidden = true; return; }
+    var unit = detectUnit(raw);
+    unitSeg.hidden = !unit;
+    var chosen = (document.querySelector('input[name="ts-unit"]:checked') || {}).value;
+    if (chosen && chosen !== unit) unit = chosen; else if (unit) {
+      var radios = document.querySelectorAll('input[name="ts-unit"]');
+      for (var i = 0; i < radios.length; i++) radios[i].checked = radios[i].value === unit;
+    }
+    var n = parseInt(raw.replace(/\D/g, ''), 10);
+    renderTsOut(unit === 'ms' ? n : n * 1000);
+  }
+  tsIn.addEventListener('input', function () {
+    if (timer) clearTimeout(timer);
+    timer = setTimeout(runTsTo, 150);
+  });
+  document.getElementById('ts-in-unit').addEventListener('change', runTsTo);
+  document.getElementById('ts-fill').addEventListener('click', function () {
+    tsIn.value = String(Date.now());
+    runTsTo();
+  });
+  document.getElementById('ts-clear').addEventListener('click', function () {
+    tsIn.value = '';
+    outBox.hidden = true; unitSeg.hidden = true;
+  });
+
+  /* ---------- 日期 → 时间戳 ---------- */
+  var dtIn = document.getElementById('ts-dt');
+  var tsOut = document.getElementById('ts-ts-out');
+  function runDtTo() {
+    if (!dtIn.value) { tsOut.hidden = true; return; }
+    var d = new Date(dtIn.value);
+    if (isNaN(d.getTime())) { tsOut.hidden = true; return; }
+    tsOut.innerHTML =
+      '<div class="ts-out-row"><span class="ts-out-k" data-i18n="ts_unit_s">秒</span><span class="ts-out-v ts-strong" data-copy="' + Math.floor(d.getTime() / 1000) + '">' + Math.floor(d.getTime() / 1000) + '</span></div>' +
+      '<div class="ts-out-row"><span class="ts-out-k" data-i18n="ts_unit_ms">毫秒</span><span class="ts-out-v ts-strong" data-copy="' + d.getTime() + '">' + d.getTime() + '</span></div>';
+    tsOut.hidden = false;
+    if (window.CATAITO_I18N) window.CATAITO_I18N.apply();
+  }
+  dtIn.addEventListener('input', runDtTo);
+  document.getElementById('ts-dt-now').addEventListener('click', function () {
+    var d = new Date();
+    dtIn.value = d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()) + 'T' + pad(d.getHours()) + ':' + pad(d.getMinutes()) + ':' + pad(d.getSeconds());
+    runDtTo();
+  });
+  tsOut.addEventListener('click', function (e) {
+    var el = e.target.closest ? e.target.closest('[data-copy]') : null;
+    if (el) copyText(el.getAttribute('data-copy'));
+  });
+
+  document.addEventListener('cataito-lang-change', function () { runTsTo(); runDtTo(); });
+})();
+});
+</script>
+
+<style>
+  /* 本页专属规则；通用组件复用 /assets/css/site.css 的 .t-* 共享组件层 */
+  .ts-mono { font-family: var(--font-mono); }
+  .ts-now { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-3); margin-top: 10px; }
+  .ts-now-item { display: flex; align-items: center; gap: 10px; background: var(--card-2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px 16px; }
+  .ts-now-val { font-family: var(--font-mono); font-size: 21px; font-weight: 700; color: var(--text); font-variant-numeric: tabular-nums; letter-spacing: .5px; }
+  .ts-now-unit { font-size: 12px; color: var(--text-3); }
+  .ts-now-item .t-icon-btn { margin-left: auto; }
+  .ts-row { display: flex; gap: 8px; margin-top: 10px; }
+  .ts-row .t-input { flex: 1; }
+  .ts-unit-seg { margin-top: 10px; }
+  .ts-out { margin-top: 12px; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--card-2); }
+  .ts-out-row { display: flex; align-items: baseline; gap: 12px; padding: 10px 14px; border-bottom: 1px solid var(--border); }
+  .ts-out-row:last-child { border-bottom: none; }
+  .ts-out-k { flex: none; width: 72px; font-size: 12px; color: var(--text-3); font-family: var(--font-mono); }
+  .ts-out-v { font-family: var(--font-mono); font-size: 13.5px; color: var(--text); word-break: break-all; }
+  .ts-out-v em { font-style: normal; font-size: 12px; color: var(--text-3); }
+  .ts-out-v.ts-strong { cursor: pointer; font-weight: 700; }
+  .ts-out-v.ts-strong:hover { color: var(--accent); }
+  @media (max-width: 560px) {
+    .ts-now { grid-template-columns: 1fr; }
+    .ts-row { flex-wrap: wrap; }
+  }
+</style>
+</body>
+</html>

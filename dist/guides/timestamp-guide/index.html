@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unix 时间戳指南：秒/毫秒、时区陷阱与代码速查 | CATAITO</title>
+<meta name="title-zh" content="Unix 时间戳指南：秒/毫秒、时区陷阱与代码速查 | CATAITO">
+<meta name="title-en" content="Unix Timestamp Guide: Seconds/ms, Time Zone Traps, and Code Cheatsheet | CATAITO">
+<meta name="description" content="Unix 时间戳完全指南：定义与表示范围、10 位秒与 13 位毫秒的换算、时区陷阱、2038 年问题、ISO 8601 写法，以及 JavaScript/Python/Java/Go/SQL 取时间戳的代码速查。附免费在线时间戳转换工具。">
+<meta name="theme-color" content="#f6f3ec">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="CATAITO 工具箱">
+<meta property="og:title" content="Unix 时间戳指南">
+<meta property="og:description" content="时间戳定义、秒/毫秒换算、时区陷阱、2038 年问题与代码速查。">
+<meta property="og:url" content="https://tools.cataito.com/guides/timestamp-guide/">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:locale:alternate" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Unix 时间戳指南">
+<meta name="twitter:description" content="秒/毫秒、时区陷阱与代码速查。">
+<link rel="canonical" href="https://tools.cataito.com/guides/timestamp-guide/">
+<link rel="icon" type="image/png" href="/assets/img/cataito-logo.png">
+<link rel="stylesheet" href="/assets/css/site.css">
+<script src="/assets/js/theme-init.js"></script>
+<script>
+  (function () {
+    try {
+      var l = localStorage.getItem('cataito-lang');
+      document.documentElement.setAttribute('lang', (l === 'en') ? 'en' : 'zh-CN');
+      if (l === 'en') document.documentElement.classList.add('lang-en');
+    } catch (e) {}
+  })();
+</script>
+<style>
+  .guide-wrap { max-width: 760px; margin: 0; }
+  .guide-meta { font-size: 13px; color: var(--text-3); margin: 0 0 6px; }
+  .page-sub { margin-bottom: 10px; }
+  .article { font-size: 15px; line-height: 1.85; color: var(--text); }
+  .article h2 { font-size: 21px; font-weight: 700; letter-spacing: -.3px; margin: 44px 0 14px; padding-top: 16px; border-top: 1px solid var(--border); color: var(--text); }
+  .article h3 { font-size: 16.5px; font-weight: 650; margin: 26px 0 10px; color: var(--text); }
+  .article p { margin: 0 0 14px; color: var(--text-2); }
+  .article strong { color: var(--text); font-weight: 650; }
+  .article a { color: var(--accent); text-decoration: none; }
+  .article a:hover { text-decoration: underline; }
+  .article ul, .article ol { margin: 0 0 16px; padding-left: 22px; color: var(--text-2); }
+  .article li { margin: 6px 0; }
+  .article code { font-family: var(--font-mono); font-size: 13px; background: var(--card-2); border: 1px solid var(--border); border-radius: 3px; padding: 1px 6px; color: var(--text); }
+  .article pre { background: var(--card-2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px 16px; margin: 14px 0 18px; overflow-x: auto; }
+  .article pre code { background: none; border: none; padding: 0; font-size: 12.5px; line-height: 1.7; }
+  .article table { width: 100%; border-collapse: collapse; margin: 18px 0 22px; font-size: 13.5px; background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-sm); overflow: hidden; }
+  .article th, .article td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--border); }
+  .article th { background: var(--card-2); color: var(--text); font-weight: 650; white-space: nowrap; }
+  .article td { color: var(--text-2); }
+  .article tr:last-child td { border-bottom: none; }
+  .toc { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 18px; margin: 20px 0 8px; box-shadow: var(--shadow-sm); }
+  .toc-title { font-size: 13px; font-weight: 650; color: var(--text); margin: 0 0 10px; }
+  .toc ol { margin: 0; padding-left: 20px; font-size: 13.5px; }
+  .toc li { margin: 5px 0; }
+  .toc a { color: var(--text-2); text-decoration: none; }
+  .toc a:hover { color: var(--accent); }
+  .cta-box { background: linear-gradient(135deg, var(--accent-soft), var(--accent-soft-2)); border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent); border-radius: var(--radius); padding: 20px 22px; margin: 34px 0 10px; text-align: center; }
+  .cta-box .cta-title { font-size: 17px; font-weight: 700; color: var(--text); margin: 0 0 6px; }
+  .cta-box .cta-sub { font-size: 13.5px; color: var(--text-2); margin: 0 0 14px; }
+  .cta-btn { display: inline-block; background: var(--accent); color: #fff; text-decoration: none; font-size: 14px; font-weight: 600; padding: 11px 26px; border-radius: var(--radius-sm); box-shadow: 0 6px 18px var(--accent-glow); transition: background .15s; }
+  .cta-btn:hover { background: var(--accent-hover); }
+  .article a.cta-btn, .article .cta-btn { color: #fff; text-decoration: none; }
+  .article a.cta-btn:hover { color: #fff; text-decoration: none; background: var(--accent-hover); }
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Unix 时间戳指南：秒/毫秒、时区陷阱与代码速查",
+  "description": "详解 Unix 时间戳的定义与表示范围、10 位秒与 13 位毫秒的换算、时区陷阱、2038 年问题、ISO 8601 写法，以及 JavaScript/Python/Java/Go/SQL 取时间戳的代码速查。",
+  "inLanguage": "zh-CN",
+  "datePublished": "2026-09-27",
+  "dateModified": "2026-09-27",
+  "author": { "@type": "Organization", "name": "CATAITO", "url": "https://tools.cataito.com/" },
+  "publisher": { "@type": "Organization", "name": "CATAITO 工具箱", "url": "https://tools.cataito.com/" },
+  "mainEntityOfPage": "https://tools.cataito.com/guides/timestamp-guide/"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "为什么同一个时间戳在不同时区显示不同的日期？",
+      "acceptedAnswer": { "@type": "Answer", "text": "时间戳是 UTC 1970-01-01 00:00:00 起的绝对时长，本身没有时区；「显示成日期」时才有本地时区参与。北京 UTC+8 和纽约 UTC-5 的用户看同一时间戳，日期自然可能差一天。跨系统传时间永远传时间戳，展示才本地化。" }
+    },
+    {
+      "@type": "Question",
+      "name": "怎么判断拿到的时间戳是秒还是毫秒？",
+      "acceptedAnswer": { "@type": "Answer", "text": "看位数：10 位是秒（如 1780000000 ≈ 2026 年），13 位是毫秒（如 1780000000000）。当前时代 11-12 位罕见，多为单位搞错的产物——数值翻 1000 倍关系就是秒与毫秒的区别。" }
+    },
+    {
+      "@type": "Question",
+      "name": "2038 年问题还影响今天的系统吗？",
+      "acceptedAnswer": { "@type": "Answer", "text": "只影响仍用 32 位有符号整数存秒级时间戳的老旧嵌入式设备和旧系统（上限 2038-01-19）。64 位系统、现代语言的时间库与毫秒级时间戳都不受影响；开发嵌入式或对接老接口时需要确认。" }
+    },
+    {
+      "@type": "Question",
+      "name": "ISO 8601 和时间戳该怎么选？",
+      "acceptedAnswer": { "@type": "Answer", "text": "人类阅读和 API 展示用 ISO 8601（2026-09-27T14:00:00Z，Z 或 ±hh:mm 必须带时区）；系统间存储、计算、排序用时间戳（纯数字、无歧义、比字符串小）。常见错误是 ISO 8601 不带时区后缀，导致解析端各猜各的。" }
+    },
+    {
+      "@type": "Question",
+      "name": "负数时间戳是什么意思？",
+      "acceptedAnswer": { "@type": "Answer", "text": "表示 1970-01-01 UTC 之前的时刻（如 -86400 是 1969-12-31 00:00:00 UTC）。生日、历史数据场景会遇到；个别老系统（及部分数据库字段类型）不支持负值，跨系统对接时值得确认。" }
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "首页", "item": "https://tools.cataito.com/" },
+    { "@type": "ListItem", "position": 2, "name": "使用指南", "item": "https://tools.cataito.com/guides/" },
+    { "@type": "ListItem", "position": 3, "name": "Unix 时间戳指南", "item": "https://tools.cataito.com/guides/timestamp-guide/" }
+  ]
+}
+</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7103529190038161" crossorigin="anonymous"></script>
+</head>
+<body>
+<div id="site-header"></div>
+
+<main class="site-main">
+  <div class="guide-wrap">
+    <nav class="breadcrumb"><a href="/" data-i18n="crumb_home">首页</a><span class="sep">/</span><a href="/guides/" data-i18n="nav_guides">使用指南</a><span class="sep">/</span><span data-i18n="gd_ts_short">时间戳指南</span></nav>
+    <p class="guide-meta"><span data-i18n="gd_published">发布于</span> 2026-09-27 · CATAITO</p>
+    <h1 class="page-h1" data-i18n="gd_ts_h1">Unix 时间戳指南</h1>
+    <p class="page-sub" data-i18n="gd_ts_sub">时间戳是跨系统传时间的唯一可靠方式，但秒与毫秒、本地时区与 UTC 的坑常年都在。本文讲清定义、换算、陷阱与代码速查。附免费在线转换工具。</p>
+
+    <div class="article lb-zh">
+      <div class="toc">
+        <p class="toc-title">目录</p>
+        <ol>
+          <li><a href="#definition">时间戳是什么</a></li>
+          <li><a href="#units">10 位秒 vs 13 位毫秒</a></li>
+          <li><a href="#timezone">时区陷阱</a></li>
+          <li><a href="#iso8601">ISO 8601 怎么写</a></li>
+          <li><a href="#cheatsheet">各语言代码速查</a></li>
+          <li><a href="#faq">常见问题</a></li>
+        </ol>
+      </div>
+
+      <h2 id="definition">时间戳是什么</h2>
+      <p>Unix 时间戳是从 <strong>1970-01-01 00:00:00 UTC</strong>（纪元，epoch）起经过的秒数或毫秒数。它是一个纯数字的绝对时刻：</p>
+      <pre><code>0            → 1970-01-01 00:00:00 UTC
+1780000000   → 2026-05-29 附近的某秒（秒级）
+1780000000000 → 同一时刻（毫秒级）</code></pre>
+      <p>它不依赖任何时区、任何语言格式——这就是为什么日志、数据库、API 全都用它。</p>
+
+      <h2 id="units">10 位秒 vs 13 位毫秒</h2>
+      <table>
+        <thead><tr><th>形式</th><th>单位</th><th>典型来源</th></tr></thead>
+        <tbody>
+          <tr><td>1780000000</td><td>秒</td><td>Unix 传统、系统日志、多数 API</td></tr>
+          <tr><td>1780000000000</td><td>毫秒</td><td>JavaScript <code>Date.now()</code>、Java 默认</td></tr>
+        </tbody>
+      </table>
+      <p>换算就是 ×1000 / ÷1000。<a href="/text/timestamp/">本站时间戳工具</a>会按位数自动识别并支持手动覆盖。</p>
+
+      <h2 id="timezone">时区陷阱</h2>
+      <ul>
+        <li><strong>时间戳无时区</strong>：它是绝对时长；「2026-09-27 14:00」才有时区参与</li>
+        <li><strong>差 8 小时不是 bug</strong>：UTC 与北京时间（UTC+8）的固有差异，对表用</li>
+        <li><strong>永远传时间戳，不要传日期字符串</strong>：「09/27/2026」在不同地区是不同日期，时间戳没有歧义</li>
+        <li><strong>数据库存 UTC</strong>：展示层再转本地，两层混用是时区 bug 的头号来源</li>
+      </ul>
+
+      <h2 id="iso8601">ISO 8601 怎么写</h2>
+      <pre><code>2026-09-27T14:00:00Z            （Z = UTC，最标准）
+2026-09-27T14:00:00+08:00       （带时区偏移）
+2026-09-27T14:00:00             ⚠ 无时区——解析端各猜各的，别这么写</code></pre>
+      <p>规则：<strong>给人看用 ISO 8601（必带时区），给机器算用时间戳</strong>。</p>
+
+      <h2 id="cheatsheet">各语言代码速查</h2>
+      <pre><code>// JavaScript（毫秒）
+Date.now()                        // 当前毫秒
+new Date(1780000000000)           // 毫秒 → Date
+Math.floor(ts / 1000)             // 毫秒 → 秒
+
+# Python（秒，浮点）
+import time; time.time()          # 当前秒
+from datetime import datetime, timezone
+datetime.fromtimestamp(1780000000, tz=timezone.utc)
+
+// Java（毫秒）
+System.currentTimeMillis();
+Instant.ofEpochSecond(1780000000L);   // 秒版
+
+// Go（秒、纳秒）
+time.Now().Unix()                 // 秒
+time.Now().UnixMilli()            // 毫秒
+
+-- SQL (MySQL)
+UNIX_TIMESTAMP()                  -- 当前秒
+FROM_UNIXTIME(1780000000)         -- 秒 → datetime</code></pre>
+
+      <h2 id="faq">常见问题</h2>
+      <div class="faq-item"><p class="faq-q">Q：为什么同一时间戳在不同时区显示不同日期？</p><p class="faq-a">A：时间戳是 UTC 起点的绝对时长，无时区；显示日期时本地时区才参与。跨系统永远传时间戳，展示才本地化。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：怎么判断是秒还是毫秒？</p><p class="faq-a">A：10 位是秒、13 位是毫秒，两者是 1000 倍关系。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：2038 年问题还影响今天的系统吗？</p><p class="faq-a">A：只影响 32 位有符号秒级时间戳的老设备（上限 2038-01-19）；64 位系统与毫秒时间戳不受影响。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：ISO 8601 和时间戳怎么选？</p><p class="faq-a">A：人类阅读用 ISO 8601（必带时区后缀）；存储、计算、排序用时间戳。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：负数时间戳是什么？</p><p class="faq-a">A：1970-01-01 UTC 之前的时刻（如 -86400 = 1969-12-31）。生日、历史数据会遇到，个别老系统不支持。</p></div>
+
+      <div class="cta-box">
+        <p class="cta-title">免费在线时间戳转换</p>
+        <p class="cta-sub">当前时间戳实时显示 · 秒/毫秒自动识别 · 本地/UTC/ISO 一次给全 · 纯本地处理</p>
+        <a class="cta-btn" href="/text/timestamp/">打开时间戳工具 →</a>
+      </div>
+    </div>
+
+    <div class="article lb-en">
+      <div class="toc">
+        <p class="toc-title">Table of Contents</p>
+        <ol>
+          <li><a href="#definition">What a timestamp is</a></li>
+          <li><a href="#units">10-digit seconds vs 13-digit ms</a></li>
+          <li><a href="#timezone">Time zone traps</a></li>
+          <li><a href="#iso8601">Writing ISO 8601</a></li>
+          <li><a href="#cheatsheet">Per-language snippets</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ol>
+      </div>
+
+      <h2 id="definition">What a timestamp is</h2>
+      <p>A Unix timestamp is the number of seconds or milliseconds elapsed since <strong>1970-01-01 00:00:00 UTC</strong> (the epoch) — a pure-numeric absolute instant:</p>
+      <pre><code>0            → 1970-01-01 00:00:00 UTC
+1780000000   → some second around 2026-05-29 (seconds)
+1780000000000 → the same instant (milliseconds)</code></pre>
+      <p>It depends on no time zone and no language format — which is why logs, databases, and APIs all use it.</p>
+
+      <h2 id="units">10-digit seconds vs 13-digit ms</h2>
+      <table>
+        <thead><tr><th>Form</th><th>Unit</th><th>Typical source</th></tr></thead>
+        <tbody>
+          <tr><td>1780000000</td><td>seconds</td><td>Unix tradition, system logs, most APIs</td></tr>
+          <tr><td>1780000000000</td><td>milliseconds</td><td>JavaScript <code>Date.now()</code>, Java default</td></tr>
+        </tbody>
+      </table>
+      <p>Conversion is ×1000 / ÷1000. Our <a href="/text/timestamp/">Timestamp tool</a> auto-detects by digit count with a manual override.</p>
+
+      <h2 id="timezone">Time zone traps</h2>
+      <ul>
+        <li><strong>Timestamps have no time zone</strong>: they're absolute durations; only rendering as "2026-09-27 14:00" involves a zone</li>
+        <li><strong>An 8-hour offset isn't a bug</strong>: it's the fixed UTC vs Beijing (UTC+8) difference</li>
+        <li><strong>Always pass timestamps, never date strings</strong>: "09/27/2026" means different dates in different regions; timestamps are unambiguous</li>
+        <li><strong>Store UTC in databases</strong>: localize at the display layer — mixing the two is the #1 source of time zone bugs</li>
+      </ul>
+
+      <h2 id="iso8601">Writing ISO 8601</h2>
+      <pre><code>2026-09-27T14:00:00Z            (Z = UTC, most standard)
+2026-09-27T14:00:00+08:00       (with an offset)
+2026-09-27T14:00:00             ⚠ no zone — parsers guess, don't do this</code></pre>
+      <p>Rule: <strong>ISO 8601 (with zone) for humans, timestamps for machines</strong>.</p>
+
+      <h2 id="cheatsheet">Per-language snippets</h2>
+      <pre><code>// JavaScript (ms)
+Date.now()                        // current ms
+new Date(1780000000000)           // ms → Date
+Math.floor(ts / 1000)             // ms → s
+
+# Python (s, float)
+import time; time.time()          // current s
+from datetime import datetime, timezone
+datetime.fromtimestamp(1780000000, tz=timezone.utc)
+
+// Java (ms)
+System.currentTimeMillis();
+Instant.ofEpochSecond(1780000000L);   // seconds
+
+// Go (s, ns)
+time.Now().Unix()                 // seconds
+time.Now().UnixMilli()            // milliseconds
+
+-- SQL (MySQL)
+UNIX_TIMESTAMP()                  -- current s
+FROM_UNIXTIME(1780000000)         -- s → datetime</code></pre>
+
+      <h2 id="faq">FAQ</h2>
+      <div class="faq-item"><p class="faq-q">Q: Why does the same timestamp show different dates in different zones?</p><p class="faq-a">A: Timestamps are absolute from UTC, zone-free; local zones only enter when displaying. Pass timestamps between systems; localize at display.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: Seconds or milliseconds?</p><p class="faq-a">A: 10 digits = seconds, 13 = milliseconds — a 1000× relationship.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: Does the 2038 problem still matter?</p><p class="faq-a">A: Only for 32-bit signed second timestamps on legacy devices (capped 2038-01-19); 64-bit systems and ms timestamps are fine.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: ISO 8601 or timestamp?</p><p class="faq-a">A: ISO 8601 (with zone suffix) for humans; timestamps for storage, computation, and sorting.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: What are negative timestamps?</p><p class="faq-a">A: Instants before 1970-01-01 UTC (-86400 = 1969-12-31). Relevant for birthdays/history; some legacy systems don't support them.</p></div>
+
+      <div class="cta-box">
+        <p class="cta-title">Free Online Timestamp Converter</p>
+        <p class="cta-sub">Live current timestamp · Auto s/ms detect · Local/UTC/ISO at once · Fully local</p>
+        <a class="cta-btn" href="/text/timestamp/">Open the Tool →</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<div id="site-footer"></div>
+<script src="/assets/js/site.js" defer></script>
+</body>
+</html>
