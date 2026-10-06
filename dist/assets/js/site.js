@@ -25,6 +25,9 @@
     nav_i2p:        { zh: '图片转 PDF', en: 'Image to PDF' },
     nav_more:       { zh: '更多工具', en: 'More tools' },
     nav_guides:     { zh: '指南', en: 'Guides' },
+    nav_cat_image:  { zh: '图片与设计', en: 'Images' },
+    nav_cat_text:   { zh: '文本与开发者', en: 'Text & Dev' },
+    nav_cat_pdf:    { zh: 'PDF 文档', en: 'PDF' },
     nav_tools:      { zh: '工具',   en: 'Tools' },
     brand_sub:      { zh: '免费工具箱', en: 'FREE TOOLS' },
     free_badge:     { zh: '100% 免费 · 无需注册 · 浏览器本地处理', en: '100% Free · No sign-up · Runs in your browser' },
@@ -1175,25 +1178,37 @@
 
   var MARK = '<svg width="18" height="18" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="7" fill="#fff"/><rect x="8" y="8" width="7" height="7" rx="1.5" fill="#6d6ae8"/><rect x="17" y="8" width="7" height="7" rx="1.5" fill="#6d6ae8" opacity=".55"/><rect x="8" y="17" width="7" height="7" rx="1.5" fill="#6d6ae8" opacity=".55"/><rect x="17" y="17" width="7" height="7" rx="1.5" fill="#6d6ae8" opacity=".3"/></svg>';
 
-  /* 导航「更多工具」下拉清单：新增工具只需在此追加，不动顶栏结构 */
-  var MORE_ITEMS = [
-    { href: '/convert/', key: 'nav_cv', label: '格式转换' },
-    { href: '/resize/', key: 'nav_rz', label: '裁剪缩放' },
-    { href: '/contrast/', key: 'nav_ct', label: '对比度' },
-    { href: '/barcode/', key: 'nav_bc', label: '条形码' },
-    { href: '/watermark/', key: 'nav_wm', label: '水印' },
-    { href: '/gradient/', key: 'nav_gr', label: '渐变' },
-    { href: '/password/', key: 'nav_pw', label: '密码' },
-    { href: '/meta-tags/', key: 'nav_mt', label: 'Meta 标签' },
-    { href: '/pdf/image-to-pdf/', key: 'nav_i2p', label: '图片转PDF' },
-    { href: '/text/diff/', key: 'nav_df', label: '文本对比' },
-    { href: '/text/checksum/', key: 'nav_ck', label: '校验和' },
-    { href: '/text/base64/', key: 'nav_b64', label: 'Base64' },
-    { href: '/text/timestamp/', key: 'nav_ts', label: '时间戳' }
+  /* 顶栏类别导航：每类别 = 分类页落地链接 + 下拉清单。
+     下拉项标签复用词典现有键；新增工具只需在对应 items 里加一行。 */
+  var NAV_CATS = [
+    { href: '/image-tools/', key: 'nav_cat_image', items: [
+      { href: '/icon-forge/', key: 'nav_if' },
+      { href: '/favicon/', key: 'nav_fv' },
+      { href: '/compress/', key: 'nav_cp' },
+      { href: '/palette/', key: 'nav_pl' },
+      { href: '/convert/', key: 'nav_cv' },
+      { href: '/resize/', key: 'nav_rz' },
+      { href: '/contrast/', key: 'nav_ct' },
+      { href: '/qrcode/', key: 'nav_qr' },
+      { href: '/barcode/', key: 'nav_bc' },
+      { href: '/watermark/', key: 'nav_wm' },
+      { href: '/gradient/', key: 'nav_gr' },
+      { href: '/password/', key: 'nav_pw' },
+      { href: '/meta-tags/', key: 'nav_mt' }
+    ]},
+    { href: '/text/', key: 'nav_cat_text', items: [
+      { href: '/text/json/', key: 'home_tool_txt_json' },
+      { href: '/text/char-count/', key: 'home_tool_txt_cc' },
+      { href: '/text/uuid/', key: 'home_tool_txt_uuid' },
+      { href: '/text/diff/', key: 'nav_df' },
+      { href: '/text/checksum/', key: 'nav_ck' },
+      { href: '/text/base64/', key: 'nav_b64' },
+      { href: '/text/timestamp/', key: 'nav_ts' }
+    ]},
+    { href: '/pdf/', key: 'nav_cat_pdf', items: [
+      { href: '/pdf/image-to-pdf/', key: 'nav_i2p' }
+    ]}
   ];
-  function MORE_ACTIVE(path) {
-    return MORE_ITEMS.some(function (it) { return path.indexOf(it.href) === 0; });
-  }
   function renderHeader() {
     var el = document.getElementById('site-header');
     if (!el) return;
@@ -1211,20 +1226,19 @@
         '</a>' +
         '<nav class="nav">' +
           '<a href="/" class="' + (active('/') ? 'active' : '') + '" data-i18n="nav_home">首页</a>' +
-          '<a href="/icon-forge/" class="' + (active('/icon-forge/') ? 'active' : '') + '" data-i18n="nav_if">图标工坊</a>' +
-          '<a href="/favicon/" class="' + (active('/favicon/') ? 'active' : '') + '" data-i18n="nav_fv">Favicon</a>' +
-          '<a href="/compress/" class="' + (active('/compress/') ? 'active' : '') + '" data-i18n="nav_cp">压缩</a>' +
-          '<a href="/palette/" class="' + (active('/palette/') ? 'active' : '') + '" data-i18n="nav_pl">配色</a>' +
-          '<a href="/qrcode/" class="' + (active('/qrcode/') ? 'active' : '') + '" data-i18n="nav_qr">二维码</a>' +
+          NAV_CATS.map(function (cat) {
+            var isActive = path.indexOf(cat.href) === 0 ||
+              cat.items.some(function (it) { return path.indexOf(it.href) === 0; });
+            return '<div class="nav-more' + (isActive ? ' has-active' : '') + '">' +
+              '<button type="button" class="nav-more-btn" aria-haspopup="true" data-i18n="' + cat.key + '"></button>' +
+              '<div class="nav-more-menu">' +
+                cat.items.map(function (it) {
+                  return '<a href="' + it.href + '" class="' + (active(it.href) ? 'active' : '') + '" data-i18n="' + it.key + '"></a>';
+                }).join('') +
+              '</div>' +
+            '</div>';
+          }).join('') +
           '<a href="/guides/" class="' + (active('/guides/') ? 'active' : '') + '" data-i18n="nav_guides">指南</a>' +
-          '<div class="nav-more' + (MORE_ACTIVE(path) ? ' has-active' : '') + '">' +
-            '<button type="button" class="nav-more-btn" aria-haspopup="true" data-i18n="nav_more">更多工具</button>' +
-            '<div class="nav-more-menu">' +
-              MORE_ITEMS.map(function (it) {
-                return '<a href="' + it.href + '" class="' + (active(it.href) ? 'active' : '') + '" data-i18n="' + it.key + '">' + it.label + '</a>';
-              }).join('') +
-            '</div>' +
-          '</div>' +
         '</nav>' +
         '<div class="header-actions">' +
           '<button class="theme-switch" id="theme-switch" type="button" data-i18n-title="theme_toggle" aria-label="Toggle theme">' +

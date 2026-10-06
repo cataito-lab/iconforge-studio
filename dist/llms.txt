@@ -3,6 +3,7 @@
 CATAITO（tools.cataito.com）是一个 100% 免费、隐私优先的在线工具箱，专注于图标与图片处理。所有工具均为纯前端实现，文件在浏览器本地处理，绝不上传服务器，无需注册、无需安装。
 
 ## 工具
+- 分类页：图片与设计 https://tools.cataito.com/image-tools/ ｜ 文本与开发者 https://tools.cataito.com/text/ ｜ PDF https://tools.cataito.com/pdf/
 - 图标工坊 IconForge — 上传 Logo，一键导出多尺寸 ICO / PNG / favicon（Light & Dark 双主题）：https://tools.cataito.com/icon-forge/
 - Favicon 生成器 — 将任意图片生成多尺寸 .ico / .png favicon 包：https://tools.cataito.com/favicon/
 - 图片压缩 — 在线压缩 PNG / JPG / WebP，体积更小、画质可控：https://tools.cataito.com/compress/

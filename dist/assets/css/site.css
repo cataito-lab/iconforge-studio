@@ -1,40 +1,41 @@
 /* ============================================================
    cataito 工具箱 · 共享外壳样式
-   设计语言：「印刷工具目录」——纸张、墨色、发丝线、编号索引。
-   主色朱砂只作印章式点缀；结构靠 1px 规则线而非投影卡片。
+   设计语言：「中性极简」——白底、近黑文字、灰边框卡片。
+   点缀蓝只用于链接/主按钮/选中态；无噪点、无印章、无编号、
+   无位移动画；结构靠留白与 1px 边框。
    令牌（亮/暗）在此唯一定义，工具页可再用自身样式覆盖（值一致）。
    ============================================================ */
 :root {
   color-scheme: light;
-  /* 色彩：米纸底 + 墨色文字 + 朱砂点缀 */
-  --bg: #f6f3ec; --bg-canvas: #eeeae0; --card: #faf8f2; --card-2: #efebe1;
-  --border: #d9d2c3; --text: #211e19; --text-2: #5c564a; --text-3: #97907f;
-  --accent: #bf4324; --accent-hover: #a53718;
-  --accent-soft: rgba(191,67,36,0.08); --accent-soft-2: rgba(191,67,36,0.04);
-  --accent-glow: rgba(191,67,36,0.16);
-  --danger: #b3362a; --success: #3d7a50; --warning: #a8681c;
-  --checker: #e3ddd0;
+  /* 色彩：白底 + 近黑文字 + 灰边框 + 克制蓝点缀 */
+  --bg: #ffffff; --bg-canvas: #fafafa; --card: #ffffff; --card-2: #f5f5f5;
+  --border: #e5e5e5; --text: #171717; --text-2: #525252; --text-3: #a3a3a3;
+  --accent: #2563eb; --accent-hover: #1d4ed8;
+  --accent-soft: rgba(37,99,235,0.08); --accent-soft-2: rgba(37,99,235,0.05);
+  --accent-glow: rgba(37,99,235,0.12);
+  --danger: #dc2626; --success: #16a34a; --warning: #d97706;
+  --checker: #ececec;
   /* 体系：圆角 / 间距 / 字号 / 行高 / 字体 */
-  --radius: 3px; --radius-sm: 2px;
+  --radius: 8px; --radius-sm: 6px;
   --sp-1: 4px; --sp-2: 8px; --sp-3: 12px; --sp-4: 16px;
   --sp-5: 20px; --sp-6: 24px; --sp-7: 32px; --sp-8: 48px;
   --fs-xs: 12px; --fs-sm: 13.5px; --fs-md: 15px; --fs-lg: 17px; --fs-xl: 22px;
   --lh-body: 1.7;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace;
-  --shadow-sm: 0 1px 0 rgba(33,30,25,0.04);
-  --shadow-md: 0 12px 32px rgba(33,30,25,0.12);
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+  --shadow-md: 0 8px 24px rgba(0,0,0,0.10);
 }
 html.dark {
   color-scheme: dark;
-  --bg: #15130f; --bg-canvas: #100e0b; --card: #1c1915; --card-2: #241f19;
-  --border: #37312a; --text: #ece5d6; --text-2: #b0a897; --text-3: #7d7666;
-  --accent: #e06842; --accent-hover: #ec7c58;
-  --accent-soft: rgba(224,104,66,0.14); --accent-soft-2: rgba(224,104,66,0.07);
-  --accent-glow: rgba(224,104,66,0.18);
-  --danger: #e2695c; --success: #6fae83; --warning: #d19a5b;
+  --bg: #0a0a0a; --bg-canvas: #0d0d0d; --card: #141414; --card-2: #1c1c1c;
+  --border: #262626; --text: #ededed; --text-2: #a3a3a3; --text-3: #6f6f6f;
+  --accent: #3b82f6; --accent-hover: #60a5fa;
+  --accent-soft: rgba(59,130,246,0.14); --accent-soft-2: rgba(59,130,246,0.08);
+  --accent-glow: rgba(59,130,246,0.16);
+  --danger: #ef4444; --success: #22c55e; --warning: #f59e0b;
   --checker: rgba(255,255,255,0.06);
-  --shadow-sm: 0 1px 0 rgba(0,0,0,0.3);
-  --shadow-md: 0 14px 34px rgba(0,0,0,0.5);
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.4);
+  --shadow-md: 0 12px 32px rgba(0,0,0,0.5);
 }
 * { box-sizing: border-box; }
 html, body { height: auto; min-height: 100%; }
@@ -47,19 +48,10 @@ body {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
-/* 纸张颗粒：极低透明度平铺在一切之上（不拦截交互） */
-body::before {
-  content: "";
-  position: fixed; inset: 0; z-index: 2000;
-  pointer-events: none;
-  opacity: .05;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
-}
-html.dark body::before { opacity: .07; }
 ::selection { background: var(--accent); color: #fff; }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
-/* ---------- 顶栏：平实纸面 + 发丝线，不做玻璃拟态 ----------
+/* ---------- 顶栏：纯色底 + 发丝线 ----------
    注意：site.js 的 renderHeader 只注入 #site-header 容器与 .site-header__inner，
    不存在 .site-header 类——吸顶样式必须写在 #site-header 上（与页脚 #site-footer 同理）。 */
 #site-header {
@@ -103,11 +95,10 @@ html.dark body::before { opacity: .07; }
 html.dark .brand__logo--dark { display: none; }
 html.dark .brand__logo--light { display: inline-block; }
 .brand__tag {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  font-weight: 500;
+  font-size: 12px;
+  font-weight: 400;
   color: var(--text-3);
-  letter-spacing: .08em;
+  letter-spacing: .02em;
   padding-left: 10px;
   border-left: 1px solid var(--border);
 }
@@ -118,35 +109,37 @@ html.dark .brand__logo--light { display: inline-block; }
   color: var(--text-2);
   font-size: 13.5px;
   padding: 7px 11px;
-  border-bottom: 2px solid transparent;
-  transition: color .15s, border-color .15s;
+  border-radius: var(--radius-sm);
+  transition: color .15s, background .15s;
 }
-.nav a:hover { color: var(--accent); }
-.nav a.active { color: var(--text); border-bottom-color: var(--accent); font-weight: 600; }
+.nav a:hover { color: var(--text); background: var(--card-2); }
+.nav a.active { color: var(--text); background: var(--card-2); font-weight: 600; }
 
-/* 「更多工具」下拉：纯 CSS hover/focus，未来加工具只改 site.js 的 MORE_ITEMS */
+/* 类别下拉：纯 CSS hover/focus，未来加工具只改 site.js 的 NAV_CATS */
 .nav-more { position: relative; }
 .nav-more-btn {
   background: none; border: none; cursor: pointer;
   font-size: 13.5px; color: var(--text-2);
-  padding: 7px 11px; border-bottom: 2px solid transparent;
+  padding: 7px 11px; border-radius: var(--radius-sm);
   font-family: inherit; display: inline-flex; align-items: center; gap: 4px;
+  transition: color .15s, background .15s;
 }
 .nav-more-btn::after { content: "▾"; font-size: 10px; }
-.nav-more-btn:hover { color: var(--accent); }
-.nav-more.has-active .nav-more-btn { color: var(--text); border-bottom-color: var(--accent); font-weight: 600; }
+.nav-more-btn:hover { color: var(--text); background: var(--card-2); }
+.nav-more.has-active .nav-more-btn { color: var(--text); background: var(--card-2); font-weight: 600; }
 .nav-more-menu {
-  display: none; position: absolute; top: 100%; left: 0;
+  display: none; position: absolute; top: calc(100% + 4px); left: 0;
   background: var(--card); border: 1px solid var(--border);
   border-radius: var(--radius-sm); box-shadow: var(--shadow-md);
-  min-width: 132px; padding: 6px 0; z-index: 30;
+  min-width: 148px; padding: 6px; z-index: 30;
 }
 .nav-more:hover .nav-more-menu, .nav-more:focus-within .nav-more-menu { display: block; }
 .nav-more-menu a {
-  display: block; padding: 8px 16px; font-size: 13px;
-  color: var(--text-2); text-decoration: none; border-bottom: none;
+  display: block; padding: 7px 12px; font-size: 13px;
+  color: var(--text-2); text-decoration: none;
+  border-radius: var(--radius-sm);
 }
-.nav-more-menu a:hover { color: var(--accent); background: var(--accent-soft-2); }
+.nav-more-menu a:hover { color: var(--text); background: var(--card-2); }
 .nav-more-menu a.active { color: var(--accent); font-weight: 600; }
 
 .lang-switch {
@@ -160,7 +153,7 @@ html.dark .brand__logo--light { display: inline-block; }
   cursor: pointer;
   transition: border-color .15s, color .15s;
 }
-.lang-switch:hover { border-color: var(--accent); color: var(--accent); }
+.lang-switch:hover { border-color: var(--text-3); color: var(--text); }
 .lang-switch .globe { width: 15px; height: 15px; }
 
 /* ---------- 顶栏右侧按钮组（主题切换 + 语言切换） ---------- */
@@ -175,7 +168,7 @@ html.dark .brand__logo--light { display: inline-block; }
   cursor: pointer;
   transition: border-color .15s, color .15s;
 }
-.theme-switch:hover { border-color: var(--accent); color: var(--accent); }
+.theme-switch:hover { border-color: var(--text-3); color: var(--text); }
 .theme-switch svg { width: 16px; height: 16px; }
 .theme-switch .ico-moon { display: none; }
 html.dark .theme-switch .ico-moon { display: block; }
@@ -186,60 +179,53 @@ html.dark .theme-switch .ico-sun { display: none; }
 
 .breadcrumb {
   display: flex; align-items: center; gap: 8px;
-  font-family: var(--font-mono);
-  font-size: 12px; color: var(--text-3); margin-bottom: 24px;
+  font-size: 12.5px; color: var(--text-3); margin-bottom: 24px;
 }
 .breadcrumb a { color: var(--text-2); text-decoration: none; }
 .breadcrumb a:hover { color: var(--accent); }
 .breadcrumb .sep { opacity: .55; }
 
-/* ---------- 首页 hero：左对齐大字标 + 印章式徽标 + 通栏粗规则线 ---------- */
+/* ---------- 首页 hero：居中标题 + 灰色徽标 ---------- */
 .hero {
-  text-align: left;
-  padding: 48px 0 40px;
-  border-bottom: 2px solid var(--text);
+  text-align: center;
+  padding: 56px 0 44px;
 }
 .hero__title {
-  font-size: clamp(38px, 6vw, 64px);
-  font-weight: 800;
+  font-size: clamp(32px, 5vw, 48px);
+  font-weight: 750;
   letter-spacing: -.02em;
-  line-height: 1.05;
-  margin: 0 0 18px;
+  line-height: 1.08;
+  margin: 0 0 16px;
   color: var(--text);
 }
-.hero__sub { font-size: 16.5px; color: var(--text-2); max-width: 40em; margin: 0 0 30px; line-height: 1.75; }
-/* 印章：方形描边 + 轻微倾斜，替代圆角药丸 */
+.hero__sub { font-size: 16px; color: var(--text-2); max-width: 38em; margin: 0 auto 26px; line-height: 1.75; }
 .free-badge {
-  display: inline-flex; flex-wrap: wrap; align-items: center; gap: 8px 16px;
-  padding: 9px 16px; border-radius: var(--radius-sm);
-  border: 1.5px solid var(--accent);
-  color: var(--accent);
-  font-family: var(--font-mono);
-  font-size: 12px; font-weight: 600;
-  letter-spacing: .04em;
-  transform: rotate(-1.2deg);
+  display: inline-flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 8px 16px;
+  padding: 8px 18px; border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--card-2);
+  color: var(--text-2);
+  font-size: 12.5px; font-weight: 500;
 }
 .free-badge span { display: inline-flex; align-items: center; gap: 6px; }
-.free-badge .dot { width: 5px; height: 5px; border-radius: 1px; background: var(--accent); }
+.free-badge .dot { width: 5px; height: 5px; border-radius: 999px; background: var(--text-3); }
 
-/* ---------- 工具索引：编号目录行，替代卡片网格 ---------- */
+/* ---------- 区块标题与工具卡片网格 ---------- */
 .section-head {
-  font-family: var(--font-mono);
-  font-size: 12px; font-weight: 600; text-transform: uppercase;
-  letter-spacing: .12em; color: var(--text-3);
-  margin: 48px 0 0;
-  display: flex; align-items: center; gap: 10px;
+  font-size: 17px; font-weight: 700;
+  letter-spacing: -.01em; color: var(--text);
+  margin: 40px 0 0;
+  display: flex; align-items: baseline; gap: 10px;
 }
-.section-head::before { content: ""; width: 24px; height: 2px; background: var(--accent); flex: none; }
 .tool-grid {
-  counter-reset: toolidx;
-  display: block;
-  margin-top: 14px;
-  border-top: 2px solid var(--text);
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 14px;
+  margin-top: 16px;
 }
 
 /* ---------- 首页：关于 / 特性 / FAQ ---------- */
-.home-about { margin-top: 8px; }
+.home-about { margin-top: 16px; }
 .feat-grid {
   display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px;
 }
@@ -247,54 +233,48 @@ html.dark .theme-switch .ico-sun { display: none; }
   .feat-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 }
 .feat {
-  border-top: 1px solid var(--text);
+  border-top: 1px solid var(--border);
   padding: 16px 0 0;
 }
 .feat__title { font-size: 14.5px; font-weight: 700; color: var(--text); margin: 0 0 6px; }
 .feat__desc { font-size: 13px; color: var(--text-2); line-height: 1.65; margin: 0; }
 
-.home-faq { margin-top: 8px; }
+.home-faq { margin-top: 16px; }
 .faq-list { display: block; border-bottom: 1px solid var(--border); }
 .faq-item {
   border-top: 1px solid var(--border);
   padding: 18px 0;
 }
 .faq-q { font-size: 15px; font-weight: 700; color: var(--text); margin: 0 0 6px; }
-.faq-q::before { content: "Q. "; font-family: var(--font-mono); font-size: 13px; color: var(--accent); }
+.faq-q::before { content: "Q. "; font-size: 13px; color: var(--accent); font-weight: 600; }
 .faq-a { font-size: 13.5px; color: var(--text-2); line-height: 1.7; margin: 0; max-width: 46em; }
 
-/* ---------- 首页：同类工具对比（横向 2-3 列，规则线分隔） ---------- */
-.home-compare { margin-top: 8px; }
+/* ---------- 首页：同类工具对比（横向 2-3 列卡片） ---------- */
+.home-compare { margin-top: 16px; }
 .compare-list {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 0;
-  border-top: 2px solid var(--text);
+  gap: 14px;
 }
 @media (min-width: 720px) {
-  .compare-list { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; }
+  .compare-list { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 .compare-item {
   display: block;
-  padding: 20px 20px 20px 0;
+  padding: 18px;
   text-decoration: none;
-  border-bottom: 1px solid var(--border);
+  color: inherit;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  transition: border-color .15s;
 }
-@media (min-width: 720px) {
-  .compare-item {
-    padding-left: 20px;
-    border-bottom: none;
-    border-right: 1px solid var(--border);
-  }
-  .compare-item:last-child { border-right: none; padding-right: 0; }
-}
+.compare-item:hover { border-color: var(--text-3); }
 .compare-item__tag {
   display: inline-block;
-  font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 11.5px;
   font-weight: 600;
   color: var(--accent);
-  letter-spacing: .04em;
   margin-bottom: 8px;
 }
 .compare-item__title {
@@ -304,9 +284,8 @@ html.dark .theme-switch .ico-sun { display: none; }
   margin: 0 0 6px;
 }
 .compare-item__title .vs {
-  font-family: var(--font-mono);
   font-size: 12px;
-  color: var(--accent);
+  color: var(--text-3);
   margin: 0 6px;
   font-weight: 400;
 }
@@ -317,64 +296,46 @@ html.dark .theme-switch .ico-sun { display: none; }
   margin: 0;
 }
 
-/* 工具目录行：编号 + 图标 + 名称/描述 + 箭头 */
+/* 工具卡：1px 边框卡片，hover 仅边框加深 */
 .tool-card {
-  counter-increment: toolidx;
-  display: grid;
-  grid-template-columns: 56px minmax(0, 1fr) auto;
-  grid-template-areas:
-    "num top go"
-    "num desc go";
-  align-items: center;
-  column-gap: 16px; row-gap: 4px;
-  padding: 22px 8px;
-  border-bottom: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 18px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
   text-decoration: none; color: inherit;
-  transition: background .15s ease, box-shadow .15s ease;
+  transition: border-color .15s ease, box-shadow .15s ease;
 }
-.tool-card::before {
-  content: counter(toolidx, decimal-leading-zero);
-  grid-area: num;
-  font-family: var(--font-mono);
-  font-size: 14px; font-weight: 500;
-  color: var(--text-3);
-  transition: color .15s ease;
-}
-.tool-card:hover { background: var(--accent-soft-2); box-shadow: inset 3px 0 0 var(--accent); }
-.tool-card:hover::before { color: var(--accent); }
-.tool-card__top { grid-area: top; display: flex; align-items: center; gap: 12px; min-width: 0; }
+.tool-card:hover { border-color: var(--text-3); box-shadow: var(--shadow-sm); }
+.tool-card__top { display: flex; align-items: center; gap: 12px; min-width: 0; }
 .tool-card__icon {
   width: auto; height: auto; border-radius: 0; flex: none;
   background: none; display: grid; place-items: center; color: var(--text-2);
 }
-.tool-card__name { font-size: 19px; font-weight: 700; color: var(--text); margin: 0; letter-spacing: -.01em; }
-.tool-card__desc { grid-area: desc; font-size: 13.5px; color: var(--text-2); line-height: 1.6; margin: 0; max-width: 46em; }
-.tool-card__foot { grid-area: go; display: flex; align-items: center; margin: 0; }
+.tool-card__name { font-size: 16px; font-weight: 700; color: var(--text); margin: 0; letter-spacing: -.01em; }
+.tool-card__desc { font-size: 13.5px; color: var(--text-2); line-height: 1.6; margin: 0; }
+.tool-card__foot { display: flex; align-items: center; margin: 0; margin-top: auto; padding-top: 4px; }
 .tool-card__go {
-  font-family: var(--font-mono);
-  font-size: 12px; font-weight: 600; color: var(--accent);
-  transition: transform .15s ease;
+  font-size: 13px; font-weight: 500; color: var(--accent);
 }
-.tool-card:hover .tool-card__go { transform: translateX(4px); }
 .tag-soon {
-  font-family: var(--font-mono);
   font-size: 11px; font-weight: 600; color: var(--text-3);
   border: 1px solid var(--border);
-  padding: 2px 8px; border-radius: var(--radius-sm);
+  padding: 2px 8px; border-radius: 999px;
 }
 .tool-card.is-soon { opacity: .72; }
-.tool-card.is-soon:hover { background: none; box-shadow: none; }
-.tool-card.is-soon:hover::before { color: var(--text-3); }
+.tool-card.is-soon:hover { border-color: var(--border); box-shadow: none; }
 
-/* ---------- 页脚：版权页（colophon）风格 ----------
+/* ---------- 页脚 ----------
    注意：site.js 的 renderFooter 只注入 #site-footer 容器与 .site-footer__inner，
-   历史上样式写在 .site-footer 类上导致选择器从未命中（链接一直显示浏览器默认蓝色）。 */
-#site-footer { border-top: 2px solid var(--text); margin-top: 56px; }
+   历史上样式写在 .site-footer 类上导致选择器从未命中。 */
+#site-footer { border-top: 1px solid var(--border); margin-top: 56px; }
 .site-footer__inner {
   max-width: 1080px; margin: 0 auto; padding: 22px 20px;
   display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap;
-  font-family: var(--font-mono);
-  font-size: 12px; color: var(--text-3);
+  font-size: 12.5px; color: var(--text-3);
 }
 #site-footer a { color: var(--text-2); text-decoration: none; }
 #site-footer a:hover { color: var(--accent); }
@@ -382,7 +343,7 @@ html.dark .theme-switch .ico-sun { display: none; }
 .site-footer__links a { white-space: nowrap; }
 
 /* h1 用于 SEO，视觉上作为页面标题 */
-.page-h1 { font-size: 30px; font-weight: 800; letter-spacing: -.02em; margin: 4px 0 8px; color: var(--text); }
+.page-h1 { font-size: 28px; font-weight: 750; letter-spacing: -.02em; margin: 4px 0 8px; color: var(--text); }
 .page-sub { font-size: 15px; color: var(--text-2); margin: 0 0 22px; line-height: 1.7; }
 
 .sr-only {
@@ -391,28 +352,21 @@ html.dark .theme-switch .ico-sun { display: none; }
 }
 
 @media (max-width: 640px) {
-  .hero { padding: 32px 0 28px; }
-  .hero__title { font-size: 34px; }
+  .hero { padding: 36px 0 30px; }
+  .hero__title { font-size: 30px; }
   .nav { display: none; }
   .brand__name small { display: none; }
-  .tool-card {
-    grid-template-columns: 40px minmax(0, 1fr);
-    grid-template-areas:
-      "num top"
-      "num desc"
-      "num go";
-    padding: 18px 4px;
-  }
-  .tool-card__foot { margin-top: 6px; }
-  .tool-card__name { font-size: 16.5px; }
-  .tool-card__go { font-size: 11px; }
+  .tool-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .tool-card { padding: 14px; }
+  .tool-card__name { font-size: 14.5px; }
+  .tool-card__desc { font-size: 12.5px; }
   .site-footer__inner { flex-direction: column; align-items: flex-start; gap: 10px; padding: 18px 16px; }
   .site-footer__links { gap: 8px 14px; flex-wrap: wrap; }
 }
 
 /* ============================================================
    工具页共享组件层（.t-*）
-   四个工具页共用同一套组件，避免各页内联复制样式导致视觉漂移。
+   全部工具页共用同一套组件，避免各页内联复制样式导致视觉漂移。
    新增工具请直接复用这些类。
    ============================================================ */
 
@@ -426,8 +380,6 @@ html.dark .theme-switch .ico-sun { display: none; }
 .t-flow { max-width: 760px; }
 /* 双列（icon-forge 等需要常驻预览的工具）：左工作区 + 右侧设置栏 */
 .t-split { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 24px; align-items: start; }
-/* 工作区卡片顶部 2px 粗规则线——把首页目录行的结构语言延伸进工具工作区 */
-.t-split > .t-card { border-top: 2px solid var(--text); }
 @media (max-width: 900px) {
   .t-split { grid-template-columns: 1fr; }
 }
@@ -493,9 +445,7 @@ html.dark .theme-switch .ico-sun { display: none; }
   width: 36px; height: 36px; flex: none; border-radius: var(--radius-sm);
   background: var(--border); color: var(--text-3);
   display: grid; place-items: center;
-  transition: transform .15s;
 }
-.t-drop.compact:hover .t-drop-ic { transform: scale(1.05); }
 .t-drop.compact svg { width: 18px; height: 18px; }
 
 /* ---------- 字段 ---------- */
@@ -520,20 +470,16 @@ html.dark .theme-switch .ico-sun { display: none; }
 .t-seg-item {
   position: relative; flex: 1 1 auto;
   display: flex; align-items: center; justify-content: center;
-  padding: 7px 10px; border-radius: var(--radius-sm);
+  padding: 7px 10px; border-radius: calc(var(--radius-sm) - 2px);
   font-size: 12.5px; color: var(--text-2); cursor: pointer;
   white-space: nowrap; user-select: none;
   transition: background .15s, color .15s;
 }
-.t-seg-item:hover { color: var(--accent); }
+.t-seg-item:hover { color: var(--text); }
 .t-seg-item input { position: absolute; opacity: 0; pointer-events: none; }
 .t-seg-item:has(input:checked), .t-seg-item.checked {
   background: var(--card); color: var(--text);
-  font-weight: 600; box-shadow: inset 0 0 0 1px var(--border);
-}
-.t-seg-item:has(input:checked)::after, .t-seg-item.checked::after {
-  content: ""; position: absolute; left: 10px; right: 10px; bottom: 2px;
-  height: 2px; background: var(--accent);
+  font-weight: 600; box-shadow: inset 0 0 0 1px var(--border), var(--shadow-sm);
 }
 
 /* ---------- 芯片（多选尺寸 / 开关） ---------- */
@@ -547,7 +493,7 @@ html.dark .theme-switch .ico-sun { display: none; }
   font-size: 12.5px; cursor: pointer; user-select: none;
   transition: border-color .15s, background .15s, color .15s;
 }
-.t-chip:hover { border-color: var(--accent); }
+.t-chip:hover { border-color: var(--text-3); color: var(--text); }
 .t-chip input { position: absolute; opacity: 0; pointer-events: none; }
 .t-chip:has(input:checked), .t-chip.checked {
   background: var(--accent-soft); border-color: var(--accent);
@@ -576,16 +522,15 @@ html.dark .theme-switch .ico-sun { display: none; }
 .t-range { width: 100%; accent-color: var(--accent); }
 .t-range-val { font-family: var(--font-mono); font-size: 12.5px; font-weight: 650; color: var(--accent); }
 
-/* ---------- 按钮：主按钮=墨色实心，悬停转朱砂；次按钮=描边 ---------- */
+/* ---------- 按钮：主按钮=近黑实心，悬停转点缀蓝；次按钮=描边 ---------- */
 .t-btn {
   display: inline-flex; align-items: center; justify-content: center; gap: 8px;
   padding: 12px 20px; border-radius: var(--radius-sm);
   font-size: 13.5px; font-weight: 600; cursor: pointer;
   border: 1px solid var(--border); background: var(--card); color: var(--text-2);
-  transition: background .15s, border-color .15s, color .15s, transform .08s;
+  transition: background .15s, border-color .15s, color .15s;
 }
-.t-btn:hover { border-color: var(--text); color: var(--text); background: transparent; }
-.t-btn:active { transform: scale(.985); }
+.t-btn:hover { border-color: var(--text-3); color: var(--text); background: transparent; }
 .t-btn.primary {
   background: var(--text); border-color: var(--text); color: var(--bg);
 }
@@ -601,7 +546,7 @@ html.dark .theme-switch .ico-sun { display: none; }
   display: grid; place-items: center; cursor: pointer;
   transition: border-color .15s, color .15s, background .15s;
 }
-.t-icon-btn:hover { border-color: var(--text); color: var(--text); }
+.t-icon-btn:hover { border-color: var(--text-3); color: var(--text); }
 .t-icon-btn.danger:hover { border-color: var(--danger); color: var(--danger); background: color-mix(in srgb, var(--danger) 8%, transparent); }
 
 /* ---------- 结果行列表（压缩工具） ---------- */
@@ -623,7 +568,7 @@ html.dark .theme-switch .ico-sun { display: none; }
   font-family: var(--font-mono);
   font-size: 11.5px; font-weight: 700; color: var(--success);
   border: 1px solid color-mix(in srgb, var(--success) 45%, transparent);
-  padding: 2px 8px; border-radius: var(--radius-sm); flex: none;
+  padding: 2px 8px; border-radius: 999px; flex: none;
 }
 .t-badge.muted { color: var(--text-3); border-color: var(--border); font-weight: 600; }
 
@@ -681,13 +626,13 @@ html.dark .theme-switch .ico-sun { display: none; }
 .t-modal {
   position: fixed; inset: 0; z-index: 80; display: none;
   align-items: center; justify-content: center;
-  background: rgba(12,10,8,.72); backdrop-filter: blur(2px);
+  background: rgba(0,0,0,.6); backdrop-filter: blur(2px);
 }
 .t-modal.show { display: flex; }
 .t-modal-card {
   background: var(--card); border: 1px solid var(--border);
   border-radius: var(--radius); padding: 24px; width: 384px; max-width: calc(100vw - 32px);
-  box-shadow: 8px 8px 0 rgba(12,10,8,.18);
+  box-shadow: var(--shadow-md);
   display: flex; flex-direction: column; gap: 16px;
 }
 .t-modal-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
@@ -725,26 +670,19 @@ html.dark .theme-switch .ico-sun { display: none; }
 .t-prose a { color: var(--accent); text-decoration: none; }
 .t-prose a:hover { text-decoration: underline; }
 
-/* 编号步骤：方框序号，替代圆形气泡 */
+/* 编号步骤 */
 .t-steps { counter-reset: tstep; list-style: none; margin: 0 0 18px; padding: 0; }
-.t-steps li { position: relative; padding-left: 40px; margin: 12px 0; }
+.t-steps li { position: relative; padding-left: 30px; margin: 12px 0; }
 .t-steps li::before {
   counter-increment: tstep;
-  content: counter(tstep, decimal-leading-zero);
+  content: counter(tstep);
   position: absolute;
   left: 0;
-  top: 2px;
-  width: 28px;
-  height: 22px;
-  border-radius: var(--radius-sm);
-  border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
+  top: 0;
+  width: 20px;
   color: var(--accent);
-  font-family: var(--font-mono);
-  font-size: 11.5px;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  font-size: 13px;
+  font-weight: 700;
 }
 
 /* 常见问题（全站唯一 FAQ 卡片实现：首页 .faq-item 与工具/指南页 .t-faq-*） */
@@ -758,15 +696,15 @@ html.dark .theme-switch .ico-sun { display: none; }
   margin: 0;
 }
 .t-faq-q { font-size: 14.5px; font-weight: 600; color: var(--text); margin: 0 0 6px; }
-.t-faq-q::before { content: "Q. "; font-family: var(--font-mono); font-size: 12.5px; color: var(--accent); }
+.t-faq-q::before { content: "Q. "; font-size: 12.5px; color: var(--accent); font-weight: 700; }
 .t-faq-a { font-size: 13.5px; color: var(--text-2); margin: 0; line-height: 1.75; }
 
 /* ---------- CTA 卡（品牌/工具导流，about 与指南页共用） ----------
    注意：指南页内联样式里有同款副本（含 .article a 特异度覆盖），暂保留；
    新页面请直接用这里的一套。 */
 .cta-box {
-  background: linear-gradient(135deg, var(--accent-soft), var(--accent-soft-2));
-  border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent);
+  background: var(--card-2);
+  border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 20px 22px; margin: 34px 0 10px; text-align: center;
 }
@@ -775,7 +713,7 @@ html.dark .theme-switch .ico-sun { display: none; }
 .cta-btn {
   display: inline-block; background: var(--accent); color: #fff; text-decoration: none;
   font-size: 14px; font-weight: 600; padding: 11px 26px; border-radius: var(--radius-sm);
-  box-shadow: 0 6px 18px var(--accent-glow); transition: background .15s;
+  transition: background .15s;
 }
 .cta-btn:hover { background: var(--accent-hover); }
 /* 特异度防护：.t-prose a（0,1,1）会压过 .cta-btn（0,1,0）的白色文字 */
@@ -796,9 +734,9 @@ html.lang-en .lb-en { display: block; }
   border-radius: var(--radius-sm);
   padding: 14px 16px;
   text-decoration: none;
-  transition: border-color .15s ease, background .15s ease, box-shadow .15s ease;
+  transition: border-color .15s ease, background .15s ease;
 }
-.t-guide-link:hover { border-color: var(--border); background: var(--accent-soft-2); box-shadow: inset 3px 0 0 var(--accent); }
+.t-guide-link:hover { border-color: var(--text-3); background: var(--bg-canvas); }
 .t-guide-link:hover .t-guide-link-title { color: var(--accent); }
 .t-guide-link-title {
   font-size: 13.5px;
@@ -828,9 +766,9 @@ html.lang-en .lb-en { display: block; }
 /* ---------- :has() 降级（Firefox 121 以下看不到选中态） ---------- */
 /* 由 site.js 的 initHasFallback 统一加 .checked 类兜底 */
 
-/* 首页类别分组：分类页入口（印刷风等宽小字） */
+/* 首页类别分组：分类页入口 */
 .section-head .cat-more {
-  font-family: var(--font-mono); font-size: 12px; font-weight: 400;
-  color: var(--text-3); text-decoration: none; margin-left: 10px;
+  font-size: 13px; font-weight: 400;
+  color: var(--text-3); text-decoration: none;
 }
 .section-head .cat-more:hover { color: var(--accent); }
