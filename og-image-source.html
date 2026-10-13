@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1200px; height: 630px; overflow: hidden; }
+  body {
+    background: #ffffff;
+    color: #171717;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    padding: 56px 64px;
+    display: flex;
+    flex-direction: column;
+  }
+  .frame { position: absolute; inset: 20px; border: 1px solid #e5e5e5; border-radius: 14px; pointer-events: none; }
+  .top { display: flex; align-items: center; justify-content: space-between; }
+  .top img { height: 30px; width: auto; }
+  .url { font-size: 15px; color: #a3a3a3; letter-spacing: .3px; }
+  .mid { margin-top: 58px; }
+  h1 { font-size: 74px; line-height: 1.1; font-weight: 700; letter-spacing: -1.5px; }
+  .sub { margin-top: 20px; font-size: 25px; line-height: 1.5; color: #525252; font-weight: 400; }
+  .badge {
+    margin-top: 30px; display: inline-flex; align-self: flex-start;
+    padding: 9px 18px; border: 1px solid #e5e5e5; border-radius: 999px;
+    background: #fafafa; color: #525252; font-size: 17px; font-weight: 500;
+  }
+  .cats { margin-top: 72px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .cat { border: 1px solid #e5e5e5; border-radius: 8px; padding: 22px 22px; background: #ffffff; }
+  .cat b { display: block; font-size: 21px; font-weight: 600; color: #171717; }
+  .cat span { display: block; margin-top: 9px; font-size: 15px; color: #a3a3a3; }
+  .cat i { font-style: normal; color: #2563eb; font-weight: 600; }
+  .foot { margin-top: auto; padding-top: 26px; border-top: 1px solid #e5e5e5; display: flex; justify-content: space-between; align-items: baseline; font-size: 17px; color: #525252; }
+  .foot em { font-style: normal; color: #a3a3a3; font-size: 15px; }
+</style>
+</head>
+<body>
+  <div class="frame"></div>
+  <div class="top">
+    <img src="/assets/logo/cataito-logo-dark.svg" alt="CATAITO">
+    <div class="url">tools.cataito.com</div>
+  </div>
+  <div class="mid">
+    <h1>免费在线工具箱</h1>
+    <p class="sub">Free Online Tools — 图标 · 压缩 · 转换 · 配色 · 二维码 · PDF</p>
+    <div class="badge">100% 免费 · 纯本地处理 · 无需注册</div>
+  </div>
+  <div class="cats">
+    <div class="cat"><b>图片与设计</b><span><i>13</i> 个工具 · 图标 / 压缩 / 转换 / 条码</span></div>
+    <div class="cat"><b>文本与开发者</b><span><i>7</i> 个工具 · JSON / diff / 校验和</span></div>
+    <div class="cat"><b>PDF 文档</b><span><i>1</i> 个工具 · 图片转 PDF</span></div>
+  </div>
+  <div class="foot">
+    <div>21 个工具 · 25 篇双语使用指南</div>
+    <em>图片与文件全程本地处理，不上传服务器</em>
+  </div>
+</body>
+</html>

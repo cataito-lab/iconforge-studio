@@ -40,14 +40,25 @@
 - 信任页：about / privacy / contact + 404（noindex）
 
 **新增页面 checklist**：`sitemap.xml`（hreflang 三连 zh-CN/en/x-default + priority）→ `llms.txt` → guides 索引卡（如指南）→ `site.js` 词典（`gd_*` 键）→ 相关工具页反向内链 → `<title>` 双语 meta + JSON-LD。⚠️ 每新增一篇指南，首页「实用指南」区块（4 篇轮换 + 全部入口）与指南间互链网络也要同步评估（2026-09-05 B3 内链加固后建立的网络基线见 HANDOFF）。
-- sitemap 现共 53 URL（首页 + 21 工具 + /text/ 与 /pdf/ 分类页 + about/privacy/contact + /guides/ + 25 指南）；首页工具区按「图片与设计 / 文本与开发者 / PDF 文档」三类别分组（分类页入口在区标题右侧）；guides 索引页收齐 25 卡。导航为短标签（`nav_*` 词典键），完整名称在页面 h1 与首页卡。图片类无统一路径前缀，暂无独立分类页（13 工具在首页直出），后续需要时补 `/image-tools/`。
+- sitemap 现共 **54 URL**（首页 + 21 工具 + `/image-tools/` `/text/` `/pdf/` 三个分类页 + about/privacy/contact + /guides/ + 25 指南）；首页工具区按「图片与设计 / 文本与开发者 / PDF 文档」三类别分组（分类页入口在区标题右侧）；guides 索引页收齐 25 卡。导航为短标签（`nav_*` 词典键），完整名称在页面 h1 与首页卡。
+
+## 五·五、i18n 词典治理（2026-10-13 建立）
+
+`site.js` 的 `I18N` 是全站唯一词典（当前 **1079 键**，中英各一值）。三条硬规则：
+
+1. **一个键只能定义一次**——JS 对象字面量后写覆盖先写，历史上 15 处重复键把正确英文盖成中文，导致 54/55 页英文模式漏翻。新增词条前先 grep 键名。
+2. **`t()` 对缺失键返回空串**（不是返回键名）——所以「漏定义」表现为**内容凭空消失**（空白标签、空白 toast），而不是裸 key。只 grep 裸 key 的旧测法查不出这类 bug。
+3. **只认四个属性**：`data-i18n` / `-html` / `-placeholder` / `-title`。`data-i18n-label` 一类的自造属性不会被处理（`<option>` 要翻译就直接用 `data-i18n`，改的是 textContent）。
+
+**验收口径**：英文模式下 `document.body.innerText` 不应出现 CJK——`html.lang-en .lb-zh{display:none}`，所以 innerText 天然排除中文正文块，残留即真漏翻（例外：语言切换按钮本身显示「中」，以及讲解中文概念的指南正文）。当前基线：**55 页中 53 页零残留，2 页为刻意保留的中文示例**（base64-guide 的「中」字节演示、word-count-guide 的字数规则）。
 
 ## 六、数据与统计
 
 - **CF Web Analytics**：beacon 由 `site.js` 的 `bindAnalytics()` 统一注入（token 明文出现在源码是 CF 设计，非密钥）；无 cookie，隐私政策已声明
 - **自研零依赖 PDF 写入器**（`/pdf/image-to-pdf/` 内联脚本，可复用）：Catalog + Pages + 每页（Page / 内容流 / JPEG XObject）四层结构 + 手工 xref 表；图片统一 Canvas → JPEG → DCTDecode 直嵌字节流（透明铺白底），无需压缩库。**新增 PDF 相关工具直接复用该写入器**；PDF 解析类工具（合并/拆分）需 vendored pdf-lib，属硬约束豁免项，须 Aaron 批准后引入
-- **GSC**：`sitemap.xml` 43 URL，全带 hreflang 三连（zh-CN / en `?lang=en` / x-default）
-- **Google AdSense**（2026-09-06 接入）：`ca-pub-7103529190038161`；验证代码在全部 26 个页面的 `<head>`（含 404）；`dist/ads.txt` 已部署（Google 对每个域名独立检查 ads.txt，**根域 cataito.com 的 ads.txt 需在母站部署**）；隐私政策已含广告披露。条目 cataito.com 状态「正在准备→审核中」，过审后广告投放与收益计入该条目
+- **GSC**：`sitemap.xml` 54 URL，全带 hreflang 三连（zh-CN / en `?lang=en` / x-default）
+- **Google AdSense**（2026-09-06 接入）：`ca-pub-7103529190038161`；验证代码在全部 **55 个页面**的 `<head>`（含 404；2026-10-13 补齐此前唯一漏掉的 `/barcode/`）；`dist/ads.txt` 已部署（Google 对每个域名独立检查 ads.txt，**根域 cataito.com 的 ads.txt 需在母站部署**）；隐私政策已含广告披露。条目 cataito.com 状态「正在准备→审核中」，过审后广告投放与收益计入该条目
+- **og:image 现状（已知缺口）**：仅 6 页（首页 + about/contact/privacy + meta-tags 及其指南）静态写有 `property="og:image"`，其余 49 页由 `site.js` 的 `bindOgImage()` 运行时注入。社交与 AI 抓取器（微信 / X / LinkedIn / Google）**不执行 JS**，这 49 页分享出去无预览图——需静态补齐才算闭环。图片本体已于 2026-10-13 按「中性极简」重制（1200×630，47KB），源文件 `og-image-source.html`（仓库根，不公开），重生成：`chrome --headless=new --window-size=1200,630 --screenshot` 该文件
 
 ## 七、本地开发与测试
 

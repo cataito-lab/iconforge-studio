@@ -63,10 +63,12 @@ dist/
   assets/js/theme-init.js # 全站主题系统（见下）
   assets/img/icon.svg     # 历史方块图标（已废弃，全站改用 cataito-logo.png）
   assets/img/cataito-logo.png  # 站点 favicon（512×512 RGBA，CATAITO 字标）
+  assets/img/og-image.png # 社交分享卡片图（1200×630，中性极简，2026-10-13 重制）
   sitemap.xml             # 站点地图（含中英 hreflang 备用链接）
   robots.txt
 ```
 根目录 `IconForge-Studio-v1.1-fixed.html` 为 IconForge 的单体历史源文件（逻辑已并入 `dist/icon-forge/`），新功能请在 `dist/` 内维护。
+根目录 `og-image-source.html` 是 `og-image.png` 的可编辑源（不在 `dist/` 内，不对外发布）；改文案或配色后用它重新截图即可生成：`chrome --headless=new --window-size=1200,630 --screenshot=<输出> og-image-source.html`。
 
 > 注意：`2026-08-20-5d539ce0/`（约 3.28GB 旧构建快照）已被 `.gitignore` 排除，请勿入库。
 
@@ -111,8 +113,12 @@ dist/
 > **设计语言约定**：① 主按钮 = 近黑实心（`var(--text)` 底），悬停转点缀蓝；次按钮 = 描边。② 点缀蓝只用于链接、主按钮、选中态，不大面积铺。③ 卡片 = 1px 边框 + 白底，hover 仅边框加深 + 轻投影，**无位移动画、无彩色光晕**。④ 首页工具区为**卡片网格**（三类别分组，区标题右侧带分类页入口）。⑤ 全站无装饰性噪点/印章/编号；等宽字体只用于功能性内容（哈希、时间戳、代码）。⑥ 新页面/新组件一律用令牌，**严禁硬编码色值/字体栈**。
 
 ### 国际化（中/英）
-- 词条放 `site.js` 的 `t()` 词典；HTML 用 `data-i18n` 属性标记
+- 词条放 `site.js` 的 `t()` 词典（全站唯一，1079 键）；HTML 用 `data-i18n` 属性标记
 - 动态文本监听 `cataito-lang-change` 事件刷新；URL 支持 `?lang=en`
+- **一个键只能定义一次**：JS 对象字面量后写覆盖先写，重复键会把正确译文静默盖掉
+- **`t()` 对缺失键返回空串**（不是返回键名），所以漏定义表现为内容凭空消失，而非裸 key
+- `applyI18n` 只处理 `data-i18n`（textContent）/ `data-i18n-html`（innerHTML）/ `-placeholder` / `-title` 四个属性；自造属性如 `data-i18n-label` 是死标记。`<option>` 要翻译直接用 `data-i18n`
+- **实体转义看走哪条路**：`data-i18n` 写的是 textContent，词典里必须用字面 `&` `<`（写 `&amp;` 会原样显示）；只有 `data-i18n-html` 才该用 HTML 实体
 
 ### 共享组件层（`.t-*`，三个工具页统一使用）
 `site.css` 里定义了一套工具页通用组件，**新增工具必须直接复用，不要在各页内联复制样式**：
