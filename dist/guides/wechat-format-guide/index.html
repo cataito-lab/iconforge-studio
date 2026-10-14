@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>公众号排版指南：微信为什么吃样式、怎么排才不跑版 | CATAITO</title>
+<meta name="title-zh" content="公众号排版指南：微信为什么吃样式、怎么排才不跑版 | CATAITO">
+<meta name="title-en" content="WeChat Formatting Guide: Why WeChat Strips Styles and How to Keep Your Layout | CATAITO">
+<meta name="description" content="公众号排版完全指南：微信编辑器的样式白名单机制、为什么只有内联 style 能活下来、字号行距的安全区间、图片与封面规范、引用块与提示框用法，以及 Markdown 转公众号排版的完整流程与跑版排查清单。">
+<meta name="theme-color" content="#ffffff">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="CATAITO 工具箱">
+<meta property="og:title" content="公众号排版指南：微信为什么吃样式">
+<meta property="og:description" content="样式白名单、内联样式原理、字号行距安全值、图片与引用块规范、Markdown 转公众号流程。">
+<meta property="og:url" content="https://tools.cataito.com/guides/wechat-format-guide/">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:locale:alternate" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="公众号排版指南">
+<meta name="twitter:description" content="微信为什么吃样式、怎么排才不跑版。">
+<link rel="canonical" href="https://tools.cataito.com/guides/wechat-format-guide/">
+<link rel="icon" type="image/png" href="/assets/img/cataito-logo.png">
+<link rel="stylesheet" href="/assets/css/site.css">
+<script src="/assets/js/theme-init.js"></script>
+<script>
+  (function () {
+    try {
+      var l = localStorage.getItem('cataito-lang');
+      document.documentElement.setAttribute('lang', (l === 'en') ? 'en' : 'zh-CN');
+      if (l === 'en') document.documentElement.classList.add('lang-en');
+    } catch (e) {}
+  })();
+</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7103529190038161" crossorigin="anonymous"></script>
+<style>
+  .guide-wrap { max-width: 760px; margin: 0; }
+  .guide-meta { font-size: 13px; color: var(--text-3); margin: 0 0 6px; }
+  .page-sub { margin-bottom: 10px; }
+  .article { font-size: 15px; line-height: 1.85; color: var(--text); }
+  .article h2 { font-size: 21px; font-weight: 700; letter-spacing: -.3px; margin: 44px 0 14px; padding-top: 16px; border-top: 1px solid var(--border); color: var(--text); }
+  .article h3 { font-size: 16.5px; font-weight: 650; margin: 26px 0 10px; color: var(--text); }
+  .article p { margin: 0 0 14px; color: var(--text-2); }
+  .article strong { color: var(--text); font-weight: 650; }
+  .article a { color: var(--accent); text-decoration: none; }
+  .article a:hover { text-decoration: underline; }
+  .article ul, .article ol { margin: 0 0 16px; padding-left: 22px; color: var(--text-2); }
+  .article li { margin: 6px 0; }
+  .article code { font-family: var(--font-mono); font-size: 13px; background: var(--card-2); border: 1px solid var(--border); border-radius: 3px; padding: 1px 6px; color: var(--text); }
+  .article pre { background: var(--card-2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px 16px; margin: 14px 0 18px; overflow-x: auto; }
+  .article pre code { background: none; border: none; padding: 0; font-size: 12.5px; line-height: 1.7; }
+  .article table { width: 100%; border-collapse: collapse; margin: 18px 0 22px; font-size: 13.5px; background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-sm); overflow: hidden; }
+  .article th, .article td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--border); }
+  .article th { background: var(--card-2); color: var(--text); font-weight: 650; white-space: nowrap; }
+  .article td { color: var(--text-2); }
+  .article tr:last-child td { border-bottom: none; }
+  .toc { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 18px; margin: 20px 0 8px; box-shadow: var(--shadow-sm); }
+  .toc-title { font-size: 13px; font-weight: 650; color: var(--text); margin: 0 0 10px; }
+  .toc ol { margin: 0; padding-left: 20px; font-size: 13.5px; }
+  .toc li { margin: 5px 0; }
+  .toc a { color: var(--text-2); text-decoration: none; }
+  .toc a:hover { color: var(--accent); }
+  .cta-box { background: linear-gradient(135deg, var(--accent-soft), var(--accent-soft-2)); border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent); border-radius: var(--radius); padding: 20px 22px; margin: 34px 0 10px; text-align: center; }
+  .cta-box .cta-title { font-size: 17px; font-weight: 700; color: var(--text); margin: 0 0 6px; }
+  .cta-box .cta-sub { font-size: 13.5px; color: var(--text-2); margin: 0 0 14px; }
+  .cta-btn { display: inline-block; background: var(--accent); color: #fff; text-decoration: none; font-size: 14px; font-weight: 600; padding: 11px 26px; border-radius: var(--radius-sm); box-shadow: 0 6px 18px var(--accent-glow); transition: background .15s; }
+  .cta-btn:hover { background: var(--accent-hover); }
+  .article a.cta-btn, .article .cta-btn { color: #fff; text-decoration: none; }
+  .article a.cta-btn:hover { color: #fff; text-decoration: none; background: var(--accent-hover); }
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "公众号排版指南：微信为什么吃样式，怎么排才不跑版",
+  "description": "公众号排版完全指南：微信编辑器的样式白名单机制、内联样式为什么是唯一解、字号行距安全区间、图片与封面规范、引用块用法，以及 Markdown 转公众号排版的完整流程。",
+  "author": { "@type": "Organization", "name": "CATAITO", "url": "https://tools.cataito.com/" },
+  "publisher": { "@type": "Organization", "name": "CATAITO 工具箱", "url": "https://tools.cataito.com/" },
+  "datePublished": "2026-10-14",
+  "dateModified": "2026-10-14",
+  "inLanguage": ["zh-CN", "en"],
+  "mainEntityOfPage": "https://tools.cataito.com/guides/wechat-format-guide/"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    { "@type": "Question", "name": "公众号排版可以用 class 吗？",
+      "acceptedAnswer": { "@type": "Answer", "text": "不可以。公众号编辑器保存时会剥掉 class 属性和 style 标签里的规则，只保留直接写在标签上的内联 style。所以哪怕你在自己的网页里排版得再漂亮，粘过去也会全部消失——样式必须逐个元素写在 style 属性里。" } },
+    { "@type": "Question", "name": "为什么手机端看着刚好，电脑端很挤？",
+      "acceptedAnswer": { "@type": "Answer", "text": "公众号正文宽度是百分比自适应的，同一段文字在手机上是 15px 一行约 20 字，在电脑端会摊到 677px 宽、一行约 45 字，行长超过 40 个汉字就会串行。解决办法是提高行高到 1.75 以上并加大段后距，而不是缩小字号。" } },
+    { "@type": "Question", "name": "正文图片可以直接从电脑粘贴吗？",
+      "acceptedAnswer": { "@type": "Answer", "text": "不能。粘贴本地图片不会自动上传，公众号只认素材库里已有的公网地址。正确顺序是先在公众号后台上传图片到素材库，再在正文里插入；本地路径和临时链接都会显示为空白。" } },
+    { "@type": "Question", "name": "封面图应该做多大？",
+      "acceptedAnswer": { "@type": "Answer", "text": "分享封面建议 1200×630（1.91:1），体积控制在 300KB 以内；公众号信息流的头图另有一套裁剪比例，重要文字要放在画面中央的安全区内，避免被裁掉。" } },
+    { "@type": "Question", "name": "Markdown 表格粘过去会散吗？",
+      "acceptedAnswer": { "@type": "Answer", "text": "直接用 Markdown 语法生成的表格依赖 border-collapse 等属性，粘进公众号容易散架。稳妥做法是用支持表格插入的工具生成带内联边框样式的表格，列数控制在 4 列以内，手机端才不会挤成一团。" } },
+    { "@type": "Question", "name": "排版后怎么检查有没有跑版？",
+      "acceptedAnswer": { "@type": "Answer", "text": "别只看编辑器预览。用公众号的「预览」功能发到自己的手机上看一遍，重点检查标题层级是否清晰、行距是否够、引用块配色是否被吃掉、表格是否散列、图片是否显示。" } }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "首页", "item": "https://tools.cataito.com/" },
+    { "@type": "ListItem", "position": 2, "name": "使用指南", "item": "https://tools.cataito.com/guides/" },
+    { "@type": "ListItem", "position": 3, "name": "公众号排版指南", "item": "https://tools.cataito.com/guides/wechat-format-guide/" }
+  ]
+}
+</script>
+</head>
+<body>
+<div id="site-header"></div>
+<main class="site-main">
+  <div class="guide-wrap">
+    <nav class="breadcrumb"><a href="/" data-i18n="crumb_home">首页</a><span class="sep">/</span><a href="/guides/" data-i18n="nav_guides">指南</a><span class="sep">/</span><span data-i18n="gd_wxf_short">公众号排版指南</span></nav>
+    <p class="guide-meta"><span data-i18n="gd_published">发布于</span> 2026-10-14 · CATAITO</p>
+    <h1 class="page-h1" data-i18n="gd_wxf_h1">公众号排版完全指南：微信为什么吃样式，怎么排才不跑版</h1>
+    <p class="page-sub" data-i18n="gd_wxf_sub">从公众号编辑器的样式白名单讲起，说清内联样式为什么是唯一解、字号行距的安全区间、图片与引用块的规范，以及 Markdown 转公众号排版的完整流程。</p>
+
+    <div class="article lb-zh" id="zh">
+
+    <div class="toc">
+      <p class="toc-title">目录</p>
+      <ol>
+        <li><a href="#s1">微信编辑器为什么「吃样式」</a></li>
+        <li><a href="#s2">内联 style 是唯一解</a></li>
+        <li><a href="#s3">字号、行距与段距的安全值</a></li>
+        <li><a href="#s4">图片与封面的硬性规范</a></li>
+        <li><a href="#s5">引用块、提示框与表格</a></li>
+        <li><a href="#s6">Markdown 转公众号：完整流程</a></li>
+        <li><a href="#s7">跑版排查清单</a></li>
+      </ol>
+    </div>
+      <h2 id="s1">一、微信编辑器为什么「吃样式」</h2>
+      <p>公众号后台的编辑器不是富文本的天堂，而是一个<strong>白名单过滤器</strong>。它在你保存草稿的那一刻，会把不符合规则的东西全部剥掉：</p>
+      <ul>
+        <li><strong><code>&lt;style&gt;</code> 标签</strong>：整块删除，你在里面写的规则一条都不剩。</li>
+        <li><strong><code>class</code> 属性</strong>：删除。因为样式表已经不在了，class 指向的是空气。</li>
+        <li><strong><code>id</code>、<code>&lt;script&gt;</code>、<code>&lt;iframe&gt;</code>、外部字体</strong>：一律删除，属于安全与性能的硬性限制。</li>
+        <li><strong>写在标签上的 <code>style="..."</code></strong>：保留。这是唯一活下来的通道。</li>
+      </ul>
+      <p>理解了这条，就理解了公众号排版的全部难点：<strong>你不是在设计网页，你是在为每一个元素手写内联样式</strong>。手工做这件事极其枯燥，这也是为什么值得用工具把主题一次性压平。</p>
+
+      <h2 id="s2">二、内联 style 是唯一解</h2>
+      <p>一个能活着进公众号的段落长这样：</p>
+      <pre><code>&lt;p style="font-size:16px;line-height:1.75;margin:0 0 14px;color:#3f3f3f;">
+  正文内容
+&lt;/p&gt;</code></pre>
+      <p>而一个会死掉的段落长这样：</p>
+      <pre><code>&lt;p class="article-body"&gt;正文内容&lt;/p&gt;</code></pre>
+      <p>两者的区别不在视觉效果，而在<strong>样式写在哪</strong>。因此判断一个排版工具能不能用，只需要看一件事：导出结果里每个标签是否都自带 <code>style</code>，以及是否残留 <code>class</code>。本站的<a href="/wechat-format/">公众号排版工具</a>导出的是 0 个 class、每个元素都带内联样式，就是按这条标准做的。</p>
+
+      <h2 id="s3">三、字号、行距与段距的安全值</h2>
+      <p>公众号正文宽度是百分比自适应的：手机约 375px，电脑端会摊到 677px。同一份排版在两端观感差别很大，安全区间如下：</p>
+      <table>
+        <thead><tr><th>元素</th><th>建议值</th><th>为什么</th></tr></thead>
+        <tbody>
+          <tr><td>正文字号</td><td>15–16px</td><td>小于 14px 在手机端费力，大于 17px 在电脑端显得幼稚</td></tr>
+          <tr><td>行高</td><td>1.75–1.8</td><td>电脑端一行可达 45 字，行高不够就会串行</td></tr>
+          <tr><td>段后距</td><td>14px 左右</td><td>小于 10px 段落粘连，大于 20px 显得松散</td></tr>
+          <tr><td>一级标题</td><td>20–22px</td><td>超过 22px 在小屏会折成两三行，压垮节奏</td></tr>
+          <tr><td>二级标题</td><td>17–19px</td><td>与正文至少差 2px，否则层级读不出来</td></tr>
+          <tr><td>字色</td><td>不用纯黑</td><td><code>#3f3f3f</code> 一类深灰在大面积正文里更耐读</td></tr>
+        </tbody>
+      </table>
+      <p><strong>新手最常见的错误</strong>是同时把字号调大、行距调小，结果手机端一行只剩 15 字却挤在一起。行长和行高必须一起考虑。</p>
+
+      <h2 id="s4">四、图片与封面的硬性规范</h2>
+      <p>图片是公众号唯一「必须经过服务器」的元素，规则也最硬：</p>
+      <ul>
+        <li><strong>不能本地粘贴</strong>：粘贴本地图片不会自动上传，公众号只认素材库里的公网地址。先传素材库，再插入。</li>
+        <li><strong>分享封面 1200×630</strong>（1.91:1），体积控制在 300KB 以内；信息流头图另有裁剪比例，关键文字放中央安全区。</li>
+        <li><strong>GIF 有体积上限</strong>，长图会被压缩到糊；需要长图时优先用多张分段图代替。</li>
+        <li><strong>上传前先压</strong>：用<a href="/compress/">图片压缩</a>把体积压到位，再用<a href="/resize/">裁剪与缩放</a>统一宽度，能显著减少后台上传失败与加载缓慢。</li>
+      </ul>
+
+      <h2 id="s5">五、引用块、提示框与表格</h2>
+      <p>引用块（<code>&gt;</code>）在公众号里是最容易做出层次感的元素。常见用法是把它当提示框：把 <code>【!TIP】</code>、<code>【!WARNING】</code>、<code>【!DANGER】</code> 写在引用行首，排版工具会换成不同配色的提示框，读者一眼能分辨「建议 / 注意 / 危险」。</p>
+      <p>三条经验：</p>
+      <ul>
+        <li>提示框<strong>不要嵌套</strong>，也不要连着放三个以上，否则整篇都在喊话，等于没有重点。</li>
+        <li>引用块里的文字建议不超过 3 行，长了改用正文加粗。</li>
+        <li>表格<strong>列数控制在 4 列以内</strong>；Markdown 原生表格依赖 <code>border-collapse</code> 等属性，粘过去容易散架，必须转成带内联边框样式的表格。</li>
+      </ul>
+
+      <h2 id="s6">六、Markdown 转公众号：完整流程</h2>
+      <ol>
+        <li><strong>用 Markdown 写内容</strong>：只关心结构——标题层级、列表、引用、表格、代码块，不要在源文里写任何样式。</li>
+        <li><strong>选一套主题</strong>：字号、行距、配色、标题装饰一次定下来。同一账号固定一套，别每篇换风格。</li>
+        <li><strong>图片先传素材库</strong>，在正文里用公网地址引用。</li>
+        <li><strong>一键复制</strong>：导出时把主题压成内联样式，直接粘进公众号编辑器。</li>
+        <li><strong>发到手机预览一遍再群发</strong>：编辑器预览不等于手机端效果。</li>
+      </ol>
+
+      <h2 id="s7">七、跑版排查清单</h2>
+      <p>按命中率从高到低检查：</p>
+      <ol>
+        <li>样式是不是写在 class 或 <code>&lt;style&gt;</code> 里 → 改成内联。</li>
+        <li>行高是否低于 1.7 → 电脑端会串行。</li>
+        <li>标题是否超过 22px → 小屏折行。</li>
+        <li>图片是否用了本地路径 → 显示空白。</li>
+        <li>表格是否超过 4 列 → 手机端挤散。</li>
+        <li>是否用了外部字体 → 公众号不支持，会回退默认字体。</li>
+      </ol>
+
+      <div class="cta-box">
+        <p class="cta-title">公众号排版工具</p>
+        <p class="cta-sub">Markdown 编辑即时预览 · 20 套主题 · 样式自动内联 · 纯浏览器本地处理</p>
+        <a class="cta-btn" href="/wechat-format/">立即使用 →</a>
+      </div>
+    </div>
+
+    <div class="article lb-en" id="en">
+
+    <div class="toc">
+      <p class="toc-title">Table of Contents</p>
+      <ol>
+        <li><a href="#s1">Why the WeChat editor eats your styles</a></li>
+        <li><a href="#s2">Inline style is the only answer</a></li>
+        <li><a href="#s3">Safe type sizes, line heights and spacing</a></li>
+        <li><a href="#s4">Hard rules for images and covers</a></li>
+        <li><a href="#s5">Blockquotes, callouts and tables</a></li>
+        <li><a href="#s6">Markdown to WeChat: the full workflow</a></li>
+        <li><a href="#s7">Troubleshooting checklist</a></li>
+      </ol>
+    </div>
+      <h2>1. Why the WeChat editor eats your styles</h2>
+      <p>The WeChat MP editor is not a rich-text playground — it is an <strong>allow-list filter</strong>. The moment you save, it strips everything that fails its rules:</p>
+      <ul>
+        <li><strong><code>&lt;style&gt;</code> blocks</strong>: deleted entirely. Not one rule survives.</li>
+        <li><strong><code>class</code> attributes</strong>: deleted — and with the stylesheet gone, a class points at nothing.</li>
+        <li><strong><code>id</code>, <code>&lt;script&gt;</code>, <code>&lt;iframe&gt;</code>, web fonts</strong>: all removed for security and performance reasons.</li>
+        <li><strong><code>style="..."</code> on the tag itself</strong>: kept. This is the only channel that survives.</li>
+      </ul>
+      <p>Once you get that, you understand the whole difficulty of WeChat typesetting: <strong>you are not designing a web page, you are hand-writing inline styles for every element.</strong> That is exactly why a tool worth using should flatten a theme for you in one click.</p>
+
+      <h2>2. Inline style is the only answer</h2>
+      <p>A paragraph that survives looks like this:</p>
+      <pre><code>&lt;p style="font-size:16px;line-height:1.75;margin:0 0 14px;color:#3f3f3f;"&gt;
+  body text
+&lt;/p&gt;</code></pre>
+      <p>A paragraph that dies looks like this:</p>
+      <pre><code>&lt;p class="article-body"&gt;body text&lt;/p&gt;</code></pre>
+      <p>The difference is not visual — it is <strong>where the style lives</strong>. So to judge any formatting tool, check one thing only: does every tag in the export carry its own <code>style</code>, and is <code>class</code> gone? The <a href="/wechat-format/">WeChat formatter</a> on this site exports zero classes and inline styles on every element, which is the standard it was built to.</p>
+
+      <h2>3. Safe type sizes, line heights and spacing</h2>
+      <p>WeChat body width is fluid: about 375px on a phone, up to 677px on desktop. The same layout reads very differently on each. Safe ranges:</p>
+      <table>
+        <thead><tr><th>Element</th><th>Safe value</th><th>Why</th></tr></thead>
+        <tbody>
+          <tr><td>Body size</td><td>15–16px</td><td>Under 14px strains on phones; over 17px looks childish on desktop</td></tr>
+          <tr><td>Line height</td><td>1.75–1.8</td><td>Desktop lines reach 45 characters — anything tighter causes line drift</td></tr>
+          <tr><td>Paragraph gap</td><td>~14px</td><td>Below 10px paragraphs merge; above 20px the text feels loose</td></tr>
+          <tr><td>H1</td><td>20–22px</td><td>Over 22px wraps to two or three lines on small screens</td></tr>
+          <tr><td>H2</td><td>17–19px</td><td>Keep at least 2px above body size or the hierarchy disappears</td></tr>
+          <tr><td>Text colour</td><td>Not pure black</td><td>Dark grey such as <code>#3f3f3f</code> is easier on long runs</td></tr>
+        </tbody>
+      </table>
+      <p><strong>The most common beginner mistake</strong> is raising the font size while shrinking the line height — a phone then shows 15 cramped characters per line. Line length and line height have to be decided together.</p>
+
+      <h2>4. Hard rules for images and covers</h2>
+      <p>Images are the one element that must go through a server, so the rules are strict:</p>
+      <ul>
+        <li><strong>No pasting from disk</strong>: local images are not uploaded automatically, and WeChat only accepts addresses already in its media library. Upload first, then insert.</li>
+        <li><strong>Share cover 1200×630</strong> (1.91:1), under 300KB. The feed thumbnail uses a different crop, so keep key text inside a central safe area.</li>
+        <li><strong>GIFs have a size ceiling</strong> and long screenshots get crushed; split them into several images instead.</li>
+        <li><strong>Optimise before uploading</strong>: compress with the <a href="/compress/">image compressor</a> and normalise width with the <a href="/resize/">cropper</a> to cut upload failures and slow loads.</li>
+      </ul>
+
+      <h2>5. Blockquotes, callouts and tables</h2>
+      <p>The blockquote (<code>&gt;</code>) is the easiest way to add hierarchy in WeChat. A common pattern is to treat it as a callout: write <code>【!TIP】</code>, <code>【!WARNING】</code> or <code>【!DANGER】</code> at the start of the line and the tool swaps in matching colours, so readers instantly see advice versus warning versus danger.</p>
+      <ul>
+        <li>Do <strong>not nest</strong> callouts or stack more than three — if everything shouts, nothing is important.</li>
+        <li>Keep callouts to three lines; longer thoughts belong in bold body text.</li>
+        <li>Keep tables to <strong>four columns or fewer</strong>. Native Markdown tables rely on <code>border-collapse</code> and fall apart on paste; convert them into tables with inline border styles.</li>
+      </ul>
+
+      <h2>6. Markdown to WeChat: the full workflow</h2>
+      <ol>
+        <li><strong>Write in Markdown</strong>: structure only — headings, lists, quotes, tables, code. No styling in the source.</li>
+        <li><strong>Pick one theme</strong>: size, line height, palette and heading decoration in a single decision. Keep it consistent per account.</li>
+        <li><strong>Upload images to the media library first</strong>, then reference them by public URL.</li>
+        <li><strong>Copy in one click</strong>: the theme is flattened into inline styles on export.</li>
+        <li><strong>Preview on your phone before publishing</strong>: the editor preview is not the phone result.</li>
+      </ol>
+
+      <h2>7. Troubleshooting checklist</h2>
+      <ol>
+        <li>Styles living in a class or <code>&lt;style&gt;</code> block → move them inline.</li>
+        <li>Line height under 1.7 → lines drift on desktop.</li>
+        <li>Headings over 22px → they wrap on small screens.</li>
+        <li>Local image paths → blank images.</li>
+        <li>Tables over four columns → crushed on phones.</li>
+        <li>Web fonts → unsupported, WeChat falls back to its default face.</li>
+      </ol>
+
+      <div class="cta-box">
+        <p class="cta-title">WeChat Article Formatter</p>
+        <p class="cta-sub">Live Markdown preview · 20 themes · styles inlined automatically · runs fully in your browser</p>
+        <a class="cta-btn" href="/wechat-format/">Open the tool →</a>
+      </div>
+    </div>
+
+    <h2 class="sr-only" data-i18n="related_guides">相关指南</h2>
+    <div class="t-guide-links">
+      <a class="t-guide-link" href="/meta-tags/"><span data-i18n="mt_name">Meta Tag 生成</span><span class="t-guide-link-desc" data-i18n="mt_desc">填写标题、描述、链接与图片，实时预览微信 / Twitter 分享卡片效果。</span></a>
+      <a class="t-guide-link" href="/guides/meta-tags-guide/"><span data-i18n="gd_mtg_short">Meta 标签与社交分享指南</span><span class="t-guide-link-desc" data-i18n="gd_mtg_card_desc">og:image 1200×630 规范、标题描述长度、调试器与缓存刷新方法。</span></a>
+      <a class="t-guide-link" href="/guides/image-compression-guide/"><span data-i18n="gd_comp_short">图片压缩指南</span><span class="t-guide-link-desc" data-i18n="gd_comp_card_desc">JPG、PNG、WebP 三种格式怎么选、质量参数怎么调。</span></a>
+      <a class="t-guide-link" href="/guides/word-count-guide/"><span data-i18n="gd_wc_short">字数统计与写作时长估算</span><span class="t-guide-link-desc" data-i18n="gd_wc_card_desc">字符、词、句、段的统计口径与阅读朗读时长估算。</span></a>
+    </div>
+  </div>
+</main>
+
+<div id="site-footer"></div>
+<script src="/assets/js/site.js" defer></script>
+</body>
+</html>

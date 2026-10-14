@@ -26,7 +26,7 @@
     var h = document.documentElement;
     if (theme === 'dark') h.classList.add('dark'); else h.classList.remove('dark');
     var meta = document.querySelector('meta[name="theme-color"]');
-    if (meta) meta.setAttribute('content', theme === 'dark' ? '#15130f' : '#f6f3ec');
+    if (meta) meta.setAttribute('content', theme === 'dark' ? '#0a0a0a' : '#ffffff');
   }
   function fire() {
     try {
@@ -40,7 +40,15 @@
 
   window.CATAITO_THEME = {
     get: function () { return current; },
+    /* 用户偏好：'auto'（未显式选择，跟随系统）| 'light' | 'dark' */
+    pref: function () { return stored() || 'auto'; },
     set: function (t) {
+      if (t === 'auto') {
+        try { localStorage.removeItem(STORE); localStorage.removeItem(LEGACY); } catch (e) {}
+        apply(sysDark() ? 'dark' : 'light');
+        fire();
+        return;
+      }
       if (t !== 'light' && t !== 'dark') return;
       try { localStorage.setItem(STORE, t); } catch (e) {}
       apply(t);

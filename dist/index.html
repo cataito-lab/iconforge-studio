@@ -73,7 +73,8 @@
     { "@type": "ListItem", "position": 18, "item": { "@type": "SoftwareApplication", "name": "Text Diff Checker", "applicationCategory": "DeveloperApplication", "operatingSystem": "Any", "url": "https://tools.cataito.com/text/diff/", "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" } } },
     { "@type": "ListItem", "position": 19, "item": { "@type": "SoftwareApplication", "name": "SHA Checksum Tool", "applicationCategory": "UtilityApplication", "operatingSystem": "Any", "url": "https://tools.cataito.com/text/checksum/", "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" } } },
     { "@type": "ListItem", "position": 20, "item": { "@type": "SoftwareApplication", "name": "Base64 URL Encoder Decoder", "applicationCategory": "DeveloperApplication", "operatingSystem": "Any", "url": "https://tools.cataito.com/text/base64/", "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" } } },
-    { "@type": "ListItem", "position": 21, "item": { "@type": "SoftwareApplication", "name": "Unix Timestamp Converter", "applicationCategory": "DeveloperApplication", "operatingSystem": "Any", "url": "https://tools.cataito.com/text/timestamp/", "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" } } }
+    { "@type": "ListItem", "position": 21, "item": { "@type": "SoftwareApplication", "name": "Unix Timestamp Converter", "applicationCategory": "DeveloperApplication", "operatingSystem": "Any", "url": "https://tools.cataito.com/text/timestamp/", "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" } } },
+    { "@type": "ListItem", "position": 22, "item": { "@type": "SoftwareApplication", "name": "WeChat Article Formatter", "applicationCategory": "UtilityApplication", "operatingSystem": "Any", "url": "https://tools.cataito.com/wechat-format/", "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" } } }
   ]
 }
 </script>
@@ -112,7 +113,7 @@
     {
       "@type": "Question",
       "name": "目前提供哪些工具？",
-      "acceptedAnswer": { "@type": "Answer", "text": "目前提供图标工坊 IconForge、Favicon 生成器、图片压缩、配色 / 调色板、图片格式转换、图片裁剪与缩放、对比度检查、二维码生成、条形码生成、图片加水印、CSS 渐变、密码生成器、Meta 标签、JSON 格式化、字数统计、UUID 生成、图片转 PDF、文本对比、SHA 校验和、Base64 编解码、时间戳转换二十一类工具，均为纯前端实现，后续还会持续增加。" }
+      "acceptedAnswer": { "@type": "Answer", "text": "目前提供图标工坊 IconForge、Favicon 生成器、图片压缩、配色 / 调色板、图片格式转换、图片裁剪与缩放、对比度检查、二维码生成、条形码生成、图片加水印、CSS 渐变、密码生成器、Meta 标签、JSON 格式化、字数统计、UUID 生成、图片转 PDF、文本对比、SHA 校验和、Base64 编解码、时间戳转换、公众号排版二十二类工具，均为纯前端实现，后续还会持续增加。" }
     }
   ]
 }
@@ -238,6 +239,8 @@
     <a class="tool-card" href="/text/base64/">
       <div class="tool-card__top"><span class="tool-card__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3 5 21M16 3l-3 18M4 9h17M3 15h17"/></svg></span><h3 class="tool-card__name" data-i18n="home_tool_b64">Base64 编解码</h3></div><p class="tool-card__desc" data-i18n="home_tool_b64_desc"></p><div class="tool-card__foot"><span class="tool-card__go" data-i18n="use_tool">使用工具 →</span></div></a>
     <a class="tool-card" href="/text/timestamp/">
+    <a class="tool-card" href="/wechat-format/">
+      <div class="tool-card__top"><span class="tool-card__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h14v16H5z"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></span><h3 class="tool-card__name" data-i18n="home_tool_wxf">公众号排版</h3></div><p class="tool-card__desc" data-i18n="home_tool_wxf_desc">Markdown 编辑即时预览，20 套主题一键切换，样式自动内联，复制到公众号不跑版。</p><div class="tool-card__foot"><span class="tool-card__go" data-i18n="use_tool">使用工具 →</span></div></a>
       <div class="tool-card__top"><span class="tool-card__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></span><h3 class="tool-card__name" data-i18n="home_tool_ts">时间戳转换</h3></div><p class="tool-card__desc" data-i18n="home_tool_ts_desc"></p><div class="tool-card__foot"><span class="tool-card__go" data-i18n="use_tool">使用工具 →</span></div></a>
   </div>
 
@@ -331,7 +334,7 @@
       </div>
       <div class="faq-item">
         <h3 class="faq-q" data-i18n="hf_faq_3_q">目前提供哪些工具？</h3>
-        <p class="faq-a" data-i18n="hf_faq_3_a">目前提供图标工坊 IconForge、Favicon 生成器、图片压缩、配色 / 调色板、图片格式转换、图片裁剪与缩放、对比度检查、二维码生成、条形码生成、图片加水印、CSS 渐变、密码生成器、Meta 标签、JSON 格式化、字数统计、UUID 生成、图片转 PDF、文本对比、SHA 校验和、Base64 编解码、时间戳转换二十一类工具，均为纯前端实现，后续还会持续增加。</p>
+        <p class="faq-a" data-i18n="hf_faq_3_a">目前提供图标工坊 IconForge、Favicon 生成器、图片压缩、配色 / 调色板、图片格式转换、图片裁剪与缩放、对比度检查、二维码生成、条形码生成、图片加水印、CSS 渐变、密码生成器、Meta 标签、JSON 格式化、字数统计、UUID 生成、图片转 PDF、文本对比、SHA 校验和、Base64 编解码、时间戳转换、公众号排版二十二类工具，均为纯前端实现，后续还会持续增加。</p>
       </div>
     </div>
   </section>

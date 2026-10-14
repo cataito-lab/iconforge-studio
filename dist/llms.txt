@@ -25,6 +25,7 @@ CATAITO（tools.cataito.com）是一个 100% 免费、隐私优先的在线工�
 - SHA 校验和 — 文件/文本的 SHA-256 等哈希计算，一键比对期望值：https://tools.cataito.com/text/checksum/
 - Base64 编解码 — Base64 与 URL 编码双向转换，UTF-8 中文安全：https://tools.cataito.com/text/base64/
 - 时间戳转换 — 当前 Unix 时间戳实时显示，秒/毫秒与日期双向互转：https://tools.cataito.com/text/timestamp/
+- 公众号排版 — Markdown 编辑即时预览，20 套主题，样式自动内联，复制到公众号不跑版：https://tools.cataito.com/wechat-format/
 
 ## 使用指南
 - ICO 文件完全指南：https://tools.cataito.com/guides/ico-file-guide/
@@ -52,6 +53,7 @@ CATAITO（tools.cataito.com）是一个 100% 免费、隐私优先的在线工�
 - SHA-256 校验和验证指南：https://tools.cataito.com/guides/checksum-guide/
 - Base64 与 URL 编码指南：https://tools.cataito.com/guides/base64-guide/
 - Unix 时间戳指南：https://tools.cataito.com/guides/timestamp-guide/
+- 公众号排版完全指南：https://tools.cataito.com/guides/wechat-format-guide/
 
 ## 关于本站
 - 关于 CATAITO：https://tools.cataito.com/about/

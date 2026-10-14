@@ -1,6 +1,6 @@
 # Cataito Tools（tools.cataito.com）
 
-纯前端、零依赖、完全本地运行的在线工具站。已上线二十一个工具（三类别）+ 中英双语 SEO 指南，全部图像与文件处理在浏览器本地完成，**文件不会上传到任何服务器**。
+纯前端、零依赖、完全本地运行的在线工具站。已上线二十二个工具（三类别）+ 中英双语 SEO 指南，全部图像与文件处理在浏览器本地完成，**文件不会上传到任何服务器**。
 
 - 线上地址：<https://tools.cataito.com>
 - 仓库：<https://github.com/cataito-lab/iconforge-studio>（Cloudflare Pages 连接此仓库自动部署）
@@ -30,8 +30,9 @@
 | SHA 校验和 | `/text/checksum/` | 文件或文本的 SHA-256/384/512/1 哈希（Web Crypto 原生计算），粘贴期望值一键比对（自动忽略大小写/空格/冒号），验证下载完整性 |
 | Base64 编解码 | `/text/base64/` | Base64 与 URL（%）编码双向转换，UTF-8 中文安全（TextEncoder/TextDecoder），实时输出、结果回填、一键复制，错误智能提示 |
 | 时间戳转换 | `/text/timestamp/` | 当前 Unix 时间戳实时显示（秒/毫秒双显），10/13 位自动识别双向互转，本地时间/UTC/ISO 8601 一次给全，日期选择器反向转换 |
+| 公众号排版 | `/wechat-format/` | Markdown 编辑 + 实时预览，20 套排版主题一键切换；导出时把主题压成内联 style（0 个 class），复制到公众号编辑器不跑版。支持表格 / 代码块 / 引用提示框，草稿存本地 localStorage，全程浏览器本地处理 |
 
-另有二十五篇 SEO 使用指南（`/guides/`，中英双语）：ICO 文件完全指南、Favicon 完全指南、暗色图标设计指南、图片压缩指南、WebP 格式指南、配色原理指南、App 图标尺寸速查、PNG 转 ICO 指南、Favicon 不显示排查、透明背景图标指南、无障碍对比度指南、二维码扫不出来排查、条形码入门与打印、图片加水印、CSS 渐变设计、强密码、Meta 标签与社交分享、JSON 入门与实用技巧、字数统计与写作时长估算、UUID 版本选择与使用场景、JPG 转 PDF 指南、文本 diff 使用指南、SHA-256 校验和验证指南、Base64 与 URL 编码指南、Unix 时间戳指南。
+另有二十六篇 SEO 使用指南（`/guides/`，中英双语）：ICO 文件完全指南、Favicon 完全指南、暗色图标设计指南、图片压缩指南、WebP 格式指南、配色原理指南、App 图标尺寸速查、PNG 转 ICO 指南、Favicon 不显示排查、透明背景图标指南、无障碍对比度指南、二维码扫不出来排查、条形码入门与打印、图片加水印、CSS 渐变设计、强密码、Meta 标签与社交分享、JSON 入门与实用技巧、字数统计与写作时长估算、UUID 版本选择与使用场景、JPG 转 PDF 指南、文本 diff 使用指南、SHA-256 校验和验证指南、Base64 与 URL 编码指南、Unix 时间戳指南、公众号排版完全指南。
 
 ## 站点结构
 `dist/` 既是部署产物，也是站点源码（纯静态、零构建、零依赖）：
@@ -54,6 +55,7 @@ dist/
   text/checksum/index.html    # 工具十九：SHA 校验和（Web Crypto）
   text/base64/index.html      # 工具二十：Base64 / URL 编解码
   text/timestamp/index.html   # 工具二十一：Unix 时间戳转换
+  wechat-format/index.html    # 工具二十二：公众号排版（独立单文件工具并入，令牌收窄在 .wx-scope）
   image-tools/index.html      # 分类页：图片与设计工具（hub）
   text/index.html             # 分类页：文本与开发者工具（hub）
   pdf/index.html              # 分类页：PDF 工具（hub）
@@ -113,12 +115,14 @@ dist/
 > **设计语言约定**：① 主按钮 = 近黑实心（`var(--text)` 底），悬停转点缀蓝；次按钮 = 描边。② 点缀蓝只用于链接、主按钮、选中态，不大面积铺。③ 卡片 = 1px 边框 + 白底，hover 仅边框加深 + 轻投影，**无位移动画、无彩色光晕**。④ 首页工具区为**卡片网格**（三类别分组，区标题右侧带分类页入口）。⑤ 全站无装饰性噪点/印章/编号；等宽字体只用于功能性内容（哈希、时间戳、代码）。⑥ 新页面/新组件一律用令牌，**严禁硬编码色值/字体栈**。
 
 ### 国际化（中/英）
-- 词条放 `site.js` 的 `t()` 词典（全站唯一，1079 键）；HTML 用 `data-i18n` 属性标记
+- 词条放 `site.js` 的 `t()` 词典（全站唯一，1242 键，支持 `${var}` 插值）；HTML 用 `data-i18n` 属性标记
 - 动态文本监听 `cataito-lang-change` 事件刷新；URL 支持 `?lang=en`
 - **一个键只能定义一次**：JS 对象字面量后写覆盖先写，重复键会把正确译文静默盖掉
 - **`t()` 对缺失键返回空串**（不是返回键名），所以漏定义表现为内容凭空消失，而非裸 key
 - `applyI18n` 只处理 `data-i18n`（textContent）/ `data-i18n-html`（innerHTML）/ `-placeholder` / `-title` 四个属性；自造属性如 `data-i18n-label` 是死标记。`<option>` 要翻译直接用 `data-i18n`
 - **实体转义看走哪条路**：`data-i18n` 写的是 textContent，词典里必须用字面 `&` `<`（写 `&amp;` 会原样显示）；只有 `data-i18n-html` 才该用 HTML 实体
+- **JS 拼出来的文案走 `tx(key, 中文兜底, vars)`**：内联脚本里 innerHTML 拼出的面板、toast、动态卡片不在 `applyI18n` 管辖范围。`site.js` 是 `defer`，内联脚本执行时词典还没就位，所以 `tx()` 的兜底必须是中文实参而不是空串（首例 `/wechat-format/`，详见 HANDOVER.md 铁律 15）
+- **验收要真点开隐藏层**：`innerText` 不含 `display:none` 的模态、未展开的面板和瞬时 toast，"英文无 CJK"自检通过 ≠ 翻译完整
 
 ### 共享组件层（`.t-*`，三个工具页统一使用）
 `site.css` 里定义了一套工具页通用组件，**新增工具必须直接复用，不要在各页内联复制样式**：
