@@ -110,10 +110,9 @@ html.dark .wx-scope{
   -webkit-font-smoothing:antialiased;
   text-rendering:optimizeLegibility;
 }
-.wx-head{flex:none;padding:22px 26px 14px}
-.wx-head .breadcrumb{font-size:12.5px;color:var(--text-3, #8f8f8f)}
-.wx-head h1{font-size:26px;font-weight:700;letter-spacing:-.3px;margin-top:6px}
-.wx-head p{font-size:13.5px;color:#525252;margin-top:5px;line-height:1.6}
+.wx-head{flex:none;padding:13px 26px 11px}
+.wx-head .breadcrumb{font-size:12.5px;color:var(--text-3, #8f8f8f);display:flex;align-items:baseline;flex-wrap:wrap}
+.wx-head h1{display:inline;font-size:15px;font-weight:650;letter-spacing:-.1px;margin:0;color:var(--text)}
 button{font-family:inherit;border:none;background:none;color:inherit;cursor:pointer;}
 ::selection{background:var(--accent-soft);}
 /* 滚动条 */
@@ -506,11 +505,9 @@ html.lang-en #preview:empty::before{content:"Type Markdown on the right, or hit 
 <div id="site-header"></div>
 <div class="wx-scope">
 
-<!-- ===================== 页面头（全站标准 .t-head 语义） ===================== -->
+<!-- ===================== 页面头（面包屑与 h1 同行，把高度让给编辑区） ===================== -->
 <div class="wx-head">
-  <nav class="breadcrumb"><a href="/" data-i18n="crumb_home">首页</a><span class="sep">/</span><a href="/text/" data-i18n="nav_cat_text">文本与开发者</a><span class="sep">/</span><span data-i18n="wxf_crumb">公众号排版</span></nav>
-  <h1 data-i18n="wxf_name">公众号排版工具</h1>
-  <p data-i18n="wxf_page_sub">Markdown 编辑 · 20 套主题 · 复制到公众号不跑版</p>
+  <nav class="breadcrumb"><a href="/" data-i18n="crumb_home">首页</a><span class="sep">/</span><a href="/text/" data-i18n="nav_cat_text">文本与开发者</a><span class="sep">/</span><h1 data-i18n="wxf_name">公众号排版工具</h1></nav>
 </div>
 
 <!-- ===================== 顶部应用栏 ===================== -->
@@ -723,11 +720,11 @@ html.lang-en #preview:empty::before{content:"Type Markdown on the right, or hit 
       </div>
       <div class="help-section">
         <h4 data-i18n="wxf_help_syntax">支持语法</h4>
-        <p data-i18n-html="wxf_help_syn_p">标题 <span class="kbd">#</span>、加粗 <span class="kbd">**文字**</span>、斜体 <span class="kbd">*文字*</span>、删除线 <span class="kbd">~~文字~~</span>、行内代码 <span class="kbd">`code`</span>、引用 <span class="kbd">&gt;</span>、提示框 <span class="kbd">&gt; [!TIP]</span> <span class="kbd">[!WARNING]</span> <span class="kbd">[!DANGER]</span>、无序列表 <span class="kbd">-</span>、有序列表 <span class="kbd">1.</span>、表格 <span class="kbd">|</span>、代码块 <span class="kbd">```</span>、分割线 <span class="kbd">---</span>、链接与图片。</p>
+        <p data-i18n-html="wxf_help_syn_p">标题 <span class='kbd'>#</span>、加粗 <span class='kbd'>**文字**</span>、斜体 <span class='kbd'>*文字*</span>、删除线 <span class='kbd'>~~文字~~</span>、行内代码 <span class='kbd'>`code`</span>、引用 <span class='kbd'>&gt;</span>、提示框 <span class='kbd'>&gt; [!TIP]</span> <span class='kbd'>[!WARNING]</span> <span class='kbd'>[!DANGER]</span>、无序列表 <span class='kbd'>-</span>、有序列表 <span class='kbd'>1.</span>、表格 <span class='kbd'>|</span>、代码块 <span class='kbd'>```</span>、分割线 <span class='kbd'>---</span>、链接与图片。</p>
       </div>
       <div class="help-section">
         <h4 data-i18n="wxf_help_keys">快捷键</h4>
-        <p data-i18n-html="wxf_help_key_p"><span class="kbd">Ctrl / ⌘ + B</span> 加粗 &nbsp; <span class="kbd">Ctrl / ⌘ + I</span> 斜体 &nbsp; <span class="kbd">Ctrl / ⌘ + U</span> 下划线 &nbsp; <span class="kbd">Ctrl / ⌘ + S</span> 保存草稿</p>
+        <p data-i18n-html="wxf_help_key_p"><span class='kbd'>Ctrl / ⌘ + B</span> 加粗 &nbsp; <span class='kbd'>Ctrl / ⌘ + I</span> 斜体 &nbsp; <span class='kbd'>Ctrl / ⌘ + U</span> 下划线 &nbsp; <span class='kbd'>Ctrl / ⌘ + S</span> 保存草稿</p>
       </div>
       <div class="help-section">
         <h4 data-i18n="wxf_help_tips">小提示</h4>
@@ -793,10 +790,10 @@ html.lang-en #preview:empty::before{content:"Type Markdown on the right, or hit 
   <section class="t-card t-prose">
     <h2 data-i18n="wxf_how_h">怎么用</h2>
     <ol class="t-steps">
-      <li data-i18n-html="wxf_how_1"><strong>左边写 Markdown</strong>：支持标题、列表、引用、表格、代码块、图片、加粗斜体删除线；也可以点「示例文档」直接看一份全元素样例。</li>
-      <li data-i18n-html="wxf_how_2"><strong>右边选主题</strong>：20 套排版主题一键切换，标题层级、行距、段距、引用块配色都会同步；预览区还能直接手动改字，改完照样能复制。</li>
+      <li data-i18n-html="wxf_how_1"><strong>右边写 Markdown</strong>：支持标题、列表、引用、表格、代码块、图片、加粗斜体删除线；也可以点「示例」直接看一份全元素样例。</li>
+      <li data-i18n-html="wxf_how_2"><strong>左边预览、左边调</strong>：预览区上方的工具栏里点「排版风格」，20 套主题一键切换，标题层级、行距、段距、引用块配色都会同步；预览区还能直接手动改字，改完照样能复制。</li>
       <li data-i18n-html="wxf_how_3"><strong>一键复制到公众号</strong>：所有样式会写成内联 style，粘贴进公众号编辑器不跑版；也可以「复制 HTML」拿源码，或「下载 HTML」存成独立文件。</li>
-      <li data-i18n-html="wxf_how_4"><strong>草稿自动留存</strong>：Ctrl+S 或点保存键写入本地草稿箱，下次打开还在原处——全程 localStorage，不经过任何服务器。</li>
+      <li data-i18n-html="wxf_how_4"><strong>草稿自动留存</strong>：输入的内容边写边存在本机，下次打开还在原处；Ctrl+S 或点保存键可再另存一份到本地草稿箱，随时取回——全程 localStorage，不经过任何服务器。</li>
     </ol>
 
     <h2 data-i18n="wxf_faq_h">常见问题</h2>
@@ -808,16 +805,16 @@ html.lang-en #preview:empty::before{content:"Type Markdown on the right, or hit 
       <div class="t-faq-item"><h3 class="t-faq-q" data-i18n="wxf_faq_3_q">图片和封面怎么处理？</h3>
         <p class="t-faq-a" data-i18n="wxf_faq_3_a">正文图片必须先用公众号后台素材库上传得到公网地址，本地路径或临时链接在公众号里显示不出来。分享封面建议 1200×630，可以先用图片工具把尺寸和体积压到位再上传。</p></div>
       <div class="t-faq-item"><h3 class="t-faq-q" data-i18n="wxf_faq_4_q">字号和行距有安全值吗？</h3>
-        <p class="t-faq-a" data-i18n="wxf_faq_4_a">手机端正文 15-16px、行高 1.75-1.8、段后距 14px 最稳；标题别超过 22px，否则在小屏上会挤成两三行。20 套主题已经按这些区间调好，不需要自己试。</p></div>
+        <p class="t-faq-a" data-i18n="wxf_faq_4_a">手机端正文 15-16px、行高 1.8-2.0、段后距 14-20px 最稳；标题别超过 22px，否则在小屏上会挤成两三行。本工具 20 套主题实测正文 15-17px、行高 1.8-2.15、段后距 14-26px，其中 17 套落在上面的建议区间内；偏大的几套（极简留白段后距 26px、大字易读正文 17px）是刻意做的呼吸感与易读版，不用自己调。</p></div>
       <div class="t-faq-item"><h3 class="t-faq-q" data-i18n="wxf_faq_5_q">支持 Markdown 表格和代码块吗？</h3>
         <p class="t-faq-a" data-i18n="wxf_faq_5_a">支持。表格可以用「插入表格」设定行列数，代码块保留等宽字体与底色；两者都会被转成公众号能接受的表格 / 段落结构。</p></div>
     </div>
 
     <h2 data-i18n="related_guides">相关指南</h2>
     <div class="t-guide-links">
-      <a class="t-guide-link" href="/guides/wechat-format-guide/"><span data-i18n="gd_wxf_short">公众号排版完全指南</span><span class="t-guide-link-desc" data-i18n="gd_wxf_card_desc">微信为什么吃样式、内联样式原理、字号行距安全值、图片与引用块规范。</span></a>
-      <a class="t-guide-link" href="/text/char-count/"><span data-i18n="home_tool_txt_cc">字数统计</span><span class="t-guide-link-desc" data-i18n="cc_desc">排版前先统计字数与阅读时长，中英混合自动识别。</span></a>
-      <a class="t-guide-link" href="/meta-tags/"><span data-i18n="mt_name">Meta Tag 生成</span><span class="t-guide-link-desc" data-i18n="mt_desc">填写标题、描述、链接与图片，实时预览微信 / Twitter 分享卡片效果。</span></a>
+      <a class="t-guide-link" href="/guides/wechat-format-guide/"><span data-i18n="gd_wxf_short">公众号排版完全指南</span><span class="t-guide-link-desc" data-i18n="gd_wxf_card_desc">微信剥掉哪些样式、内联样式原理、字号行距安全值、图片与引用块规范、Markdown 转公众号完整流程。</span></a>
+      <a class="t-guide-link" href="/text/char-count/"><span data-i18n="home_tool_txt_cc">字数统计</span><span class="t-guide-link-desc" data-i18n="cc_desc">粘贴文本即可实时统计字符、词、句、段与阅读时长，中英文混合自动识别。纯浏览器本地处理，文本不上传。</span></a>
+      <a class="t-guide-link" href="/meta-tags/"><span data-i18n="mt_name">Meta Tag 生成</span><span class="t-guide-link-desc" data-i18n="mt_desc">填写标题、描述、链接与图片，实时预览微信 / Twitter 分享卡片效果，一键生成可复制的 Open Graph 与 Twitter Card 代码。</span></a>
     </div>
   </section>
 </main>

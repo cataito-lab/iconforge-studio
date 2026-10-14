@@ -121,7 +121,7 @@
 <div id="site-header"></div>
 <main class="site-main">
   <div class="guide-wrap">
-    <nav class="breadcrumb"><a href="/" data-i18n="crumb_home">首页</a><span class="sep">/</span><a href="/guides/" data-i18n="nav_guides">指南</a><span class="sep">/</span><span data-i18n="gd_wxf_short">公众号排版指南</span></nav>
+    <nav class="breadcrumb"><a href="/" data-i18n="crumb_home">首页</a><span class="sep">/</span><a href="/guides/" data-i18n="nav_guides">指南</a><span class="sep">/</span><span data-i18n="gd_wxf_short">公众号排版完全指南</span></nav>
     <p class="guide-meta"><span data-i18n="gd_published">发布于</span> 2026-10-14 · CATAITO</p>
     <h1 class="page-h1" data-i18n="gd_wxf_h1">公众号排版完全指南：微信为什么吃样式，怎么排才不跑版</h1>
     <p class="page-sub" data-i18n="gd_wxf_sub">从公众号编辑器的样式白名单讲起，说清内联样式为什么是唯一解、字号行距的安全区间、图片与引用块的规范，以及 Markdown 转公众号排版的完整流程。</p>
@@ -152,7 +152,7 @@
 
       <h2 id="s2">二、内联 style 是唯一解</h2>
       <p>一个能活着进公众号的段落长这样：</p>
-      <pre><code>&lt;p style="font-size:16px;line-height:1.75;margin:0 0 14px;color:#3f3f3f;">
+      <pre><code>&lt;p style="font-size:16px;line-height:1.85;margin:0 0 16px;color:#3f3f3f;">
   正文内容
 &lt;/p&gt;</code></pre>
       <p>而一个会死掉的段落长这样：</p>
@@ -165,8 +165,8 @@
         <thead><tr><th>元素</th><th>建议值</th><th>为什么</th></tr></thead>
         <tbody>
           <tr><td>正文字号</td><td>15–16px</td><td>小于 14px 在手机端费力，大于 17px 在电脑端显得幼稚</td></tr>
-          <tr><td>行高</td><td>1.75–1.8</td><td>电脑端一行可达 45 字，行高不够就会串行</td></tr>
-          <tr><td>段后距</td><td>14px 左右</td><td>小于 10px 段落粘连，大于 20px 显得松散</td></tr>
+          <tr><td>行高</td><td>1.8–2.0</td><td>电脑端一行可达 45 字，行高不够就会串行</td></tr>
+          <tr><td>段后距</td><td>14–20px</td><td>小于 10px 段落粘连，大于 20px 显得松散</td></tr>
           <tr><td>一级标题</td><td>20–22px</td><td>超过 22px 在小屏会折成两三行，压垮节奏</td></tr>
           <tr><td>二级标题</td><td>17–19px</td><td>与正文至少差 2px，否则层级读不出来</td></tr>
           <tr><td>字色</td><td>不用纯黑</td><td><code>#3f3f3f</code> 一类深灰在大面积正文里更耐读</td></tr>
@@ -245,7 +245,7 @@
 
       <h2>2. Inline style is the only answer</h2>
       <p>A paragraph that survives looks like this:</p>
-      <pre><code>&lt;p style="font-size:16px;line-height:1.75;margin:0 0 14px;color:#3f3f3f;"&gt;
+      <pre><code>&lt;p style="font-size:16px;line-height:1.85;margin:0 0 16px;color:#3f3f3f;"&gt;
   body text
 &lt;/p&gt;</code></pre>
       <p>A paragraph that dies looks like this:</p>
@@ -258,8 +258,8 @@
         <thead><tr><th>Element</th><th>Safe value</th><th>Why</th></tr></thead>
         <tbody>
           <tr><td>Body size</td><td>15–16px</td><td>Under 14px strains on phones; over 17px looks childish on desktop</td></tr>
-          <tr><td>Line height</td><td>1.75–1.8</td><td>Desktop lines reach 45 characters — anything tighter causes line drift</td></tr>
-          <tr><td>Paragraph gap</td><td>~14px</td><td>Below 10px paragraphs merge; above 20px the text feels loose</td></tr>
+          <tr><td>Line height</td><td>1.8–2.0</td><td>Desktop lines reach 45 characters — anything tighter causes line drift</td></tr>
+          <tr><td>Paragraph gap</td><td>14–20px</td><td>Below 10px paragraphs merge; above 20px the text feels loose</td></tr>
           <tr><td>H1</td><td>20–22px</td><td>Over 22px wraps to two or three lines on small screens</td></tr>
           <tr><td>H2</td><td>17–19px</td><td>Keep at least 2px above body size or the hierarchy disappears</td></tr>
           <tr><td>Text colour</td><td>Not pure black</td><td>Dark grey such as <code>#3f3f3f</code> is easier on long runs</td></tr>
@@ -312,10 +312,10 @@
 
     <h2 class="sr-only" data-i18n="related_guides">相关指南</h2>
     <div class="t-guide-links">
-      <a class="t-guide-link" href="/meta-tags/"><span data-i18n="mt_name">Meta Tag 生成</span><span class="t-guide-link-desc" data-i18n="mt_desc">填写标题、描述、链接与图片，实时预览微信 / Twitter 分享卡片效果。</span></a>
-      <a class="t-guide-link" href="/guides/meta-tags-guide/"><span data-i18n="gd_mtg_short">Meta 标签与社交分享指南</span><span class="t-guide-link-desc" data-i18n="gd_mtg_card_desc">og:image 1200×630 规范、标题描述长度、调试器与缓存刷新方法。</span></a>
-      <a class="t-guide-link" href="/guides/image-compression-guide/"><span data-i18n="gd_comp_short">图片压缩指南</span><span class="t-guide-link-desc" data-i18n="gd_comp_card_desc">JPG、PNG、WebP 三种格式怎么选、质量参数怎么调。</span></a>
-      <a class="t-guide-link" href="/guides/word-count-guide/"><span data-i18n="gd_wc_short">字数统计与写作时长估算</span><span class="t-guide-link-desc" data-i18n="gd_wc_card_desc">字符、词、句、段的统计口径与阅读朗读时长估算。</span></a>
+      <a class="t-guide-link" href="/meta-tags/"><span data-i18n="mt_name">Meta Tag 生成</span><span class="t-guide-link-desc" data-i18n="mt_desc">填写标题、描述、链接与图片，实时预览微信 / Twitter 分享卡片效果，一键生成可复制的 Open Graph 与 Twitter Card 代码。</span></a>
+      <a class="t-guide-link" href="/guides/meta-tags-guide/"><span data-i18n="gd_mtg_short">OG / Twitter Card 全解</span><span class="t-guide-link-desc" data-i18n="gd_mtg_card_desc">og:image 1200×630 规范、标题描述长度、调试器与缓存刷新方法、卡片不生效的常见原因全解。</span></a>
+      <a class="t-guide-link" href="/guides/image-compression-guide/"><span data-i18n="gd_comp_short">图片压缩指南</span><span class="t-guide-link-desc" data-i18n="gd_comp_card_desc">JPG、PNG、WebP 三种格式怎么选、质量参数怎么调、最长边限制的技巧，以及免费在线批量压缩图片（透明自动保留）。</span></a>
+      <a class="t-guide-link" href="/guides/word-count-guide/"><span data-i18n="gd_wc_short">字数统计与写作时长估算</span><span class="t-guide-link-desc" data-i18n="gd_wc_card_desc">中英文字数计算方式、阅读/朗读速度依据（wpm）、文体差异、常见写作目标、SEO 字数考量。</span></a>
     </div>
   </div>
 </main>

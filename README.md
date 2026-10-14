@@ -55,7 +55,7 @@ dist/
   text/checksum/index.html    # 工具十九：SHA 校验和（Web Crypto）
   text/base64/index.html      # 工具二十：Base64 / URL 编解码
   text/timestamp/index.html   # 工具二十一：Unix 时间戳转换
-  wechat-format/index.html    # 工具二十二：公众号排版（独立单文件工具并入，令牌收窄在 .wx-scope）
+  wechat-format/index.html    # 工具二十二：公众号排版（独立单文件工具并入，令牌收窄在 .wx-scope；h1 收进面包屑，页面头 74px 把高度让给编辑区）
   image-tools/index.html      # 分类页：图片与设计工具（hub）
   text/index.html             # 分类页：文本与开发者工具（hub）
   pdf/index.html              # 分类页：PDF 工具（hub）

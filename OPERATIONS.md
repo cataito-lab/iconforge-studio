@@ -36,6 +36,10 @@
 3. **取消文档级高度锁**：工具若用 `html,body{height:100%}` + `body{overflow:hidden}`（铁律 5 禁止），改成 `.wx-scope{height:calc(100vh - 64px);display:flex;flex-direction:column}` + `.workspace{flex:1;min-height:0}`，并在 ≤1080px 断点里把 `.wx-scope` 恢复成 `height:auto` 让页面自然流式。
 4. **不包 `DOMContentLoaded` 的例外**：若工具脚本里有被 HTML 内联 `on*` 属性引用的顶层函数（铁律 13），整体包进闭包会直接打断功能。此时**保持脚本原样不包**（`/wechat-format/` 就是这样：1900 行脚本裸放在 `</body>` 前）。不包闭包的代价是脚本内 JS 拼接的文案拿不到词典，用 §五·五 第 4 条的 `tx()` 现取现翻译解决——`site.js` 是 `defer`，内联脚本执行时词典还没就位，所以 `tx()` 必须带中文兜底实参，缺失时退回中文而不是退回空串。
 
+5. **编辑类工具不再套 `.t-head` 大块**：这类页面的首屏高度就是生产力。把 `<h1>` 直接做成面包屑的最后一项（`.wx-head h1{display:inline;font-size:15px}` + 容器 `padding:13px 26px 11px`），页面头从 118px 压到 74px，副标题删掉（其内容已在 `<meta name="description">` 与应用栏里）。**h1 仍在 DOM 里，SEO 不丢**，对应词条 `wxf_crumb` / `wxf_page_sub` 一并从词典删除。
+
+⚠️ **往列表里插块，必须插在整块之后**：`<a>` 的自动闭合规则是「遇到新的 `<a>` 开标签就结束当前 `<a>`」。把新卡片的开标签插到前一张卡片的开标签与内容之间，浏览器会立刻闭合前者——**前一张卡变成空壳，它的内容掉到卡片外面**，CSS 与 JS 都不报错，只有渲染出来才看得见（2026-10-14 首页与 `/text/` 都中了这一枪，是 Aaron 在线上发现的）。插完必须断言：`<a>` 开闭数量相等、无嵌套、每张 `.tool-card` 都能查到 `.tool-card__name`。
+
 ⚠️ **注入容器无类名**：`renderHeader/renderFooter` 只输出 `#site-header` / `#site-footer` 容器（内部是 `.site-header__inner` / `.site-footer__inner`），**顶栏/页脚样式必须写在 ID 上**——历史上写在 `.site-header` / `.site-footer` 类上导致吸顶和页脚样式从未生效（2026-09-05 修复）。
 
 ## 四、设计语言速览
@@ -61,6 +65,9 @@
 4. **JS 拼出来的文案走 `tx(key, 中文兜底, vars)`**——工具页内联脚本里自建的字符串（弹出菜单、toast、草稿卡片、外观提示）拿不到 `data-i18n`，一律包 `tx()`：`function tx(k,zh,vars){ const v=window.CATAITO_I18N&&CATAITO_I18N.t(k,vars); if(v) return v; /* 否则把 ${var} 填进中文兜底 */ }`。词典缺失时退中文、不退空串，所以加词条失败也不会白屏。占位符语法 `${name}` 与 `t(key, vars)` 一致。
 
 **验收口径**：英文模式下 `document.body.innerText` 不应出现 CJK——`html.lang-en .lb-zh{display:none}`，所以 innerText 天然排除中文正文块，残留即真漏翻（例外：语言切换按钮本身显示「中」，以及讲解中文概念的指南正文）。⚠️ **innerText 看不见隐藏层**：`display:none` 的模态框、`position:fixed` 未弹出的面板、瞬时 toast 全部不参与 innerText——`/wechat-format/` 首版就是这么漏掉整个帮助弹层和 14 个工具栏 tooltip。验收必须**真点开每一层**再读文本（`_cfp/wx_en_probe.js`：逐个点 `[data-tool]`、给 `.modal-mask` 加 `.show`、触发 toast，中英各跑一遍）。当前基线：**57 页中 54 页零残留**，3 页为刻意保留的中文（base64-guide 的「中」字节演示、word-count-guide 的字数规则、/wechat-format/ 的 20 套主题名 + 演示文档 24 行）。
+
+5. **静态兜底由词典反向生成**：`data-i18n*` 元素里的手写中文会与词典漂移（改了词典忘了改页面，反之亦然）。改完词典跑 `_cfp/sync_fallback.js <页面...>`，它把每个带 `data-i18n` / `-html` 元素的兜底文本按词典 `zh` 重写（textContent 类自动转义 `&<>`），并只报告实际改动的节点数。**不要手写兜底**。
+6. **文案里的方位、按钮名、数值一律实测**：`/wechat-format/` 首版「怎么用」写「左边写 Markdown、右边选主题」，实际工具是**左预览 / 右输入**，主题在左侧工具栏的「排版风格」里——写反了；「示例文档」按钮实名「示例」；FAQ 里「行高 1.75-1.8、段后距 14px」与 20 套主题实测值（正文 15-17px / 行高 1.8-2.15 / 段后距 14-26px，其中 17 套落在建议区间）不符。这类错误**任何自动化都查不出来**，只能对着代码量：grep 出全部方向词逐个核对，数值直接从 `THEME_BASE` 与 20 套 `over` 里跑数。指南里引用的区间也要与工具一致，否则读者一对照就发现自相矛盾。
 
 ## 六、数据与统计
 
