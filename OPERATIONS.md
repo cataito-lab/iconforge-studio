@@ -48,7 +48,7 @@
 - 指南 26：ico-file-guide、favicon-guide、dark-mode-icons、image-compression-guide、webp-guide、color-guide、app-icon-sizes、png-to-ico-guide、favicon-not-showing-guide、transparent-icon-guide、accessibility-contrast-guide、qr-not-scanning-guide、barcode-guide、watermark-guide、gradient-guide、password-guide、meta-tags-guide、json-guide、word-count-guide、uuid-guide、jpg-to-pdf-guide、text-diff-guide、checksum-guide、base64-guide、timestamp-guide、wechat-format-guide（均中英双语 `.lb-zh`/`.lb-en` 双块）
 - 信任页：about / privacy / contact + 404（noindex）
 
-**新增页面 checklist**：`sitemap.xml`（hreflang 三连 zh-CN/en/x-default + priority）→ `llms.txt` → guides 索引卡（如指南）→ `site.js` 词典（`gd_*` 键，**先 grep 键名确认不重复**）→ 相关工具页反向内链 → `<title>` 双语 meta + JSON-LD → **`<head>` 内 AdSense 验证脚本**（历史上 `/barcode/` 与新指南页都漏过这一项）。⚠️ 每新增一篇指南，首页「实用指南」区块（4 篇轮换 + 全部入口）与指南间互链网络也要同步评估（2026-09-05 B3 内链加固后建立的网络基线见 HANDOFF）。
+**新增页面 checklist**：`sitemap.xml`（hreflang 三连 zh-CN/en/x-default + priority，⚠️ **URL 结尾只能一个斜杠**——`/wechat-format//` 这种双斜杠与页面 canonical 不一致，会削弱规范信号）→ `llms.txt` → guides 索引卡（如指南）→ `site.js` 词典（`gd_*` 键，**先 grep 键名确认不重复**）→ 相关工具页反向内链 → `<title>` 双语 meta + JSON-LD → **`<head>` 内 AdSense 验证脚本**（历史上 `/barcode/` 与新指南页都漏过这一项）→ **`og:image` 四行静态块**（`og:image` + `og:image:width` + `og:image:height` + `twitter:image`；⚠️ 现仍缺 49 页，见下条待办——`site.js` 的 `bindOgImage()` 是运行时注入，社交与 AI 抓取器不执行 JS）。⚠️ 每新增一篇指南，首页「实用指南」区块（4 篇轮换 + 全部入口）与指南间互链网络也要同步评估（2026-09-05 B3 内链加固后建立的网络基线见 HANDOFF）。
 - sitemap 现共 **56 URL**（首页 + 22 工具 + `/image-tools/` `/text/` `/pdf/` 三个分类页 + about/privacy/contact + /guides/ + 26 指南）；首页工具区按「图片与设计 / 文本与开发者 / PDF 文档」三类别分组（分类页入口在区标题右侧）；guides 索引页收齐 26 卡。导航为短标签（`nav_*` 词典键），完整名称在页面 h1 与首页卡。
 
 ## 五·五、i18n 词典治理（2026-10-13 建立）
