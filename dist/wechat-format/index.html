@@ -6,12 +6,12 @@
 <title>公众号排版工具 — Markdown 转公众号 · 20 套主题免重排 | CATAITO</title>
 <meta name="title-zh" content="公众号排版工具 — Markdown 转公众号 · 20 套主题免重排 | CATAITO">
 <meta name="title-en" content="WeChat Official Account Formatter — Markdown to MP Article · 12 Themes | CATAITO">
-<meta name="description" content="免费在线公众号排版工具：Markdown 编辑即时预览，20 套排版主题一键切换，自动内联样式，复制到公众号编辑器不跑版。文章与图片全程在浏览器本地处理，不上传服务器。">
+<meta name="description" content="免费在线公众号排版工具：Markdown 编辑即时预览，20 套排版主题一键切换，自动内联样式，复制到公众号编辑器不跑版，长稿可开源码↔预览联动定位。文章与图片全程在浏览器本地处理，不上传服务器。">
 <meta name="theme-color" content="#ffffff">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="CATAITO 工具箱">
 <meta property="og:title" content="公众号排版工具 — Markdown 转公众号，20 套主题">
-<meta property="og:description" content="Markdown 编辑即时预览，一键复制到公众号编辑器不跑版，纯浏览器本地处理。">
+<meta property="og:description" content="Markdown 编辑即时预览，20 套主题一键切换，复制到公众号不跑版，可选源码↔预览联动定位，纯浏览器本地处理。">
 <meta property="og:url" content="https://tools.cataito.com/wechat-format/">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:locale:alternate" content="en_US">
@@ -21,7 +21,7 @@
 <meta name="twitter:image" content="https://tools.cataito.com/assets/img/og-image.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="公众号排版工具">
-<meta name="twitter:description" content="Markdown 转公众号排版，20 套主题，复制不跑版，纯本地处理。">
+<meta name="twitter:description" content="Markdown 转公众号排版，20 套主题，复制不跑版，可选联动定位，纯本地处理。">
 <link rel="icon" type="image/png" href="/assets/img/cataito-logo.png">
 <link rel="canonical" href="https://tools.cataito.com/wechat-format/">
 <link rel="stylesheet" href="/assets/css/site.css">
@@ -45,7 +45,7 @@
   "url": "https://tools.cataito.com/wechat-format/",
   "inLanguage": ["zh-CN", "en"],
   "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
-  "description": "免费在线公众号排版工具：Markdown 编辑即时预览，20 套排版主题一键切换，自动内联样式，复制到公众号编辑器不跑版。全程浏览器本地处理，文章不上传服务器。"
+  "description": "免费在线公众号排版工具：Markdown 编辑即时预览，20 套排版主题一键切换，自动内联样式，复制到公众号编辑器不跑版，长稿可开源码↔预览联动定位。全程浏览器本地处理，文章不上传服务器。"
 }
 </script>
 <script type="application/ld+json">
@@ -285,7 +285,14 @@ html.lang-en #preview:empty::before{content:"Type Markdown on the right, or hit 
 }
 .text-btn:hover{background:var(--accent-soft);}
 .text-btn.danger{color:#ff3b30;}
-.text-btn.danger:hover{background:rgba(255,59,48,.1);}
+.text-btn.danger:hover{background:rgba(255,59,48,.1);}/* 联动定位开关。开启态用中性灰而非强调色，与工具里其它「已设置」状态一致 */
+.text-btn.toggle{display:inline-flex;align-items:center;gap:7px;color:var(--text-2);}
+.tg-track{width:26px;height:15px;border-radius:999px;background:var(--border);position:relative;flex:none;transition:background .16s;}
+.tg-knob{position:absolute;top:2px;left:2px;width:11px;height:11px;border-radius:50%;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.28);transition:transform .16s cubic-bezier(.2,.9,.3,1.2);}
+.text-btn.toggle[aria-checked="true"]{color:var(--text);}
+.text-btn.toggle[aria-checked="true"] .tg-track{background:var(--text-3);}
+.text-btn.toggle[aria-checked="true"] .tg-knob{transform:translateX(11px);}
+
 #mdInput{
   flex:1;border:none;outline:none;resize:none;
   width:100%;padding:18px 18px 24px;
@@ -665,6 +672,10 @@ html.lang-en #preview:empty::before{content:"Type Markdown on the right, or hit 
     <div class="md-head">
       <span class="md-title" data-i18n="wxf_md_input">MARKDOWN 输入</span>
       <span class="spacer"></span>
+      <button id="btnSync" class="text-btn toggle" role="switch" aria-checked="false" title="联动定位">
+        <span class="tg-track"><span class="tg-knob"></span></span>
+        <span class="btn-text2" data-i18n="wxf_sync">联动定位</span>
+      </button>
       <button id="btnSample" class="text-btn" data-i18n-title="wxf_sample_tip" title="载入演示文档"><span data-i18n="wxf_sample">示例</span></button>
       <button id="btnClear" class="text-btn danger" data-i18n-title="wxf_clear_tip" title="清空输入区"><span data-i18n="wxf_clear">清空</span></button>
     </div>
@@ -794,6 +805,7 @@ html.lang-en #preview:empty::before{content:"Type Markdown on the right, or hit 
       <li data-i18n-html="wxf_how_2"><strong>左边预览、左边调</strong>：预览区上方的工具栏里点「排版风格」，20 套主题一键切换，标题层级、行距、段距、引用块配色都会同步；预览区还能直接手动改字，改完照样能复制。</li>
       <li data-i18n-html="wxf_how_3"><strong>一键复制到公众号</strong>：所有样式会写成内联 style，粘贴进公众号编辑器不跑版；也可以「复制 HTML」拿源码，或「下载 HTML」存成独立文件。</li>
       <li data-i18n-html="wxf_how_4"><strong>草稿自动留存</strong>：输入的内容边写边存在本机，下次打开还在原处；Ctrl+S 或点保存键可再另存一份到本地草稿箱，随时取回——全程 localStorage，不经过任何服务器。</li>
+      <li data-i18n-html="wxf_how_5"><strong>长稿两头对照</strong>：右栏标题行的「联动定位」默认关闭；打开后点预览里任意一段，源码就滚到对应行，反过来点源码某一行，预览也滚到对应段落，改长文不用来回翻找。</li>
     </ol>
 
     <h2 data-i18n="wxf_faq_h">常见问题</h2>
@@ -808,6 +820,8 @@ html.lang-en #preview:empty::before{content:"Type Markdown on the right, or hit 
         <p class="t-faq-a" data-i18n="wxf_faq_4_a">手机端正文 15-16px、行高 1.8-2.0、段后距 14-20px 最稳；标题别超过 22px，否则在小屏上会挤成两三行。本工具 20 套主题实测正文 15-17px、行高 1.8-2.15、段后距 14-26px，其中 17 套落在上面的建议区间内；偏大的几套（极简留白段后距 26px、大字易读正文 17px）是刻意做的呼吸感与易读版，不用自己调。</p></div>
       <div class="t-faq-item"><h3 class="t-faq-q" data-i18n="wxf_faq_5_q">支持 Markdown 表格和代码块吗？</h3>
         <p class="t-faq-a" data-i18n="wxf_faq_5_a">支持。表格可以用「插入表格」设定行列数，代码块保留等宽字体与底色；两者都会被转成公众号能接受的表格 / 段落结构。</p></div>
+      <div class="t-faq-item"><h3 class="t-faq-q" data-i18n="wxf_faq_6_q">「联动定位」是什么？会带进导出文件吗？</h3>
+        <p class="t-faq-a" data-i18n="wxf_faq_6_a">它是右栏标题行上一个默认关闭的开关：打开后，点预览里的某一段，Markdown 会滚到对应源码行；点源码某一行，预览会滚到对应段落。实现上给每个渲染块临时挂一个源码行号标记，复制到公众号或下载 HTML 前会全部清除，导出产物与不开联动时完全一致。</p></div>
     </div>
 
     <h2 data-i18n="related_guides">相关指南</h2>
@@ -1371,13 +1385,19 @@ function renderTable(rows){
 function mdToHtml(src){
   const lines = String(src || '').replace(/\r\n/g, '\n').split('\n');
   const out = [];
-  let quoteBuf = null, quoteKind = null;
-  let listType = null;
-  let inCode = false, codeBuf = [], codeLang = '';
+  let quoteBuf = null, quoteKind = null, quoteStart = 0;
+  let listType = null, listStart = 0;
+  let inCode = false, codeBuf = [], codeLang = '', codeStart = 0;
+  /* 联动定位用：给每个顶层块标上起始源码行号。导出给微信前会被剥掉，
+     因为规范只关心正文结构，多余属性只会增加被平台改写的不确定性。 */
+  const withLine = (html, n) => {
+    const m = html.match(/^<[a-zA-Z][a-zA-Z0-9]*/);
+    return m ? html.slice(0, m[0].length) + ' data-line="' + n + '"' + html.slice(m[0].length) : html;
+  };
   const flushQuote = () => {
     if (quoteBuf){
-      out.push('<blockquote' + (quoteKind ? ' data-callout="' + quoteKind + '"' : '') + ' style="' + quoteCss(quoteKind) + '">'
-        + quoteLabelHtml(quoteKind) + quoteBuf.map(inline).join('<br/>') + '</blockquote>');
+      out.push(withLine('<blockquote' + (quoteKind ? ' data-callout="' + quoteKind + '"' : '') + ' style="' + quoteCss(quoteKind) + '">'
+        + quoteLabelHtml(quoteKind) + quoteBuf.map(inline).join('<br/>') + '</blockquote>', quoteStart));
       quoteBuf = null; quoteKind = null;
     }
   };
@@ -1394,10 +1414,10 @@ function mdToHtml(src){
     /* 代码块 */
     if (/^```/.test(line.trim())){
       flush();
-      if (!inCode){ inCode = true; codeBuf = []; codeLang = line.trim().slice(3).trim(); }
+      if (!inCode){ inCode = true; codeBuf = []; codeStart = i; codeLang = line.trim().slice(3).trim(); }
       else{
         inCode = false;
-        out.push('<pre style="' + STYLES.pre + '"><code style="' + STYLES.code + '">' + escapeHtml(codeBuf.join('\n')) + '</code></pre>');
+        out.push(withLine('<pre style="' + STYLES.pre + '"><code style="' + STYLES.code + '">' + escapeHtml(codeBuf.join('\n')) + '</code></pre>', codeStart));
       }
       i++; continue;
     }
@@ -1411,14 +1431,14 @@ function mdToHtml(src){
     if (hm){
       flush();
       const tag = 'h' + hm[1].length;
-      out.push('<' + tag + ' style="' + STYLES[tag] + '">' + inline(hm[2]) + '</' + tag + '>');
+      out.push(withLine('<' + tag + ' style="' + STYLES[tag] + '">' + inline(hm[2]) + '</' + tag + '>', i));
       i++; continue;
     }
 
     /* 分割线 */
     if (/^\s*([-*_])\s*\1\s*\1[\s\1-]*$/.test(line)){
       flush();
-      out.push('<hr style="' + STYLES.hr + '">');
+      out.push(withLine('<hr style="' + STYLES.hr + '">', i));
       i++; continue;
     }
 
@@ -1426,6 +1446,7 @@ function mdToHtml(src){
     if (/^>\s?/.test(line)){
       flushList();
       if (!quoteBuf){
+        quoteStart = i;
         /* GitHub 风格的 callout 标记：> [!TIP] / [!WARNING] / [!DANGER]，也收中文 */
         const cm = line.replace(/^>\s?/, '').trim().match(/^\[!(TIP|WARNING|DANGER|提示|注意|危险)\]$/);
         if (cm){ quoteBuf = []; quoteKind = CALLOUT_ALIAS[cm[1].toUpperCase()] || CALLOUT_ALIAS[cm[1]]; i++; continue; }
@@ -1443,8 +1464,8 @@ function mdToHtml(src){
       const type = um ? 'ul' : 'ol';
       if (listType !== type){
         flushList();
-        out.push('<' + type + ' style="' + STYLES[type] + '">');
-        listType = type;
+        out.push(withLine('<' + type + ' style="' + STYLES[type] + '">', i));
+        listType = type; listStart = i;
       }
       const indent = (um ? um[1] : om[1]).length;
       const pad = indent ? 'padding-left:' + Math.min(indent * 16, 64) + 'px;' : '';
@@ -1462,7 +1483,7 @@ function mdToHtml(src){
       }
       if (tbl.length >= 2){
         flush();
-        out.push(renderTable(tbl));
+        out.push(withLine(renderTable(tbl), i));
         i = j;
         continue;
       }
@@ -1470,6 +1491,7 @@ function mdToHtml(src){
 
     /* 段落：合并连续普通行 */
     flush();
+    const paraStart = i;
     const para = [line.trim()];
     while (i + 1 < lines.length){
       const nx = lines[i + 1].replace(/\t/g, '    ');
@@ -1484,12 +1506,12 @@ function mdToHtml(src){
       para.push(nx.trim());
       i++;
     }
-    out.push('<p style="' + STYLES.p + '">' + para.map(inline).join('<br/>') + '</p>');
+    out.push(withLine('<p style="' + STYLES.p + '">' + para.map(inline).join('<br/>') + '</p>', paraStart));
     i++; continue;
   }
   flush();
   if (inCode){
-    out.push('<pre style="' + STYLES.pre + '"><code style="' + STYLES.code + '">' + escapeHtml(codeBuf.join('\n')) + '</code></pre>');
+    out.push(withLine('<pre style="' + STYLES.pre + '"><code style="' + STYLES.code + '">' + escapeHtml(codeBuf.join('\n')) + '</code></pre>', codeStart));
   }
   return out.join('\n');
 }
@@ -2226,6 +2248,92 @@ function restylePreview(){
   });
 }
 
+/* ===================== 预览 ↔ 源码 点击定位联动 ===================== */
+/* 只响应点击、不监听 scroll：连续滚动同步会让两侧互相触发形成回环，
+   且打字时预览每输入一个字符就重排，跟着滚会抖得没法用。
+   实测确认预览侧真正滚动的是 .preview-scroll，不是 #preview。 */
+let syncOn = localStorage.getItem('wx-editor-sync') === 'on';
+const syncBtn = document.getElementById('btnSync');
+const previewScroll = document.querySelector('.preview-scroll');
+
+function syncPaint(){
+  syncBtn.setAttribute('aria-checked', syncOn ? 'true' : 'false');
+  syncBtn.title = syncOn
+    ? tx('wxf_sync_tip_on','联动定位：开 · 点击任一侧，另一侧滚到对应段落')
+    : tx('wxf_sync_tip_off','联动定位：关 · 两侧各自滚动，互不影响');
+}
+
+/* textarea 虽是等宽字体，但长行会折行，逻辑行号不能直接乘行高，
+   所以用一个复刻相同字体度量与宽度的镜像层量目标行的真实像素位置。 */
+const mdMirror = document.createElement('div');
+function mirrorReady(){
+  if (mdMirror.parentNode) return mdMirror;
+  const cs = getComputedStyle(mdInput);
+  ['fontFamily','fontSize','lineHeight','letterSpacing','paddingTop','paddingRight','paddingBottom','paddingLeft','borderWidth','tabSize']
+    .forEach(p => { mdMirror.style[p] = cs[p]; });
+  Object.assign(mdMirror.style, {
+    position:'absolute', left:'-99999px', top:'0', visibility:'hidden',
+    boxSizing:'border-box', overflow:'hidden', whiteSpace:'pre-wrap', wordWrap:'break-word',
+  });
+  document.body.appendChild(mdMirror);
+  return mdMirror;
+}
+function mdLineTop(lineIdx){
+  const m = mirrorReady();
+  m.style.width = mdInput.clientWidth + 'px';
+  const src = mdInput.value.split('\n');
+  const n = Math.max(0, Math.min(lineIdx, src.length - 1));
+  m.textContent = n > 0 ? src.slice(0, n).join('\n') + '\n' : '';
+  const probe = document.createElement('span');
+  probe.textContent = 'X';
+  m.appendChild(probe);
+  return probe.offsetTop - parseFloat(getComputedStyle(mdInput).paddingTop);
+}
+function scrollMdToLine(lineIdx){
+  const max = mdInput.scrollHeight - mdInput.clientHeight;
+  const want = mdLineTop(lineIdx) - mdInput.clientHeight * 0.3;
+  mdInput.scrollTop = Math.max(0, Math.min(max, want));
+}
+function topBlockOf(node){
+  const el = node && node.nodeType === 3 ? node.parentElement : node;
+  return el && el.closest ? el.closest('#preview > [data-line]') : null;
+}
+function scrollPreviewToLine(line){
+  const kids = [...preview.children];
+  let target = null;
+  for (const el of kids){
+    const l = parseInt(el.dataset.line, 10);
+    if (Number.isNaN(l)) continue;
+    if (l <= line) target = el; else break;
+  }
+  if (!target) target = kids[0];
+  if (!target || !previewScroll) return;
+  previewScroll.scrollTop += target.getBoundingClientRect().top - previewScroll.getBoundingClientRect().top - 14;
+}
+
+preview.addEventListener('click', e => {
+  if (!syncOn) return;
+  const block = topBlockOf(e.target);
+  if (!block) return;
+  const n = parseInt(block.dataset.line, 10);
+  if (!Number.isNaN(n)) scrollMdToLine(n);
+});
+mdInput.addEventListener('click', () => {
+  if (!syncOn) return;
+  scrollPreviewToLine(mdInput.value.slice(0, mdInput.selectionStart).split('\n').length - 1);
+});
+syncBtn.addEventListener('click', () => {
+  syncOn = !syncOn;
+  try{ localStorage.setItem('wx-editor-sync', syncOn ? 'on' : 'off'); }catch(err){}
+  syncPaint();
+  toast(syncOn ? tx('wxf_t_sync_on','联动定位已开启') : tx('wxf_t_sync_off','联动定位已关闭'));
+});
+syncPaint();
+/* 标题随开关状态变化，所以由本模块独占；语言切换与首帧后各重绘一次，
+   避免 site.js 的 applyI18n 把状态化提示覆盖成静态文案 */
+document.addEventListener('cataito-lang-change', syncPaint);
+document.addEventListener('DOMContentLoaded', syncPaint);
+
 /* ===================== 工具栏 ===================== */
 toolbar.addEventListener('click', (e) => {
   const btn = e.target.closest('.tbtn');
@@ -2478,6 +2586,8 @@ function getPreviewHtml(){
      所以不能直接对脱离文档的克隆做。做法：把副本挂回 preview 的父级（同一层叠上下文）、
      离屏且等宽，在副本上归一化后取走 innerHTML —— 正在编辑的文档不会被烤进 computed 样式。 */
   const clone = preview.cloneNode(true);
+  /* 联动定位用的 data-line 只服务于本工具，绝不进导出产物 */
+  clone.querySelectorAll('[data-line]').forEach(el => el.removeAttribute('data-line'));
   const holder = document.createElement('div');
   holder.setAttribute('style', 'position:absolute;left:-99999px;top:0;pointer-events:none;'
     + 'width:' + preview.getBoundingClientRect().width + 'px;');
@@ -2624,6 +2734,20 @@ function renderDrafts(){
       if (!d) return;
       mdInput.value = d.md;
       preview.innerHTML = d.html || mdToHtml(d.md);
+      /* 旧草稿存的 HTML 没有 data-line。不能直接重渲染——那会丢掉用户在预览区手动的微调
+         （那些微调在 Markdown 里没有对应）。改成按下标把行号补挂回去，块数对不上就放弃，
+         最坏情况只是这份草稿的联动不生效，不会丢内容。 */
+      if (![...preview.children].some(el => el.hasAttribute('data-line'))){
+        const tmp = document.createElement('div');
+        tmp.innerHTML = mdToHtml(d.md);
+        const a = [...preview.children], b = [...tmp.children];
+        if (a.length === b.length){
+          a.forEach((el, n) => {
+            const l = b[n].getAttribute('data-line');
+            if (l !== null) el.setAttribute('data-line', l);
+          });
+        }
+      }
       updateStats();
       hideModal('draftsMask');
       toast(tx('wxf_t_draft_on','已载入草稿'));

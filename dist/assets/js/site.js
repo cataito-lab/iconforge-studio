@@ -1198,7 +1198,7 @@
     wxf_faq_5_q:        { zh: "支持 Markdown 表格和代码块吗？", en: "Are Markdown tables and code blocks supported?" },
     wxf_faq_5_a:        { zh: "支持。表格可以用「插入表格」设定行列数，代码块保留等宽字体与底色；两者都会被转成公众号能接受的表格 / 段落结构。", en: "Yes. Insert table lets you set rows and columns, and code blocks keep their monospace face and background. Both are converted into structures WeChat accepts." },
     home_tool_wxf:      { zh: "公众号排版", en: "WeChat Formatter" },
-    home_tool_wxf_desc: { zh: "Markdown 编辑即时预览，20 套主题一键切换，样式自动内联，复制到公众号不跑版。", en: "Write Markdown with live preview, switch among 20 themes, and copy into WeChat with styles already inlined." },
+    home_tool_wxf_desc: { zh: "Markdown 编辑即时预览，20 套主题一键切换，样式自动内联，复制到公众号不跑版，可选源码↔预览联动定位。", en: "Write Markdown with live preview, switch among 20 themes, copy into WeChat with styles already inlined, and optionally link source and preview side by side." },
     gd_wxf_h1:          { zh: "公众号排版完全指南：微信为什么吃样式，怎么排才不跑版", en: "WeChat Formatting Guide: Why WeChat Eats Your Styles and How to Stop It" },
     gd_wxf_short:       { zh: "公众号排版完全指南", en: "WeChat Formatting Guide" },
     gd_wxf_sub:         { zh: "从公众号编辑器的样式白名单讲起，说清内联样式为什么是唯一解、字号行距的安全区间、图片与引用块的规范，以及 Markdown 转公众号排版的完整流程。", en: "What the WeChat editor allows and what it strips, why inline styles are the only answer, safe type scales, image and blockquote rules, and an end-to-end Markdown-to-WeChat workflow." },
@@ -1320,6 +1320,16 @@
     wxf_tbl_cols:          { zh: "列数", en: "Columns" },
     wxf_tbl_cancel:        { zh: "取消", en: "Cancel" },
     wxf_tbl_insert:        { zh: "插入", en: "Insert" },
+
+  /* 联动定位功能：开关文案 + 对外说明 */
+    wxf_sync:         { zh: "联动定位", en: "Link panes" },
+    wxf_sync_tip_on:  { zh: "联动定位：开 · 点击任一侧，另一侧滚到对应段落", en: "Linked panes: on — click either side and the other scrolls to that block" },
+    wxf_sync_tip_off: { zh: "联动定位：关 · 两侧各自滚动，互不影响", en: "Linked panes: off — each side scrolls on its own" },
+    wxf_t_sync_on:    { zh: "联动定位已开启", en: "Linked panes turned on" },
+    wxf_t_sync_off:   { zh: "联动定位已关闭", en: "Linked panes turned off" },
+    wxf_how_5:        { zh: "<strong>长稿两头对照</strong>：右栏标题行的「联动定位」默认关闭；打开后点预览里任意一段，源码就滚到对应行，反过来点源码某一行，预览也滚到对应段落，改长文不用来回翻找。", en: "<strong>Cross-reference a long draft</strong>: the Link panes switch in the right-hand title bar is off by default. Turn it on and clicking any block in the preview scrolls the source to that line — and vice versa, so you stop hunting for the paragraph you are editing." },
+    wxf_faq_6_q:      { zh: "「联动定位」是什么？会带进导出文件吗？", en: "What is Link panes, and does it leak into the export?" },
+    wxf_faq_6_a:      { zh: "它是右栏标题行上一个默认关闭的开关：打开后，点预览里的某一段，Markdown 会滚到对应源码行；点源码某一行，预览会滚到对应段落。实现上给每个渲染块临时挂一个源码行号标记，复制到公众号或下载 HTML 前会全部清除，导出产物与不开联动时完全一致。", en: "It is a switch in the right-hand title bar, off by default. Once on, clicking a block in the preview scrolls the Markdown to the matching source line, and clicking a source line scrolls the preview to that block. It works by tagging each rendered block with a temporary source line number; every tag is removed before Copy to WeChat or Download HTML, so the exported file is byte-for-byte what it would be with the switch off." },
   };
 
   var LANGS = ['zh', 'en'];

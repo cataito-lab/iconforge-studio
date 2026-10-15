@@ -137,7 +137,8 @@
         <li><a href="#s4">图片与封面的硬性规范</a></li>
         <li><a href="#s5">引用块、提示框与表格</a></li>
         <li><a href="#s6">Markdown 转公众号：完整流程</a></li>
-        <li><a href="#s7">跑版排查清单</a></li>
+        <li><a href="#s7">长稿怎么两头对照</a></li>
+        <li><a href="#s8">跑版排查清单</a></li>
       </ol>
     </div>
       <h2 id="s1">一、微信编辑器为什么「吃样式」</h2>
@@ -201,7 +202,17 @@
         <li><strong>发到手机预览一遍再群发</strong>：编辑器预览不等于手机端效果。</li>
       </ol>
 
-      <h2 id="s7">七、跑版排查清单</h2>
+      <h2 id="s7">七、长稿怎么两头对照</h2>
+      <p>Markdown 转公众号最耗时的往往不是排版，而是<strong>改到中后段就找不到对应的源码</strong>：预览十几屏，源码也十几屏，两边行高还不一样。</p>
+      <ul>
+        <li><strong>按比例同步滚动解决不了</strong>：两边内容高度差得远，源码滚到 40% 处预览可能还在第二段，看着在动，其实对不上。</li>
+        <li><strong>可靠做法是按块锚定</strong>：让每个渲染块记住自己来自源码第几行，点哪一段就定位到哪一段，两个方向都成立。</li>
+        <li><strong>不要在打字时联动</strong>：预览每输入一个字符就重排一次，跟着滚会抖。只在点击时定位，才既准又安静。</li>
+        <li><strong>定位标记不能进导出</strong>：它只是页面上的临时属性，粘给公众号前必须清干净，否则给平台留下改写的不确定性。</li>
+      </ul>
+      <p>本站的 <a href="/wechat-format/">公众号排版工具</a> 把这套做成了一个默认关闭的「联动定位」开关，放在 Markdown 输入栏的标题行——不打开就完全不影响原来的用法。</p>
+
+      <h2 id="s8">八、跑版排查清单</h2>
       <p>按命中率从高到低检查：</p>
       <ol>
         <li>样式是不是写在 class 或 <code>&lt;style&gt;</code> 里 → 改成内联。</li>
@@ -230,7 +241,8 @@
         <li><a href="#s4">Hard rules for images and covers</a></li>
         <li><a href="#s5">Blockquotes, callouts and tables</a></li>
         <li><a href="#s6">Markdown to WeChat: the full workflow</a></li>
-        <li><a href="#s7">Troubleshooting checklist</a></li>
+        <li><a href="#s7">Cross-referencing a long draft</a></li>
+        <li><a href="#s8">Troubleshooting checklist</a></li>
       </ol>
     </div>
       <h2>1. Why the WeChat editor eats your styles</h2>
@@ -293,7 +305,17 @@
         <li><strong>Preview on your phone before publishing</strong>: the editor preview is not the phone result.</li>
       </ol>
 
-      <h2>7. Troubleshooting checklist</h2>
+      <h2>7. Cross-referencing a long draft</h2>
+      <p>What costs time in a Markdown-to-WeChat workflow is rarely the styling — it is <strong>losing the source line for the paragraph you are editing</strong>. The preview runs to a dozen screens, the source does too, and the two do not share a line height.</p>
+      <ul>
+        <li><strong>Proportional scroll sync does not solve it</strong>: the two sides differ too much in height, so 40% down the source can still be the second paragraph in the preview. It moves, but it does not match.</li>
+        <li><strong>Anchoring by block does</strong>: remember which source line each rendered block came from, then clicking a paragraph lands on its line — in either direction.</li>
+        <li><strong>Do not sync while typing</strong>: the preview re-lays out on every keystroke, and following it produces jitter. Locating on click only is both accurate and calm.</li>
+        <li><strong>The locator must not ship</strong>: it is a transient page attribute. Strip it before pasting into WeChat, or you hand the platform another attribute to rewrite.</li>
+      </ul>
+      <p>Our <a href="/wechat-format/">WeChat Article Formatter</a> ships this as a Link panes switch in the Markdown title bar, off by default — leave it off and nothing about the current workflow changes.</p>
+
+      <h2>8. Troubleshooting checklist</h2>
       <ol>
         <li>Styles living in a class or <code>&lt;style&gt;</code> block → move them inline.</li>
         <li>Line height under 1.7 → lines drift on desktop.</li>
