@@ -1,15 +1,17 @@
 /* ============================================================
    cataito 工具箱 · 共享外壳样式
-   设计语言：「中性极简」——白底、近黑文字、灰边框卡片。
+   设计语言：「中性极简」——浅灰页面底 + 纯白卡片、近黑文字、灰边框。
+   表面分三层：页面 --bg → 卡片 --card → 内嵌 --card-2，靠色差分层。
    点缀蓝只用于链接/主按钮/选中态；无噪点、无印章、无编号、
-   无位移动画；结构靠留白与 1px 边框。
+   无位移动画、无投影；结构靠留白与 1px 边框。
    令牌（亮/暗）在此唯一定义，工具页可再用自身样式覆盖（值一致）。
    ============================================================ */
 :root {
   color-scheme: light;
-  /* 色彩：白底 + 近黑文字 + 灰边框 + 克制蓝点缀 */
-  --bg: #ffffff; --bg-canvas: #fafafa; --card: #ffffff; --card-2: #f5f5f5;
-  --border: #e5e5e5; --text: #171717; --text-2: #525252; --text-3: #a3a3a3;
+  /* 色彩：浅灰页面底 + 纯白卡面（靠色差分层，卡片不再与背景同色） */
+  --bg: #f4f5f7; --bg-canvas: #eaecef; --card: #ffffff; --card-2: #f2f3f5;
+  --border: #e1e3e7; --text: #171717; --text-2: #525252; --text-3: #a3a3a3;
+  --on-ink: #ffffff;
   --accent: #2563eb; --accent-hover: #1d4ed8;
   --accent-soft: rgba(37,99,235,0.08); --accent-soft-2: rgba(37,99,235,0.05);
   --accent-glow: rgba(37,99,235,0.12);
@@ -27,8 +29,10 @@
 }
 html.dark {
   color-scheme: dark;
-  --bg: #0a0a0a; --bg-canvas: #0d0d0d; --card: #141414; --card-2: #1c1c1c;
-  --border: #262626; --text: #ededed; --text-2: #a3a3a3; --text-3: #6f6f6f;
+  /* 暗色三级表面阶梯：页面 #0a0a0a → 卡片 #18191b → 内嵌 #212426 */
+  --bg: #0a0a0a; --bg-canvas: #0d0d0d; --card: #18191b; --card-2: #212426;
+  --border: #2e3134; --text: #ededed; --text-2: #adb2b7; --text-3: #7d8288;
+  --on-ink: #0a0a0a;
   --accent: #3b82f6; --accent-hover: #60a5fa;
   --accent-soft: rgba(59,130,246,0.14); --accent-soft-2: rgba(59,130,246,0.08);
   --accent-glow: rgba(59,130,246,0.16);
@@ -53,12 +57,13 @@ body {
 
 /* ---------- 顶栏：纯色底 + 发丝线 ----------
    注意：site.js 的 renderHeader 只注入 #site-header 容器与 .site-header__inner，
-   不存在 .site-header 类——吸顶样式必须写在 #site-header 上（与页脚 #site-footer 同理）。 */
+   不存在 .site-header 类——吸顶样式必须写在 #site-header 上（与页脚 #site-footer 同理）。
+   底色钉 --card 而非 --bg：页面底是浅灰，顶栏保持白面才与 theme-color 一致。 */
 #site-header {
   position: sticky;
   top: 0;
   z-index: 50;
-  background: var(--bg);
+  background: var(--card);
   border-bottom: 1px solid var(--border);
   /* CLS 修复：页头由 site.js 注入，提前预留高度避免首屏内容下移 */
   min-height: 64px;
@@ -533,7 +538,7 @@ html.dark .theme-switch .ico-sun { display: none; }
 }
 .t-btn:hover { border-color: var(--text-3); color: var(--text); background: transparent; }
 .t-btn.primary {
-  background: var(--text); border-color: var(--text); color: var(--bg);
+  background: var(--text); border-color: var(--text); color: var(--on-ink);
 }
 .t-btn.primary:hover { background: var(--accent); border-color: var(--accent); color: #fff; }
 .t-btn.block { width: 100%; }
@@ -704,7 +709,9 @@ html.dark .theme-switch .ico-sun { display: none; }
    注意：指南页内联样式里有同款副本（含 .article a 特异度覆盖），暂保留；
    新页面请直接用这里的一套。 */
 .cta-box {
-  background: var(--card-2);
+  /* 用 --card 而非 --card-2：CTA 卡常直接坐在页面底上（指南页 / 关于页），
+     浅灰页配灰底会几乎看不见边界 */
+  background: var(--card);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 20px 22px; margin: 34px 0 10px; text-align: center;

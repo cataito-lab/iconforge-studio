@@ -26,7 +26,9 @@
     var h = document.documentElement;
     if (theme === 'dark') h.classList.add('dark'); else h.classList.remove('dark');
     var meta = document.querySelector('meta[name="theme-color"]');
-    if (meta) meta.setAttribute('content', theme === 'dark' ? '#0a0a0a' : '#ffffff');
+    /* 两个色值必须等于 #site-header 的底色（即 --card）：亮 #ffffff / 暗 #18191b。
+       改 site.css 的表面令牌时，这里要同步改，否则手机状态栏与顶栏会分色。 */
+    if (meta) meta.setAttribute('content', theme === 'dark' ? '#18191b' : '#ffffff');
   }
   function fire() {
     try {
