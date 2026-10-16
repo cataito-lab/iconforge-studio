@@ -136,9 +136,10 @@
         <li><a href="#s3">字号、行距与段距的安全值</a></li>
         <li><a href="#s4">图片与封面的硬性规范</a></li>
         <li><a href="#s5">引用块、提示框与表格</a></li>
-        <li><a href="#s6">Markdown 转公众号：完整流程</a></li>
-        <li><a href="#s7">长稿怎么两头对照</a></li>
-        <li><a href="#s8">跑版排查清单</a></li>
+        <li><a href="#s6">表格和代码块为什么不再飘出屏幕</a></li>
+        <li><a href="#s7">Markdown 转公众号：完整流程</a></li>
+        <li><a href="#s8">长稿怎么两头对照</a></li>
+        <li><a href="#s9">跑版排查清单</a></li>
       </ol>
     </div>
       <h2 id="s1">一、微信编辑器为什么「吃样式」</h2>
@@ -193,7 +194,18 @@
         <li>表格<strong>列数控制在 4 列以内</strong>；Markdown 原生表格依赖 <code>border-collapse</code> 等属性，粘过去容易散架，必须转成带内联边框样式的表格。</li>
       </ul>
 
-      <h2 id="s6">六、Markdown 转公众号：完整流程</h2>
+      <h2 id="s6">六、表格和代码块为什么不再飘出屏幕</h2>
+      <p>「手机上表格超出正文区」是公众号排版里最难自查的一类问题：你在电脑编辑器里看得整整齐齐，发到手机就飘出去。它有两层原因，得分开治。</p>
+      <ul>
+        <li><strong>平台那一层</strong>：微信编辑器把它收到的表格节点收进自己的表格模型，按<strong>粘贴那一刻的渲染宽度</strong>把列宽写成固定像素。真实已发布文章里能看到 <code>width:577px</code> 这种被烤进去的列宽——577px 落在 375px 的屏幕上必然溢出约 200px，而且<strong>与内容长短无关</strong>，纯中文、没有任何长串的表格一样飘。</li>
+        <li><strong>CSS 那一层</strong>：表格默认「自动布局」，<code>width:100%</code> 只是一个希望值；单元格里只要有一个不换行的长串（网址、英文单词、代码），表格就会被顶到比容器更宽。<code>pre</code> 默认不换行，同理会被手机水平截断。</li>
+      </ul>
+      <p>平台那一层在自己这边写什么样式都救不了，唯一的出路是<strong>别给它表格节点</strong>。做法是：编辑区照常用真表格（工具栏、撤销、联动定位都不受影响），只在复制或下载的那一刻把表格改写成 <code>display:table</code> 的结构——微信只重写表格标签，普通节点的内联样式原样保留。三条实现约束都是踩出来的：先把内联样式烤好再改写（顺序反了就补不上）、<code>display</code> 先摘后写（否则同一条声明出现两遍）、空单元格塞占位符（微信会清掉空节点，一行少一格整列就错位）。含<strong>合并单元格</strong>或<strong>嵌套</strong>的表格不做改写，原样交给微信。</p>
+      <p>CSS 那一层要做成<strong>不变量</strong>，不能做成主题选项：表格固定布局加最大宽度 100%、单元格允许断词、代码块允许换行，并且必须在主题样式合并<strong>全部完成之后</strong>补齐——写进任何一层都会被另一层挤掉，实测有 4 套主题覆盖单元格样式、4 套覆盖代码块。老草稿和手工粘进预览区的内容带着生成当时的样式，主题合并管不到，所以导出前再按标签补一次。</p>
+      <p>实测口径（2026-10-16）：20 套主题 × 320 / 375 / 414px 三档共 <strong>60 项测量，溢出 0px</strong>；把这几条不变量抽空后，同一测量立刻报出 <strong>333px</strong>，证明测试不是恒真；导出产物里真表格标签 <strong>0 个</strong>，微信官方结构检测器返回 <code>isValid: true</code>。</p>
+      <p>一个要提前知道的取舍：多列表格现在是<strong>等宽列</strong>，不再按内容比例分配宽度。手机上「不换行」和「按比例分列」没法同时成立——一旦宽度声明被平台丢掉，按比例那一套会重新撑破。</p>
+
+      <h2 id="s7">七、Markdown 转公众号：完整流程</h2>
       <ol>
         <li><strong>用 Markdown 写内容</strong>：只关心结构——标题层级、列表、引用、表格、代码块，不要在源文里写任何样式。</li>
         <li><strong>选一套主题</strong>：字号、行距、配色、标题装饰一次定下来。同一账号固定一套，别每篇换风格。</li>
@@ -202,7 +214,7 @@
         <li><strong>发到手机预览一遍再群发</strong>：编辑器预览不等于手机端效果。</li>
       </ol>
 
-      <h2 id="s7">七、长稿怎么两头对照</h2>
+      <h2 id="s8">八、长稿怎么两头对照</h2>
       <p>Markdown 转公众号最耗时的往往不是排版，而是<strong>改到中后段就找不到对应的源码</strong>：预览十几屏，源码也十几屏，两边行高还不一样。</p>
       <ul>
         <li><strong>按比例同步滚动解决不了</strong>：两边内容高度差得远，源码滚到 40% 处预览可能还在第二段，看着在动，其实对不上。</li>
@@ -212,7 +224,7 @@
       </ul>
       <p>本站的 <a href="/wechat-format/">公众号排版工具</a> 把这套做成了一个默认关闭的「联动定位」开关，放在 Markdown 输入栏的标题行——不打开就完全不影响原来的用法。</p>
 
-      <h2 id="s8">八、跑版排查清单</h2>
+      <h2 id="s9">九、跑版排查清单</h2>
       <p>按命中率从高到低检查：</p>
       <ol>
         <li>样式是不是写在 class 或 <code>&lt;style&gt;</code> 里 → 改成内联。</li>
@@ -240,9 +252,10 @@
         <li><a href="#s3">Safe type sizes, line heights and spacing</a></li>
         <li><a href="#s4">Hard rules for images and covers</a></li>
         <li><a href="#s5">Blockquotes, callouts and tables</a></li>
-        <li><a href="#s6">Markdown to WeChat: the full workflow</a></li>
-        <li><a href="#s7">Cross-referencing a long draft</a></li>
-        <li><a href="#s8">Troubleshooting checklist</a></li>
+        <li><a href="#s6">Why tables and code blocks stopped sliding off the screen</a></li>
+        <li><a href="#s7">Markdown to WeChat: the full workflow</a></li>
+        <li><a href="#s8">Cross-referencing a long draft</a></li>
+        <li><a href="#s9">Troubleshooting checklist</a></li>
       </ol>
     </div>
       <h2>1. Why the WeChat editor eats your styles</h2>
@@ -296,7 +309,18 @@
         <li>Keep tables to <strong>four columns or fewer</strong>. Native Markdown tables rely on <code>border-collapse</code> and fall apart on paste; convert them into tables with inline border styles.</li>
       </ul>
 
-      <h2>6. Markdown to WeChat: the full workflow</h2>
+      <h2>6. Why tables and code blocks stopped sliding off the screen</h2>
+      <p>"The table runs past the edge on my phone" is the hardest class of WeChat layout bug to catch yourself: it looks perfect in the desktop editor and spills off the small screen. There are two separate causes.</p>
+      <ul>
+        <li><strong>The platform side</strong>: WeChat folds any table it receives into its own table model and re-bakes each column width into fixed pixels measured <strong>at the moment you paste</strong>. Published articles carry widths like <code>width:577px</code> — on a 375px phone that is guaranteed to overflow, and it has <strong>nothing to do with how long your content is</strong>: a table of pure Chinese characters spills just the same.</li>
+        <li><strong>The CSS side</strong>: tables default to automatic layout, where <code>width:100%</code> is only a wish. A single unbreakable run inside a cell — a URL, a long English word, code — pushes the table wider than its container. <code>pre</code> does not wrap by default and gets clipped horizontally for the same reason.</li>
+      </ul>
+      <p>The platform side cannot be answered with CSS, so the only way out is <strong>not to hand it a table</strong>. The editor keeps using real tables (the toolbar, undo and link-panes all behave as before), and only at copy or download time the table is rewritten into <code>display:table</code> structures — WeChat rewrites table tags and leaves ordinary nodes alone, so the inline styles survive intact. Three implementation constraints, each learned the hard way: bake the inline styles first and rewrite second (the other order cannot fill them in), strip <code>display</code> before writing the new one (or the same declaration appears twice), and put a placeholder in empty cells (WeChat deletes empty nodes and one missing cell shifts the whole column). Tables with <strong>merged</strong> or <strong>nested</strong> cells are handed to WeChat untouched.</p>
+      <p>The CSS side is implemented as an <strong>invariant</strong>, not a theme option: fixed table layout with a 100% maximum width, breakable cells and wrapping code blocks, applied <strong>after</strong> the theme layers have been merged — put them in any layer and another layer pushes them out, and four of the twenty themes override cell styles while four override code blocks. Old drafts and content pasted straight into the preview carry the styles they were made with, so the same declarations are topped up per tag at export time.</p>
+      <p>What was measured (2026-10-16): 20 themes × 320 / 375 / 414px = <strong>60 checks, 0px of overflow</strong>; drain those invariants and the same run immediately reports <strong>333px</strong>, which proves the test can fail; the exported fragment contains <strong>0</strong> real table tags and the official WeChat structure checker returns <code>isValid: true</code>.</p>
+      <p>One trade-off to know in advance: multi-column tables now use <strong>equal column widths</strong> instead of widths proportional to content. On a phone you can have "never breaks the edge" or "proportional columns", not both — the proportional scheme overflows again the moment the platform drops the width declarations.</p>
+
+      <h2>7. Markdown to WeChat: the full workflow</h2>
       <ol>
         <li><strong>Write in Markdown</strong>: structure only — headings, lists, quotes, tables, code. No styling in the source.</li>
         <li><strong>Pick one theme</strong>: size, line height, palette and heading decoration in a single decision. Keep it consistent per account.</li>
@@ -305,7 +329,7 @@
         <li><strong>Preview on your phone before publishing</strong>: the editor preview is not the phone result.</li>
       </ol>
 
-      <h2>7. Cross-referencing a long draft</h2>
+      <h2>8. Cross-referencing a long draft</h2>
       <p>What costs time in a Markdown-to-WeChat workflow is rarely the styling — it is <strong>losing the source line for the paragraph you are editing</strong>. The preview runs to a dozen screens, the source does too, and the two do not share a line height.</p>
       <ul>
         <li><strong>Proportional scroll sync does not solve it</strong>: the two sides differ too much in height, so 40% down the source can still be the second paragraph in the preview. It moves, but it does not match.</li>
@@ -315,7 +339,7 @@
       </ul>
       <p>Our <a href="/wechat-format/">WeChat Article Formatter</a> ships this as a Link panes switch in the Markdown title bar, off by default — leave it off and nothing about the current workflow changes.</p>
 
-      <h2>8. Troubleshooting checklist</h2>
+      <h2>9. Troubleshooting checklist</h2>
       <ol>
         <li>Styles living in a class or <code>&lt;style&gt;</code> block → move them inline.</li>
         <li>Line height under 1.7 → lines drift on desktop.</li>

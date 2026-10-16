@@ -40,8 +40,10 @@
 
 ⚠️ **往列表里插块，必须插在整块之后**：`<a>` 的自动闭合规则是「遇到新的 `<a>` 开标签就结束当前 `<a>`」。把新卡片的开标签插到前一张卡片的开标签与内容之间，浏览器会立刻闭合前者——**前一张卡变成空壳，它的内容掉到卡片外面**，CSS 与 JS 都不报错，只有渲染出来才看得见（2026-10-14 首页与 `/text/` 都中了这一枪，是 Aaron 在线上发现的）。插完必须断言：`<a>` 开闭数量相等、无嵌套、每张 `.tool-card` 都能查到 `.tool-card__name`。
 
-6. **上游再升级时走"函数级整段替换"，不要重跑集成**：外部工具出了新版本，**不要**从新源文件重跑整套并入脚本——那会冲掉站点侧手工加的 `data-i18n` 标记、`tx()` 包裹与 SEO 区块。正确做法：① 用 `diff 旧备份 新源` 得到升级 hunk；② 逐 hunk 用**行区间从新源原文取出**（绝不手抄），在站点副本里找**唯一锚点**插入，全部断言通过才落盘；③ 函数体有变化的（如 `mdToHtml`）先证明"站点里的旧函数与升级前源逐字节一致"，再整段替换——**替换函数要用首尾标记定位，不能用花括号计数**（本项目的 `mdToHtml` 里有 `'}'` 之类字面量，计数扫描会提前收尾，实测截断过一轮）；④ 落盘后用并入时的基线数字自证：20 套主题产出 20 种不同预览、导出 18015 字符 / 55 处内联 style / 0 个 class，逐位重现才算没动到排版。
+6. **上游再升级时走"函数级整段替换"，不要重跑集成**：外部工具出了新版本，**不要**从新源文件重跑整套并入脚本——那会冲掉站点侧手工加的 `data-i18n` 标记、`tx()` 包裹与 SEO 区块。正确做法：① 用 `diff 旧备份 新源` 得到升级 hunk；② 逐 hunk 用**行区间从新源原文取出**（绝不手抄），在站点副本里找**唯一锚点**插入，全部断言通过才落盘；③ 函数体有变化的（如 `mdToHtml`）先证明"站点里的旧函数与升级前源逐字节一致"，再整段替换——**替换函数要用首尾标记定位，不能用花括号计数**（本项目的 `mdToHtml` 里有 `'}'` 之类字面量，计数扫描会提前收尾，实测截断过一轮）；④ 落盘后用**同一次运行内的前后对照**自证排版没动（见第 8 条：把移植前的副本另起服务跑 A/B）——**不要**引用交接文档里的绝对字符数当基线，那个值会随测量时点漂（历史上「导出 18015 字符」在下一棒同一页面实测是 17553）。
 7. **状态化 title 归 JS 独占**：若某个元素的 `title` 会随开关状态变化，就**不要**再给它挂 `data-i18n-title`——`applyI18n` 在 `DOMContentLoaded` 阶段会把状态化提示覆盖成静态文案。改为在模块内用 `tx()` 生成，并同时监听 `cataito-lang-change` 与 `DOMContentLoaded` 各重绘一次（`/wechat-format/` 的「联动定位」开关即此写法）。
+
+8. **回灌后必须跑 A/B 双跑，而不是只看新页**：上游第二次升级（2026-10-16 表格防溢出）带来的不是新功能而是**导出产物的形态变化**，这类改动最容易「新页全绿、旧行为静默变」。可复用做法：把移植前的页面副本连 `assets/` 一起放进 `_cfp/before_site/` 用第二个端口起服务，同一份浏览器内探针跑两遍（`_cfp/wx_of_gate.js`），断言三件事：① **去掉本次新增的声明后**，20 套主题的预览 HTML 与升级前**逐字节相同**（证明排版没动）；② 导出侧的结构变化要逐项列出（真表格 1→0、改写出的表/行/格数目、单元格样式逐条比对、可见正文哈希）；③ 强制宽度生效自检（`320→320 / 375→375 / 414→414`），否则「量不到溢出」和「没有溢出」分不清。⚠️ **绝对长度会漂**：上一棒记的「导出 18015 字符」今日在同一页面 fresh-load 实测是 17553——所以验收基线一律用**同一次运行内的前后对照对**，不要用交接文档里的绝对值。产物级测量还要分清两种溢出：`display:table` 盒在 `border-collapse:collapse` 下会把 1px 外框沿边线**居中**绘制（左右各出血 0.5px），真 `<table>` 由表格算法吸进 `width:100%` 内——所以产物级阈值写 ≤1px 并同时报「格内 `scrollWidth-clientWidth`」（内容是否真被裁切）。
 
 ⚠️ **注入容器无类名**：`renderHeader/renderFooter` 只输出 `#site-header` / `#site-footer` 容器（内部是 `.site-header__inner` / `.site-footer__inner`），**顶栏/页脚样式必须写在 ID 上**——历史上写在 `.site-header` / `.site-footer` 类上导致吸顶和页脚样式从未生效（2026-09-05 修复）。
 
@@ -51,7 +53,7 @@
 
 ## 五、内容清单与新增 checklist
 
-- 工具 22：`/icon-forge/`（ICO/PNG 图标）、`/favicon/`、`/compress/`（≤20 张批量）、`/palette/`、`/convert/`（PNG/JPEG/WebP 互转，转 JPEG 铺白底、WebP/PNG 保透明）、`/resize/`（居中裁切 1:1/4:3/16:9/9:16 + 最长边缩放，默认保持原格式）、`/contrast/`（WCAG 对比度检查 + 自动调整）、`/qrcode/`（自研 QR 编码器，字节模式 v1-40，矩阵级验证）、`/barcode/`（Code128/EAN-13/UPC-A/EAN-8）、`/watermark/`、`/gradient/`、`/password/`、`/meta-tags/`、`/text/json/`（JSON 格式化/校验/压缩）、`/text/char-count/`（字数统计 + 阅读时长）、`/text/uuid/`（v4/v1/v5 UUID）、`/pdf/image-to-pdf/`（图片转 PDF，自研零依赖 PDF 写入器：JPEG DCTDecode 直嵌 + xref 表，适配图片/A4/Letter + 方向/边距/质量，透明铺白底）、`/text/diff/`（LCS 行级对比，三色高亮 + 行号 + 统计）、`/text/checksum/`（SHA-256/384/512/1，Web Crypto，期望值一键比对）、`/text/base64/`（Base64/URL 双向编解码，UTF-8 安全）、`/text/timestamp/`（当前时间戳实时 + 秒/毫秒与日期双向互转）、`/wechat-format/`（公众号排版：Markdown 编辑 + 20 套主题 + 样式内联压平，复制到公众号不跑版；由独立单文件工具并入，见 §三·五）
+- 工具 22：`/icon-forge/`（ICO/PNG 图标）、`/favicon/`、`/compress/`（≤20 张批量）、`/palette/`、`/convert/`（PNG/JPEG/WebP 互转，转 JPEG 铺白底、WebP/PNG 保透明）、`/resize/`（居中裁切 1:1/4:3/16:9/9:16 + 最长边缩放，默认保持原格式）、`/contrast/`（WCAG 对比度检查 + 自动调整）、`/qrcode/`（自研 QR 编码器，字节模式 v1-40，矩阵级验证）、`/barcode/`（Code128/EAN-13/UPC-A/EAN-8）、`/watermark/`、`/gradient/`、`/password/`、`/meta-tags/`、`/text/json/`（JSON 格式化/校验/压缩）、`/text/char-count/`（字数统计 + 阅读时长）、`/text/uuid/`（v4/v1/v5 UUID）、`/pdf/image-to-pdf/`（图片转 PDF，自研零依赖 PDF 写入器：JPEG DCTDecode 直嵌 + xref 表，适配图片/A4/Letter + 方向/边距/质量，透明铺白底）、`/text/diff/`（LCS 行级对比，三色高亮 + 行号 + 统计）、`/text/checksum/`（SHA-256/384/512/1，Web Crypto，期望值一键比对）、`/text/base64/`（Base64/URL 双向编解码，UTF-8 安全）、`/text/timestamp/`（当前时间戳实时 + 秒/毫秒与日期双向互转）、`/wechat-format/`（公众号排版：Markdown 编辑 + 20 套主题 + 样式内联压平，复制到公众号不跑版；表格与代码块在手机上不溢出——导出时把表格改写成 `display:table` 结构、防溢出声明作为不变量在主题合并后补齐；由独立单文件工具并入，见 §三·五）
 - 指南 26：ico-file-guide、favicon-guide、dark-mode-icons、image-compression-guide、webp-guide、color-guide、app-icon-sizes、png-to-ico-guide、favicon-not-showing-guide、transparent-icon-guide、accessibility-contrast-guide、qr-not-scanning-guide、barcode-guide、watermark-guide、gradient-guide、password-guide、meta-tags-guide、json-guide、word-count-guide、uuid-guide、jpg-to-pdf-guide、text-diff-guide、checksum-guide、base64-guide、timestamp-guide、wechat-format-guide（均中英双语 `.lb-zh`/`.lb-en` 双块）
 - 信任页：about / privacy / contact + 404（noindex）
 
@@ -60,7 +62,7 @@
 
 ## 五·五、i18n 词典治理（2026-10-13 建立）
 
-`site.js` 的 `I18N` 是全站唯一词典（当前 **1242 键**，中英各一值）。四条硬规则：
+`site.js` 的 `I18N` 是全站唯一词典（当前 **1250 键**，中英各一值）。四条硬规则：
 
 1. **一个键只能定义一次**——JS 对象字面量后写覆盖先写，历史上 15 处重复键把正确英文盖成中文，导致 54/55 页英文模式漏翻。新增词条前先 grep 键名。
 2. **`t()` 对缺失键返回空串**（不是返回键名）——所以「漏定义」表现为**内容凭空消失**（空白标签、空白 toast），而不是裸 key。只 grep 裸 key 的旧测法查不出这类 bug。

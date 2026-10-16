@@ -822,6 +822,8 @@ html.lang-en #preview:empty::before{content:"Type Markdown on the right, or hit 
         <p class="t-faq-a" data-i18n="wxf_faq_5_a">支持。表格可以用「插入表格」设定行列数，代码块保留等宽字体与底色；两者都会被转成公众号能接受的表格 / 段落结构。</p></div>
       <div class="t-faq-item"><h3 class="t-faq-q" data-i18n="wxf_faq_6_q">「联动定位」是什么？会带进导出文件吗？</h3>
         <p class="t-faq-a" data-i18n="wxf_faq_6_a">它是右栏标题行上一个默认关闭的开关：打开后，点预览里的某一段，Markdown 会滚到对应源码行；点源码某一行，预览会滚到对应段落。实现上给每个渲染块临时挂一个源码行号标记，复制到公众号或下载 HTML 前会全部清除，导出产物与不开联动时完全一致。</p></div>
+      <div class="t-faq-item"><h3 class="t-faq-q" data-i18n="wxf_faq_7_q">表格粘到公众号，手机上会飘出屏幕吗？</h3>
+        <p class="t-faq-a" data-i18n="wxf_faq_7_a">不会。微信编辑器会把它收到的表格按粘贴那一刻的渲染宽度烤成固定像素列宽，所以本工具在复制或下载的那一刻把表格改写成微信不再改写的结构；同时把「表格固定布局、单元格允许断词、代码块允许换行」做成 20 套主题共同的约束，换主题也挤不掉。实测 20 套主题 × 320/375/414px 三档共 60 项测量溢出 0px，导出产物里真表格标签 0 个。代价是多列表格改为等宽列；含合并单元格的表格不做改写，仍原样交给微信。</p></div>
     </div>
 
     <h2 data-i18n="related_guides">相关指南</h2>
@@ -1254,9 +1256,23 @@ const DEFAULT_THEME = 'plain';
 
 const STYLES = {};
 /* 合并出某套主题的最终样式表：排字基线 → 强调色派生 → 该套自己的差异覆盖 */
+/* 微信移动端防溢出的合规不变量（规范 1.4.2），不是风格选项：
+   自动布局下 width:100% 只是「希望值」，单元格里不换行的长串（URL、英文单词）
+   会把表格撑到比容器更宽，手机上内容直接飞出屏幕。fixed 布局 + 单元格断词才能钉住。
+   放在主题合并之后补齐，任何主题（含 themeAccent 派生的 th/td）都挤不掉它。 */
+const LAYOUT_SAFE = {
+  table: 'table-layout:fixed;max-width:100%;',
+  th: 'overflow-wrap:anywhere;word-break:break-word;',
+  td: 'overflow-wrap:anywhere;word-break:break-word;',
+  pre: 'white-space:pre-wrap;overflow-wrap:anywhere;',
+};
 function themeStyles(name){
   const t = THEMES[name] || THEMES[DEFAULT_THEME];
-  return Object.assign({}, THEME_BASE, t.accent ? themeAccent(t.accent) : {}, t.over);
+  const s = Object.assign({}, THEME_BASE, t.accent ? themeAccent(t.accent) : {}, t.over);
+  Object.keys(LAYOUT_SAFE).forEach(k => {
+    if (s[k]) s[k] = (/;\s*$/.test(s[k]) ? s[k] : s[k] + ';') + LAYOUT_SAFE[k];
+  });
+  return s;
 }
 function syncStyles(name){
   Object.keys(STYLES).forEach(k => delete STYLES[k]);
@@ -2540,6 +2556,16 @@ function buildPopover(tool, btn){
    - 1.6：text-align 禁用 start/end → 见 normalizeInline 内跳过逻辑
    用户显式设置过的属性仍在 style 中，existing 机制会原样保留 */
 const INLINE_KEYS = ['font-size','font-weight','font-style','text-decoration','color','background-color','text-align','line-height','letter-spacing','text-indent','margin-top','margin-bottom','margin-left','margin-right','padding-top','padding-bottom','padding-left','padding-right','border-left','border-left-color','border-left-width','border-left-style','border-right','border-top','border-bottom','border-collapse','border-radius','white-space','display','vertical-align'];
+function ensureLayoutSafe(el){
+  /* 老草稿、撤销快照、手工粘进预览区的表格都带着生成当时的样式，
+     主题合并的兜底管不到它们，导出前按标签补齐缺的那几条（已有的不覆盖） */
+  const need = LAYOUT_SAFE[el.tagName.toLowerCase()];
+  if (!need) return;
+  const cur = el.getAttribute('style') || '';
+  const missing = need.split(';').map(d => d.trim()).filter(Boolean)
+    .filter(d => cur.toLowerCase().indexOf(d.split(':')[0] + ':') < 0);
+  if (missing.length) el.setAttribute('style', (cur && !/;\s*$/.test(cur) ? cur + ';' : cur) + missing.join(';'));
+}
 function normalizeInline(root){
   const els = [];
   const walker = document.createTreeWalker(root, NodeFilter.SHOW_ELEMENT, {
@@ -2565,6 +2591,7 @@ function normalizeInline(root){
       return true;
     });
     if (cleaned) el.setAttribute('style', kept.join(';'));
+    ensureLayoutSafe(el);
     const cs = getComputedStyle(el);
     const parts = [];
     /* 已存在于 style 的属性不再重复追加，避免多次复制导致样式膨胀 */
@@ -2581,6 +2608,40 @@ function normalizeInline(root){
     if (parts.length) el.style.cssText = (el.getAttribute('style') ? el.getAttribute('style') + ';' : '') + parts.join(';');
   });
 }
+/* 微信编辑器会把真正的 <table> 收进它自己的表格模型，按粘贴那一刻的渲染宽度烤成固定像素：
+   真实已发布文章语料实测为 <table style="...table-layout:fixed;width:577px"> 且每个单元格带
+   data-colwidth="146" width="123"。577px 落在 375px 手机上必然横向溢出，且与内容长短无关——
+   纯中文、无任何长串的表格一样飘出来。我们这边写什么宽度都救不了，只能不给它 <table>。
+   改成 display:table 的 section 结构后，微信按普通节点处理、内联样式原样保留
+   （同一批真实语料里 display:inline-block 出现 373 次、display:flex 130 次，均存活）。
+   只改导出产物，编辑区仍是真表格，工具栏与撤销行为不变。 */
+function tablesToSections(root){
+  /* normalizeInline 会把 computed 的 display:table / table-cell 也写进 style，
+     这里先摘掉再按新结构重写，避免同一条声明出现两遍 */
+  const carry = (s, d) => String(s || '').split(';').map(x => x.trim())
+      .filter(x => x && x.split(':')[0].trim().toLowerCase() !== 'display').join(';') + ';' + d + ';';
+  root.querySelectorAll('table').forEach(tb => {
+    if (tb.querySelector('table')) return;                       /* 嵌套表格改写风险大于收益，原样交给微信 */
+    const cells = tb.querySelectorAll('th,td');
+    if (!cells.length || tb.querySelector('[colspan],[rowspan]')) return;  /* 合并单元格没法用 CSS 表格模型等价表达 */
+    const box = document.createElement('section');
+    box.setAttribute('style', carry(tb.getAttribute('style'), 'display:table'));
+    tb.querySelectorAll('tr').forEach(tr => {
+      const row = document.createElement('section');
+      row.setAttribute('style', 'display:table-row;');
+      tr.querySelectorAll('th,td').forEach(cell => {
+        const sp = document.createElement('span');
+        sp.setAttribute('style', carry(cell.getAttribute('style'), 'display:table-cell'));
+        while (cell.firstChild) sp.appendChild(cell.firstChild);
+        /* 空单元格必须留东西占位：微信会清掉空节点，一行少一格列就错位 */
+        if (!sp.textContent.trim()) sp.appendChild(document.createElement('br'));
+        row.appendChild(sp);
+      });
+      box.appendChild(row);
+    });
+    tb.replaceWith(box);
+  });
+}
 function getPreviewHtml(){
   /* normalizeInline 依赖 getComputedStyle，节点必须在文档内并完成布局才能取到值，
      所以不能直接对脱离文档的克隆做。做法：把副本挂回 preview 的父级（同一层叠上下文）、
@@ -2595,6 +2656,9 @@ function getPreviewHtml(){
   preview.parentElement.appendChild(holder);
   try{
     normalizeInline(clone);
+    /* 顺序不能反：normalizeInline 里的 ensureLayoutSafe 按 table/th/td 标签补防溢出声明，
+       必须先补在真表格上，再改写成 section 结构把样式带过去 */
+    tablesToSections(clone);
     return clone.innerHTML;
   }finally{
     holder.remove();
