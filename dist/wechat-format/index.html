@@ -2476,7 +2476,7 @@ function buildPopover(tool, btn){
       const items = [['0','0px',true],['8px','8px'],['16px','16px'],['32px','32px'],['48px','48px']];
       const curIb = normVal(currentBlockVal('padding-left'));
       html = '<div class="pop-title">' + tx('wxf_tb_indent2','两端缩进') + '</div><div class="pop-list">' + items.map(i =>
-        '<button class="pop-item' + (curIb === i[0] ? ' selected' : '') + '" data-val="' + i[0] + '">' + i[1] + (i[2] ? '<span class="sub" style="color:var(--accent)>' + tx('wxf_pop_default','默认') + '</span>' : '') + '</button>').join('') + '</div>';
+        '<button class="pop-item' + (curIb === i[0] ? ' selected' : '') + '" data-val="' + i[0] + '">' + i[1] + (i[2] ? '<span class="sub" style="color:var(--accent)">' + tx('wxf_pop_default','默认') + '</span>' : '') + '</button>').join('') + '</div>';
       bind = () => popover.querySelectorAll('.pop-item').forEach(el => el.addEventListener('click', () => {
         const v = el.dataset.val;
         applyBlockStyle({'padding-left': v, 'padding-right': v});
@@ -2488,7 +2488,7 @@ function buildPopover(tool, btn){
       const items = [['0','0px',true],['8px','8px'],['16px','16px'],['24px','24px'],['32px','32px'],['40px','40px'],['48px','48px']];
       const curMt = normVal(currentBlockVal('margin-top'));
       html = '<div class="pop-title">' + tx('wxf_tb_mtop','段前距') + '</div><div class="pop-list">' + items.map(i =>
-        '<button class="pop-item' + (curMt === i[0] ? ' selected' : '') + '" data-val="' + i[0] + '">' + i[1] + (i[2] ? '<span class="sub" style="color:var(--accent)>' + tx('wxf_pop_default','默认') + '</span>' : '') + '</button>').join('') + '</div>';
+        '<button class="pop-item' + (curMt === i[0] ? ' selected' : '') + '" data-val="' + i[0] + '">' + i[1] + (i[2] ? '<span class="sub" style="color:var(--accent)">' + tx('wxf_pop_default','默认') + '</span>' : '') + '</button>').join('') + '</div>';
       bind = () => popover.querySelectorAll('.pop-item').forEach(el => el.addEventListener('click', () => {
         applyBlockStyle({'margin-top': el.dataset.val});
         hidePopover();
@@ -2499,7 +2499,7 @@ function buildPopover(tool, btn){
       const items = [['0','0px',true],['8px','8px'],['16px','16px'],['24px','24px'],['32px','32px'],['40px','40px'],['48px','48px']];
       const curMb = normVal(currentBlockVal('margin-bottom'));
       html = '<div class="pop-title">' + tx('wxf_tb_mbottom','段后距') + '</div><div class="pop-list">' + items.map(i =>
-        '<button class="pop-item' + (curMb === i[0] ? ' selected' : '') + '" data-val="' + i[0] + '">' + i[1] + (i[2] ? '<span class="sub" style="color:var(--accent)>' + tx('wxf_pop_default','默认') + '</span>' : '') + '</button>').join('') + '</div>';
+        '<button class="pop-item' + (curMb === i[0] ? ' selected' : '') + '" data-val="' + i[0] + '">' + i[1] + (i[2] ? '<span class="sub" style="color:var(--accent)">' + tx('wxf_pop_default','默认') + '</span>' : '') + '</button>').join('') + '</div>';
       bind = () => popover.querySelectorAll('.pop-item').forEach(el => el.addEventListener('click', () => {
         applyBlockStyle({'margin-bottom': el.dataset.val});
         hidePopover();
@@ -2510,7 +2510,7 @@ function buildPopover(tool, btn){
       const items = [['1','1'],['1.5','1.5'],['1.6','1.6',true],['1.75','1.75'],['2','2'],['3','3'],['4','4'],['5','5']];
       const curLh = currentBlockVal('line-height');
       html = '<div class="pop-title">' + tx('wxf_tb_lh','行间距') + '</div><div class="pop-list">' + items.map(i =>
-        '<button class="pop-item' + (curLh === i[0] ? ' selected' : '') + '" data-val="' + i[0] + '">' + i[1] + (i[2] ? '<span class="sub" style="color:var(--accent)>' + tx('wxf_pop_default','默认') + '</span>' : '') + '</button>').join('') + '</div>';
+        '<button class="pop-item' + (curLh === i[0] ? ' selected' : '') + '" data-val="' + i[0] + '">' + i[1] + (i[2] ? '<span class="sub" style="color:var(--accent)">' + tx('wxf_pop_default','默认') + '</span>' : '') + '</button>').join('') + '</div>';
       bind = () => popover.querySelectorAll('.pop-item').forEach(el => el.addEventListener('click', () => {
         applyBlockStyle({'line-height': el.dataset.val});
         hidePopover();
@@ -2521,7 +2521,7 @@ function buildPopover(tool, btn){
       const items = [['0','0px',true],['0.5px','0.5px'],['1px','1px'],['2px','2px']];
       const curLs = normVal(currentStyleVal('letter-spacing'));
       html = '<div class="pop-title">' + tx('wxf_tb_ls','字间距') + '</div><div class="pop-list">' + items.map(i =>
-        '<button class="pop-item' + (curLs === i[0] ? ' selected' : '') + '" data-val="' + i[0] + '">' + i[1] + (i[2] ? '<span class="sub" style="color:var(--accent)>' + tx('wxf_pop_default','默认') + '</span>' : '') + '</button>').join('') + '</div>';
+        '<button class="pop-item' + (curLs === i[0] ? ' selected' : '') + '" data-val="' + i[0] + '">' + i[1] + (i[2] ? '<span class="sub" style="color:var(--accent)">' + tx('wxf_pop_default','默认') + '</span>' : '') + '</button>').join('') + '</div>';
       bind = () => popover.querySelectorAll('.pop-item').forEach(el => el.addEventListener('click', () => {
         applyCharStyle('letter-spacing', el.dataset.val);
         hidePopover();
