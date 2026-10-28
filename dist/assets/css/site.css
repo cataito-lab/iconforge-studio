@@ -108,6 +108,20 @@ html.dark .brand__logo--light { display: inline-block; }
   border-left: 1px solid var(--border);
 }
 
+/* 移动端汉堡按钮：桌面端隐藏 */
+.nav-toggle {
+  display: none;
+  background: none; border: 1px solid var(--border);
+  color: var(--text-2);
+  width: 38px; height: 38px;
+  border-radius: var(--radius-sm);
+  align-items: center; justify-content: center;
+  cursor: pointer;
+  transition: color .15s, border-color .15s;
+}
+.nav-toggle:hover { color: var(--text); border-color: var(--text-3); }
+.nav-toggle svg { width: 20px; height: 20px; }
+
 .nav { display: flex; align-items: center; gap: 2px; }
 .nav a {
   text-decoration: none;
@@ -360,7 +374,26 @@ html.dark .theme-switch .ico-sun { display: none; }
 @media (max-width: 640px) {
   .hero { padding: 36px 0 30px; }
   .hero__title { font-size: 30px; }
-  .nav { display: none; }
+  /* 移动端：显示汉堡按钮，nav 收起为下拉面板 */
+  .nav-toggle { display: inline-flex; }
+  .nav {
+    display: none;
+    position: absolute; top: 100%; left: 0; right: 0;
+    flex-direction: column; align-items: stretch; gap: 2px;
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
+    padding: 10px 16px 14px;
+    box-shadow: var(--shadow-md);
+  }
+  #site-header.nav-open .nav { display: flex; }
+  .nav a { padding: 10px 12px; font-size: 14px; }
+  .nav-more-btn { width: 100%; justify-content: space-between; padding: 10px 12px; font-size: 14px; }
+  .nav-more-menu {
+    position: static; display: block;
+    box-shadow: none; border: none;
+    padding: 2px 0 4px 12px; min-width: 0;
+  }
+  .nav-more-menu a { font-size: 13px; padding: 8px 12px; }
   .brand__name small { display: none; }
   .tool-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
   .tool-card { padding: 14px; }

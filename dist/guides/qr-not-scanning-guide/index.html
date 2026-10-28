@@ -19,6 +19,10 @@
 <meta name="twitter:title" content="二维码扫不出来排查">
 <meta name="twitter:description" content="8 个常见原因与排查步骤，60 秒快速自检。">
 <link rel="canonical" href="https://tools.cataito.com/guides/qr-not-scanning-guide/">
+<meta property="og:image" content="https://tools.cataito.com/assets/img/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:image" content="https://tools.cataito.com/assets/img/og-image.png">
 <link rel="icon" type="image/png" href="/assets/img/cataito-logo.png">
 <link rel="stylesheet" href="/assets/css/site.css">
 <script src="/assets/js/theme-init.js"></script>
@@ -258,15 +262,15 @@
       <div class="toc">
         <p class="toc-title">Table of Contents</p>
         <ol>
-          <li><a href="#check">60-Second Quick Check</a></li>
-          <li><a href="#causes">8 Common Causes (Ranked by Hit Rate)</a></li>
-          <li><a href="#regen">Regenerating With the Right Settings</a></li>
-          <li><a href="#print">Print &amp; Display Best Practices</a></li>
-          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#check-en">60-Second Quick Check</a></li>
+          <li><a href="#causes-en">8 Common Causes (Ranked by Hit Rate)</a></li>
+          <li><a href="#regen-en">Regenerating With the Right Settings</a></li>
+          <li><a href="#print-en">Print &amp; Display Best Practices</a></li>
+          <li><a href="#faq-en">FAQ</a></li>
         </ol>
       </div>
 
-      <h2 id="check">60-Second Quick Check</h2>
+      <h2 id="check-en">60-Second Quick Check</h2>
       <p>Spend a minute ruling out the environment before blaming the code itself:</p>
       <ol class="t-steps">
         <li><strong>Try another phone</strong>: ideally a different brand — many issues are scanner-specific;</li>
@@ -276,7 +280,7 @@
       </ol>
       <p>If it still fails across phones, distances, and lighting, work through the causes below.</p>
 
-      <h2 id="causes">8 Common Causes (Ranked by Hit Rate)</h2>
+      <h2 id="causes-en">8 Common Causes (Ranked by Hit Rate)</h2>
 
       <h3>1. Insufficient contrast (highest hit rate)</h3>
       <p>Light-gray or beige modules on white "look okay" on screen but confuse the camera. Higher contrast = more reliable scanning — <strong>dark modules on white is the only recommended combination</strong>. Avoid light foregrounds and the camera-blind pure red/green.</p>
@@ -302,7 +306,7 @@
       <h3>8. Encoding mistakes</h3>
       <p>A typo in the URL, a missing https://, unencoded Chinese — the code scans fine but lands on a 404. These "scans but wrong" issues are fixed at generation: test immediately after generating.</p>
 
-      <h2 id="regen">Regenerating With the Right Settings</h2>
+      <h2 id="regen-en">Regenerating With the Right Settings</h2>
       <p>Use this site's <a href="/qrcode/">QR Code Generator</a> with these baselines — everything runs in your browser:</p>
       <ol class="t-steps">
         <li><strong>Content</strong>: verify the URL character by character; shorten long links first;</li>
@@ -312,7 +316,7 @@
       </ol>
       <p>Test with two phones immediately after generating — never skip this. For the same ranked-causes methodology applied to favicons, see <a href="/guides/favicon-not-showing-guide/">Favicon Not Showing</a>: environment first, then the artifact.</p>
 
-      <h2 id="print">Print &amp; Display Best Practices</h2>
+      <h2 id="print-en">Print &amp; Display Best Practices</h2>
       <ul>
         <li><strong>Minimum size</strong>: 2×2 cm on print; scale by one tenth of the distance for posters;</li>
         <li><strong>Output resolution</strong>: ≥ 300 DPI — QR codes are hard-edged graphics, vector output is best;</li>
@@ -321,7 +325,7 @@
         <li><strong>Supporting text</strong>: caption what the code opens ("Scan for our website") to lower the attempt cost.</li>
       </ul>
 
-      <h2 id="faq">FAQ</h2>
+      <h2 id="faq-en">FAQ</h2>
       <div class="faq-item"><p class="faq-q">Q: How small can a printed QR code be?</p><p class="faq-a">A: One tenth of the scanning distance: at 30 cm, at least 3 cm square. Denser (higher-version) codes are harder to scan at the same size, so keep print codes at least 2×2 cm, scale poster codes by distance, and always keep the quiet zone.</p></div>
       <div class="faq-item"><p class="faq-q">Q: Which error-correction level should I choose?</p><p class="faq-a">A: L (7%) is sparsest and easiest to scan — good for plain on-screen URLs. M (15%) is the all-purpose balance; Q (25%) suits print and light wear; H (30%) is for logo overlays and harsh environments. When in doubt, M — higher levels pack denser modules and get harder to scan at small sizes.</p></div>
       <div class="faq-item"><p class="faq-q">Q: Do QR codes expire?</p><p class="faq-a">A: Static QR codes never expire: the content lives in the pattern itself. What "expires" is a wrapped short link inside the code — if the generator routes through a short-link service and that service dies, the code dies. Use static codes or your own domain redirect for anything important. And always scan-test before printing: the code won't change, but a typo'd destination is dead on arrival.</p></div>

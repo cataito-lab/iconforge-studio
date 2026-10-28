@@ -19,6 +19,10 @@
 <meta name="twitter:title" content="图片压缩指南">
 <meta name="twitter:description" content="JPG/PNG/WebP 怎么选、质量参数怎么调、免费在线批量压缩。">
 <link rel="canonical" href="https://tools.cataito.com/guides/image-compression-guide/">
+<meta property="og:image" content="https://tools.cataito.com/assets/img/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:image" content="https://tools.cataito.com/assets/img/og-image.png">
 <link rel="icon" type="image/png" href="/assets/img/cataito-logo.png">
 <link rel="stylesheet" href="/assets/css/site.css">
 <script src="/assets/js/theme-init.js"></script>
@@ -252,16 +256,16 @@
       <div class="toc">
         <p class="toc-title">Table of Contents</p>
         <ol>
-          <li><a href="#why">Why Image Compression Is Worth It</a></li>
-          <li><a href="#formats">JPEG vs PNG vs WebP: How to Choose</a></li>
-          <li><a href="#quality">What the Quality Slider Actually Does</a></li>
-          <li><a href="#resize">Max-Edge Limits: More Effective Than Quality</a></li>
-          <li><a href="#howto">Batch Compression Step by Step</a></li>
-          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#why-en">Why Image Compression Is Worth It</a></li>
+          <li><a href="#formats-en">JPEG vs PNG vs WebP: How to Choose</a></li>
+          <li><a href="#quality-en">What the Quality Slider Actually Does</a></li>
+          <li><a href="#resize-en">Max-Edge Limits: More Effective Than Quality</a></li>
+          <li><a href="#howto-en">Batch Compression Step by Step</a></li>
+          <li><a href="#faq-en">FAQ</a></li>
         </ol>
       </div>
 
-      <h2 id="why">Why Image Compression Is Worth It</h2>
+      <h2 id="why-en">Why Image Compression Is Worth It</h2>
       <p>For most web pages, <strong>images account for more than half of the total page weight</strong>. An uncompressed phone photo is easily 3–8 MB, while the same visual quality can often fit in 200–500 KB. Smaller images mean:</p>
       <ul>
         <li><strong>Faster loading</strong>: hero images directly affect LCP (Largest Contentful Paint), a core Core Web Vitals metric and a Google ranking signal;</li>
@@ -270,7 +274,7 @@
       </ul>
       <p>Real measurements: a 1600×1200 photo (about 64 KB JPEG source) drops to <strong>about 14 KB (−78%)</strong> in smart mode; a 900×900 transparent PNG (about 491 KB) becomes <strong>about 5.6 KB (−99%)</strong> as WebP.</p>
 
-      <h2 id="formats">JPEG vs PNG vs WebP: How to Choose</h2>
+      <h2 id="formats-en">JPEG vs PNG vs WebP: How to Choose</h2>
       <p>No format is absolutely better — only right for the job:</p>
       <table>
         <tr><th>Format</th><th>Compression</th><th>Transparency</th><th>Best for</th></tr>
@@ -286,7 +290,7 @@
       </ul>
       <p>Want to go deeper on WebP — why it's smaller, browser support, and when to use it? See the <a href="/guides/webp-guide/">WebP Format Guide</a>. Just need a format change without compression? Use the <a href="/convert/">Image Converter</a> directly.</p>
 
-      <h2 id="quality">What the Quality Slider Actually Controls</h2>
+      <h2 id="quality-en">What the Quality Slider Actually Controls</h2>
       <p>JPEG and lossy WebP "quality" determines <strong>how much visually-insensitive information gets discarded</strong>. The pattern:</p>
       <ul>
         <li><strong>90–100</strong>: visually indistinguishable from the original, but savings are minimal — sometimes the "compressed" file is even larger;</li>
@@ -295,11 +299,11 @@
       </ul>
       <p>This site's compressor defaults to 80, right in the middle of the sweet spot. After compressing, zoom to 100% and check the details — <strong>every project's content is different, and 10 seconds of verification is worth it</strong>.</p>
 
-      <h2 id="resize">Max-Edge Limits: More Effective Than Quality</h2>
+      <h2 id="resize-en">Max-Edge Limits: More Effective Than Quality</h2>
       <p>A phone original is often 4000×3000, but web layouts rarely display wider than 1920px. <strong>Reducing the longest edge from 4000 to 1920 cuts total pixels by 77%</strong> — more effective than any quality setting, with virtually no visible difference on a web page.</p>
       <p>Suggested limits: blog/news images <strong>1920px</strong>; in-content images <strong>1280px</strong>; thumbnails <strong>800px</strong>. If the source is already small (say 600px wide), keep "original size" — never upscale.</p>
 
-      <h2 id="howto">Batch Compression Step by Step</h2>
+      <h2 id="howto-en">Batch Compression Step by Step</h2>
       <p>This site's <a href="/compress/">Image Compressor</a> runs entirely in your browser — images are never uploaded:</p>
       <ol class="t-steps">
         <li><strong>Batch upload</strong>: click or drag in up to 20 images at once — JPG / PNG / WebP all supported.</li>
@@ -309,7 +313,7 @@
       </ol>
       <p>A thoughtful detail: if a file would grow rather than shrink (already highly optimized), the tool <strong>honestly keeps the original</strong> and labels it in the list — you never download a worse, larger "compressed" copy.</p>
 
-      <h2 id="faq">FAQ</h2>
+      <h2 id="faq-en">FAQ</h2>
       <div class="faq-item"><p class="faq-q">Q: JPEG, PNG, or WebP — which should I pick?</p><p class="faq-a">A: Rule of thumb — photos and opaque screenshots: JPEG or WebP; transparent logos and icons: WebP or PNG; unsure: compress as both and keep the smaller, which is exactly what smart mode does automatically.</p></div>
       <div class="faq-item"><p class="faq-q">Q: What quality setting should I use?</p><p class="faq-a">A: For web display, 70–85 offers the best trade-off: below 60 risks blocky artifacts; above 90 grows files fast with no visible gain. Portraits can go higher; thumbnails lower.</p></div>
       <div class="faq-item"><p class="faq-q">Q: Will compression make images blurry?</p><p class="faq-a">A: Lossy compression at high quality settings is essentially indistinguishable; lossless PNG changes no pixels at all. Reducing the max edge drops total pixels but is usually visually lossless for web use.</p></div>

@@ -19,6 +19,10 @@
 <meta name="twitter:title" content="SHA-256 校验和验证指南">
 <meta name="twitter:description" content="下载文件完整性校验全解。">
 <link rel="canonical" href="https://tools.cataito.com/guides/checksum-guide/">
+<meta property="og:image" content="https://tools.cataito.com/assets/img/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:image" content="https://tools.cataito.com/assets/img/og-image.png">
 <link rel="icon" type="image/png" href="/assets/img/cataito-logo.png">
 <link rel="stylesheet" href="/assets/css/site.css">
 <script src="/assets/js/theme-init.js"></script>
@@ -207,16 +211,16 @@
       <div class="toc">
         <p class="toc-title">Table of Contents</p>
         <ol>
-          <li><a href="#what">What a checksum is</a></li>
-          <li><a href="#why">Why verify downloads</a></li>
-          <li><a href="#cli">Command line on three platforms</a></li>
-          <li><a href="#online">No terminal? Local online tools</a></li>
-          <li><a href="#troubleshoot">Troubleshooting failed checks</a></li>
-          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#what-en">What a checksum is</a></li>
+          <li><a href="#why-en">Why verify downloads</a></li>
+          <li><a href="#cli-en">Command line on three platforms</a></li>
+          <li><a href="#online-en">No terminal? Local online tools</a></li>
+          <li><a href="#troubleshoot-en">Troubleshooting failed checks</a></li>
+          <li><a href="#faq-en">FAQ</a></li>
         </ol>
       </div>
 
-      <h2 id="what">What a checksum is</h2>
+      <h2 id="what-en">What a checksum is</h2>
       <p>SHA-256 is a <strong>cryptographic hash function</strong>: it maps any input (a file, a text) to a fixed 64-hex-character "fingerprint":</p>
       <pre><code>e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855</code></pre>
       <p>Three key properties:</p>
@@ -226,7 +230,7 @@
         <li><strong>Irreversible &amp; collision-resistant</strong>: can't reverse the fingerprint, and finding two files with one fingerprint is practically impossible — hence hard to forge</li>
       </ul>
 
-      <h2 id="why">Why verify downloads</h2>
+      <h2 id="why-en">Why verify downloads</h2>
       <ul>
         <li><strong>Incomplete downloads</strong>: big-file transfers break; a truncated installer fails oddly — a hash check reveals it instantly</li>
         <li><strong>Tampering in transit</strong>: mirrors, internal proxies, or compromised CDNs can hand you modified files</li>
@@ -234,7 +238,7 @@
       </ul>
       <p>The workflow is simple: the publisher announces <code>file + SHA-256</code>; you hash your downloaded file locally and install only when the two match.</p>
 
-      <h2 id="cli">Command line on three platforms</h2>
+      <h2 id="cli-en">Command line on three platforms</h2>
       <table>
         <thead><tr><th>Platform</th><th>Command</th></tr></thead>
         <tbody>
@@ -245,10 +249,10 @@
       </table>
       <p>Note: <code>Get-FileHash</code> supports SHA1/SHA256/SHA384/SHA512/MD5; <code>certutil</code> algorithm-name casing varies by version — <code>SHA256</code> is the safe spelling.</p>
 
-      <h2 id="online">No terminal? Local online tools</h2>
+      <h2 id="online-en">No terminal? Local online tools</h2>
       <p>For a graphical option, use a <strong>browser-local</strong> checker (like our <a href="/text/checksum/">SHA Checksum tool</a>): drop the file in for an instant digest, paste the expected value for auto-comparison — files are never uploaded, as safe as the command line, and it handles multi-GB images.</p>
 
-      <h2 id="troubleshoot">Troubleshooting failed checks</h2>
+      <h2 id="troubleshoot-en">Troubleshooting failed checks</h2>
       <ol class="t-steps">
         <li><strong>Same algorithm?</strong> A SHA-1 value never matches a SHA-256 field — check the published algorithm name first.</li>
         <li><strong>Clean copy?</strong> Web copies often carry spaces, line breaks, and case differences — our tool ignores them; others may not.</li>
@@ -256,7 +260,7 @@
         <li><strong>Re-download from the official source</strong>: if all else is ruled out, the file itself is bad — don't install or run it.</li>
       </ol>
 
-      <h2 id="faq">FAQ</h2>
+      <h2 id="faq-en">FAQ</h2>
       <div class="faq-item"><p class="faq-q">Q: Are hash and checksum the same thing?</p><p class="faq-a">A: "Checksum" is the umbrella term; "hash" specifically means cryptographic digests like SHA-256. In daily use they're interchangeable, but hashes are far stronger than legacy summation checks.</p></div>
       <div class="faq-item"><p class="faq-q">Q: SHA-1 or SHA-256?</p><p class="faq-a">A: Prefer SHA-256; SHA-1 is broken and only for legacy manifests. Always match the publisher's published algorithm.</p></div>
       <div class="faq-item"><p class="faq-q">Q: How do I compute SHA-256 on Windows?</p><p class="faq-a">A: PowerShell: Get-FileHash filename -Algorithm SHA256; CMD: certutil -hashfile filename SHA256; or drop the file into a local browser tool.</p></div>

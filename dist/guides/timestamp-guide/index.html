@@ -19,6 +19,10 @@
 <meta name="twitter:title" content="Unix 时间戳指南">
 <meta name="twitter:description" content="秒/毫秒、时区陷阱与代码速查。">
 <link rel="canonical" href="https://tools.cataito.com/guides/timestamp-guide/">
+<meta property="og:image" content="https://tools.cataito.com/assets/img/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:image" content="https://tools.cataito.com/assets/img/og-image.png">
 <link rel="icon" type="image/png" href="/assets/img/cataito-logo.png">
 <link rel="stylesheet" href="/assets/css/site.css">
 <script src="/assets/js/theme-init.js"></script>
@@ -221,23 +225,23 @@ FROM_UNIXTIME(1780000000)         -- 秒 → datetime</code></pre>
       <div class="toc">
         <p class="toc-title">Table of Contents</p>
         <ol>
-          <li><a href="#definition">What a timestamp is</a></li>
-          <li><a href="#units">10-digit seconds vs 13-digit ms</a></li>
-          <li><a href="#timezone">Time zone traps</a></li>
-          <li><a href="#iso8601">Writing ISO 8601</a></li>
-          <li><a href="#cheatsheet">Per-language snippets</a></li>
-          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#definition-en">What a timestamp is</a></li>
+          <li><a href="#units-en">10-digit seconds vs 13-digit ms</a></li>
+          <li><a href="#timezone-en">Time zone traps</a></li>
+          <li><a href="#iso8601-en">Writing ISO 8601</a></li>
+          <li><a href="#cheatsheet-en">Per-language snippets</a></li>
+          <li><a href="#faq-en">FAQ</a></li>
         </ol>
       </div>
 
-      <h2 id="definition">What a timestamp is</h2>
+      <h2 id="definition-en">What a timestamp is</h2>
       <p>A Unix timestamp is the number of seconds or milliseconds elapsed since <strong>1970-01-01 00:00:00 UTC</strong> (the epoch) — a pure-numeric absolute instant:</p>
       <pre><code>0            → 1970-01-01 00:00:00 UTC
 1780000000   → some second around 2026-05-29 (seconds)
 1780000000000 → the same instant (milliseconds)</code></pre>
       <p>It depends on no time zone and no language format — which is why logs, databases, and APIs all use it.</p>
 
-      <h2 id="units">10-digit seconds vs 13-digit ms</h2>
+      <h2 id="units-en">10-digit seconds vs 13-digit ms</h2>
       <table>
         <thead><tr><th>Form</th><th>Unit</th><th>Typical source</th></tr></thead>
         <tbody>
@@ -247,7 +251,7 @@ FROM_UNIXTIME(1780000000)         -- 秒 → datetime</code></pre>
       </table>
       <p>Conversion is ×1000 / ÷1000. Our <a href="/text/timestamp/">Timestamp tool</a> auto-detects by digit count with a manual override.</p>
 
-      <h2 id="timezone">Time zone traps</h2>
+      <h2 id="timezone-en">Time zone traps</h2>
       <ul>
         <li><strong>Timestamps have no time zone</strong>: they're absolute durations; only rendering as "2026-09-27 14:00" involves a zone</li>
         <li><strong>An 8-hour offset isn't a bug</strong>: it's the fixed UTC vs Beijing (UTC+8) difference</li>
@@ -255,13 +259,13 @@ FROM_UNIXTIME(1780000000)         -- 秒 → datetime</code></pre>
         <li><strong>Store UTC in databases</strong>: localize at the display layer — mixing the two is the #1 source of time zone bugs</li>
       </ul>
 
-      <h2 id="iso8601">Writing ISO 8601</h2>
+      <h2 id="iso8601-en">Writing ISO 8601</h2>
       <pre><code>2026-09-27T14:00:00Z            (Z = UTC, most standard)
 2026-09-27T14:00:00+08:00       (with an offset)
 2026-09-27T14:00:00             ⚠ no zone — parsers guess, don't do this</code></pre>
       <p>Rule: <strong>ISO 8601 (with zone) for humans, timestamps for machines</strong>.</p>
 
-      <h2 id="cheatsheet">Per-language snippets</h2>
+      <h2 id="cheatsheet-en">Per-language snippets</h2>
       <pre><code>// JavaScript (ms)
 Date.now()                        // current ms
 new Date(1780000000000)           // ms → Date
@@ -284,7 +288,7 @@ time.Now().UnixMilli()            // milliseconds
 UNIX_TIMESTAMP()                  -- current s
 FROM_UNIXTIME(1780000000)         -- s → datetime</code></pre>
 
-      <h2 id="faq">FAQ</h2>
+      <h2 id="faq-en">FAQ</h2>
       <div class="faq-item"><p class="faq-q">Q: Why does the same timestamp show different dates in different zones?</p><p class="faq-a">A: Timestamps are absolute from UTC, zone-free; local zones only enter when displaying. Pass timestamps between systems; localize at display.</p></div>
       <div class="faq-item"><p class="faq-q">Q: Seconds or milliseconds?</p><p class="faq-a">A: 10 digits = seconds, 13 = milliseconds — a 1000× relationship.</p></div>
       <div class="faq-item"><p class="faq-q">Q: Does the 2038 problem still matter?</p><p class="faq-a">A: Only for 32-bit signed second timestamps on legacy devices (capped 2038-01-19); 64-bit systems and ms timestamps are fine.</p></div>

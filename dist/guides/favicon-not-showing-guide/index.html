@@ -19,6 +19,10 @@
 <meta name="twitter:title" content="Favicon 不显示排查指南">
 <meta name="twitter:description" content="8 个常见原因、开发者工具排查法与正确的 favicon 写法。">
 <link rel="canonical" href="https://tools.cataito.com/guides/favicon-not-showing-guide/">
+<meta property="og:image" content="https://tools.cataito.com/assets/img/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:image" content="https://tools.cataito.com/assets/img/og-image.png">
 <link rel="icon" type="image/png" href="/assets/img/cataito-logo.png">
 <link rel="stylesheet" href="/assets/css/site.css">
 <script src="/assets/js/theme-init.js"></script>
@@ -258,15 +262,15 @@
       <div class="toc">
         <p class="toc-title">Table of Contents</p>
         <ol>
-          <li><a href="#quickcheck">The 60-Second Check</a></li>
-          <li><a href="#causes">8 Common Causes</a></li>
-          <li><a href="#steps">Diagnose with DevTools</a></li>
-          <li><a href="#html">Correct Favicon Markup</a></li>
-          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#quickcheck-en">The 60-Second Check</a></li>
+          <li><a href="#causes-en">8 Common Causes</a></li>
+          <li><a href="#steps-en">Diagnose with DevTools</a></li>
+          <li><a href="#html-en">Correct Favicon Markup</a></li>
+          <li><a href="#faq-en">FAQ</a></li>
         </ol>
       </div>
 
-      <h2 id="quickcheck">The 60-Second Check</h2>
+      <h2 id="quickcheck-en">The 60-Second Check</h2>
       <p>Do these four steps first — they resolve most cases on the spot:</p>
       <ul>
         <li><strong>Hard refresh</strong>: <code>Ctrl+F5</code> (Mac: <code>Cmd+Shift+R</code>) to bypass cache for the page and its icon;</li>
@@ -275,7 +279,7 @@
         <li><strong>Try another browser</strong> — different caches help you quickly split "site-wide problem" from "this machine's problem".</li>
       </ul>
 
-      <h2 id="causes">8 Common Causes (Ranked by Hit Rate)</h2>
+      <h2 id="causes-en">8 Common Causes (Ranked by Hit Rate)</h2>
 
       <h3>1. Cache — by far the most common</h3>
       <p>Favicon caching is bizarrely stubborn: browsers cache it separately from regular images, sometimes for weeks. <strong>Fix</strong>: hard refresh + incognito test; on release, bump a version query (<code>/favicon.ico?v=2</code>) — the most reliable forced update.</p>
@@ -306,7 +310,7 @@
       <h3>8. Extensions or local data</h3>
       <p>Some privacy extensions block icon requests; bookmarks/home-screen shortcuts keep their own stale copies. After ruling out 1–7, verify once from another device.</p>
 
-      <h2 id="steps">Diagnose with DevTools</h2>
+      <h2 id="steps-en">Diagnose with DevTools</h2>
       <p>If the quick check didn't crack it, open <strong>DevTools (F12)</strong> — two minutes to find the broken layer:</p>
       <ol class="t-steps">
         <li><strong>Network panel</strong>: press <code>F12</code> → Network tab → check "Disable cache";</li>
@@ -317,7 +321,7 @@
       </ol>
       <p>Status 200 with correct content but the tab still shows the old icon? That's the most stubborn local icon cache — try another device or wait it out; other visitors aren't affected.</p>
 
-      <h2 id="html">Correct Favicon Markup</h2>
+      <h2 id="html-en">Correct Favicon Markup</h2>
       <p>The most complete modern set (inside <code>&lt;head&gt;</code>):</p>
       <pre><code>&lt;!-- Fallback: legacy browsers &amp; default requests --&gt;
 &lt;link rel="icon" href="/favicon.ico" sizes="32x32"&gt;
@@ -327,7 +331,7 @@
 &lt;link rel="apple-touch-icon" href="/apple-touch-icon.png"&gt;</code></pre>
       <p>Key points: use <strong>root-relative paths</strong> (starting with <code>/</code>) so they don't shift with page URLs; the fallback ICO should carry 16/32/48; the full cross-platform size list lives in the <a href="/guides/favicon-guide/">Favicon guide</a>. To generate the whole set from one image, use the <a href="/favicon/">Favicon Generator</a>.</p>
 
-      <h2 id="faq">FAQ</h2>
+      <h2 id="faq-en">FAQ</h2>
       <div class="faq-item"><p class="faq-q">Q: Why does the old favicon still show after I replaced it?</p><p class="faq-a">A: Almost always cache — and multiple layers of it: the browser's local icon cache, HTTP cache, and CDN cache. In order: hard refresh (Ctrl+F5), incognito window, visit the favicon file URL directly to see if it's the new one; if not, add a version query (/favicon.ico?v=2) and purge the CDN.</p></div>
       <div class="faq-item"><p class="faq-q">Q: Does favicon.ico have to be in the site root?</p><p class="faq-a">A: Not required, but root placement is a long-standing convention — browsers request /favicon.ico automatically even without a declaration. Any other location or filename needs an explicit link rel="icon" declaration.</p></div>
       <div class="faq-item"><p class="faq-q">Q: ICO, PNG, or SVG favicon — which one?</p><p class="faq-a">A: Combine them: a .ico with 16/32/48px at the root as the fallback (legacy browsers and default requests), plus PNG/SVG link declarations for hi-dpi rendering in modern browsers. Most generators output the whole set at once.</p></div>

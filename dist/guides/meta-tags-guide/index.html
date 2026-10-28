@@ -262,16 +262,16 @@
       <div class="toc">
         <p class="toc-title">Table of Contents</p>
         <ol>
-          <li><a href="#og">What Is the OG Protocol</a></li>
-          <li><a href="#image">og:image: The 1200×630 Spec</a></li>
-          <li><a href="#length">Title &amp; Description Lengths</a></li>
-          <li><a href="#debug">Debugging: Validators &amp; Cache Refresh</a></li>
-          <li><a href="#why">Why Cards Fail to Render</a></li>
-          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#og-en">What Is the OG Protocol</a></li>
+          <li><a href="#image-en">og:image: The 1200×630 Spec</a></li>
+          <li><a href="#length-en">Title &amp; Description Lengths</a></li>
+          <li><a href="#debug-en">Debugging: Validators &amp; Cache Refresh</a></li>
+          <li><a href="#why-en">Why Cards Fail to Render</a></li>
+          <li><a href="#faq-en">FAQ</a></li>
         </ol>
       </div>
 
-      <h2 id="og">What Is the OG Protocol</h2>
+      <h2 id="og-en">What Is the OG Protocol</h2>
       <p>OG (Open Graph) is a page-level metadata protocol introduced by Facebook in 2010 and now the de facto standard: when a link is shared, Facebook, X/Twitter, LinkedIn, WhatsApp, Telegram, Slack, Discord and most other platforms read the <code>og:*</code> tags in <code>&lt;head&gt;</code> to render the card. The core four:</p>
       <pre><code>&lt;meta property="og:type" content="website"&gt;
 &lt;meta property="og:title" content="Page Title"&gt;
@@ -281,7 +281,7 @@
       <p>The Twitter Card system adds only one essential tag: <code>&lt;meta name="twitter:card" content="summary_large_image"&gt;</code>, which declares the large-image layout. Everything else — twitter:title, twitter:description, twitter:image — falls back to the matching OG tag when absent. <strong>One OG set plus one twitter:card covers nearly every platform.</strong></p>
       <p>If you'd rather not hand-write them, the <a href="/meta-tags/">Meta Tag Generator</a> takes a title, description, and image URL once and outputs a complete, paste-ready block.</p>
 
-      <h2 id="image">og:image: The 1200×630 Spec</h2>
+      <h2 id="image-en">og:image: The 1200×630 Spec</h2>
       <p>The image is the most visible part of the card and the easiest to get wrong. The common denominator across platforms:</p>
       <ul>
         <li><strong>Size</strong>: <strong>1200×630 pixels</strong> (about 1.91:1). Facebook's declared large-image standard; X's summary_large_image is designed to the same ratio; LinkedIn and WeChat handle it well. Larger is fine — platforms scale and crop;</li>
@@ -293,7 +293,7 @@
       </ul>
       <p>Also add <code>og:image:width</code> and <code>og:image:height</code>: they let platforms reserve layout space before the image finishes downloading, speeding first render.</p>
 
-      <h2 id="length">Title &amp; Description Lengths</h2>
+      <h2 id="length-en">Title &amp; Description Lengths</h2>
       <p>Platforms have no hard truncation limit — text just gets an ellipsis when it doesn't fit. Plan by display width:</p>
       <table>
         <thead>
@@ -308,7 +308,7 @@
       </table>
       <p>Remember og:title and <code>&lt;title&gt;</code> serve different audiences: the former is scanned in a social feed — short, direct, benefit-led; the latter serves search results, where keywords and a brand suffix help. Writing them independently works best.</p>
 
-      <h2 id="debug">Debugging: Validators &amp; Cache Refresh</h2>
+      <h2 id="debug-en">Debugging: Validators &amp; Cache Refresh</h2>
       <p>Don't verify by "sending it to a friend". Every major platform ships an official debugger that simulates its own crawler and lists <strong>exactly what it fetched</strong>:</p>
       <ol class="t-steps">
         <li><strong>Facebook / Meta</strong>: Sharing Debugger (developers.facebook.com/tools/debug/) — paste the URL, hit Debug, and see every fetched tag plus an image preview;</li>
@@ -318,7 +318,7 @@
       </ol>
       <p>The debugger also has a second job: <strong>re-scraping refreshes the cache</strong>. Hit "Scrape Again" in Facebook Debugger, or resubmit in Post Inspector. If you fixed the tags but shares still show old content, it's cache nine times out of ten — re-scrape first, verify second. For platforms without a debugger (like WeChat), appending a harmless query parameter (<code>?v=2</code>) turns the link into a "new" one and forces a fresh fetch.</p>
 
-      <h2 id="why">Why Cards Fail to Render</h2>
+      <h2 id="why-en">Why Cards Fail to Render</h2>
       <p>When the card doesn't render, troubleshoot in this order:</p>
       <h3>1. og:image isn't an https absolute URL</h3>
       <p><code>content="/img/cover.png"</code> or an <code>http://</code> address. Crawlers require a complete, publicly reachable https URL; relative paths simply fail to resolve. Also check the image isn't blocked by hotlink protection, a firewall, or a login wall — the debugger's image preview exposes these instantly.</p>
@@ -329,7 +329,7 @@
       <p>This ranked-causes, use-the-official-tool methodology is the same one that solves static-asset issues — the <a href="/guides/favicon-not-showing-guide/">Favicon Not Showing</a> guide follows the identical playbook: confirm the file is reachable, check the reference path, then suspect the cache.</p>
       <p>For generating the block, copying it, and pasting it back into <code>&lt;head&gt;</code>, the <a href="/meta-tags/">Meta Tag Generator</a> does it in one pass so no field gets skipped.</p>
 
-      <h2 id="faq">FAQ</h2>
+      <h2 id="faq-en">FAQ</h2>
       <div class="faq-item"><p class="faq-q">Q: Do OG tags directly affect SEO rankings?</p><p class="faq-a">A: No — Google ranks on &lt;title&gt;, &lt;meta name="description"&gt;, and the content itself. But OG tags decide how your link's card looks on social platforms: a compelling title and a crisp image drive click-through, and clicks plus link sharing influence SEO indirectly. In short: OG earns no ranking points, but without it a shared link is a bare URL — and that loss is very real.</p></div>
       <div class="faq-item"><p class="faq-q">Q: How big should og:image be?</p><p class="faq-a">A: 1200×630 pixels (about 1.91:1) — Facebook's declared standard, the ratio X's summary_large_image card is designed for, and one that WeChat and LinkedIn handle well. Keep the file under ~1 MB to be safe (platform caps differ; 1 MB avoids crawler timeouts), in JPG or PNG. Images under 200×200 get demoted to small thumbnails or dropped.</p></div>
       <div class="faq-item"><p class="faq-q">Q: Why do shares still show old content after I changed the tags?</p><p class="faq-a">A: Platforms fetch and cache OG data, then reuse the cache for every future share of the same URL. Fix it with each platform's official debugger (Facebook Sharing Debugger, X Card Validator, LinkedIn Post Inspector): a fresh scrape refreshes the cache. Platforms without a debugger usually re-fetch if you share a URL with a new query parameter (?v=2).</p></div>

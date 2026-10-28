@@ -19,6 +19,10 @@
 <meta name="twitter:title" content="强密码指南">
 <meta name="twitter:description" content="长度/随机性/不复用三要素与熵的计算，密码管理器配合指南。">
 <link rel="canonical" href="https://tools.cataito.com/guides/password-guide/">
+<meta property="og:image" content="https://tools.cataito.com/assets/img/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:image" content="https://tools.cataito.com/assets/img/og-image.png">
 <link rel="icon" type="image/png" href="/assets/img/cataito-logo.png">
 <link rel="stylesheet" href="/assets/css/site.css">
 <script src="/assets/js/theme-init.js"></script>
@@ -259,16 +263,16 @@
       <div class="toc">
         <p class="toc-title">Table of Contents</p>
         <ol>
-          <li><a href="#pillars">The Three Pillars of a Strong Password</a></li>
-          <li><a href="#entropy">Entropy: The Ruler of Password Strength</a></li>
-          <li><a href="#manager">Working With a Password Manager</a></li>
-          <li><a href="#confusable">About Look-Alike Characters</a></li>
-          <li><a href="#personal">Why Personal Information Makes Terrible Passwords</a></li>
-          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#pillars-en">The Three Pillars of a Strong Password</a></li>
+          <li><a href="#entropy-en">Entropy: The Ruler of Password Strength</a></li>
+          <li><a href="#manager-en">Working With a Password Manager</a></li>
+          <li><a href="#confusable-en">About Look-Alike Characters</a></li>
+          <li><a href="#personal-en">Why Personal Information Makes Terrible Passwords</a></li>
+          <li><a href="#faq-en">FAQ</a></li>
         </ol>
       </div>
 
-      <h2 id="pillars">The Three Pillars of a Strong Password</h2>
+      <h2 id="pillars-en">The Three Pillars of a Strong Password</h2>
       <p>Whether a password is strong comes down to exactly three things:</p>
       <ol class="t-steps">
         <li><strong>Length</strong>: the most effective source of strength. Each extra character multiplies the search space by the alphabet size (×62 for letters+digits);</li>
@@ -277,7 +281,7 @@
       </ol>
       <p>Put together, the practical standard is: <strong>one independently generated random password per account, 16+ characters</strong>. Memorizing dozens of these is impossible — which is why the third pillar points to the password manager below.</p>
 
-      <h2 id="entropy">Entropy: The Ruler of Password Strength</h2>
+      <h2 id="entropy-en">Entropy: The Ruler of Password Strength</h2>
       <p>"Strong" is vague; cryptography quantifies it with <strong>entropy</strong>, measured in bits — how many binary guesses an attacker needs on average. It depends on exactly two things: <strong>alphabet size × length</strong>, provided every character is truly random.</p>
       <p>Each character contributes roughly log2(alphabet size) bits:</p>
       <table>
@@ -293,7 +297,7 @@
       <p>Useful baselines: 80+ bits is comfortable against offline cracking; 100+ bits is effectively unguessable with foreseeable hardware. By contrast, a password assembled from common words plus a year — however long and however many exclamation marks — often carries <strong>under 20 bits of real entropy</strong>, because every choice in it was made by a human. That's why "P@ssw0rd2024" is worthless: the character classes look fancy, but nothing is random.</p>
       <p>So don't try to stuff symbols in yourself — <strong>let a machine pick</strong>. Generate a 16–32 character random string with the <a href="/password/">Password Generator</a>, where length and alphabet are explicit and the entropy is computable at a glance.</p>
 
-      <h2 id="manager">Working With a Password Manager</h2>
+      <h2 id="manager-en">Working With a Password Manager</h2>
       <p>The manager solves "what happens after generation". The division of labor is simple:</p>
       <ol class="t-steps">
         <li><strong>The manager stores</strong>: dozens of random passwords sit encrypted in one vault with autofill — you only memorize a master password;</li>
@@ -303,7 +307,7 @@
       </ol>
       <p>When choosing a manager, check three things: zero-knowledge encryption (the vendor can't decrypt your vault), open source or independently audited, and solid autofill with cross-device sync. Browser "save password" features are a stopgap, without dedicated generation or guaranteed encryption strength.</p>
 
-      <h2 id="confusable">About Look-Alike Characters</h2>
+      <h2 id="confusable-en">About Look-Alike Characters</h2>
       <p>Many generators offer an "exclude look-alike characters" option that drops <code>l</code> / <code>1</code> / <code>I</code> and <code>O</code> / <code>0</code>. Whether to use it depends on the scenario:</p>
       <ul>
         <li><strong>Copy-paste scenarios: don't exclude</strong>. Web and app logins paste or autofill the string — look-alikes can't be misread, and the full alphabet means slightly more entropy;</li>
@@ -312,7 +316,7 @@
       </ul>
       <p>Hyphen grouping (like <code>k7m2-qp9x</code>) exists purely for easier reading aloud and transcription — paste the whole thing as one string.</p>
 
-      <h2 id="personal">Why Personal Information Makes Terrible Passwords</h2>
+      <h2 id="personal-en">Why Personal Information Makes Terrible Passwords</h2>
       <p>"Name + birthday" is the most intuitive password material — which is exactly why attackers try it first. A targeted attack's dictionary is typically built in this order:</p>
       <ol class="t-steps">
         <li>Your name, its romanization, initials, nicknames, and handles;</li>
@@ -323,7 +327,7 @@
       <p>The first two categories are public on social profiles, company pages, and photo EXIF data; the last two ship as defaults in every cracking tool. The subtler trap is <strong>patterned reuse</strong>: "name + first letter of the site" looks unique per site, but once one breached account reveals the rule, every account falls with it.</p>
       <p>The conclusion is simple: password material must have zero connection to who you are, and only machine randomness guarantees that. Generate, store in a manager, and memorize one master password — this flow sidesteps every trap above. And once you've changed a password, copy the 2FA recovery codes into the vault's secure notes as well.</p>
 
-      <h2 id="faq">FAQ</h2>
+      <h2 id="faq-en">FAQ</h2>
       <div class="faq-item"><p class="faq-q">Q: How long does a password need to be?</p><p class="faq-a">A: For random passwords over upper/lowercase letters and digits, 16 characters is the current mainstream floor (~95 bits of entropy), and 20–32 is safer where the manager allows it. The shorter the password, the more the character variety has to compensate: lowercase-only needs roughly 20+ characters for comparable strength. Length is the easiest strength to add — add length first.</p></div>
       <div class="faq-item"><p class="faq-q">Q: What is entropy and how do I estimate a password's strength?</p><p class="faq-a">A: Entropy measures unpredictability in bits. Estimate it as log2(alphabet size) per character — about 4.7 bits/char for lowercase, 5.95 for 62 characters of letters+digits, 6.5 with all symbols. Multiply by length: 16 characters of letters+digits ≈ 95 bits, while a human-assembled "name + birthday" password may carry under 20 bits and fall to brute force within hours.</p></div>
       <div class="faq-item"><p class="faq-q">Q: Can password managers be trusted? What if I forget the master password?</p><p class="faq-a">A: Reputable managers use zero-knowledge encryption: data is encrypted locally before upload, so the vendor can't see your passwords — far safer than browser-saved plaintext plus cross-site reuse. The real single point of failure is the master password: write it on paper kept somewhere safe and set up recovery (emergency contact, recovery key). If you forget it with no recovery in place, the data is unrecoverable by design — that's the point.</p></div>

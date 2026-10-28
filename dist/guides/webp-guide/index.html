@@ -19,6 +19,10 @@
 <meta name="twitter:title" content="WebP 格式指南">
 <meta name="twitter:description" content="WebP 是什么、为什么更小、何时用、怎么转 WebP。">
 <link rel="canonical" href="https://tools.cataito.com/guides/webp-guide/">
+<meta property="og:image" content="https://tools.cataito.com/assets/img/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:image" content="https://tools.cataito.com/assets/img/og-image.png">
 <link rel="icon" type="image/png" href="/assets/img/cataito-logo.png">
 <link rel="stylesheet" href="/assets/css/site.css">
 <script src="/assets/js/theme-init.js"></script>
@@ -258,20 +262,20 @@
       <div class="toc">
         <p class="toc-title">Table of Contents</p>
         <ol>
-          <li><a href="#what">What Is WebP</a></li>
-          <li><a href="#why">Why It Is Smaller Than JPEG/PNG</a></li>
-          <li><a href="#compare">WebP vs JPEG vs PNG</a></li>
-          <li><a href="#when">When to Use WebP</a></li>
-          <li><a href="#support">Browser Support</a></li>
-          <li><a href="#howto">How to Convert Images to WebP</a></li>
-          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#what-en">What Is WebP</a></li>
+          <li><a href="#why-en">Why It Is Smaller Than JPEG/PNG</a></li>
+          <li><a href="#compare-en">WebP vs JPEG vs PNG</a></li>
+          <li><a href="#when-en">When to Use WebP</a></li>
+          <li><a href="#support-en">Browser Support</a></li>
+          <li><a href="#howto-en">How to Convert Images to WebP</a></li>
+          <li><a href="#faq-en">FAQ</a></li>
         </ol>
       </div>
 
-      <h2 id="what">What Is WebP</h2>
+      <h2 id="what-en">What Is WebP</h2>
       <p>WebP is a <strong>modern image format</strong> introduced by Google in 2010, using predictive coding derived from VP8/VP9 video compression. It supports <strong>both lossy and lossless compression</strong>, as well as <strong>transparency (alpha)</strong> and animation — making it an all-in-one successor to JPEG, PNG, and GIF. Browser support is now excellent, and it is the default first choice for optimizing images on the web.</p>
 
-      <h2 id="why">Why It Is Smaller Than JPEG/PNG</h2>
+      <h2 id="why-en">Why It Is Smaller Than JPEG/PNG</h2>
       <p>At equal perceived quality, WebP is typically <strong>25–35% smaller</strong> than JPEG (Google's own tests) and even further ahead of PNG. The reason is its <strong>predictive coding</strong>: it encodes differences using the similarity between neighboring pixel blocks, instead of compressing each block independently like older formats.</p>
       <ul>
         <li>For <strong>photographic content</strong>, lossy WebP achieves smaller files at the same "looks about the same" setting;</li>
@@ -279,7 +283,7 @@
       </ul>
       <p>Real measurements: a 900×900 transparent PNG (about 491 KB) becomes about <strong>5.6 KB (−99%)</strong> as lossless WebP; a 1600×1200 photo can drop to roughly 60–75% of its JPEG size as lossy WebP.</p>
 
-      <h2 id="compare">WebP vs JPEG vs PNG</h2>
+      <h2 id="compare-en">WebP vs JPEG vs PNG</h2>
       <p>No format is absolutely better — only right for the job:</p>
       <table>
         <tr><th>Format</th><th>Compression</th><th>Transparency</th><th>Best for</th></tr>
@@ -288,7 +292,7 @@
         <tr><td>WebP</td><td>Lossy or lossless</td><td>Yes</td><td>Modern replacement for both — smaller at equal quality, prefer for new projects</td></tr>
       </table>
 
-      <h2 id="when">When to Use WebP</h2>
+      <h2 id="when-en">When to Use WebP</h2>
       <p><strong>Reach for WebP when:</strong></p>
       <ul>
         <li>Images on a website (article hero, product shots, banners) — the most direct win for load speed;</li>
@@ -303,7 +307,7 @@
       </ul>
       <p>Unsure how to choose between JPG/PNG/WebP, or how to tune quality and max-edge limits? See the <a href="/guides/image-compression-guide/">Image Compression Guide</a>.</p>
 
-      <h2 id="support">Browser Support</h2>
+      <h2 id="support-en">Browser Support</h2>
       <p>All modern browsers support WebP: <strong>Chrome, Edge, Firefox, and Safari 14+</strong>. The only one left out is Internet Explorer.</p>
       <p>For projects that must support older environments, use the <strong><code>&lt;picture&gt;</code> element for graceful degradation</strong>: serve WebP first and automatically fall back to JPEG/PNG where unsupported:</p>
       <pre><code>&lt;picture&gt;
@@ -311,7 +315,7 @@
   &lt;img src="image.jpg" alt="..."&gt;
 &lt;/picture&gt;</code></pre>
 
-      <h2 id="howto">How to Convert Images to WebP</h2>
+      <h2 id="howto-en">How to Convert Images to WebP</h2>
       <p>This site's <a href="/compress/">Image Compressor</a> runs entirely in your browser — images are never uploaded. Pick "WebP" or "Smart":</p>
       <ol class="t-steps">
         <li><strong>Batch upload</strong>: click or drag in up to 20 images at once — JPG / PNG / WebP all supported.</li>
@@ -321,7 +325,7 @@
       </ol>
       <p>Transparent images keep their alpha as WebP (no white box). If a file would grow after conversion (already optimized), the tool <strong>honestly keeps the original</strong>. Just want a format change without compression? Use the <a href="/convert/">Image Converter</a> for PNG / JPEG / WebP conversion.</p>
 
-      <h2 id="faq">FAQ</h2>
+      <h2 id="faq-en">FAQ</h2>
       <div class="faq-item"><p class="faq-q">Q: How much smaller is WebP than JPEG/PNG?</p><p class="faq-a">A: At equal perceived quality, WebP is typically 25–35% smaller than JPEG (Google's own data), and even more ahead of PNG — especially for transparent images, which often shrink to a fraction of the original.</p></div>
       <div class="faq-item"><p class="faq-q">Q: Does WebP support transparency?</p><p class="faq-a">A: Yes. Both lossy and lossless WebP support an alpha channel, while JPEG has no transparency at all. When you need transparency but want smaller files, WebP is the modern replacement for PNG.</p></div>
       <div class="faq-item"><p class="faq-q">Q: Which browsers support WebP?</p><p class="faq-a">A: All modern browsers do: Chrome, Edge, Firefox, and Safari 14+. The only one left out is the long-dead Internet Explorer. For older environments, use the picture element to gracefully fall back to JPEG/PNG.</p></div>

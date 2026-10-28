@@ -19,6 +19,10 @@
 <meta name="twitter:title" content="PNG 转 ICO 完全指南">
 <meta name="twitter:description" content="三种 PNG 转 ICO 方法，多尺寸与透明度完整说明。">
 <link rel="canonical" href="https://tools.cataito.com/guides/png-to-ico-guide/">
+<meta property="og:image" content="https://tools.cataito.com/assets/img/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:image" content="https://tools.cataito.com/assets/img/og-image.png">
 <link rel="icon" type="image/png" href="/assets/img/cataito-logo.png">
 <link rel="stylesheet" href="/assets/css/site.css">
 <script src="/assets/js/theme-init.js"></script>
@@ -255,20 +259,20 @@
       <div class="toc">
         <p class="toc-title">Table of Contents</p>
         <ol>
-          <li><a href="#what">What Is an ICO File</a></li>
-          <li><a href="#why">When You Need PNG → ICO</a></li>
-          <li><a href="#methods">Three Ways to Convert</a></li>
-          <li><a href="#tips">Things to Watch Out For</a></li>
-          <li><a href="#compare">PNG vs ICO</a></li>
-          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#what-en">What Is an ICO File</a></li>
+          <li><a href="#why-en">When You Need PNG → ICO</a></li>
+          <li><a href="#methods-en">Three Ways to Convert</a></li>
+          <li><a href="#tips-en">Things to Watch Out For</a></li>
+          <li><a href="#compare-en">PNG vs ICO</a></li>
+          <li><a href="#faq-en">FAQ</a></li>
         </ol>
       </div>
 
-      <h2 id="what">What Is an ICO File</h2>
+      <h2 id="what-en">What Is an ICO File</h2>
       <p>ICO is <strong>Windows' icon container format</strong>. Unlike PNG — one file, one image — a single ICO can <strong>pack multiple sizes</strong> (16 / 32 / 48 / 64 / 128 / 256px) into one file, and the system picks the best fit per context: 16px for browser tabs, 32px for the taskbar, 48px+ for desktop. For the format's history and internals, see the <a href="/guides/ico-file-guide/">complete ICO file guide</a>.</p>
       <p>PNG is the general-purpose format: lossless, transparent, but always a single image with no "size directory". So the common workflow is "PNG as source material, ICO as deliverable" — which needs a conversion step.</p>
 
-      <h2 id="why">When You Need PNG → ICO</h2>
+      <h2 id="why-en">When You Need PNG → ICO</h2>
       <ul>
         <li><strong>Website favicon</strong>: browsers request <code>/favicon.ico</code> from the site root by default; an ICO containing 16/32/48px is the most compatible option;</li>
         <li><strong>Windows desktop/app icons</strong>: shortcuts, folders, and your own software all expect .ico;</li>
@@ -276,7 +280,7 @@
       </ul>
       <p>Conversely, macOS uses icns and high-DPI web contexts prefer PNG/SVG declarations — no ICO needed. See the <a href="/guides/app-icon-sizes/">app icon sizes guide</a> for a cross-platform cheat sheet.</p>
 
-      <h2 id="methods">Three Ways to Convert</h2>
+      <h2 id="methods-en">Three Ways to Convert</h2>
 
       <h3>Option 1: Online Converter (Recommended — Free &amp; Local)</h3>
       <p>Use this site's <a href="/icon-forge/">Icon Forge</a> — everything runs in your browser, images never leave your device, and it packs all sizes in one go:</p>
@@ -295,7 +299,7 @@
       <pre><code>magick logo.png -define icon:auto-resize=256,128,64,48,32,16 logo.ico</code></pre>
       <p><code>icon:auto-resize</code> scales and packs each size automatically. Best for build scripts and automation; for a one-off file, an online tool is faster.</p>
 
-      <h2 id="tips">Things to Watch Out For</h2>
+      <h2 id="tips-en">Things to Watch Out For</h2>
       <ul>
         <li><strong>256px is the ceiling</strong>: the ICO spec allows up to 256×256 per image. Larger sources (say 1024px) get scaled to 256 first — fine quality-wise, but don't expect 512px inside an ICO; that's PWA/macOS territory;</li>
         <li><strong>Start square</strong>: non-square images get padded or stretched — center-crop to 1:1 before converting (the <a href="/resize/">Crop &amp; Resize tool</a> does this in batches);</li>
@@ -304,7 +308,7 @@
         <li><strong>16px is a dark art</strong>: complex logos inevitably blur at that size; professionals draw a simplified mark for it. Icon Forge supports separate Light/Dark variants for exactly these cases.</li>
       </ul>
 
-      <h2 id="compare">PNG vs ICO</h2>
+      <h2 id="compare-en">PNG vs ICO</h2>
       <table>
         <tr><th>Aspect</th><th>PNG</th><th>ICO</th></tr>
         <tr><td>Contents</td><td>One image</td><td>A container holding multiple sizes</td></tr>
@@ -315,7 +319,7 @@
       </table>
       <p>In one line: <strong>PNG is the asset, ICO is the deliverable</strong>. Keep designs in PNG; ship ICO to Windows and favicons.</p>
 
-      <h2 id="faq">FAQ</h2>
+      <h2 id="faq-en">FAQ</h2>
       <div class="faq-item"><p class="faq-q">Q: What's the difference between ICO and PNG?</p><p class="faq-a">A: PNG is a plain image format — one file, one image. ICO is Windows' icon container: one file can hold multiple sizes (16/32/48/256px), and the system picks the right one per context. You need ICO for favicons and Windows app icons.</p></div>
       <div class="faq-item"><p class="faq-q">Q: Can I just rename .png to .ico?</p><p class="faq-a">A: No. ICO is a container format with its own header and multi-image structure; renaming the extension doesn't change the file structure, and most consumers will misread or reject it. Use a real converter.</p></div>
       <div class="faq-item"><p class="faq-q">Q: What's the maximum size inside an ICO?</p><p class="faq-a">A: 256×256 per image, per the spec. Converters should pack sizes up to 256 and downscale anything larger first. Bigger targets (macOS icns, PWA 512px) belong to other formats.</p></div>

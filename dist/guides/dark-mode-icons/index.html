@@ -19,6 +19,10 @@
 <meta name="twitter:title" content="暗色图标设计指南">
 <meta name="twitter:description" content="深色模式图标设计原则与双变体生成。">
 <link rel="canonical" href="https://tools.cataito.com/guides/dark-mode-icons/">
+<meta property="og:image" content="https://tools.cataito.com/assets/img/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:image" content="https://tools.cataito.com/assets/img/og-image.png">
 <link rel="icon" type="image/png" href="/assets/img/cataito-logo.png">
 <link rel="stylesheet" href="/assets/css/site.css">
 <script src="/assets/js/theme-init.js"></script>
@@ -310,17 +314,17 @@
       <div class="toc">
         <p class="toc-title">Table of Contents</p>
         <ol>
-          <li><a href="#why-dark">Why Dark Icons Deserve Their Own Design</a></li>
-          <li><a href="#principles">Three Core Principles</a></li>
-          <li><a href="#app-icons">App Icons: Dark Backgrounds Done Right</a></li>
-          <li><a href="#ui-icons">UI Icons: The Two-Variant Strategy</a></li>
-          <li><a href="#favicon-dark">Favicons That Follow Dark Mode</a></li>
-          <li><a href="#generate">Generate Dual-Theme Icons in One Click</a></li>
-          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#why-dark-en">Why Dark Icons Deserve Their Own Design</a></li>
+          <li><a href="#principles-en">Three Core Principles</a></li>
+          <li><a href="#app-icons-en">App Icons: Dark Backgrounds Done Right</a></li>
+          <li><a href="#ui-icons-en">UI Icons: The Two-Variant Strategy</a></li>
+          <li><a href="#favicon-dark-en">Favicons That Follow Dark Mode</a></li>
+          <li><a href="#generate-en">Generate Dual-Theme Icons in One Click</a></li>
+          <li><a href="#faq-en">FAQ</a></li>
         </ol>
       </div>
 
-      <h2 id="why-dark">Why Dark Icons Deserve Their Own Design</h2>
+      <h2 id="why-dark-en">Why Dark Icons Deserve Their Own Design</h2>
       <p>Since 2020, iOS, Android, Windows, and macOS have all made system-wide dark mode standard, and many users keep it on permanently. Dark mode is not just "swap the background to black" — <strong>the same icon set reads differently on light and dark backgrounds</strong>, in legibility, hierarchy, and mood. Reusing light-mode icons verbatim causes three classic failures:</p>
       <ul>
         <li><strong>Contrast collapse</strong>: dark gray icons vanish on dark backgrounds; light gray ones wash out on light ones;</li>
@@ -353,7 +357,7 @@
         </div>
       </div>
 
-      <h2 id="principles">Three Core Principles</h2>
+      <h2 id="principles-en">Three Core Principles</h2>
       <h3>1. Contrast first</h3>
       <p>On dark backgrounds, use <strong>light gray around #E8EAF0</strong> for foregrounds rather than pure white — pure white glares against dark surfaces, while light gray feels softer and layered. The reverse holds too: avoid pure black (#000) for dark fills; <strong>#16181F to #1E212B dark gray-blue</strong> keeps icon boundaries even on OLED screens.</p>
       <h3>2. Replace shadows with luminance differences</h3>
@@ -362,7 +366,7 @@
       <p>The same brand color looks darker and duller on a dark background (a quirk of human vision). Compensate by brightening the accent a notch: for example, #6366F1 can shift to #7C7FF5 in dark mode. Any brand color covering large icon areas deserves this correction.</p>
       <p>To get systematic about choosing colors in the first place — the color wheel, complementary/analogous/triadic/monochromatic schemes, and the 60-30-10 rule — see the <a href="/guides/color-guide/">Color Theory Guide</a>. Once decided, verify text-on-background contrast against WCAG AA / AAA with the <a href="/contrast/">Contrast Checker</a>.</p>
 
-      <h2 id="app-icons">App Icons: Dark Backgrounds Done Right</h2>
+      <h2 id="app-icons-en">App Icons: Dark Backgrounds Done Right</h2>
       <p>Brand app icons usually ship as one universal set — the key is that it must work on both light and dark wallpapers. The modern convention is a <strong>"dark gray base + brightened foreground" design that works everywhere</strong>:</p>
       <table>
         <tr><th>Element</th><th>Light theme</th><th>Dark theme</th></tr>
@@ -373,7 +377,7 @@
       </table>
       <p>Windows 11 and Android 13+ can auto-switch between light and dark app icons based on system theme (via ICO resources or adaptive icons); macOS has supported dark icons since Big Sur. Adapting requires <strong>having both finished variants in hand</strong> — exactly what Icon Forge's Dark variant feature solves (below).</p>
 
-      <h2 id="ui-icons">UI Icons: The Two-Variant Strategy</h2>
+      <h2 id="ui-icons-en">UI Icons: The Two-Variant Strategy</h2>
       <p>For in-interface functional icons (settings, search, back...), maintain <strong>one glyph with two stroke colors</strong>: dark strokes for light mode, light strokes for dark mode. Don't draw two sets of paths — use <code>currentColor</code> in SVG or CSS variables, and one glyph adapts to both themes automatically:</p>
       <pre><code>&lt;svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
      stroke-width="1.8" stroke-linecap="round"&gt;
@@ -382,7 +386,7 @@
 &lt;/svg&gt;</code></pre>
       <p>The icon color always matches body text — zero-cost theme switching. Only brand graphics (logos, illustrations) genuinely need two drawn versions.</p>
 
-      <h2 id="favicon-dark">Favicons That Follow Dark Mode</h2>
+      <h2 id="favicon-dark-en">Favicons That Follow Dark Mode</h2>
       <p>Browser tab bars come in light and dark variants too. To make your favicon follow the system theme, provide an SVG version with a media query:</p>
       <pre><code>&lt;!-- favicon.svg --&gt;
 &lt;svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"&gt;
@@ -399,7 +403,7 @@
 &lt;/svg&gt;</code></pre>
       <p>Chrome, Edge, and Firefox follow the system setting; Safari's SVG favicon support is limited, so <strong>keep the PNG/ICO fallbacks</strong> and declare the SVG last as progressive enhancement. The favicon.ico and apple-touch-icon should use neutral colors readable on both. See the <a href="/guides/favicon-guide/">Complete Favicon Guide</a> for full HTML declarations.</p>
 
-      <h2 id="generate">Generate Dual-Theme Icons in One Click</h2>
+      <h2 id="generate-en">Generate Dual-Theme Icons in One Click</h2>
       <p>Hand-crafting two complete icon sets is tedious. <a href="/icon-forge/">Icon Forge</a> on this site has a built-in <strong>Dark variant</strong> feature built exactly for this:</p>
       <ol class="t-steps">
         <li><strong>Upload one source image</strong>: any square logo (PNG/JPG/WebP/SVG); the tool auto-corrects to 1:1.</li>
@@ -409,7 +413,7 @@
       </ol>
       <p>Everything runs locally in your browser; images are never uploaded — safe for commercial logos.</p>
 
-      <h2 id="faq">FAQ</h2>
+      <h2 id="faq-en">FAQ</h2>
       <div class="faq-item"><p class="faq-q">Q: Do all icons need a dark-mode redesign?</p><p class="faq-a">A: No. Functional UI icons adapt automatically via currentColor/CSS variables; only brand graphics (app icons, logos, illustrations) are worth true dual variants.</p></div>
       <div class="faq-item"><p class="faq-q">Q: Pure white or light gray for dark-mode foregrounds?</p><p class="faq-a">A: Light gray (around #E8EAF0). Pure white is over-contrasted and glaring on dark surfaces; light gray is more comfortable and keeps depth.</p></div>
       <div class="faq-item"><p class="faq-q">Q: Why not pure black for dark bases?</p><p class="faq-a">A: OLED system backgrounds are often pure black — a pure black icon merges with them and loses its boundary. #16181F-ish dark gray-blue keeps the dark look while preserving the outline.</p></div>

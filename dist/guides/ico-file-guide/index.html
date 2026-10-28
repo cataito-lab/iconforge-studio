@@ -19,6 +19,10 @@
 <meta name="twitter:title" content="ICO 文件完全指南">
 <meta name="twitter:description" content="什么是 .ico、尺寸规范与在线制作方法，免费本地处理。">
 <link rel="canonical" href="https://tools.cataito.com/guides/ico-file-guide/">
+<meta property="og:image" content="https://tools.cataito.com/assets/img/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:image" content="https://tools.cataito.com/assets/img/og-image.png">
 <link rel="icon" type="image/png" href="/assets/img/cataito-logo.png">
 <link rel="stylesheet" href="/assets/css/site.css">
 <script src="/assets/js/theme-init.js"></script>
@@ -277,23 +281,23 @@
       <div class="toc">
         <p class="toc-title">Table of Contents</p>
         <ol>
-          <li><a href="#what-is-ico">What Is an ICO File</a></li>
-          <li><a href="#ico-vs-png">ICO vs PNG</a></li>
-          <li><a href="#where-used">Where Windows Uses .ico</a></li>
-          <li><a href="#sizes">Standard ICO Sizes</a></li>
-          <li><a href="#how-to-make">How to Create an ICO Online</a></li>
-          <li><a href="#set-icon">How to Change a Windows Icon</a></li>
-          <li><a href="#mac-linux">macOS and Linux</a></li>
-          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#what-is-ico-en">What Is an ICO File</a></li>
+          <li><a href="#ico-vs-png-en">ICO vs PNG</a></li>
+          <li><a href="#where-used-en">Where Windows Uses .ico</a></li>
+          <li><a href="#sizes-en">Standard ICO Sizes</a></li>
+          <li><a href="#how-to-make-en">How to Create an ICO Online</a></li>
+          <li><a href="#set-icon-en">How to Change a Windows Icon</a></li>
+          <li><a href="#mac-linux-en">macOS and Linux</a></li>
+          <li><a href="#faq-en">FAQ</a></li>
         </ol>
       </div>
 
-      <h2 id="what-is-ico">What Is an ICO File?</h2>
+      <h2 id="what-is-ico-en">What Is an ICO File?</h2>
       <p>An <strong>ICO file is Windows' native icon format</strong> (short for "icon"), with the <code>.ico</code> extension. It is not an image codec but a <strong>container format</strong>: a single .ico file can hold multiple images at different sizes and color depths, and Windows automatically picks the best one for each context — desktop, taskbar, File Explorer, and so on.</p>
       <p>This design solves a very practical problem: the same icon appears at wildly different sizes. The taskbar shows only 16–24px, the desktop 48px, and File Explorer can zoom up to 256px. Storing one carefully drawn bitmap per size inside a single file keeps the icon crisp everywhere.</p>
       <p>The format dates back to Windows 1.0 (1985) and originally used BMP encoding internally. Since Windows Vista, images inside the container may be PNG-encoded, which keeps 256px artwork remarkably small.</p>
 
-      <h2 id="ico-vs-png">ICO vs PNG: What's the Difference?</h2>
+      <h2 id="ico-vs-png-en">ICO vs PNG: What's the Difference?</h2>
       <p>A common question: PNG is an image too — can't you just use it as an icon? Here are the key differences:</p>
       <table>
         <tr><th>Aspect</th><th>ICO</th><th>PNG</th></tr>
@@ -305,7 +309,7 @@
       </table>
       <p>In short: <strong>a PNG is "one image"; an ICO is "a set of images."</strong> Renaming a PNG to .ico does not produce a valid file — the internal structures are entirely different, and a real conversion tool is required.</p>
 
-      <h2 id="where-used">Where Windows Uses .ico</h2>
+      <h2 id="where-used-en">Where Windows Uses .ico</h2>
       <ul>
         <li><strong>Desktop &amp; taskbar</strong>: app shortcuts and pinned programs;</li>
         <li><strong>File Explorer</strong>: file-type associations, custom folder icons;</li>
@@ -313,7 +317,7 @@
         <li><strong>Favicons</strong>: the browser tab icon — favicon.ico in the site root remains the most compatible option.</li>
       </ul>
 
-      <h2 id="sizes">Standard ICO Sizes</h2>
+      <h2 id="sizes-en">Standard ICO Sizes</h2>
       <p>When creating an ICO, pack all of the following sizes to cover every Windows scenario:</p>
       <table>
         <tr><th>Size</th><th>Typical usage</th></tr>
@@ -328,7 +332,7 @@
       <p>Note: <strong>256×256 is the spec's per-image limit</strong>. On high-DPI screens (125%/150%/200% scaling), Windows scales from a larger entry, so the more sizes you pack, the more stable the rendering.</p>
       <p>ICO covers the Windows side only. For the full set of iOS / Android / macOS / PWA app icons, see the <a href="/guides/app-icon-sizes/">App Icon Sizes Cheat Sheet</a>.</p>
 
-      <h2 id="how-to-make">How to Create an ICO File Online</h2>
+      <h2 id="how-to-make-en">How to Create an ICO File Online</h2>
       <p>We recommend <a href="/icon-forge/">Icon Forge</a> on this site — free, no sign-up, and <strong>everything runs locally in your browser; your images are never uploaded to any server</strong>, which matters for unreleased logos and commercial assets.</p>
       <ol class="t-steps">
         <li><strong>Prepare a square logo</strong>: PNG with transparency, at least 256×256 (the larger the source, the sharper the output).</li>
@@ -337,7 +341,7 @@
         <li><strong>Generate &amp; export</strong>: one click produces a fully-packed .ico plus individual PNGs at every size.</li>
       </ol>
 
-      <h2 id="set-icon">How to Change a Windows Icon</h2>
+      <h2 id="set-icon-en">How to Change a Windows Icon</h2>
       <p>With your .ico in hand, changing a shortcut's icon takes three steps:</p>
       <ol>
         <li>Right-click the shortcut and choose <strong>Properties</strong>;</li>
@@ -346,10 +350,10 @@
       </ol>
       <p>For folders: right-click → Properties → Customize → Change Icon. Icons embedded in an EXE itself cannot be swapped this way; that requires a resource editor.</p>
 
-      <h2 id="mac-linux">macOS and Linux</h2>
+      <h2 id="mac-linux-en">macOS and Linux</h2>
       <p>macOS uses its own <strong>.icns</strong> format — also a multi-size container (16–1024px), buildable from a set of PNGs with the <code>iconutil</code> command. Linux desktops (GNOME/KDE) use PNG/SVG icons directly. What all platforms share: <strong>a high-quality square source image is always step one</strong>.</p>
 
-      <h2 id="faq">FAQ</h2>
+      <h2 id="faq-en">FAQ</h2>
       <div class="faq-item"><p class="faq-q">Q: What is the maximum size of an ICO image?</p><p class="faq-a">A: 256×256 pixels. Anything larger violates the spec and won't be recognized by Windows; converters usually skip or downscale it.</p></div>
       <div class="faq-item"><p class="faq-q">Q: Can one .ico contain multiple sizes?</p><p class="faq-a">A: Yes — that is the core of the format. Packing all seven sizes (16/24/32/48/64/128/256) is recommended.</p></div>
       <div class="faq-item"><p class="faq-q">Q: Can I just rename a PNG to .ico?</p><p class="faq-a">A: No. ICO has its own header and directory structure; a renamed PNG is a fake ICO that most programs can't read.</p></div>

@@ -19,6 +19,10 @@
 <meta name="twitter:title" content="JSON 入门与实用技巧">
 <meta name="twitter:description" content="RFC 8259 规范、与 YAML/TOML/CSV 对比、常见错误排查与工具使用建议。">
 <link rel="canonical" href="https://tools.cataito.com/guides/json-guide/">
+<meta property="og:image" content="https://tools.cataito.com/assets/img/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:image" content="https://tools.cataito.com/assets/img/og-image.png">
 <link rel="icon" type="image/png" href="/assets/img/cataito-logo.png">
 <link rel="stylesheet" href="/assets/css/site.css">
 <script src="/assets/js/theme-init.js"></script>
@@ -283,17 +287,17 @@
       <div class="toc">
         <p class="toc-title">Table of Contents</p>
         <ol>
-          <li><a href="#what-is-json">What JSON Is</a></li>
-          <li><a href="#types">Supported Data Types</a></li>
-          <li><a href="#common-errors">Common Syntax Errors</a></li>
-          <li><a href="#vs-js">JSON vs JavaScript Objects</a></li>
-          <li><a href="#vs-others">JSON vs YAML / TOML / CSV</a></li>
-          <li><a href="#pitfalls">Practical Tips &amp; Gotchas</a></li>
-          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#what-is-json-en">What JSON Is</a></li>
+          <li><a href="#types-en">Supported Data Types</a></li>
+          <li><a href="#common-errors-en">Common Syntax Errors</a></li>
+          <li><a href="#vs-js-en">JSON vs JavaScript Objects</a></li>
+          <li><a href="#vs-others-en">JSON vs YAML / TOML / CSV</a></li>
+          <li><a href="#pitfalls-en">Practical Tips &amp; Gotchas</a></li>
+          <li><a href="#faq-en">FAQ</a></li>
         </ol>
       </div>
 
-      <h2 id="what-is-json">What JSON Is</h2>
+      <h2 id="what-is-json-en">What JSON Is</h2>
       <p>JSON (JavaScript Object Notation) is a lightweight data-exchange format defined by <a href="https://www.rfc-editor.org/rfc/rfc8259" target="_blank" rel="noopener">RFC 8259</a>. Its core advantage: nearly every modern language has native support — JavaScript, Python, Java, Go, Rust, Swift all parse and serialize it in one line.</p>
       <p>Typical structure:</p>
       <pre><code>{
@@ -305,7 +309,7 @@
 }</code></pre>
       <p>JSON is not JSONP, not JavaScript, not any programming language. It's a <strong>format</strong> — a grammar of data exchange, parallel to HTML and XML — with no logic of its own. As long as both sides follow the rules, data interoperates.</p>
 
-      <h2 id="types">Supported Data Types</h2>
+      <h2 id="types-en">Supported Data Types</h2>
       <p>JSON knows only seven types, far fewer than JavaScript:</p>
       <table>
         <thead><tr><th>Type</th><th>Example</th><th>Notes</th></tr></thead>
@@ -321,7 +325,7 @@
       </table>
       <p>The absence of Date is a common first stumble: <code>new Date()</code> is a native object in JS, but <code>JSON.stringify(new Date())</code> outputs an ISO string (because Date.prototype.toJSON is overridden). Conversely, <code>JSON.parse</code> given an ISO string does not restore a Date; your application must convert it.</p>
 
-      <h2 id="common-errors">Common Syntax Errors</h2>
+      <h2 id="common-errors-en">Common Syntax Errors</h2>
       <p>When JSON parsing fails, 90% of the time it's one of the following. Use the <a href="/text/json/">JSON Formatter</a> to see error positions and reasons.</p>
       <ol class="t-steps">
         <li><strong>Trailing commas</strong>: <code>[1, 2, 3,]</code> or <code>{"a": 1,}</code> are invalid. Python/JS allow them, JSON does not.</li>
@@ -332,7 +336,7 @@
         <li><strong>Unescaped nested quotes</strong>: <code>"say "hi""</code> will fail. Escape the inner quotes: <code>"say \"hi\""</code>.</li>
       </ol>
 
-      <h2 id="vs-js">JSON vs JavaScript Objects</h2>
+      <h2 id="vs-js-en">JSON vs JavaScript Objects</h2>
       <p>"JSON is just a JS object" is a common misconception. They differ strictly in syntax:</p>
       <table>
         <thead><tr><th>Aspect</th><th>JSON</th><th>JS Object Literal</th></tr></thead>
@@ -347,7 +351,7 @@
       </table>
       <p>So to generate JSON from a JS object, always use <code>JSON.stringify(obj)</code> — never drop the object literal into an HTTP response as a string. Conversely, to restore a JS object from JSON, use <code>JSON.parse(str)</code>, never <code>eval()</code> — the latter executes arbitrary code and is a security hole.</p>
 
-      <h2 id="vs-others">JSON vs YAML / TOML / CSV</h2>
+      <h2 id="vs-others-en">JSON vs YAML / TOML / CSV</h2>
       <p>Four common data formats with distinct purposes:</p>
       <table>
         <thead><tr><th>Format</th><th>Positioning</th><th>Strengths</th><th>Weaknesses</th></tr></thead>
@@ -360,7 +364,7 @@
       </table>
       <p>Rule of thumb: <strong>interfaces, logs, storage use JSON</strong>; <strong>config files use YAML or TOML</strong> (YAML has a larger ecosystem, TOML has stricter syntax); <strong>pure tabular data uses CSV</strong>. Mixing is a common mistake — e.g., treating CSV as config breaks as soon as a field contains commas, newlines, or quotes.</p>
 
-      <h2 id="pitfalls">Practical Tips &amp; Gotchas</h2>
+      <h2 id="pitfalls-en">Practical Tips &amp; Gotchas</h2>
       <h3>Escaping and encoding</h3>
       <p>In JSON strings, <code>"</code>, <code>\</code>, and control characters (<code>\n</code>, <code>\t</code>, <code>\r</code>) must be escaped. Non-ASCII characters can be written directly as UTF-8, or via <code>\uXXXX</code>. Chinese generally works as UTF-8 unless the target environment doesn't support it.</p>
       <h3>Large files and streaming</h3>
@@ -374,7 +378,7 @@
       <h3>Schema validation</h3>
       <p>The JSON spec handles only syntax, not structure. To validate that a JSON conforms to a shape, use <a href="https://json-schema.org" target="_blank" rel="noopener">JSON Schema</a> or a runtime library (e.g., Python's <code>pydantic</code>, JS's <code>zod</code>). This is a required defense layer in production.</p>
 
-      <h2 id="faq">FAQ</h2>
+      <h2 id="faq-en">FAQ</h2>
       <div class="faq-item"><p class="faq-q">Q: What's the difference between JSON and JavaScript objects?</p><p class="faq-a">A: JSON is a data format defined by RFC 8259; JavaScript objects are a JS-language data structure. JSON requires double-quoted keys, disallows trailing commas, single-quoted strings, comments, and unquoted keys. JSON.parse accepts strict JSON only.</p></div>
       <div class="faq-item"><p class="faq-q">Q: What data types does JSON support?</p><p class="faq-a">A: RFC 8259 defines seven: object, array, string, number, boolean, null. No undefined, function, Date, Map, or Set.</p></div>
       <div class="faq-item"><p class="faq-q">Q: Is JSON key order guaranteed?</p><p class="faq-a">A: The spec explicitly says object members are unordered; parsers may reorder. Most modern engines preserve insertion order, but this is not a spec guarantee, so don't rely on it.</p></div>

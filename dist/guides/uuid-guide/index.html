@@ -19,6 +19,10 @@
 <meta name="twitter:title" content="UUID 版本选择与使用场景">
 <meta name="twitter:description" content="128 位标识符基础、v1/v4/v5 差异与适用场景、UUID vs ULID vs nanoid 对比。">
 <link rel="canonical" href="https://tools.cataito.com/guides/uuid-guide/">
+<meta property="og:image" content="https://tools.cataito.com/assets/img/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:image" content="https://tools.cataito.com/assets/img/og-image.png">
 <link rel="icon" type="image/png" href="/assets/img/cataito-logo.png">
 <link rel="stylesheet" href="/assets/css/site.css">
 <script src="/assets/js/theme-init.js"></script>
@@ -275,17 +279,17 @@
       <div class="toc">
         <p class="toc-title">Table of Contents</p>
         <ol>
-          <li><a href="#what-is-uuid">What UUID Is</a></li>
-          <li><a href="#versions">v1 / v4 / v5 Differences</a></li>
-          <li><a href="#collision">Collision Probability</a></li>
-          <li><a href="#vs-others">vs ULID / nanoid</a></li>
-          <li><a href="#security">Privacy &amp; Security</a></li>
-          <li><a href="#common-errors">Common Mistakes</a></li>
-          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#what-is-uuid-en">What UUID Is</a></li>
+          <li><a href="#versions-en">v1 / v4 / v5 Differences</a></li>
+          <li><a href="#collision-en">Collision Probability</a></li>
+          <li><a href="#vs-others-en">vs ULID / nanoid</a></li>
+          <li><a href="#security-en">Privacy &amp; Security</a></li>
+          <li><a href="#common-errors-en">Common Mistakes</a></li>
+          <li><a href="#faq-en">FAQ</a></li>
         </ol>
       </div>
 
-      <h2 id="what-is-uuid">What UUID Is</h2>
+      <h2 id="what-is-uuid-en">What UUID Is</h2>
       <p>UUID (Universally Unique Identifier) is a <strong>128-bit identifier</strong> defined by <a href="https://www.rfc-editor.org/rfc/rfc4122" target="_blank" rel="noopener">RFC 4122</a>, typically written as 8-4-4-4-12 hex groups:</p>
       <pre><code>6ba7b811-9dad-11d1-80b4-00c04fd430c8</code></pre>
       <p>Group structure:</p>
@@ -298,7 +302,7 @@
       </ul>
       <p>Core design goal: <strong>uniquely identify an object across systems without a central authority</strong> — two non-communicating servers can generate UUIDs simultaneously and almost never collide.</p>
 
-      <h2 id="versions">v1 / v4 / v5 Differences</h2>
+      <h2 id="versions-en">v1 / v4 / v5 Differences</h2>
       <table>
         <thead><tr><th>Version</th><th>Generation</th><th>Ordering</th><th>Use cases</th></tr></thead>
         <tbody>
@@ -315,7 +319,7 @@
       <h3>v5: Deterministic hash</h3>
       <p>v5 hashes "namespace UUID + name string" with SHA-1 and takes the first 16 bytes. <strong>Pros</strong>: same input always yields same output, useful for stable cross-service IDs. <strong>Cons</strong>: no randomness; if the namespace is exposed, IDs can be enumerated.</p>
 
-      <h2 id="collision">Collision Probability</h2>
+      <h2 id="collision-en">Collision Probability</h2>
       <p>v4 collision probability follows the birthday paradox. After generating <em>n</em> UUIDs, the probability of any two matching is roughly:</p>
       <p><code>P ≈ n² / (2 × 2¹²²)</code></p>
       <p>Concrete numbers:</p>
@@ -329,7 +333,7 @@
       </table>
       <p>Bottom line: v4 collisions are negligible at typical business scale. If truly concerned, switch to UUID v7 (RFC 9562) plus a unique constraint as a backstop.</p>
 
-      <h2 id="vs-others">vs ULID / nanoid</h2>
+      <h2 id="vs-others-en">vs ULID / nanoid</h2>
       <p>UUID isn't the only option. Two other common ID types:</p>
       <table>
         <thead><tr><th>Format</th><th>Length</th><th>Ordered</th><th>URL-safe</th><th>Typical use</th></tr></thead>
@@ -343,7 +347,7 @@
       </table>
       <p>Selection rules: <strong>cross-language interop requires UUID</strong>; <strong>time-series PK uses UUID v7 or ULID</strong>; <strong>short share links use nanoid</strong>; <strong>single-host small data uses auto-increment int</strong>.</p>
 
-      <h2 id="security">Privacy &amp; Security</h2>
+      <h2 id="security-en">Privacy &amp; Security</h2>
       <ul>
         <li><strong>v1 leaks information</strong>: timestamp and machine ID (MAC/IP) can be reverse-engineered to see "how many UUIDs this machine generated when". Don't expose v1 externally.</li>
         <li><strong>v4 has no info leak</strong>: uses a CSPRNG (e.g., <code>crypto.getRandomValues</code>), no extractable information.</li>
@@ -352,7 +356,7 @@
         <li><strong>Don't use UUID as encryption keys</strong>: 128 bits of randomness is far below symmetric-key strength (128-256 bits). Generate keys with a dedicated KDF or CSPRNG.</li>
       </ul>
 
-      <h2 id="common-errors">Common Mistakes</h2>
+      <h2 id="common-errors-en">Common Mistakes</h2>
       <ol class="t-steps">
         <li><strong>Generating UUID with Math.random()</strong>: JavaScript's <code>Math.random()</code> is not a CSPRNG; resulting UUIDs can be predicted. Always use <code>crypto.getRandomValues()</code>.</li>
         <li><strong>Using UUID as encryption keys</strong>: 128-bit random is insufficient for symmetric keys; you need at least 128 bits of key entropy plus a key-encapsulation protocol.</li>
@@ -361,7 +365,7 @@
         <li><strong>Storing UUID as a number</strong>: 128 bits exceeds every language's integer range; must be stored as a string.</li>
       </ol>
 
-      <h2 id="faq">FAQ</h2>
+      <h2 id="faq-en">FAQ</h2>
       <div class="faq-item"><p class="faq-q">Q: Are UUID and GUID the same thing?</p><p class="faq-a">A: UUID is the 128-bit identifier defined by RFC 4122; GUID is Microsoft's similar concept with the same format as UUID v4. Interchangeable in modern usage, UUID is more universal.</p></div>
       <div class="faq-item"><p class="faq-q">Q: Can UUIDs collide?</p><p class="faq-a">A: v4 is mathematically almost impossible to collide: after generating 1 billion v4s, the probability of any two matching is ≈1.2×10⁻¹⁶. v1 can duplicate if the clock rolls back; v5 is a deterministic hash, same input always gives same output.</p></div>
       <div class="faq-item"><p class="faq-q">Q: Is UUID suitable as a primary key?</p><p class="faq-a">A: v4 is good for distributed PKs but causes random write amplification in B+ tree indexes. For high-performance OLTP, use UUID v7 (RFC 9562) or ULID. For single-host small data, use auto-increment integers.</p></div>

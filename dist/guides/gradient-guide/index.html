@@ -19,6 +19,10 @@
 <meta name="twitter:title" content="CSS 渐变设计指南">
 <meta name="twitter:description" content="从色标到上线：类型、色标、角度与无障碍对比度。">
 <link rel="canonical" href="https://tools.cataito.com/guides/gradient-guide/">
+<meta property="og:image" content="https://tools.cataito.com/assets/img/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:image" content="https://tools.cataito.com/assets/img/og-image.png">
 <link rel="icon" type="image/png" href="/assets/img/cataito-logo.png">
 <link rel="stylesheet" href="/assets/css/site.css">
 <script src="/assets/js/theme-init.js"></script>
@@ -251,15 +255,15 @@
       <div class="toc">
         <p class="toc-title">Table of Contents</p>
         <ol>
-          <li><a href="#type">Pick the Type: Linear, Radial, or Conic</a></li>
-          <li><a href="#stops">Stops and Angles: The Core Parameters</a></li>
-          <li><a href="#brand">Landing a Brand Gradient in Three Steps</a></li>
-          <li><a href="#a11y">Text on Gradients: Check the Worst Point</a></li>
-          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#type-en">Pick the Type: Linear, Radial, or Conic</a></li>
+          <li><a href="#stops-en">Stops and Angles: The Core Parameters</a></li>
+          <li><a href="#brand-en">Landing a Brand Gradient in Three Steps</a></li>
+          <li><a href="#a11y-en">Text on Gradients: Check the Worst Point</a></li>
+          <li><a href="#faq-en">FAQ</a></li>
         </ol>
       </div>
 
-      <h2 id="type">Pick the Type: Linear, Radial, or Conic</h2>
+      <h2 id="type-en">Pick the Type: Linear, Radial, or Conic</h2>
       <p>Each CSS gradient type handles a different sense of direction — pick the wrong one and no amount of tuning feels right:</p>
       <ul>
         <li><strong>Linear gradients</strong> transition along one direction. Banners, hero backgrounds, buttons, card borders, section transitions — anything "directional". The default choice;</li>
@@ -268,7 +272,7 @@
       </ul>
       <p>When unsure, preview all three side by side in the <a href="/gradient/">CSS Gradient Generator</a> — with live rendering, the right one is obvious, and the CSS copies straight out.</p>
 
-      <h2 id="stops">Stops and Angles: The Core Parameters</h2>
+      <h2 id="stops-en">Stops and Angles: The Core Parameters</h2>
 
       <h3>Stop count: start with two</h3>
       <p><strong>Two stops is the default answer</strong> — cleanest and hardest to break. Three stops build a highlight (dark-light-dark) or carry three brand colors; beyond three, you're one step from a rainbow wall. Stop positions don't have to be even — moving the main stop to around 30%/70% gives the gradient rhythm. (For the muddy-middle problem, see below and the FAQ.)</p>
@@ -288,7 +292,7 @@
       <h3>Interpolation: why the middle turns gray</h3>
       <p>When the two ends are far apart in hue (cyan → orange), the browser interpolates in a straight line through RGB — the path crosses a low-saturation zone and the middle muddies. Fixes, in order of preference: switch to a same-hue light/dark pair (safest); add a middle transition stop with a hand-picked color; or interpolate in a modern space with <code>in oklch</code> to route around the gray. For hue distance and color-wheel thinking, see the <a href="/guides/color-guide/" data-i18n="gd_color_short">Color Theory Guide</a>.</p>
 
-      <h2 id="brand">Landing a Brand Gradient in Three Steps</h2>
+      <h2 id="brand-en">Landing a Brand Gradient in Three Steps</h2>
       <ol class="t-steps">
         <li><strong>Fix the two ends</strong>: start from the brand color and pick the second — a same-hue light/dark pair is the safe bet; if crossing hues, preview the middle in the generator first;</li>
         <li><strong>Fix the angle system</strong>: one global primary angle (say 135deg), with at most one secondary for narrow elements like buttons. Write it into the design spec — don't improvise per page;</li>
@@ -296,7 +300,7 @@
       </ol>
       <p>Tune it in the <a href="/gradient/">CSS Gradient Generator</a>, copy the CSS, and paste it into your token file. Before shipping, run the accessibility check below.</p>
 
-      <h2 id="a11y">Text on Gradients: Check the Worst Point</h2>
+      <h2 id="a11y-en">Text on Gradients: Check the Worst Point</h2>
       <p>On a solid background, text contrast is a single number; on a gradient, <strong>every point has its own ratio</strong> — so you must validate the worst point, typically the text color against the lighter end of the gradient. WCAG thresholds: at least <strong>4.5:1</strong> for body text, <strong>3:1</strong> for large text (18pt+).</p>
       <p>Practical workflow:</p>
       <ol class="t-steps">
@@ -307,7 +311,7 @@
       </ol>
       <p>The thresholds, testing details, and common pitfalls are covered fully in the <a href="/guides/accessibility-contrast-guide/" data-i18n="gd_acc_short">Accessibility Contrast Guide</a>; for gradients, remember one sentence: <strong>validate the worst point, not the average</strong>.</p>
 
-      <h2 id="faq">FAQ</h2>
+      <h2 id="faq-en">FAQ</h2>
       <div class="faq-item"><p class="faq-q">Q: When do I use linear vs radial gradients?</p><p class="faq-a">A: Linear gradients transition along one direction — banners, buttons, section backgrounds, covers, anything directional. Radial gradients spread from a center point — spotlights, glows, avatar backdrops, button highlights. Conic gradients suit pie charts and decorative sectors. When unsure, try linear at 135deg (top-left to bottom-right) first — the most natural, hardest-to-ruin default.</p></div>
       <div class="faq-item"><p class="faq-q">Q: How do I choose the gradient angle?</p><p class="faq-a">A: In CSS, 0deg points up, 90deg right, 180deg down — angles are clockwise. Safe go-tos: 135deg (top-left to bottom-right) is the most natural; 90deg (horizontal) suits narrow buttons; 180deg (vertical) suits large backgrounds. Fixing one or two angles across a product reads as more professional than changing it everywhere — the angle itself is part of your brand gradient system.</p></div>
       <div class="faq-item"><p class="faq-q">Q: Why does my gradient turn gray or muddy in the middle?</p><p class="faq-a">A: Two causes: the end hues are too far apart (cyan to orange, say), so the interpolation path crosses a low-saturation zone and the middle grays out; or complementary colors are interpolated directly in RGB. Fixes: shorten the hue distance and use a same-hue light/dark pair; add a middle transition stop with a hand-picked color when you must cross hues; or use modern OKLCH interpolation (interpolation color space).</p></div>

@@ -1443,6 +1443,9 @@
           '<img class="brand__logo brand__logo--light" src="/assets/logo/cataito-logo-light.svg" alt="CATAITO" width="124" height="22">' +
           '<span class="brand__tag" data-i18n="brand_sub">免费工具箱</span>' +
         '</a>' +
+        '<button class="nav-toggle" id="nav-toggle" type="button" aria-label="菜单" aria-expanded="false">' +
+          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>' +
+        '</button>' +
         '<nav class="nav">' +
           '<a href="/" class="' + (active('/') ? 'active' : '') + '" data-i18n="nav_home">首页</a>' +
           NAV_CATS.map(function (cat) {
@@ -1475,6 +1478,12 @@
     var tbtn = document.getElementById('theme-switch');
     if (tbtn) tbtn.addEventListener('click', function () {
       if (window.CATAITO_THEME) window.CATAITO_THEME.toggle();
+    });
+    var nt = document.getElementById('nav-toggle');
+    if (nt) nt.addEventListener('click', function () {
+      var h = document.getElementById('site-header');
+      var open = h.classList.toggle('nav-open');
+      nt.setAttribute('aria-expanded', open ? 'true' : 'false');
     });
   }
 

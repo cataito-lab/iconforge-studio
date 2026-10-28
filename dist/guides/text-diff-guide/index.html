@@ -19,6 +19,10 @@
 <meta name="twitter:title" content="文本 diff 使用指南">
 <meta name="twitter:description" content="diff 粒度、LCS 原理与比对最佳实践。">
 <link rel="canonical" href="https://tools.cataito.com/guides/text-diff-guide/">
+<meta property="og:image" content="https://tools.cataito.com/assets/img/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:image" content="https://tools.cataito.com/assets/img/og-image.png">
 <link rel="icon" type="image/png" href="/assets/img/cataito-logo.png">
 <link rel="stylesheet" href="/assets/css/site.css">
 <script src="/assets/js/theme-init.js"></script>
@@ -216,16 +220,16 @@
       <div class="toc">
         <p class="toc-title">Table of Contents</p>
         <ol>
-          <li><a href="#granularity">Three granularities: line / word / char</a></li>
-          <li><a href="#lcs">How the LCS algorithm works</a></li>
-          <li><a href="#git-diff">Reading git diff markers</a></li>
-          <li><a href="#contract">Comparing contracts &amp; documents</a></li>
-          <li><a href="#code">Comparing code &amp; config</a></li>
-          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#granularity-en">Three granularities: line / word / char</a></li>
+          <li><a href="#lcs-en">How the LCS algorithm works</a></li>
+          <li><a href="#git-diff-en">Reading git diff markers</a></li>
+          <li><a href="#contract-en">Comparing contracts &amp; documents</a></li>
+          <li><a href="#code-en">Comparing code &amp; config</a></li>
+          <li><a href="#faq-en">FAQ</a></li>
         </ol>
       </div>
 
-      <h2 id="granularity">Three granularities: line / word / char</h2>
+      <h2 id="granularity-en">Three granularities: line / word / char</h2>
       <table>
         <thead><tr><th>Granularity</th><th>Unit</th><th>Best for</th></tr></thead>
         <tbody>
@@ -236,7 +240,7 @@
       </table>
       <p>Finer granularity means noisier output. <strong>Line-level is the daily default</strong> — our <a href="/text/diff/">Text Diff tool</a> uses it: character-level edits show as one deletion plus one addition, with line numbers for quick location.</p>
 
-      <h2 id="lcs">How the LCS algorithm works</h2>
+      <h2 id="lcs-en">How the LCS algorithm works</h2>
       <p>Mainstream diff tools (GNU diff, git, online checkers) are all built on <strong>LCS (Longest Common Subsequence)</strong>: find the longest sequence of lines that appears in both texts in order.</p>
       <ul>
         <li>Lines kept by the LCS = shared <strong>context</strong> (gray)</li>
@@ -245,7 +249,7 @@
       </ul>
       <p>Complexity is O(n×m); two 3,000-line texts still finish in milliseconds in a browser. For longer inputs, extract the relevant sections first.</p>
 
-      <h2 id="git-diff">Reading git diff markers</h2>
+      <h2 id="git-diff-en">Reading git diff markers</h2>
       <pre><code>@@ -12,4 +12,5 @@
    timeout = 30
 -  max_retries = 3
@@ -259,7 +263,7 @@
       </ul>
       <p>Online diff tools follow the same color convention as git: green adds, red removes. Learn it once, use it everywhere.</p>
 
-      <h2 id="contract">Comparing contracts &amp; documents</h2>
+      <h2 id="contract-en">Comparing contracts &amp; documents</h2>
       <ol class="t-steps">
         <li><strong>Normalize formats first</strong>: Word→PDF→copy or email bodies can introduce whitespace and line-break differences; clean both sides to plain text.</li>
         <li><strong>Watch for clause shifts</strong>: inserting one clause renumbers everything after it — long runs of paired deletions/additions are usually shifts, not rewrites.</li>
@@ -267,14 +271,14 @@
       </ol>
       <p>Sensitive contracts shouldn't go through cloud upload tools — use a <a href="/text/diff/">fully local diff tool</a>; text never leaves the browser.</p>
 
-      <h2 id="code">Comparing code &amp; config</h2>
+      <h2 id="code-en">Comparing code &amp; config</h2>
       <ul>
         <li><strong>Pre-commit self-check</strong>: diff your config before/after to ensure debug flags and secrets don't slip into the commit.</li>
         <li><strong>Environment drift</strong>: diffing test vs production config files is step one of "works locally, breaks in prod".</li>
         <li><strong>Trailing spaces</strong>: invisible to the eye but visible to diff — many "identical" lines differ only at the end.</li>
       </ul>
 
-      <h2 id="faq">FAQ</h2>
+      <h2 id="faq-en">FAQ</h2>
       <div class="faq-item"><p class="faq-q">Q: Line vs word vs character diff?</p><p class="faq-a">A: Line-level (git diff default) for spotting changes; word-level for edits within sentences; character-level for the finest detail. Finer = noisier; line is the daily choice.</p></div>
       <div class="faq-item"><p class="faq-q">Q: How does the LCS algorithm work?</p><p class="faq-a">A: It finds the longest in-order sequence of common lines as the unchanged part; the rest is marked as removals or additions by position. Same basis as git and GNU diff.</p></div>
       <div class="faq-item"><p class="faq-q">Q: How to read +, -, @@ in git diff?</p><p class="faq-a">A: + added, - removed, space context; @@ is a hunk header showing line ranges in both versions.</p></div>

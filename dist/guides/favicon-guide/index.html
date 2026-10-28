@@ -19,6 +19,10 @@
 <meta name="twitter:title" content="Favicon 完全指南">
 <meta name="twitter:description" content="尺寸规范、HTML 写法与在线制作，免费本地处理。">
 <link rel="canonical" href="https://tools.cataito.com/guides/favicon-guide/">
+<meta property="og:image" content="https://tools.cataito.com/assets/img/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:image" content="https://tools.cataito.com/assets/img/og-image.png">
 <link rel="icon" type="image/png" href="/assets/img/cataito-logo.png">
 <link rel="stylesheet" href="/assets/css/site.css">
 <script src="/assets/js/theme-init.js"></script>
@@ -286,22 +290,22 @@
       <div class="toc">
         <p class="toc-title">Table of Contents</p>
         <ol>
-          <li><a href="#what-is-favicon">What Is a Favicon</a></li>
-          <li><a href="#sizes">Favicon Sizes for Every Platform</a></li>
-          <li><a href="#formats">favicon.ico vs PNG vs SVG</a></li>
-          <li><a href="#html">HTML Code (Copy &amp; Paste)</a></li>
-          <li><a href="#platforms">Platform Behavior Differences</a></li>
-          <li><a href="#how-to-make">How to Make a Favicon Online</a></li>
-          <li><a href="#design-tips">Favicon Design Tips</a></li>
-          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#what-is-favicon-en">What Is a Favicon</a></li>
+          <li><a href="#sizes-en">Favicon Sizes for Every Platform</a></li>
+          <li><a href="#formats-en">favicon.ico vs PNG vs SVG</a></li>
+          <li><a href="#html-en">HTML Code (Copy &amp; Paste)</a></li>
+          <li><a href="#platforms-en">Platform Behavior Differences</a></li>
+          <li><a href="#how-to-make-en">How to Make a Favicon Online</a></li>
+          <li><a href="#design-tips-en">Favicon Design Tips</a></li>
+          <li><a href="#faq-en">FAQ</a></li>
         </ol>
       </div>
 
-      <h2 id="what-is-favicon">What Is a Favicon?</h2>
+      <h2 id="what-is-favicon-en">What Is a Favicon?</h2>
       <p>A <strong>favicon (favorites icon) is the small icon shown in browser tabs, the address bar, bookmarks, and history</strong>. It is your brand's smallest — and most frequently seen — representative in the browser. When a user has a dozen tabs open, a clear favicon helps them find your site instantly; a blurry or default one makes the site look untrustworthy.</p>
       <p>The favicon dates back to Internet Explorer 5 in 1999: originally just "the icon shown when you bookmark a site," conventionally placed in the site root and named <code>favicon.ico</code>. Twenty-some years later, a favicon is really a <strong>collection of icon files</strong> for different devices and contexts — browser tabs, the iOS home screen, Android launcher icons, and PWA windows each have their own size requirements.</p>
 
-      <h2 id="sizes">Favicon Sizes for Every Platform</h2>
+      <h2 id="sizes-en">Favicon Sizes for Every Platform</h2>
       <p>Modern sites need far more than a single 16×16 icon. The industry-standard full set:</p>
       <table>
         <tr><th>File</th><th>Size</th><th>Used for</th></tr>
@@ -315,7 +319,7 @@
       </table>
       <p>Minimum viable setup: <strong>a favicon.ico with 16/32px in the root + one 180×180 apple-touch-icon</strong>. That covers the vast majority of cases; the full table above is the perfectionist's version.</p>
 
-      <h2 id="formats">favicon.ico vs PNG vs SVG</h2>
+      <h2 id="formats-en">favicon.ico vs PNG vs SVG</h2>
       <p>The three formats have different jobs — it's not a pick-one decision:</p>
       <ul>
         <li><strong>ICO</strong>: the compatibility king. Some older browsers, crawlers, and readers request only <code>/favicon.ico</code>, ignoring HTML. It's also the only favicon format that packs multiple sizes in one file.</li>
@@ -324,7 +328,7 @@
       </ul>
       <p><strong>Recommended combo: ICO (root fallback) + PNG (per-size declarations) + SVG (progressive enhancement, declared last).</strong> Browsers pick the best match from your declarations.</p>
 
-      <h2 id="html">HTML Code (Copy &amp; Paste)</h2>
+      <h2 id="html-en">HTML Code (Copy &amp; Paste)</h2>
       <p>Drop this into the <code>&lt;head&gt;</code> of every page (replace paths with your own when deploying):</p>
       <pre><code>&lt;!-- Fallback: root favicon.ico (requested even undeclared) --&gt;
 &lt;link rel="icon" href="/favicon.ico" sizes="48x48"&gt;
@@ -351,7 +355,7 @@
 }</code></pre>
       <p>Markup looks right but the icon still won't show? It's probably caching or a path issue — walk through the checklist in <a href="/guides/favicon-not-showing-guide/">Favicon Not Showing</a>.</p>
 
-      <h2 id="platforms">Platform Behavior Differences</h2>
+      <h2 id="platforms-en">Platform Behavior Differences</h2>
       <ul>
         <li><strong>Chrome / Edge / Firefox</strong>: prefer files declared with <code>&lt;link rel="icon"&gt;</code>, matching <code>sizes</code> to device pixel density; fall back to <code>/favicon.ico</code> only when none exist.</li>
         <li><strong>Safari (macOS)</strong>: limited SVG support; in practice PNG rules. A blurry pinned-tab icon usually means you're missing a 32×32 PNG.</li>
@@ -360,7 +364,7 @@
         <li><strong>Search engines</strong>: Google mobile results sometimes display the favicon directly — a crisp icon can lift click-through rates.</li>
       </ul>
 
-      <h2 id="how-to-make">How to Make a Favicon Online</h2>
+      <h2 id="how-to-make-en">How to Make a Favicon Online</h2>
       <p>We recommend the <a href="/favicon/">Favicon Generator</a> on this site — free, no sign-up, and it <strong>produces the entire favicon pack in one shot</strong> (multi-size .ico + per-size PNGs). Everything runs locally in your browser; images are never uploaded.</p>
       <ol class="t-steps">
         <li><strong>Prepare a square logo</strong>: ideally 512×512 or larger PNG (transparent or solid background — bigger source, sharper output).</li>
@@ -369,7 +373,7 @@
         <li><strong>Generate &amp; deploy</strong>: download the pack, drop the files into your site root, and paste the HTML above into <code>&lt;head&gt;</code>.</li>
       </ol>
 
-      <h2 id="design-tips">Favicon Design Tips</h2>
+      <h2 id="design-tips-en">Favicon Design Tips</h2>
       <ul>
         <li><strong>Subtract</strong>: at 16×16 you have only a few hundred pixels. Use an initial, a single shape, or a simplified mark — never the full logo.</li>
         <li><strong>High contrast</strong>: the icon must read against both light and dark tab bars; preview on both backgrounds.</li>
@@ -378,7 +382,7 @@
         <li><strong>Avoid JPG</strong>: no alpha channel means white boxes at the edges; stick with PNG + ICO + SVG.</li>
       </ul>
 
-      <h2 id="faq">FAQ</h2>
+      <h2 id="faq-en">FAQ</h2>
       <div class="faq-item"><p class="faq-q">Q: What is the standard favicon size?</p><p class="faq-a">A: There isn't one. Minimum: favicon.ico (16/32px) + apple-touch-icon (180px). Full set adds 16/32 PNGs, 192/512 PWA icons, and an SVG.</p></div>
       <div class="faq-item"><p class="faq-q">Q: Why does the browser still show my old favicon after I changed it?</p><p class="faq-a">A: Favicons are aggressively cached by browsers and CDNs. Add a version query string (<code>?v=2</code>), rename the file, or hard-refresh (Ctrl+F5). In production, rename the file on every update.</p></div>
       <div class="faq-item"><p class="faq-q">Q: Must favicon.ico live in the root?</p><p class="faq-a">A: Strongly recommended. Many browsers and legacy tools request /favicon.ico directly, ignoring your HTML. PNG/SVG files can live anywhere if properly declared.</p></div>

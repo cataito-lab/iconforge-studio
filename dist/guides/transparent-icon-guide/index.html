@@ -19,6 +19,10 @@
 <meta name="twitter:title" content="透明背景图标指南">
 <meta name="twitter:description" content="去背景方法、透明常见坑与 ICO / favicon 转换完整说明。">
 <link rel="canonical" href="https://tools.cataito.com/guides/transparent-icon-guide/">
+<meta property="og:image" content="https://tools.cataito.com/assets/img/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:image" content="https://tools.cataito.com/assets/img/og-image.png">
 <link rel="icon" type="image/png" href="/assets/img/cataito-logo.png">
 <link rel="stylesheet" href="/assets/css/site.css">
 <script src="/assets/js/theme-init.js"></script>
@@ -250,20 +254,20 @@
       <div class="toc">
         <p class="toc-title">Table of Contents</p>
         <ol>
-          <li><a href="#what">What "Transparent" Actually Means</a></li>
-          <li><a href="#why">When You Need Transparency</a></li>
-          <li><a href="#how">Three Ways to Remove a Background</a></li>
-          <li><a href="#pitfalls">Common Transparency Pitfalls</a></li>
-          <li><a href="#check">Pre-Ship Checklist</a></li>
-          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#what-en">What "Transparent" Actually Means</a></li>
+          <li><a href="#why-en">When You Need Transparency</a></li>
+          <li><a href="#how-en">Three Ways to Remove a Background</a></li>
+          <li><a href="#pitfalls-en">Common Transparency Pitfalls</a></li>
+          <li><a href="#check-en">Pre-Ship Checklist</a></li>
+          <li><a href="#faq-en">FAQ</a></li>
         </ol>
       </div>
 
-      <h2 id="what">What "Transparent" Actually Means</h2>
+      <h2 id="what-en">What "Transparent" Actually Means</h2>
       <p>A transparent background is the alpha channel at work: <strong>every pixel carries an opacity value from 0–255 in addition to its RGB color</strong> — 0 is fully invisible, 255 fully solid, and everything between is semi-transparent (shadows, soft edges). The <strong>gray checkerboard</strong> you see in image editors is the conventional way of saying "no pixels here — you're seeing through to what's below". The checkerboard itself is never part of the image.</p>
       <p>Format support varies wildly: <strong>PNG, WebP, GIF, and ICO support transparency</strong> (PNG and WebP including partial alpha gradients); <strong>JPEG does not support it at all</strong> — transparent areas are flattened to a fill color (usually white) at save time, irreversibly. So the first rule of transparent icons: <strong>keep assets as PNG and never let them touch JPEG</strong>.</p>
 
-      <h2 id="why">When You Need Transparency</h2>
+      <h2 id="why-en">When You Need Transparency</h2>
       <ul>
         <li><strong>Website favicons</strong>: browser tabs come in light and dark themes — a white square icon looks jarring on a dark tab bar. Transparent background with an adaptive foreground is the right pattern;</li>
         <li><strong>Windows desktop and app icons</strong>: ICO carries full alpha; desktop icons without transparency look flat (see the <a href="/guides/ico-file-guide/">complete ICO file guide</a>);</li>
@@ -271,7 +275,7 @@
       </ul>
       <p>One important exception: <strong>iOS and App Store icons must not be transparent</strong>. Safari fills a transparent apple-touch-icon with black, and a transparent 1024px App Store icon gets rejected outright. Design an opaque square for iOS and let the system round the corners — see the <a href="/guides/app-icon-sizes/">app icon sizes cheat sheet</a> for the cross-platform picture.</p>
 
-      <h2 id="how">Three Ways to Remove a Background</h2>
+      <h2 id="how-en">Three Ways to Remove a Background</h2>
       <p>You have a white-background logo — how do you turn it into a transparent PNG? Ranked by control:</p>
 
       <h3>Option 1: Manual Cutout in an Image Editor (Most Control)</h3>
@@ -285,7 +289,7 @@
 
       <p>Once you have a transparent PNG, convert it to multi-size ICO / PNG with this site's <a href="/icon-forge/">Icon Forge</a> (runs entirely in your browser, alpha untouched); for website icons only, the <a href="/favicon/">Favicon Generator</a> produces the full favicon set in one go — markup in the <a href="/guides/favicon-guide/">Favicon guide</a>.</p>
 
-      <h2 id="pitfalls">Common Transparency Pitfalls</h2>
+      <h2 id="pitfalls-en">Common Transparency Pitfalls</h2>
       <ul>
         <li><strong>White is not transparent</strong>: painting the background white on a white canvas is the classic fake transparency. Check: real transparency shows a checkerboard in editors, or drop the image on a dark background and the white gives itself away;</li>
         <li><strong>Saving as JPEG mid-workflow</strong>: one JPEG export anywhere in the chain flattens transparency permanently (white fill) — converting back to PNG won't recover it. Keep the pipeline PNG / WebP / PSD / SVG throughout;</li>
@@ -295,7 +299,7 @@
         <li><strong>Cropped soft shadows</strong>: drop shadows and glows live in the alpha edges; too-tight export canvases slice them. Leave at least 4–8px of transparent breathing room on all sides.</li>
       </ul>
 
-      <h2 id="check">Pre-Ship Checklist</h2>
+      <h2 id="check-en">Pre-Ship Checklist</h2>
       <ol class="t-steps">
         <li><strong>Checkerboard check</strong>: confirm the background shows a checkerboard in your editor, not white;</li>
         <li><strong>Light &amp; dark backdrop test</strong>: place the icon on pure white and pure black (or a contrasting brand color) — look for halos and dark-mode visibility;</li>
@@ -305,7 +309,7 @@
       </ol>
       <p>For the full PNG → Windows ICO workflow (256px ceiling, multi-size packing), see the <a href="/guides/png-to-ico-guide/">PNG to ICO guide</a>.</p>
 
-      <h2 id="faq">FAQ</h2>
+      <h2 id="faq-en">FAQ</h2>
       <div class="faq-item"><p class="faq-q">Q: PNG and JPEG — which one supports transparent backgrounds?</p><p class="faq-a">A: PNG does: every pixel carries an alpha channel recording 0–255 levels of partial transparency. JPEG has no alpha at all — transparent areas are flattened to a fill color (usually white) at save time, and its lossy compression adds edge artifacts. Transparent icons should always be PNG (or WebP/GIF), never JPEG.</p></div>
       <div class="faq-item"><p class="faq-q">Q: Why does my "transparent" PNG still show a white box on my page?</p><p class="faq-a">A: Usually white was mistaken for transparent: painting the background white on a white canvas looks identical, but the pixels are still solid white. Real transparency shows the gray checkerboard in alpha-aware editors. Also check your CSS — a white container or body background sits behind the image. (Old IE6 rendered PNG alpha as gray; modern browsers don't.)</p></div>
       <div class="faq-item"><p class="faq-q">Q: Does the ICO format support transparency?</p><p class="faq-a">A: Yes. Every image inside an ICO container can carry an alpha channel. As long as the source PNG is transparent and the converter preserves alpha, the ICO stays transparent. This site's Icon Forge runs entirely in your browser and writes alpha through untouched.</p></div>

@@ -19,6 +19,10 @@
 <meta name="twitter:title" content="条形码入门与打印指南">
 <meta name="twitter:description" content="Code128 / EAN-13 怎么选、校验位原理与打印规范。">
 <link rel="canonical" href="https://tools.cataito.com/guides/barcode-guide/">
+<meta property="og:image" content="https://tools.cataito.com/assets/img/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:image" content="https://tools.cataito.com/assets/img/og-image.png">
 <link rel="icon" type="image/png" href="/assets/img/cataito-logo.png">
 <link rel="stylesheet" href="/assets/css/site.css">
 <script src="/assets/js/theme-init.js"></script>
@@ -258,15 +262,15 @@
       <div class="toc">
         <p class="toc-title">Table of Contents</p>
         <ol>
-          <li><a href="#choose">Choosing: Internal Assets vs Retail</a></li>
-          <li><a href="#checksum">How Check Digits Work</a></li>
-          <li><a href="#print">Print Specs: Size, Resolution, Quiet Zone</a></li>
-          <li><a href="#vs">Barcode vs QR Code</a></li>
-          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#choose-en">Choosing: Internal Assets vs Retail</a></li>
+          <li><a href="#checksum-en">How Check Digits Work</a></li>
+          <li><a href="#print-en">Print Specs: Size, Resolution, Quiet Zone</a></li>
+          <li><a href="#vs-en">Barcode vs QR Code</a></li>
+          <li><a href="#faq-en">FAQ</a></li>
         </ol>
       </div>
 
-      <h2 id="choose">Choosing: Internal Assets vs Retail</h2>
+      <h2 id="choose-en">Choosing: Internal Assets vs Retail</h2>
       <p>The first question isn't "which is better" but <strong>who will scan this barcode</strong>. Only your own systems, or external ones too (retail POS, marketplaces, libraries)? The answer decides the symbology.</p>
 
       <h3>Code128: the workhorse for internal systems</h3>
@@ -288,7 +292,7 @@
 
       <p>Once you've picked a type, generate it with this site's <a href="/barcode/">Barcode Generator</a> — choose the symbology, type the content, and the check digit is computed automatically, all locally in your browser.</p>
 
-      <h2 id="checksum">How Check Digits Work</h2>
+      <h2 id="checksum-en">How Check Digits Work</h2>
       <p>A check digit is a self-test digit at the end of the code: the scanner decodes each bar, recomputes the checksum, and rejects the result on mismatch. It guards against <strong>misreads</strong> — smudges, faded ink, and skew that flip a digit are mostly caught by the check.</p>
 
       <h3>The EAN-13 mod-10 algorithm</h3>
@@ -303,7 +307,7 @@ Full code: 6901234567892</code></pre>
       <h3>Code128's built-in check</h3>
       <p>Code128's check isn't a visible character — every symbol carries a mod-103 check character appended automatically at encode time. Nothing to manage; just know that shorter, wider codes read right on the first pass more often.</p>
 
-      <h2 id="print">Print Specs: Size, Resolution, Quiet Zone</h2>
+      <h2 id="print-en">Print Specs: Size, Resolution, Quiet Zone</h2>
       <p>Barcodes are hard-edged graphics — fine on screen, fragile in print. Three hard requirements:</p>
       <ul>
         <li><strong>Minimum size</strong>: EAN-13 standard size is 37.29×25.93 mm with a minimum magnification of 80%; Code128 narrow elements should stay above 0.19 mm, ideally 0.25 mm+. Don't design at the limit — smaller means harder to scan;</li>
@@ -313,7 +317,7 @@ Full code: 6901234567892</code></pre>
       </ul>
       <p>Re-export a high-resolution copy from the <a href="/barcode/">Barcode Generator</a> before printing, proof-test one copy, then run the batch — same rule as QR printing: never skip the live test.</p>
 
-      <h2 id="vs">Barcode vs QR Code</h2>
+      <h2 id="vs-en">Barcode vs QR Code</h2>
       <p>They don't replace each other — they <strong>address different audiences</strong>:</p>
       <ul>
         <li><strong>Choose a barcode</strong> when the content is a short numeric ID read in bulk by scanners, cost-sensitive (plain labels), and not meant for humans — inventory, assets, ticketing, retail checkout;</li>
@@ -321,7 +325,7 @@ Full code: 6901234567892</code></pre>
       </ul>
       <p>Rule of thumb: <strong>machines reading IDs get barcodes; people scanning content get QR codes</strong>. Packaging often carries both — a product barcode on one side for checkout, a QR code on the back for engagement. If you go the QR route, see <a href="/guides/qr-not-scanning-guide/" data-i18n="gd_qr_short">QR Code Not Scanning</a> — the quiet-zone and resolution discipline carries over.</p>
 
-      <h2 id="faq">FAQ</h2>
+      <h2 id="faq-en">FAQ</h2>
       <div class="faq-item"><p class="faq-q">Q: Code128 or EAN-13 — which one?</p><p class="faq-a">A: Depends on the use: retail codes scanned at checkout must be EAN-13 with a GS1 prefix — the retail system only accepts standard product codes. For warehouse assets, internal documents, membership cards, and serials, choose Code128: letters, digits, and symbols, unlimited length, higher density. In short: into supermarkets, EAN-13; not into supermarkets, Code128.</p></div>
       <div class="faq-item"><p class="faq-q">Q: How is the EAN-13 check digit calculated?</p><p class="faq-a">A: Weight the first 12 digits alternately by 3 and 1 from the right, sum them, then take the difference to the next multiple of ten: check digit = (10 − last digit of the sum) mod 10. If the weighted sum is 101, the check digit is 9. Scanners recompute the checksum and reject mismatches, so one wrong check digit makes the whole code unscannable.</p></div>
       <div class="faq-item"><p class="faq-q">Q: How small can a printed barcode be?</p><p class="faq-a">A: For EAN-13, the standard size is 37.29×25.93 mm (100% magnification) and the spec allows down to 80% — below that scanners struggle. Code128 has no fixed outline, but keep narrow elements above 0.19 mm, preferably 0.25 mm or more. The smaller the code, the more you need high-resolution printing and a proper quiet zone.</p></div>

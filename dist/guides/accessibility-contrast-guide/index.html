@@ -19,6 +19,10 @@
 <meta name="twitter:title" content="无障碍对比度指南">
 <meta name="twitter:description" content="WCAG AA / AAA 达标全流程，含速查表与常见案例。">
 <link rel="canonical" href="https://tools.cataito.com/guides/accessibility-contrast-guide/">
+<meta property="og:image" content="https://tools.cataito.com/assets/img/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:image" content="https://tools.cataito.com/assets/img/og-image.png">
 <link rel="icon" type="image/png" href="/assets/img/cataito-logo.png">
 <link rel="stylesheet" href="/assets/css/site.css">
 <script src="/assets/js/theme-init.js"></script>
@@ -250,20 +254,20 @@
       <div class="toc">
         <p class="toc-title">Table of Contents</p>
         <ol>
-          <li><a href="#why">Why Contrast Is the First Gate of Accessibility</a></li>
-          <li><a href="#rules">Threshold Cheat Sheet</a></li>
-          <li><a href="#how">Testing Workflow: Four Steps</a></li>
-          <li><a href="#fix">Four Ways to Fix a Failure</a></li>
-          <li><a href="#cases">Five Most Common Failures</a></li>
-          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#why-en">Why Contrast Is the First Gate of Accessibility</a></li>
+          <li><a href="#rules-en">Threshold Cheat Sheet</a></li>
+          <li><a href="#how-en">Testing Workflow: Four Steps</a></li>
+          <li><a href="#fix-en">Four Ways to Fix a Failure</a></li>
+          <li><a href="#cases-en">Five Most Common Failures</a></li>
+          <li><a href="#faq-en">FAQ</a></li>
         </ol>
       </div>
 
-      <h2 id="why">Why Contrast Is the First Gate of Accessibility</h2>
+      <h2 id="why-en">Why Contrast Is the First Gate of Accessibility</h2>
       <p>About <strong>4.5% of people have some form of color-vision deficiency</strong>, plus huge numbers of low-vision and presbyopic users — and anyone using a phone in bright sunlight. Low contrast isn't "ugly" for them; it's <strong>unreadable</strong>. WCAG treats contrast as a core perceivability requirement, and it's the <strong>highest-ROI</strong> accessibility fix of all: no structural changes, no code — often just a few adjusted color values.</p>
       <p>Contrast is measured as a ratio from 1:1 (identical) to 21:1 (pure black on pure white). It is the ratio of <strong>relative luminance</strong> between two colors and has nothing to do with hue — light green on white may pass while dark green on white fails, so "it looks dark enough" is never a valid judgment. Test it.</p>
 
-      <h2 id="rules">Threshold Cheat Sheet</h2>
+      <h2 id="rules-en">Threshold Cheat Sheet</h2>
       <p>WCAG 2.1 defines four text thresholds plus one for UI components:</p>
       <table>
         <tr><th>Content type</th><th>AA (baseline)</th><th>AAA (enhanced)</th></tr>
@@ -278,7 +282,7 @@
         <li><strong>UI components at 3:1 are the most-missed check</strong>: faint input borders and buttons blending into the background live here.</li>
       </ul>
 
-      <h2 id="how">Testing Workflow: Four Steps</h2>
+      <h2 id="how-en">Testing Workflow: Four Steps</h2>
       <p>Use this site's <a href="/contrast/">WCAG Contrast Checker</a> — everything runs in your browser:</p>
       <ol class="t-steps">
         <li><strong>Pick colors</strong>: take the foreground (text) and background from your design; enter HEX or use the pickers;</li>
@@ -287,7 +291,7 @@
         <li><strong>Sweep every combination</strong>: test each text-on-background pair in your page — body, links, placeholders, buttons, footer — including <strong>the dark-mode set</strong>.</li>
       </ol>
 
-      <h2 id="fix">Four Ways to Fix a Failure</h2>
+      <h2 id="fix-en">Four Ways to Fix a Failure</h2>
       <ul>
         <li><strong>Adjust the foreground</strong>: keep the hue, brighten or darken the text — the checker's one-click auto-fix does exactly this, taking the smaller change to just reach 4.5:1;</li>
         <li><strong>Adjust the background</strong>: when the text color is untouchable brand color, shift the background a step lighter (or darker in dark mode) — often a one-step fix;</li>
@@ -296,7 +300,7 @@
       </ul>
       <p>Run this workflow before finalizing a palette — far cheaper than rework after launch. For color selection methodology see the <a href="/guides/color-guide/">Color Theory Guide</a>; for dark-mode strategy see the <a href="/guides/dark-mode-icons/">Dark Mode Icon Design Guide</a>.</p>
 
-      <h2 id="cases">Five Most Common Failures</h2>
+      <h2 id="cases-en">Five Most Common Failures</h2>
       <ul>
         <li><strong>Gray text on white</strong>: "secondary notes" in #999 on white is only 2.8:1 — the classic miss; secondary information still needs 4.5:1;</li>
         <li><strong>Brand-color button with white text</strong>: many brand hues (light blue, orange, yellow-green) with white land between 2:1 and 3:1 — it "looks fine" but fails; darken the button or switch to dark text;</li>
@@ -305,7 +309,7 @@
         <li><strong>Text on images without checking the backdrop</strong>: photo backgrounds vary — compute against the darkest and lightest regions; any failure counts.</li>
       </ul>
 
-      <h2 id="faq">FAQ</h2>
+      <h2 id="faq-en">FAQ</h2>
       <div class="faq-item"><p class="faq-q">Q: How is the contrast ratio calculated?</p><p class="faq-a">A: Per WCAG 2.1: each RGB channel is gamma-expanded into relative luminance L (L = 0.2126×R + 0.7152×G + 0.0722×B), then ratio = (lighter L + 0.05) / (darker L + 0.05), ranging 1 to 21. Pure black on pure white is exactly 21:1. Human eyes are most sensitive to green wavelengths — the green channel carries the most weight, which is why equal-value green and blue look different in brightness.</p></div>
       <div class="faq-item"><p class="faq-q">Q: Is 4.5:1 a legal requirement?</p><p class="faq-a">A: It depends on region and context: US ADA case law, EU EN 301 549, and China's accessibility standards all reference WCAG AA; government and public-service sites are broadly mandated. Commercial sites aren't universally required, yet accessibility lawsuits keep growing and search engines weigh usability. Treat AA as the floor and AAA as the goal.</p></div>
       <div class="faq-item"><p class="faq-q">Q: Do logos and decorative elements need to pass?</p><p class="faq-a">A: No. WCAG exempts pure decoration, brand logos and names, and disabled controls invisible to all users. But form placeholder text, input borders, and icon buttons carry information and still need 3:1 or 4.5:1.</p></div>

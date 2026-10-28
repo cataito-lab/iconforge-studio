@@ -19,6 +19,10 @@
 <meta name="twitter:title" content="JPG 转 PDF 完全指南">
 <meta name="twitter:description" content="页面尺寸与边距选择、画质与体积取舍、多图排序与隐私考量。">
 <link rel="canonical" href="https://tools.cataito.com/guides/jpg-to-pdf-guide/">
+<meta property="og:image" content="https://tools.cataito.com/assets/img/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:image" content="https://tools.cataito.com/assets/img/og-image.png">
 <link rel="icon" type="image/png" href="/assets/img/cataito-logo.png">
 <link rel="stylesheet" href="/assets/css/site.css">
 <script src="/assets/js/theme-init.js"></script>
@@ -251,17 +255,17 @@
       <div class="toc">
         <p class="toc-title">Table of Contents</p>
         <ol>
-          <li><a href="#when">When Images Should Become PDF</a></li>
-          <li><a href="#page-size">Page Size: Fit-to-Image vs A4 / Letter</a></li>
-          <li><a href="#margin">Margins &amp; Orientation</a></li>
-          <li><a href="#quality">Quality vs File Size</a></li>
-          <li><a href="#order">Ordering Multiple Images</a></li>
-          <li><a href="#privacy">Privacy: Cloud Upload vs Local Conversion</a></li>
-          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#when-en">When Images Should Become PDF</a></li>
+          <li><a href="#page-size-en">Page Size: Fit-to-Image vs A4 / Letter</a></li>
+          <li><a href="#margin-en">Margins &amp; Orientation</a></li>
+          <li><a href="#quality-en">Quality vs File Size</a></li>
+          <li><a href="#order-en">Ordering Multiple Images</a></li>
+          <li><a href="#privacy-en">Privacy: Cloud Upload vs Local Conversion</a></li>
+          <li><a href="#faq-en">FAQ</a></li>
         </ol>
       </div>
 
-      <h2 id="when">When Images Should Become PDF</h2>
+      <h2 id="when-en">When Images Should Become PDF</h2>
       <p>JPG / PNG are "pictures"; PDF is a "document". Convert when the recipient expects <strong>a fixed-layout file</strong>:</p>
       <ul>
         <li><strong>ID and document submission</strong>: government, banking, school, and visa systems accept PDF only — combine several ID photos into one file, in order.</li>
@@ -271,7 +275,7 @@
       </ul>
       <p>Conversely, if the recipient needs editable source material, keep the original image format.</p>
 
-      <h2 id="page-size">Page Size: Fit-to-Image vs A4 / Letter</h2>
+      <h2 id="page-size-en">Page Size: Fit-to-Image vs A4 / Letter</h2>
       <table>
         <thead><tr><th>Option</th><th>Page size</th><th>Best for</th></tr></thead>
         <tbody>
@@ -282,7 +286,7 @@
       </table>
       <p>Rule of thumb: <strong>for screens and machines, fit to image; for printers and signatures, A4 / Letter</strong>. In A4 mode images are scaled proportionally onto the paper (no cropping, no distortion), landscape images rotate the page automatically.</p>
 
-      <h2 id="margin">Margins &amp; Orientation</h2>
+      <h2 id="margin-en">Margins &amp; Orientation</h2>
       <p>For fixed paper (A4 / Letter), two parameters shape the result:</p>
       <ul>
         <li><strong>Margins</strong>: zero margins run images to the paper edge, where printers may clip content; <strong>10mm narrow</strong> suits photo collections; <strong>20mm normal</strong> suits files meant for binding or annotation.</li>
@@ -290,7 +294,7 @@
       </ul>
       <p>In "Fit to image" mode the page is the image itself; margin and orientation options don't apply.</p>
 
-      <h2 id="quality">Quality vs File Size</h2>
+      <h2 id="quality-en">Quality vs File Size</h2>
       <p>Converters typically re-encode images as JPEG before embedding (the most compatible approach):</p>
       <table>
         <thead><tr><th>Quality</th><th>Typical result</th><th>Use</th></tr></thead>
@@ -302,18 +306,18 @@
       </table>
       <p>Size patterns: <strong>PNG screenshots usually shrink</strong> (lossless files encode well as JPEG); <strong>already-compressed JPGs may grow slightly</strong> — a normal cost of re-encoding. For quality-critical work, use high-resolution originals at quality 90.</p>
 
-      <h2 id="order">Ordering Multiple Images</h2>
+      <h2 id="order-en">Ordering Multiple Images</h2>
       <p>PDF page order = the order you add images. Two practical habits:</p>
       <ol class="t-steps">
         <li><strong>Pre-sort by filename</strong>: rename files to <code>01.jpg, 02.jpg, 03.jpg</code> before batch-selecting (zero-pad 1–9, or <code>10.jpg</code> sorts before <code>2.jpg</code>).</li>
         <li><strong>Fine-tune in the tool</strong>: use the move-up / move-down buttons per row, then verify thumbnail order before generating.</li>
       </ol>
 
-      <h2 id="privacy">Privacy: Cloud Upload vs Local Conversion</h2>
+      <h2 id="privacy-en">Privacy: Cloud Upload vs Local Conversion</h2>
       <p>Mainstream online converters (iLovePDF, Smallpdf, PDF24, etc.) work by <strong>uploading your file to their servers</strong> and handing back a download link. For ordinary photos this doesn't matter — but for IDs, contracts, or medical bills, think twice: you don't control how long the server-side copy is retained.</p>
       <p>The alternative is <strong>in-browser local conversion</strong>: the conversion logic runs in your browser, files never leave the device, and it works offline. Our <a href="/pdf/image-to-pdf/">Image to PDF tool</a> takes this route — the PDF itself is generated byte-by-byte in your browser, suitable for sensitive material like IDs.</p>
 
-      <h2 id="faq">FAQ</h2>
+      <h2 id="faq-en">FAQ</h2>
       <div class="faq-item"><p class="faq-q">Q: Does converting images to PDF lose quality?</p><p class="faq-a">A: PNG transparency can't survive (transparent areas get a white fill), and images are typically re-encoded as JPEG — quality 90 is visually lossless. Drop to 75–85 to shrink.</p></div>
       <div class="faq-item"><p class="faq-q">Q: Fit-to-image or A4?</p><p class="faq-a">A: On-screen reading → fit to image (each page is one image). Printing or formal submission → A4 (Europe/Asia) or Letter (North America).</p></div>
       <div class="faq-item"><p class="faq-q">Q: Is it safe to upload ID photos to an online converter?</p><p class="faq-a">A: Mainstream tools upload files to their servers. For sensitive material like IDs, prefer a tool that runs entirely in your browser.</p></div>
