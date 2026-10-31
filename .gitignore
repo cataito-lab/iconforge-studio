@@ -30,3 +30,6 @@ _cprofile/
 _cprofile2/
 _cprofile3/
 _cog/
+
+# ===== 本地验证临时区（e2e 夹具 / 下载产物 / 截图，2026-10-31） =====
+.verify/

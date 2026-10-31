@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>压缩 PDF — 免费在线减小 PDF 体积 | CATAITO</title>
+<meta name="title-zh" content="压缩 PDF — 免费在线减小 PDF 体积 | CATAITO">
+<meta name="title-en" content="Compress PDF — Free Online PDF Size Reducer | CATAITO">
+<meta name="description" content="免费在线压缩 PDF：重建文件结构并重采样内嵌大图，三档压缩强度，逐个显示压缩前后体积。纯浏览器本地处理，文件绝不上传服务器。">
+<meta name="theme-color" content="#ffffff">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="CATAITO 工具箱">
+<meta property="og:title" content="压缩 PDF — 免费在线减小 PDF 体积">
+<meta property="og:description" content="重建结构并压缩内嵌大图，三档强度，纯本地处理不上传。">
+<meta property="og:url" content="https://tools.cataito.com/pdf/compress/">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:locale:alternate" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="压缩 PDF">
+<meta name="twitter:description" content="免费在线压缩 PDF，纯本地处理。">
+<link rel="icon" type="image/png" href="/assets/img/cataito-logo.png">
+<link rel="canonical" href="https://tools.cataito.com/pdf/compress/">
+<meta property="og:image" content="https://tools.cataito.com/assets/img/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:image" content="https://tools.cataito.com/assets/img/og-image.png">
+<link rel="stylesheet" href="/assets/css/site.css">
+<script src="/assets/js/theme-init.js"></script>
+<script>
+  (function () {
+    try {
+      var l = localStorage.getItem('cataito-lang');
+      document.documentElement.setAttribute('lang', (l === 'en') ? 'en' : 'zh-CN');
+    } catch (e) {}
+  })();
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Compress PDF",
+  "alternateName": "压缩 PDF",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "Any",
+  "url": "https://tools.cataito.com/pdf/compress/",
+  "inLanguage": ["zh-CN", "en"],
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "description": "免费在线压缩 PDF：重建文件结构并重采样内嵌大图，三档强度，逐个显示前后体积，纯浏览器本地处理，文件不上传。"
+}
+</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7103529190038161" crossorigin="anonymous"></script>
+</head>
+<body>
+<div id="site-header"></div>
+<main class="site-main">
+  <div class="t-head">
+    <nav class="breadcrumb"><a href="/" data-i18n="crumb_home">首页</a><span class="sep">/</span><span data-i18n="pdfc_name">压缩 PDF</span></nav>
+    <h1 class="page-h1" data-i18n="pdfc_name">压缩 PDF</h1>
+    <p class="page-sub" data-i18n="pdfc_desc">重建 PDF 结构并重采样内嵌大图来减小体积：三档强度，逐个显示压缩前后大小，文字内容不受影响。纯浏览器本地处理，文件绝不上传服务器。</p>
+  </div>
+
+  <section class="t-card t-flow">
+    <div id="pdfc-dropzone" class="t-drop" tabindex="0">
+      <input type="file" id="pdfc-file" accept="application/pdf,.pdf" multiple hidden>
+      <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m4 14h6v6"/><path d="m20 10h-6V4"/><path d="M14 10l7-7"/><path d="M3 21l7-7"/></svg>
+      <span class="t-drop-title" data-i18n="pdfc_upload">点击或拖入 PDF（可多选）</span>
+      <span class="t-drop-hint" data-i18n="pdfc_dz_hint">最多 10 个文件 · 全程本地处理，不上传</span>
+    </div>
+
+    <div class="t-block">
+      <div class="t-field">
+        <div class="t-label" data-i18n="pdfc_level">压缩强度</div>
+        <div class="t-seg" id="pdfc-level">
+          <label class="t-seg-item"><input type="radio" name="pdfc-level" value="strong"><span data-i18n="pdfc_level_strong">强力</span></label>
+          <label class="t-seg-item"><input type="radio" name="pdfc-level" value="balanced" checked><span data-i18n="pdfc_level_balanced">均衡</span></label>
+          <label class="t-seg-item"><input type="radio" name="pdfc-level" value="light"><span data-i18n="pdfc_level_light">轻微</span></label>
+        </div>
+        <div class="t-hint" data-i18n="pdfc_level_hint">内嵌大图会按强度降采样并重新编码（强力长边 1600px / 均衡 2400px / 轻微只重编码不缩放）；文字与矢量内容不受影响。</div>
+      </div>
+    </div>
+
+    <div id="pdfc-list" class="t-list"></div>
+    <p id="pdfc-empty" class="t-empty" data-i18n="pdfc_empty">还没有 PDF 文件，先添加几个试试。</p>
+
+    <div id="pdfc-bar" class="t-bar" hidden>
+      <div class="t-bar-stats" id="pdfc-bar-stats"></div>
+      <div class="t-bar-actions">
+        <button type="button" class="t-btn" id="pdfc-add" data-i18n="pdfc_add_more">继续添加</button>
+        <button type="button" class="t-btn" id="pdfc-clear" data-i18n="pdfc_clear_all">清空全部</button>
+        <button type="button" class="t-btn primary" id="pdfc-zip" data-i18n="pdfc_zip">打包下载全部（ZIP）</button>
+      </div>
+    </div>
+
+    <p class="t-note" data-i18n="pdfc_note">压缩在本地完成：重建 PDF 结构并把内嵌 JPEG 大图降采样重编码。不含大图的文件（纯文字、已优化过）体积变化可能很小，列表会如实标注。</p>
+  </section>
+
+  <section class="t-prose">
+    <h2 data-i18n="pdfc_how_h">怎么用</h2>
+    <ol class="t-steps">
+      <li data-i18n-html="pdfc_how_1"><strong>批量上传</strong>：点击或拖入 PDF（一次最多 10 个），添加后自动开始压缩。</li>
+      <li data-i18n-html="pdfc_how_2"><strong>选强度</strong>：网传附件选「强力」；打印或存档选「轻微」；不确定就用默认「均衡」。</li>
+      <li data-i18n-html="pdfc_how_3"><strong>对比体积</strong>：每行显示压缩前后大小与降幅；纯文字文件会标注「收益有限」。</li>
+      <li data-i18n-html="pdfc_how_4"><strong>下载</strong>：单行逐个下载，或一键打包全部为 ZIP。</li>
+    </ol>
+
+    <h2 data-i18n="pdfc_faq_h">常见问题</h2>
+    <div class="t-faq">
+      <div class="t-faq-item">
+        <p class="t-faq-q" data-i18n="pdfc_faq_1_q">PDF 文件会被上传到服务器吗？</p>
+        <p class="t-faq-a" data-i18n="pdfc_faq_1_a">不会。压缩在你的浏览器里本地完成（解析结构 + Canvas 重编码图片），文件不经过网络，扫描件、合同、档案都能放心压缩。</p>
+      </div>
+      <div class="t-faq-item">
+        <p class="t-faq-q" data-i18n="pdfc_faq_2_q">为什么我的 PDF 压缩后没变小？</p>
+        <p class="t-faq-a" data-i18n="pdfc_faq_2_a">本工具主要压缩「内嵌图片」。纯文字 PDF、已经被优化过的 PDF，或图片是 PNG / Flate 格式（非 JPEG）的文件，可压缩空间本来就小，列表会标注「收益有限」。带大量扫描图的 PDF 压缩效果最明显。</p>
+      </div>
+      <div class="t-faq-item">
+        <p class="t-faq-q" data-i18n="pdfc_faq_3_q">压缩强度怎么选？</p>
+        <p class="t-faq-a" data-i18n="pdfc_faq_3_a">「强力」降采样到长边 1600px + 质量 60，适合网上传输；「均衡」长边 2400px + 质量 75，是默认推荐；「轻微」只重编码不缩放，接近原画质，适合打印或存档。文字与矢量内容在任何档位都不受影响。</p>
+      </div>
+      <div class="t-faq-item">
+        <p class="t-faq-q" data-i18n="pdfc_faq_4_q">加密的 PDF 能压缩吗？</p>
+        <p class="t-faq-a" data-i18n="pdfc_faq_4_a">不能。带打开密码的 PDF 无法被解析，会标记为「已跳过」。请先用密码在 PDF 阅读器中打开并另存为无密码副本，再回来压缩。</p>
+      </div>
+    </div>
+
+    <h2 data-i18n="related_guides">相关指南</h2>
+    <div class="t-guide-links">
+      <a class="t-guide-link" href="/guides/compress-pdf-guide/">
+        <p class="t-guide-link-title" data-i18n="gd_pcd_short">PDF 压缩指南</p>
+        <p class="t-guide-link-desc" data-i18n="gd_pcd_card_desc">PDF 为什么会那么大（扫描图、嵌入字体）、三档强度的取舍、哪些文件压不动，以及云端压缩与本地压缩的隐私差别。</p>
+      </a>
+      <a class="t-guide-link" href="/guides/merge-pdf-guide/">
+        <p class="t-guide-link-title" data-i18n="gd_pmg_short">PDF 合并指南</p>
+        <p class="t-guide-link-desc" data-i18n="gd_pmg_card_desc">哪些文件适合合并成一份、怎么决定先后顺序、超大合并失败怎么办，以及云上传合并工具的隐私风险。</p>
+      </a>
+    </div>
+  </section>
+</main>
+
+<div id="site-footer"></div>
+<div id="pdfc-toast" class="t-toast">
+  <span class="t-toast-ic">
+    <svg class="ic-ok" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+    <svg class="ic-err" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+  </span>
+  <span class="t-toast-title"></span>
+</div>
+
+<script src="/assets/js/pdf-lib.min.js" defer></script>
+<script src="/assets/js/site.js" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+(function () {
+  'use strict';
+  var t = function (k, vars) { return (window.CATAITO_I18N && window.CATAITO_I18N.t) ? window.CATAITO_I18N.t(k, vars) : k; };
+  var MAX_FILES = 10;
+  var LEVELS = {
+    strong:   { q: 0.60, cap: 1600 },
+    balanced: { q: 0.75, cap: 2400 },
+    light:    { q: 0.88, cap: 0 }
+  };
+  var MIN_IMAGE_BYTES = 20 * 1024;   /* 小于 20KB 的图不动，避免得不偿失 */
+  var items = [];   /* { id, file, outU8, outName, status: 'loading'|'done'|'flat'|'bad', reason } */
+  var seq = 0;
+  var rerunTimer = null;
+
+  /* ---------- 工具函数 ---------- */
+  function fmtSize(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  }
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+  function blobToU8(blob) {
+    return blob.arrayBuffer ? blob.arrayBuffer().then(function (b) { return new Uint8Array(b); })
+      : new Promise(function (resolve) {
+          var r = new FileReader();
+          r.onload = function () { resolve(new Uint8Array(r.result)); };
+          r.readAsArrayBuffer(blob);
+        });
+  }
+  function canvasToBlob(canvas, type, quality) {
+    return new Promise(function (resolve) {
+      if (canvas.toBlob) {
+        canvas.toBlob(function (b) { resolve(b); }, type, quality);
+      } else {
+        var u = canvas.toDataURL(type, quality);
+        var bin = atob(u.split(',')[1]);
+        var bytes = new Uint8Array(bin.length);
+        for (var i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+        resolve(new Blob([bytes], { type: type }));
+      }
+    });
+  }
+  function isPdfFile(f) {
+    var name = (f.name || '').toLowerCase();
+    return f.type === 'application/pdf' || f.type === 'application/x-pdf' || /\.pdf$/.test(name);
+  }
+  function downloadBlob(blob, name) {
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = name;
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(function () { URL.revokeObjectURL(a.href); }, 4000);
+  }
+
+  /* ============================================================
+     压缩核心（宁可不压，不弄坏）：
+     1) 复制全部页面到新文档（对象流重存本身即可瘦身）
+     2) 枚举间接对象，找到 DCTDecode（JPEG）图片 XObject
+     3) 解码 → 按强度降采样重编码 → 仅当真的变小时替换回写
+     跳过：带 SMask/Mask（透明通道）的图、ImageMask、非 JPEG、
+          多重滤镜、过小的图；FlateDecode 等其他格式不碰。
+     ============================================================ */
+  function nameEq(libs, dict, key, val) {
+    var v = dict.get(libs.PDFName.of(key));
+    return v instanceof libs.PDFName && v.asString() === '/' + val;
+  }
+  function dictHas(libs, dict, key) {
+    return dict.get(libs.PDFName.of(key)) !== undefined;
+  }
+  async function compressPdf(libs, u8, level) {
+    var src = await libs.PDFDocument.load(u8, { ignoreEncryption: true });
+    if (src.isEncrypted) throw { code: 'encrypted' };
+    var out = await libs.PDFDocument.create();
+    var copied = await out.copyPages(src, src.getPageIndices());
+    for (var i = 0; i < copied.length; i++) out.addPage(copied[i]);
+
+    var replaced = 0;
+    var entries = out.context.enumerateIndirectObjects();
+    for (var e = 0; e < entries.length; e++) {
+      var ref = entries[e][0], obj = entries[e][1];
+      if (!(obj instanceof libs.PDFRawStream)) continue;
+      var dict = obj.dict;
+      if (!nameEq(libs, dict, 'Subtype', 'Image')) continue;
+      if (dictHas(libs, dict, 'SMask') || dictHas(libs, dict, 'Mask')) continue;
+      var im = dict.get(libs.PDFName.of('ImageMask'));
+      if (im && im.asBool && im.asBool()) continue;
+      /* Filter 必须是 DCTDecode（单值或数组唯一项） */
+      var flt = dict.get(libs.PDFName.of('Filter'));
+      var isDct = false;
+      if (flt instanceof libs.PDFName) isDct = flt.asString() === '/DCTDecode';
+      else if (flt instanceof libs.PDFArray) {
+        isDct = flt.size() === 1 && flt.get(0) instanceof libs.PDFName && flt.get(0).asString() === '/DCTDecode';
+      }
+      if (!isDct) continue;
+      if (obj.contents && obj.contents.length < MIN_IMAGE_BYTES) continue;
+
+      var wN = dict.get(libs.PDFName.of('Width'));
+      var hN = dict.get(libs.PDFName.of('Height'));
+      var w = wN && wN.asNumber ? wN.asNumber() : 0;
+      var h = hN && hN.asNumber ? hN.asNumber() : 0;
+      if (!w || !h) continue;
+
+      var bmp = null;
+      try {
+        bmp = await createImageBitmap(new Blob([obj.contents], { type: 'image/jpeg' }));
+      } catch (err) { continue; }
+
+      var scale = (level.cap && Math.max(w, h) > level.cap) ? level.cap / Math.max(w, h) : 1;
+      var cw = Math.max(1, Math.round(w * scale));
+      var ch = Math.max(1, Math.round(h * scale));
+      var canvas = document.createElement('canvas');
+      canvas.width = cw; canvas.height = ch;
+      var ctx = canvas.getContext('2d');
+      ctx.imageSmoothingEnabled = true;
+      ctx.imageSmoothingQuality = 'high';
+      ctx.drawImage(bmp, 0, 0, cw, ch);
+      if (bmp.close) bmp.close();
+      var blob = await canvasToBlob(canvas, 'image/jpeg', level.q);
+      var nu8 = await blobToU8(blob);
+      if (nu8.length >= obj.contents.length) continue;   /* 没变小就不替换 */
+
+      dict.set(libs.PDFName.of('Width'), libs.PDFNumber.of(cw));
+      dict.set(libs.PDFName.of('Height'), libs.PDFNumber.of(ch));
+      dict.set(libs.PDFName.of('ColorSpace'), libs.PDFName.of('DeviceRGB'));
+      dict.set(libs.PDFName.of('BitsPerComponent'), libs.PDFNumber.of(8));
+      dict.set(libs.PDFName.of('Filter'), libs.PDFName.of('DCTDecode'));
+      dict.delete(libs.PDFName.of('Decode'));
+      dict.set(libs.PDFName.of('Length'), libs.PDFNumber.of(nu8.length));
+      out.context.assign(ref, libs.PDFRawStream.of(dict, nu8));
+      replaced++;
+    }
+    var outU8 = await out.save({ useObjectStreams: true });
+    return { u8: outU8, replaced: replaced };
+  }
+
+  /* ---------- 渲染 ---------- */
+  function renderRow(item) {
+    var row = document.getElementById('pdfc-row-' + item.id);
+    if (!row) return;
+    var meta, badge = '';
+    if (item.status === 'loading') {
+      meta = esc(t('pdfc_processing'));
+    } else if (item.status === 'bad') {
+      meta = '<span class="pdfc-badnote">' + esc(t(item.reason === 'encrypted' ? 'pdfc_bad_encrypted' : 'pdfc_bad_read')) + '</span>';
+    } else if (item.status === 'flat') {
+      meta = '<span data-i18n="pdfc_orig">原始</span> ' + fmtSize(item.file.size) + ' → <strong>' + fmtSize(item.outU8.length) + '</strong> ' +
+             '<span class="t-badge muted">' + esc(t('pdfc_flat')) + '</span>';
+    } else {
+      var delta = Math.round((item.outU8.length / item.file.size - 1) * 100);
+      var pct = Math.abs(delta);
+      badge = delta > 0
+        ? '<span class="t-badge muted">+' + pct + '%</span>'
+        : '<span class="t-badge">-' + pct + '%</span>';
+      meta = '<span data-i18n="pdfc_orig">原始</span> ' + fmtSize(item.file.size) + ' → <strong>' + fmtSize(item.outU8.length) + '</strong> ' + badge;
+    }
+    row.className = 't-row' + (item.status === 'bad' ? ' is-bad' : '');
+    row.innerHTML =
+      '<div class="t-thumb pdfc-thumb">' +
+        '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h6"/></svg>' +
+      '</div>' +
+      '<div class="t-row-main">' +
+        '<div class="t-row-name" title="' + esc(item.file.name) + '">' + esc(item.file.name) + '</div>' +
+        '<div class="t-row-meta">' + meta + '</div>' +
+      '</div>' +
+      '<div class="pdfc-row-actions">' +
+        (item.outU8
+          ? '<button type="button" class="t-icon-btn" data-act="dl" data-i18n-title="pdfc_dl">' +
+            '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3"/><path d="m7 10 5 5 5-5"/><path d="M4 21h16"/></svg></button>'
+          : '') +
+        '<button type="button" class="t-icon-btn danger" data-act="rm" data-i18n-title="pdfc_remove">' +
+          '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>' +
+        '</button>' +
+      '</div>';
+    if (window.CATAITO_I18N) window.CATAITO_I18N.apply();
+  }
+  function renderList() {
+    var list = document.getElementById('pdfc-list');
+    list.innerHTML = '';
+    items.forEach(function (item) {
+      var row = document.createElement('div');
+      row.className = 't-row';
+      row.id = 'pdfc-row-' + item.id;
+      list.appendChild(row);
+      renderRow(item);
+    });
+    document.getElementById('pdfc-empty').style.display = items.length ? 'none' : '';
+    document.getElementById('pdfc-bar').hidden = !items.length;
+    renderBar();
+  }
+  function renderBar() {
+    if (!items.length) return;
+    var orig = 0, out = 0, done = 0;
+    items.forEach(function (it) {
+      orig += it.file.size;
+      if (it.outU8) { out += it.outU8.length; done++; }
+    });
+    document.getElementById('pdfc-bar-stats').textContent =
+      t('pdfc_bar_stats', { done: done, total: items.length, orig: fmtSize(orig), out: fmtSize(out) });
+  }
+
+  /* ---------- 处理调度（参照 convert：添加/改设置后自动重跑） ---------- */
+  function currentLevel() {
+    var v = (document.querySelector('input[name="pdfc-level"]:checked') || {}).value || 'balanced';
+    return LEVELS[v] || LEVELS.balanced;
+  }
+  async function processItem(item) {
+    item.status = 'loading';
+    item.outU8 = null;
+    item.outName = '';
+    renderRow(item);
+    try {
+      var u8 = await blobToU8(item.file);
+      var r = await compressPdf(window.PDFLib, u8, currentLevel());
+      item.outU8 = r.u8;
+      item.outName = item.file.name.replace(/\.pdf$/i, '') + '-compressed.pdf';
+      /* 无可替换图片且体积几乎没变 → 如实标注收益有限 */
+      item.status = (r.replaced === 0 && r.u8.length > item.file.size * 0.9) ? 'flat' : 'done';
+    } catch (e) {
+      if (e && e.code === 'encrypted') { item.status = 'bad'; item.reason = 'encrypted'; }
+      else { item.status = 'bad'; item.reason = 'read'; }
+    }
+    renderRow(item);
+    renderBar();
+  }
+  async function runPending() {
+    if (!window.PDFLib || !window.PDFLib.PDFDocument) { showToast(t('pdfc_toast_err'), true); return; }
+    for (var i = 0; i < items.length; i++) {
+      if (items[i].status === 'loading' || !items[i].outU8) await processItem(items[i]);
+    }
+  }
+  function scheduleRerun() {
+    if (rerunTimer) clearTimeout(rerunTimer);
+    rerunTimer = setTimeout(function () {
+      items.forEach(function (it) { it.outU8 = null; it.status = 'loading'; });
+      renderList();
+      runPending();
+    }, 400);
+  }
+
+  /* ---------- 添加 / 移除 ---------- */
+  function addFiles(fileList) {
+    var added = 0;
+    var files = Array.prototype.slice.call(fileList || []);
+    for (var i = 0; i < files.length; i++) {
+      var f = files[i];
+      if (!isPdfFile(f)) { showToast(t('pdfc_toast_type'), true); continue; }
+      if (items.length >= MAX_FILES) { showToast(t('pdfc_toast_too_many', { n: MAX_FILES }), true); break; }
+      var item = { id: ++seq, file: f, outU8: null, outName: '', status: 'loading', reason: '' };
+      items.push(item);
+      added++;
+      processItem(item);
+    }
+    if (added) renderList();
+  }
+  function removeItem(id) {
+    for (var i = 0; i < items.length; i++) {
+      if (items[i].id === id) { items.splice(i, 1); break; }
+    }
+    renderList();
+  }
+  async function downloadZip() {
+    var files = [];
+    var used = {};
+    for (var i = 0; i < items.length; i++) {
+      var it = items[i];
+      if (!it.outU8) continue;
+      var name = it.outName || it.file.name;
+      if (used[name]) name = name.replace(/(\.pdf)$/, '-' + (i + 1) + '$1');
+      used[name] = 1;
+      files.push({ name: name, data: it.outU8 });
+    }
+    if (!files.length) { showToast(t('pdfc_toast_empty'), true); return; }
+    downloadBlob(buildZip(files), 'compressed-pdfs.zip');
+    showToast(t('pdfc_toast_zip', { n: files.length }));
+  }
+
+  /* ---------- ZIP（与 convert 同源的手工实现：CRC32 查表 + UTF-8 文件名） ---------- */
+  var CRC_TABLE = null;
+  function getCrcTable() {
+    if (CRC_TABLE) return CRC_TABLE;
+    CRC_TABLE = new Uint32Array(256);
+    for (var i = 0; i < 256; i++) {
+      var c = i;
+      for (var k = 0; k < 8; k++) c = (c & 1) ? (0xEDB88320 ^ (c >>> 1)) : (c >>> 1);
+      CRC_TABLE[i] = c >>> 0;
+    }
+    return CRC_TABLE;
+  }
+  function crc32(buf) {
+    var table = getCrcTable();
+    var crc = 0xFFFFFFFF;
+    for (var i = 0; i < buf.length; i++) crc = table[(crc ^ buf[i]) & 0xFF] ^ (crc >>> 8);
+    return (crc ^ 0xFFFFFFFF) >>> 0;
+  }
+  function buildZip(files) {
+    var enc = new TextEncoder();
+    var chunks = [], central = [], offset = 0;
+    var now = new Date();
+    var dosTime = ((now.getHours() & 31) << 11) | ((now.getMinutes() & 63) << 5) | ((now.getSeconds() >> 1) & 31);
+    var dosDate = ((Math.max(0, now.getFullYear() - 1980) & 127) << 9) | (((now.getMonth() + 1) & 15) << 5) | (now.getDate() & 31);
+    for (var f = 0; f < files.length; f++) {
+      var nameBytes = enc.encode(files[f].name);
+      var data = files[f].data;
+      var crc = crc32(data);
+      var local = new DataView(new ArrayBuffer(30));
+      local.setUint32(0, 0x04034b50, true); local.setUint16(4, 20, true); local.setUint16(6, 0x0800, true);
+      local.setUint16(8, 0, true); local.setUint16(10, dosTime, true); local.setUint16(12, dosDate, true);
+      local.setUint32(14, crc, true); local.setUint32(18, data.length, true); local.setUint32(22, data.length, true);
+      local.setUint16(26, nameBytes.length, true); local.setUint16(28, 0, true);
+      chunks.push(new Uint8Array(local.buffer), nameBytes, data);
+      var cd = new DataView(new ArrayBuffer(46));
+      cd.setUint32(0, 0x02014b50, true); cd.setUint16(4, 20, true); cd.setUint16(6, 20, true); cd.setUint16(8, 0x0800, true);
+      cd.setUint16(10, 0, true); cd.setUint16(12, dosTime, true); cd.setUint16(14, dosDate, true);
+      cd.setUint32(16, crc, true); cd.setUint32(20, data.length, true); cd.setUint32(24, data.length, true);
+      cd.setUint16(28, nameBytes.length, true); cd.setUint16(30, 0, true); cd.setUint16(32, 0, true); cd.setUint16(34, 0, true); cd.setUint16(36, 0, true);
+      cd.setUint32(38, 0, true); cd.setUint32(42, offset, true);
+      central.push({ header: new Uint8Array(cd.buffer), name: nameBytes });
+      offset += 30 + nameBytes.length + data.length;
+    }
+    var centralStart = offset, centralSize = 0;
+    central.forEach(function (c) { chunks.push(c.header, c.name); centralSize += c.header.length + c.name.length; });
+    var end = new DataView(new ArrayBuffer(22));
+    end.setUint32(0, 0x06054b50, true); end.setUint16(4, 0, true); end.setUint16(6, 0, true);
+    end.setUint16(8, files.length, true); end.setUint16(10, files.length, true);
+    end.setUint32(12, centralSize, true); end.setUint32(16, centralStart, true); end.setUint16(20, 0, true);
+    chunks.push(new Uint8Array(end.buffer));
+    return new Blob(chunks, { type: 'application/zip' });
+  }
+
+  /* ---------- Toast ---------- */
+  var toastTimer = null;
+  function showToast(msg, isErr) {
+    var el = document.getElementById('pdfc-toast');
+    el.querySelector('.t-toast-title').textContent = msg;
+    el.classList.toggle('error', !!isErr);
+    el.classList.add('show');
+    if (toastTimer) clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { el.classList.remove('show'); }, 2600);
+  }
+
+  /* ---------- 事件绑定 ---------- */
+  var dz = document.getElementById('pdfc-dropzone');
+  var fileInput = document.getElementById('pdfc-file');
+  dz.addEventListener('click', function () { fileInput.click(); });
+  dz.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fileInput.click(); } });
+  fileInput.addEventListener('change', function (e) { addFiles(e.target.files); fileInput.value = ''; });
+  ['dragenter', 'dragover'].forEach(function (ev) {
+    dz.addEventListener(ev, function (e) { e.preventDefault(); dz.classList.add('is-over'); });
+  });
+  ['dragleave', 'drop'].forEach(function (ev) {
+    dz.addEventListener(ev, function (e) { e.preventDefault(); dz.classList.remove('is-over'); });
+  });
+  dz.addEventListener('drop', function (e) {
+    var dt = e.dataTransfer;
+    if (dt && dt.files && dt.files.length) addFiles(dt.files);
+  });
+
+  document.getElementById('pdfc-list').addEventListener('click', function (e) {
+    var btn = e.target.closest ? e.target.closest('.t-icon-btn') : null;
+    if (!btn || btn.disabled) return;
+    var row = btn.closest('.t-row');
+    if (!row) return;
+    var id = parseInt(row.id.replace('pdfc-row-', ''), 10);
+    var act = btn.getAttribute('data-act');
+    if (act === 'rm') { removeItem(id); return; }
+    if (act === 'dl') {
+      var it = null;
+      for (var i = 0; i < items.length; i++) if (items[i].id === id) it = items[i];
+      if (it && it.outU8) {
+        downloadBlob(new Blob([it.outU8], { type: 'application/pdf' }), it.outName);
+      }
+    }
+  });
+  document.getElementById('pdfc-level').addEventListener('change', scheduleRerun);
+  document.getElementById('pdfc-add').addEventListener('click', function () { fileInput.click(); });
+  document.getElementById('pdfc-clear').addEventListener('click', function () { items = []; renderList(); });
+  document.getElementById('pdfc-zip').addEventListener('click', downloadZip);
+
+  /* 语言切换时刷新动态文本 */
+  document.addEventListener('cataito-lang-change', function () {
+    renderList();
+  });
+})();
+});
+</script>
+
+<style>
+  /* 本页专属规则；通用组件已复用 /assets/css/site.css 的 .t-* 共享组件层 */
+  .pdfc-row-actions { display: flex; gap: 6px; flex: none; }
+  .pdfc-thumb { display: flex; align-items: center; justify-content: center; color: var(--text-3); }
+  .pdfc-badnote { color: var(--text-3); }
+  .t-row.is-bad .t-row-main { opacity: .55; }
+  .t-icon-btn:disabled { opacity: .3; cursor: default; }
+  body.pdfc-busy .t-row { opacity: .55; }
+  @media (max-width: 560px) {
+    .t-bar { flex-direction: column; align-items: stretch; }
+    .t-bar-actions { width: 100%; }
+    .t-bar-actions .t-btn { flex: 1; }
+  }
+</style>
+</body>
+</html>

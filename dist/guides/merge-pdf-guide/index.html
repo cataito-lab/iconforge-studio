@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PDF 合并完全指南：哪些文件该合并、怎么合并最稳 | CATAITO</title>
+<meta name="title-zh" content="PDF 合并完全指南：哪些文件该合并、怎么合并最稳 | CATAITO">
+<meta name="title-en" content="PDF Merge Guide: What to Combine and How to Do It Safely | CATAITO">
+<meta name="description" content="PDF 合并完全指南：哪些文件适合合并成一份、怎么决定先后顺序、加密与损坏文件的处理、超大合并的分组技巧，以及云上传合并工具的隐私风险。附免费在线 PDF 合并工具，纯浏览器本地处理。">
+<meta name="theme-color" content="#ffffff">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="CATAITO 工具箱">
+<meta property="og:title" content="PDF 合并完全指南">
+<meta property="og:description" content="哪些文件适合合并、顺序怎么决定、加密文件怎么办，以及云上传工具的隐私风险。">
+<meta property="og:url" content="https://tools.cataito.com/guides/merge-pdf-guide/">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:locale:alternate" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="PDF 合并完全指南">
+<meta name="twitter:description" content="哪些文件该合并、顺序怎么定、加密与损坏文件的处理与隐私考量。">
+<link rel="canonical" href="https://tools.cataito.com/guides/merge-pdf-guide/">
+<meta property="og:image" content="https://tools.cataito.com/assets/img/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:image" content="https://tools.cataito.com/assets/img/og-image.png">
+<link rel="icon" type="image/png" href="/assets/img/cataito-logo.png">
+<link rel="stylesheet" href="/assets/css/site.css">
+<script src="/assets/js/theme-init.js"></script>
+<script>
+  (function () {
+    try {
+      var l = localStorage.getItem('cataito-lang');
+      document.documentElement.setAttribute('lang', (l === 'en') ? 'en' : 'zh-CN');
+      if (l === 'en') document.documentElement.classList.add('lang-en');
+    } catch (e) {}
+  })();
+</script>
+<style>
+  .guide-wrap { max-width: 760px; margin: 0; }
+  .guide-meta { font-size: 13px; color: var(--text-3); margin: 0 0 6px; }
+  .page-sub { margin-bottom: 10px; }
+  .article { font-size: 15px; line-height: 1.85; color: var(--text); }
+  .article h2 {
+    font-size: 21px; font-weight: 700; letter-spacing: -.3px;
+    margin: 44px 0 14px; padding-top: 16px; border-top: 1px solid var(--border); color: var(--text);
+  }
+  .article h3 { font-size: 16.5px; font-weight: 650; margin: 26px 0 10px; color: var(--text); }
+  .article p { margin: 0 0 14px; color: var(--text-2); }
+  .article strong { color: var(--text); font-weight: 650; }
+  .article a { color: var(--accent); text-decoration: none; }
+  .article a:hover { text-decoration: underline; }
+  .article ul, .article ol { margin: 0 0 16px; padding-left: 22px; color: var(--text-2); }
+  .article li { margin: 6px 0; }
+  .article code {
+    font-family: var(--font-mono);
+    font-size: 13px; background: var(--card-2); border: 1px solid var(--border);
+    border-radius: 3px; padding: 1px 6px; color: var(--text);
+  }
+  .article pre {
+    background: var(--card-2); border: 1px solid var(--border); border-radius: var(--radius-sm);
+    padding: 14px 16px; margin: 14px 0 18px; overflow-x: auto;
+  }
+  .article pre code { background: none; border: none; padding: 0; font-size: 12.5px; line-height: 1.7; }
+  .article table {
+    width: 100%; border-collapse: collapse; margin: 18px 0 22px;
+    font-size: 13.5px; background: var(--card);
+    border: 1px solid var(--border); border-radius: var(--radius-sm); overflow: hidden;
+  }
+  .article th, .article td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--border); }
+  .article th { background: var(--card-2); color: var(--text); font-weight: 650; white-space: nowrap; }
+  .article td { color: var(--text-2); }
+  .article tr:last-child td { border-bottom: none; }
+  .toc {
+    background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 16px 18px; margin: 20px 0 8px; box-shadow: var(--shadow-sm);
+  }
+  .toc-title { font-size: 13px; font-weight: 650; color: var(--text); margin: 0 0 10px; }
+  .toc ol { margin: 0; padding-left: 20px; font-size: 13.5px; }
+  .toc li { margin: 5px 0; }
+  .toc a { color: var(--text-2); text-decoration: none; }
+  .toc a:hover { color: var(--accent); }
+  .cta-box {
+    background: linear-gradient(135deg, var(--accent-soft), var(--accent-soft-2));
+    border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent); border-radius: var(--radius);
+    padding: 20px 22px; margin: 34px 0 10px; text-align: center;
+  }
+  .cta-box .cta-title { font-size: 17px; font-weight: 700; color: var(--text); margin: 0 0 6px; }
+  .cta-box .cta-sub { font-size: 13.5px; color: var(--text-2); margin: 0 0 14px; }
+  .cta-btn {
+    display: inline-block; background: var(--accent); color: #fff; text-decoration: none;
+    font-size: 14px; font-weight: 600; padding: 11px 26px; border-radius: var(--radius-sm);
+    box-shadow: 0 6px 18px var(--accent-glow); transition: background .15s;
+  }
+  .cta-btn:hover { background: var(--accent-hover); }
+  .article a.cta-btn, .article .cta-btn { color: #fff; text-decoration: none; }
+  .article a.cta-btn:hover { color: #fff; text-decoration: none; background: var(--accent-hover); }
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "PDF 合并完全指南：哪些文件该合并、怎么合并最稳",
+  "description": "详解哪些文件适合合并成一份、怎么决定先后顺序、加密与损坏文件的处理、超大合并的分组技巧，以及云上传合并工具的隐私风险。",
+  "inLanguage": "zh-CN",
+  "datePublished": "2026-10-31",
+  "dateModified": "2026-10-31",
+  "author": { "@type": "Organization", "name": "CATAITO", "url": "https://tools.cataito.com/" },
+  "publisher": { "@type": "Organization", "name": "CATAITO 工具箱", "url": "https://tools.cataito.com/" },
+  "mainEntityOfPage": "https://tools.cataito.com/guides/merge-pdf-guide/"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "合并后的 PDF 顺序还能改吗？",
+      "acceptedAnswer": { "@type": "Answer", "text": "能。合并前在工具里用上移/下移按钮调整文件顺序最省事；已经合并完的文件也可以用拆分工具按页码范围重新拆出、再按新顺序合并一次。" }
+    },
+    {
+      "@type": "Question",
+      "name": "一次最多能合并多少个 PDF？",
+      "acceptedAnswer": { "@type": "Answer", "text": "本站工具单次最多 20 个文件。数量更多时建议分批合并：先把 20 个合成一个，再把结果与其他批次继续合并，两三轮就能处理上百个文件。" }
+    },
+    {
+      "@type": "Question",
+      "name": "合并会让文件变大吗？",
+      "acceptedAnswer": { "@type": "Answer", "text": "合并只是把页面原样搬进新文件，不重新编码、不压缩图片，所以结果体积约等于各文件之和。如果需要变小，请在合并前或合并后用压缩工具处理内嵌图片。" }
+    },
+    {
+      "@type": "Question",
+      "name": "带密码的加密 PDF 能合并吗？",
+      "acceptedAnswer": { "@type": "Answer", "text": "不能。带打开密码的 PDF 无法被解析，正规工具会把它标记为跳过而不是报错中断。请先用密码在 PDF 阅读器中打开并另存为无密码副本，再参与合并。" }
+    },
+    {
+      "@type": "Question",
+      "name": "合并后还能再拆开吗？",
+      "acceptedAnswer": { "@type": "Answer", "text": "可以。合并不会破坏单页的完整性，用拆分工具按页码范围就能把任意章节重新拆出来；这也是「先合并归档、后按需取用」工作流的基础。" }
+    },
+    {
+      "@type": "Question",
+      "name": "把文件上传到在线合并工具安全吗？",
+      "acceptedAnswer": { "@type": "Answer", "text": "主流在线合并器需要把文件上传到服务器处理，合同、账单、证件类敏感文件不建议上传。更稳妥的选择是纯浏览器本地处理的合并工具：文件全程不离开设备，断网也能用。" }
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "首页", "item": "https://tools.cataito.com/" },
+    { "@type": "ListItem", "position": 2, "name": "使用指南", "item": "https://tools.cataito.com/guides/" },
+    { "@type": "ListItem", "position": 3, "name": "PDF 合并完全指南", "item": "https://tools.cataito.com/guides/merge-pdf-guide/" }
+  ]
+}
+</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7103529190038161" crossorigin="anonymous"></script>
+</head>
+<body>
+<div id="site-header"></div>
+
+<main class="site-main">
+  <div class="guide-wrap">
+    <nav class="breadcrumb"><a href="/" data-i18n="crumb_home">首页</a><span class="sep">/</span><a href="/guides/" data-i18n="nav_guides">使用指南</a><span class="sep">/</span><span data-i18n="gd_pmg_short">PDF 合并指南</span></nav>
+    <p class="guide-meta"><span data-i18n="gd_published">发布于</span> 2026-10-31 · CATAITO</p>
+    <h1 class="page-h1" data-i18n="gd_pmg_h1">PDF 合并完全指南：哪些文件该合并、怎么合并最稳</h1>
+    <p class="page-sub" data-i18n="gd_pmg_sub">报销单据、简历与作品集、章节分开的扫描件——最后常常需要合成一个 PDF。本文讲清哪些文件适合合并、怎么决定先后顺序、加密与损坏文件的处理，以及云上传合并工具的隐私风险。附免费在线 PDF 合并工具，纯浏览器本地处理。</p>
+
+    <div class="article lb-zh">
+      <div class="toc">
+        <p class="toc-title">目录</p>
+        <ol>
+          <li><a href="#which">哪些文件适合合并成一份</a></li>
+          <li><a href="#order">先后顺序怎么决定</a></li>
+          <li><a href="#skip">加密与损坏文件怎么办</a></li>
+          <li><a href="#size">超大合并：分批更稳</a></li>
+          <li><a href="#cloud">隐私：云上传 vs 本地合并</a></li>
+          <li><a href="#faq">常见问题</a></li>
+        </ol>
+      </div>
+
+      <h2 id="which">哪些文件适合合并成一份</h2>
+      <p>合并的本质是<strong>把「散装的材料」变成「一份完整的档案」</strong>。常见的场景：</p>
+      <ul>
+        <li><strong>报销与报账</strong>：发票、行程单、审批单各是一个 PDF，财务系统往往只收一个附件——合并成一份，按「发票 → 行程 → 审批」排好。</li>
+        <li><strong>申请材料</strong>：简历 + 作品集 + 证书分开是三个文件，合成一份后对方按页翻看，不会漏件。</li>
+        <li><strong>分章扫描件</strong>：厚合同或书籍分批扫描出多个 PDF，合并一次就还原成完整文档。</li>
+        <li><strong>归档</strong>：同一项目的往来文件合并成一个「项目档案.pdf」，检索时只找一个文件。</li>
+      </ul>
+      <p>反过来说，如果每个文件的<strong>用途不同、接收方不同</strong>（比如一份发财务、一份发 HR），就别硬合在一起——拆分工具随时能把合并档案再拆开，但「一份走完全流程」的文件往往要重新拆。</p>
+
+      <h2 id="order">先后顺序怎么决定</h2>
+      <p>合并结果的页面顺序 = 文件在列表里的顺序。两个实用做法：</p>
+      <ol class="t-steps">
+        <li><strong>文件名预排序</strong>：上传前把文件重命名为 <code>01-发票.pdf、02-行程单.pdf、03-审批单.pdf</code>，批量选择时天然有序（1–9 记得补零，否则 <code>10.pdf</code> 会排在 <code>2.pdf</code> 前面）。</li>
+        <li><strong>工具内微调</strong>：规范的合并工具会给每个文件一行，用 ▲▼ 上下移动调整，改完核对一遍再合并。</li>
+      </ol>
+      <p>合并后如果发现顺序不对，不必重来：用 <a href="/pdf/split/">拆分工具</a>按页码范围拆出顺序错误的段落，调整后重新合并即可。</p>
+
+      <h2 id="skip">加密与损坏文件怎么办</h2>
+      <p>两类文件无法参与合并：</p>
+      <ul>
+        <li><strong>带打开密码的加密 PDF</strong>：需要密码才能解析内容，任何本地工具都无法绕过（这是 PDF 加密的正常行为，不是工具缺陷）。处理办法：用密码在 PDF 阅读器里打开，另存为一份无密码副本，再回来合并。</li>
+        <li><strong>损坏或伪造的 PDF</strong>：下载不完整、或只是把别的文件改了 .pdf 后缀，解析时会失败。</li>
+      </ul>
+      <p>好的合并工具会<strong>把这两类文件标记为「已跳过」并继续处理其余文件</strong>，而不是整批报错。本站的 <a href="/pdf/merge/">合并 PDF 工具</a>就是这个行为：列表里加密与损坏文件会标注跳过原因，其余文件正常合并。</p>
+
+      <h2 id="size">超大合并：分批更稳</h2>
+      <p>浏览器本地合并在内存里完成，文件总量越大、占用越高。经验值：</p>
+      <table>
+        <thead><tr><th>文件总量</th><th>建议做法</th></tr></thead>
+        <tbody>
+          <tr><td>合计 50MB 以内</td><td>一次合并没问题，普通电脑几秒完成</td></tr>
+          <tr><td>50–200MB</td><td>可以一次合并，但关闭其他大标签页更稳</td></tr>
+          <tr><td>200MB 以上 / 上百个文件</td><td>分批合并：先 20 个合成一个，再把结果与其他批次继续合并</td></tr>
+        </tbody>
+      </table>
+      <p>合并本身<strong>不重编码、不压缩</strong>，结果体积约等于各文件之和；想给合并结果瘦身，用 <a href="/pdf/compress/">压缩 PDF 工具</a>把内嵌大图降采样。</p>
+
+      <h2 id="cloud">隐私：云上传 vs 本地合并</h2>
+      <p>主流在线合并器（iLovePDF、Smallpdf 等）的流程是<strong>把所有文件上传到服务器</strong>，在服务器上合并后给你下载链接。合并报销单、合同这类文件时值得想一想：多份敏感文件同时离开你的设备，你无法控制服务器端副本的留存周期。</p>
+      <p>另一条路线是<strong>纯浏览器本地合并</strong>：页面在浏览器里解析每个 PDF 的结构，把页面「搬」进一个新文件，全程不经过网络。本站的 <a href="/pdf/merge/">合并 PDF 工具</a>就是这一路线——合同、账单、证件材料都在设备上完成合并，断网也能用。</p>
+
+      <h2 id="faq">常见问题</h2>
+      <div class="faq-item"><p class="faq-q">Q：合并后的 PDF 顺序还能改吗？</p><p class="faq-a">A：能。合并前在工具里用 ▲▼ 调整文件顺序最省事；已合并的文件也可以用拆分工具按页码范围拆出、再按新顺序合并一次。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：一次最多能合并多少个 PDF？</p><p class="faq-a">A：本站工具单次 20 个。更多就分批合并，两三轮能处理上百个文件。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：合并会让文件变大吗？</p><p class="faq-a">A：合并不重新编码，结果体积约等于各文件之和。想变小请用压缩工具处理内嵌图片。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：带密码的加密 PDF 能合并吗？</p><p class="faq-a">A：不能，会被标记跳过。先在阅读器里另存为无密码副本再合并。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：合并后还能再拆开吗？</p><p class="faq-a">A：可以。合并不破坏单页完整性，用拆分工具按页码范围即可拆出任意章节。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：把文件上传到在线合并工具安全吗？</p><p class="faq-a">A：主流工具会上传到服务器处理，敏感材料不建议。纯浏览器本地合并的工具文件不离开设备，更稳妥。</p></div>
+
+      <div class="cta-box">
+        <p class="cta-title">免费在线合并 PDF</p>
+        <p class="cta-sub">最多 20 个文件 · 顺序可调 · 加密文件自动跳过 · 纯浏览器本地处理</p>
+        <a class="cta-btn" href="/pdf/merge/">打开合并 PDF 工具 →</a>
+      </div>
+
+      <div class="t-guide-links">
+        <a class="t-guide-link" href="/guides/split-pdf-guide/">
+          <p class="t-guide-link-title" data-i18n="gd_psp_short">PDF 拆分指南</p>
+          <p class="t-guide-link-desc" data-i18n="gd_psp_card_desc">每 N 页拆一份、按页码范围拆、提取或删除指定页、批量旋转——页码范围语法的写法与拆分文件的命名规则。</p>
+        </a>
+        <a class="t-guide-link" href="/guides/compress-pdf-guide/">
+          <p class="t-guide-link-title" data-i18n="gd_pcd_short">PDF 压缩指南</p>
+          <p class="t-guide-link-desc" data-i18n="gd_pcd_card_desc">PDF 为什么会那么大（扫描图、嵌入字体）、三档强度的取舍、哪些文件压不动，以及云端压缩与本地压缩的隐私差别。</p>
+        </a>
+        <a class="t-guide-link" href="/guides/jpg-to-pdf-guide/">
+          <p class="t-guide-link-title" data-i18n="gd_i2p_short">JPG 转 PDF 指南</p>
+          <p class="t-guide-link-desc" data-i18n="gd_i2p_card_desc">哪些场景必须用 PDF、页面尺寸与边距选择、画质与体积取舍、多图排序技巧，以及云上传工具的隐私风险。</p>
+        </a>
+      </div>
+    </div>
+
+    <div class="article lb-en">
+      <div class="toc">
+        <p class="toc-title">Table of Contents</p>
+        <ol>
+          <li><a href="#which-en">Which Files Belong Together</a></li>
+          <li><a href="#order-en">Deciding the Order</a></li>
+          <li><a href="#skip-en">Encrypted &amp; Broken Files</a></li>
+          <li><a href="#size-en">Huge Merges: Batch Them</a></li>
+          <li><a href="#cloud-en">Privacy: Cloud Upload vs Local Merging</a></li>
+          <li><a href="#faq-en">FAQ</a></li>
+        </ol>
+      </div>
+
+      <h2 id="which-en">Which Files Belong Together</h2>
+      <p>Merging turns <strong>a pile of loose materials into one complete dossier</strong>. Typical cases:</p>
+      <ul>
+        <li><strong>Expense claims</strong>: invoices, itineraries, and approvals arrive as separate PDFs — finance systems usually accept one attachment. Merge them in "invoice → itinerary → approval" order.</li>
+        <li><strong>Applications</strong>: résumé + portfolio + certificates are three files; merged, the reviewer pages through without missing anything.</li>
+        <li><strong>Chapter scans</strong>: a thick contract or book scanned in batches becomes one complete document again after a single merge.</li>
+        <li><strong>Archiving</strong>: combine a project's correspondence into one "project-archive.pdf" so retrieval means finding one file.</li>
+      </ul>
+      <p>Conversely, if each file has <strong>a different purpose or recipient</strong> (one for finance, one for HR), don't force them together — a split tool can always break an archive apart later, but a "one file for the whole workflow" document often needs re-splitting.</p>
+
+      <h2 id="order-en">Deciding the Order</h2>
+      <p>Page order in the result = file order in the list. Two practical habits:</p>
+      <ol class="t-steps">
+        <li><strong>Pre-sort by filename</strong>: rename to <code>01-invoice.pdf, 02-itinerary.pdf, 03-approval.pdf</code> before batch-selecting (zero-pad 1–9, or <code>10.pdf</code> sorts before <code>2.pdf</code>).</li>
+        <li><strong>Fine-tune in the tool</strong>: a proper merger gives every file a row with move-up / move-down buttons — verify the order before merging.</li>
+      </ol>
+      <p>Wrong order after merging? No need to redo everything: use the <a href="/pdf/split/">split tool</a> to extract the out-of-order section by page range, then merge again.</p>
+
+      <h2 id="skip-en">Encrypted &amp; Broken Files</h2>
+      <p>Two kinds of files can't join a merge:</p>
+      <ul>
+        <li><strong>Password-protected PDFs</strong>: the password is required to parse content; no local tool can bypass it (that's PDF encryption working as designed, not a tool flaw). Open with the password in a PDF reader, save an unprotected copy, then merge.</li>
+        <li><strong>Corrupted or fake PDFs</strong>: incomplete downloads, or files that merely had their extension renamed to .pdf — parsing fails.</li>
+      </ul>
+      <p>A good merger <strong>flags both kinds as "skipped" and continues with the rest</strong> instead of failing the whole batch. Our <a href="/pdf/merge/">Merge PDF tool</a> works exactly this way: skipped files are annotated in the list while everything else merges normally.</p>
+
+      <h2 id="size-en">Huge Merges: Batch Them</h2>
+      <p>Local in-browser merging works in memory, so bigger totals need more of it. Rules of thumb:</p>
+      <table>
+        <thead><tr><th>Total size</th><th>What to do</th></tr></thead>
+        <tbody>
+          <tr><td>Under 50MB combined</td><td>One pass is fine — seconds on an ordinary machine</td></tr>
+          <tr><td>50–200MB</td><td>One pass works; close other heavy tabs to be safe</td></tr>
+          <tr><td>200MB+ / hundreds of files</td><td>Batch: merge 20 into one, then merge that result with the next batch</td></tr>
+        </tbody>
+      </table>
+      <p>Merging <strong>never re-encodes or compresses</strong> — the result weighs roughly the sum of its parts; to slim a merged archive, run it through the <a href="/pdf/compress/">Compress PDF tool</a> to downsample embedded images.</p>
+
+      <h2 id="cloud-en">Privacy: Cloud Upload vs Local Merging</h2>
+      <p>Mainstream online mergers (iLovePDF, Smallpdf, etc.) <strong>upload every file to their servers</strong>, merge there, and hand back a download link. When the files are receipts, contracts, or IDs, think twice: multiple sensitive files leave your device at once, and you don't control how long the server-side copies are retained.</p>
+      <p>The alternative is <strong>in-browser local merging</strong>: the page parses each PDF's structure and moves pages into a new file, entirely offline. Our <a href="/pdf/merge/">Merge PDF tool</a> takes this route — contracts, bills, and IDs merge on the device, and it works without a network.</p>
+
+      <h2 id="faq-en">FAQ</h2>
+      <div class="faq-item"><p class="faq-q">Q: Can I change the order after merging?</p><p class="faq-a">A: Yes. Reordering files with ▲▼ before merging is easiest; an already-merged file can be re-split by page range and merged again in the new order.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: How many PDFs can I merge at once?</p><p class="faq-a">A: 20 per run here. Merge in batches — two or three rounds handle hundreds of files.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: Does merging make files bigger?</p><p class="faq-a">A: Merging doesn't re-encode, so the result weighs roughly the sum of its parts. Use the compressor to shrink embedded images.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: Can I merge password-protected PDFs?</p><p class="faq-a">A: No — they're flagged and skipped. Save an unprotected copy from your PDF reader first.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: Can I split a merged file apart again?</p><p class="faq-a">A: Yes. Merging doesn't damage pages; the split tool extracts any section by page range.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: Is it safe to upload files to an online merger?</p><p class="faq-a">A: Mainstream tools upload to their servers. For sensitive material prefer a tool that merges entirely in your browser.</p></div>
+
+      <div class="cta-box">
+        <p class="cta-title">Free Online PDF Merger</p>
+        <p class="cta-sub">Up to 20 files · Adjustable order · Encrypted files skipped · 100% browser-local</p>
+        <a class="cta-btn" href="/pdf/merge/">Open Merge PDF Tool →</a>
+      </div>
+
+      <div class="t-guide-links">
+        <a class="t-guide-link" href="/guides/split-pdf-guide/">
+          <p class="t-guide-link-title" data-i18n="gd_psp_short">PDF Split Guide</p>
+          <p class="t-guide-link-desc" data-i18n="gd_psp_card_desc">Split every N pages or by ranges, extract or remove selected pages, rotate in bulk — range syntax and output naming.</p>
+        </a>
+        <a class="t-guide-link" href="/guides/compress-pdf-guide/">
+          <p class="t-guide-link-title" data-i18n="gd_pcd_short">PDF Compress Guide</p>
+          <p class="t-guide-link-desc" data-i18n="gd_pcd_card_desc">Why PDFs get huge (scans, embedded fonts), choosing a strength level, files that barely compress, and cloud vs local privacy.</p>
+        </a>
+        <a class="t-guide-link" href="/guides/jpg-to-pdf-guide/">
+          <p class="t-guide-link-title" data-i18n="gd_i2p_short">JPG to PDF Guide</p>
+          <p class="t-guide-link-desc" data-i18n="gd_i2p_card_desc">When PDF is the right format, choosing page size and margins, the quality/size trade-off, ordering tips, and upload-tool privacy risks.</p>
+        </a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<div id="site-footer"></div>
+<script src="/assets/js/site.js" defer></script>
+</body>
+</html>

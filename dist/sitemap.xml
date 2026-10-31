@@ -338,10 +338,58 @@
     <priority>0.9</priority>
   </url>
   <url>
+    <loc>https://tools.cataito.com/pdf/merge/</loc>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://tools.cataito.com/pdf/merge/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tools.cataito.com/pdf/merge/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tools.cataito.com/pdf/merge/"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://tools.cataito.com/pdf/split/</loc>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://tools.cataito.com/pdf/split/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tools.cataito.com/pdf/split/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tools.cataito.com/pdf/split/"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://tools.cataito.com/pdf/compress/</loc>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://tools.cataito.com/pdf/compress/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tools.cataito.com/pdf/compress/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tools.cataito.com/pdf/compress/"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
     <loc>https://tools.cataito.com/guides/jpg-to-pdf-guide/</loc>
     <xhtml:link rel="alternate" hreflang="zh-CN" href="https://tools.cataito.com/guides/jpg-to-pdf-guide/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://tools.cataito.com/guides/jpg-to-pdf-guide/?lang=en"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://tools.cataito.com/guides/jpg-to-pdf-guide/"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://tools.cataito.com/guides/merge-pdf-guide/</loc>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://tools.cataito.com/guides/merge-pdf-guide/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tools.cataito.com/guides/merge-pdf-guide/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tools.cataito.com/guides/merge-pdf-guide/"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://tools.cataito.com/guides/split-pdf-guide/</loc>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://tools.cataito.com/guides/split-pdf-guide/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tools.cataito.com/guides/split-pdf-guide/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tools.cataito.com/guides/split-pdf-guide/"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://tools.cataito.com/guides/compress-pdf-guide/</loc>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://tools.cataito.com/guides/compress-pdf-guide/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tools.cataito.com/guides/compress-pdf-guide/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tools.cataito.com/guides/compress-pdf-guide/"/>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>

@@ -53,16 +53,16 @@
 
 ## 五、内容清单与新增 checklist
 
-- 工具 22：`/icon-forge/`（ICO/PNG 图标）、`/favicon/`、`/compress/`（≤20 张批量）、`/palette/`、`/convert/`（PNG/JPEG/WebP 互转，转 JPEG 铺白底、WebP/PNG 保透明）、`/resize/`（居中裁切 1:1/4:3/16:9/9:16 + 最长边缩放，默认保持原格式）、`/contrast/`（WCAG 对比度检查 + 自动调整）、`/qrcode/`（自研 QR 编码器，字节模式 v1-40，矩阵级验证）、`/barcode/`（Code128/EAN-13/UPC-A/EAN-8）、`/watermark/`、`/gradient/`、`/password/`、`/meta-tags/`、`/text/json/`（JSON 格式化/校验/压缩）、`/text/char-count/`（字数统计 + 阅读时长）、`/text/uuid/`（v4/v1/v5 UUID）、`/pdf/image-to-pdf/`（图片转 PDF，自研零依赖 PDF 写入器：JPEG DCTDecode 直嵌 + xref 表，适配图片/A4/Letter + 方向/边距/质量，透明铺白底）、`/text/diff/`（LCS 行级对比，三色高亮 + 行号 + 统计）、`/text/checksum/`（SHA-256/384/512/1，Web Crypto，期望值一键比对）、`/text/base64/`（Base64/URL 双向编解码，UTF-8 安全）、`/text/timestamp/`（当前时间戳实时 + 秒/毫秒与日期双向互转）、`/wechat-format/`（公众号排版：Markdown 编辑 + 20 套主题 + 样式内联压平，复制到公众号不跑版；表格与代码块在手机上不溢出——导出时把表格改写成 `display:table` 结构、防溢出声明作为不变量在主题合并后补齐；由独立单文件工具并入，见 §三·五）
-- 指南 26：ico-file-guide、favicon-guide、dark-mode-icons、image-compression-guide、webp-guide、color-guide、app-icon-sizes、png-to-ico-guide、favicon-not-showing-guide、transparent-icon-guide、accessibility-contrast-guide、qr-not-scanning-guide、barcode-guide、watermark-guide、gradient-guide、password-guide、meta-tags-guide、json-guide、word-count-guide、uuid-guide、jpg-to-pdf-guide、text-diff-guide、checksum-guide、base64-guide、timestamp-guide、wechat-format-guide（均中英双语 `.lb-zh`/`.lb-en` 双块）
+- 工具 25：`/icon-forge/`（ICO/PNG 图标）、`/favicon/`、`/compress/`（≤20 张批量）、`/palette/`、`/convert/`（PNG/JPEG/WebP 互转，转 JPEG 铺白底、WebP/PNG 保透明）、`/resize/`（居中裁切 1:1/4:3/16:9/9:16 + 最长边缩放，默认保持原格式）、`/contrast/`（WCAG 对比度检查 + 自动调整）、`/qrcode/`（自研 QR 编码器，字节模式 v1-40，矩阵级验证）、`/barcode/`（Code128/EAN-13/UPC-A/EAN-8）、`/watermark/`、`/gradient/`、`/password/`、`/meta-tags/`、`/text/json/`（JSON 格式化/校验/压缩）、`/text/char-count/`（字数统计 + 阅读时长）、`/text/uuid/`（v4/v1/v5 UUID）、`/pdf/image-to-pdf/`（图片转 PDF，自研零依赖 PDF 写入器：JPEG DCTDecode 直嵌 + xref 表，适配图片/A4/Letter + 方向/边距/质量，透明铺白底）、`/text/diff/`（LCS 行级对比，三色高亮 + 行号 + 统计）、`/text/checksum/`（SHA-256/384/512/1，Web Crypto，期望值一键比对）、`/text/base64/`（Base64/URL 双向编解码，UTF-8 安全）、`/text/timestamp/`（当前时间戳实时 + 秒/毫秒与日期双向互转）、`/wechat-format/`（公众号排版：Markdown 编辑 + 20 套主题 + 样式内联压平，复制到公众号不跑版；表格与代码块在手机上不溢出——导出时把表格改写成 `display:table` 结构、防溢出声明作为不变量在主题合并后补齐；由独立单文件工具并入，见 §三·五）、`/pdf/merge/`（合并 PDF：≤20 个按顺序合并，▲▼ 调序，加密/损坏文件标记跳过，vendored pdf-lib 本地解析）、`/pdf/split/`（拆分 PDF：每 N 页/自定义页码范围（重叠自动合并）/提取/删页/批量旋转，多输出自动 ZIP）、`/pdf/compress/`（压缩 PDF：结构重存 + 内嵌 JPEG 降采样重编码三档强度，逐行前后体积，纯文字如实标注收益有限）
+- 指南 29：ico-file-guide、favicon-guide、dark-mode-icons、image-compression-guide、webp-guide、color-guide、app-icon-sizes、png-to-ico-guide、favicon-not-showing-guide、transparent-icon-guide、accessibility-contrast-guide、qr-not-scanning-guide、barcode-guide、watermark-guide、gradient-guide、password-guide、meta-tags-guide、json-guide、word-count-guide、uuid-guide、jpg-to-pdf-guide、merge-pdf-guide、split-pdf-guide、compress-pdf-guide、text-diff-guide、checksum-guide、base64-guide、timestamp-guide、wechat-format-guide（均中英双语 `.lb-zh`/`.lb-en` 双块）
 - 信任页：about / privacy / contact + 404（noindex）
 
 **新增页面 checklist**：`sitemap.xml`（hreflang 三连 zh-CN/en/x-default + priority，⚠️ **URL 结尾只能一个斜杠**——`/wechat-format//` 这种双斜杠与页面 canonical 不一致，会削弱规范信号）→ `llms.txt` → guides 索引卡（如指南）→ `site.js` 词典（`gd_*` 键，**先 grep 键名确认不重复**）→ 相关工具页反向内链 → `<title>` 双语 meta + JSON-LD → **`<head>` 内 AdSense 验证脚本**（历史上 `/barcode/` 与新指南页都漏过这一项）→ **`og:image` 四行静态块**（`og:image` + `og:image:width` + `og:image:height` + `twitter:image`；⚠️ 现仍缺 49 页，见下条待办——`site.js` 的 `bindOgImage()` 是运行时注入，社交与 AI 抓取器不执行 JS）。⚠️ 每新增一篇指南，首页「实用指南」区块（4 篇轮换 + 全部入口）与指南间互链网络也要同步评估（2026-09-05 B3 内链加固后建立的网络基线见 HANDOFF）。
-- sitemap 现共 **56 URL**（首页 + 22 工具 + `/image-tools/` `/text/` `/pdf/` 三个分类页 + about/privacy/contact + /guides/ + 26 指南）；首页工具区按「图片与设计 / 文本与开发者 / PDF 文档」三类别分组（分类页入口在区标题右侧）；guides 索引页收齐 26 卡。导航为短标签（`nav_*` 词典键），完整名称在页面 h1 与首页卡。
+- sitemap 现共 **62 URL**（首页 + 25 工具 + `/image-tools/` `/text/` `/pdf/` 三个分类页 + about/privacy/contact + /guides/ + 29 指南）；首页工具区按「图片与设计 / 文本与开发者 / PDF 文档」三类别分组（分类页入口在区标题右侧）；guides 索引页收齐 29 卡。导航为短标签（`nav_*` 词典键），完整名称在页面 h1 与首页卡。
 
 ## 五·五、i18n 词典治理（2026-10-13 建立）
 
-`site.js` 的 `I18N` 是全站唯一词典（当前 **1250 键**，中英各一值）。四条硬规则：
+`site.js` 的 `I18N` 是全站唯一词典（当前 **1404 键**，中英各一值）。四条硬规则：
 
 1. **一个键只能定义一次**——JS 对象字面量后写覆盖先写，历史上 15 处重复键把正确英文盖成中文，导致 54/55 页英文模式漏翻。新增词条前先 grep 键名。
 2. **`t()` 对缺失键返回空串**（不是返回键名）——所以「漏定义」表现为**内容凭空消失**（空白标签、空白 toast），而不是裸 key。只 grep 裸 key 的旧测法查不出这类 bug。
@@ -79,10 +79,10 @@
 ## 六、数据与统计
 
 - **CF Web Analytics**：beacon 由 `site.js` 的 `bindAnalytics()` 统一注入（token 明文出现在源码是 CF 设计，非密钥）；无 cookie，隐私政策已声明
-- **自研零依赖 PDF 写入器**（`/pdf/image-to-pdf/` 内联脚本，可复用）：Catalog + Pages + 每页（Page / 内容流 / JPEG XObject）四层结构 + 手工 xref 表；图片统一 Canvas → JPEG → DCTDecode 直嵌字节流（透明铺白底），无需压缩库。**新增 PDF 相关工具直接复用该写入器**；PDF 解析类工具（合并/拆分）需 vendored pdf-lib，属硬约束豁免项，须 Aaron 批准后引入
-- **GSC**：`sitemap.xml` 56 URL，全带 hreflang 三连（zh-CN / en `?lang=en` / x-default）
-- **Google AdSense**（2026-09-06 接入）：`ca-pub-7103529190038161`；验证代码在全部 **57 个页面**的 `<head>`（含 404；2026-10-13 补齐此前唯一漏掉的 `/barcode/`）；`dist/ads.txt` 已部署（Google 对每个域名独立检查 ads.txt，**根域 cataito.com 的 ads.txt 需在母站部署**）；隐私政策已含广告披露。条目 cataito.com 状态「正在准备→审核中」，过审后广告投放与收益计入该条目
-- **og:image 现状（已知缺口）**：仅 6 页（首页 + about/contact/privacy + meta-tags 及其指南）静态写有 `property="og:image"`，其余 49 页由 `site.js` 的 `bindOgImage()` 运行时注入。社交与 AI 抓取器（微信 / X / LinkedIn / Google）**不执行 JS**，这 49 页分享出去无预览图——需静态补齐才算闭环。图片本体已于 2026-10-13 按「中性极简」重制（1200×630，47KB），源文件 `og-image-source.html`（仓库根，不公开），重生成：`chrome --headless=new --window-size=1200,630 --screenshot` 该文件
+- **自研零依赖 PDF 写入器**（`/pdf/image-to-pdf/` 内联脚本，可复用）：Catalog + Pages + 每页（Page / 内容流 / JPEG XObject）四层结构 + 手工 xref 表；图片统一 Canvas → JPEG → DCTDecode 直嵌字节流（透明铺白底），无需压缩库。**新增生成类 PDF 工具直接复用该写入器**。2026-10-31 起 `assets/js/pdf-lib.min.js`（v1.17.1 UMD，525KB，仅合并/拆分/压缩三页 defer 引用）已按 Aaron 2026-09-27 批准 vendored 入库——豁免已执行并记录 DECISIONS；解析/改写类 PDF 工具一律用它，不得引 CDN
+- **GSC**：`sitemap.xml` 62 URL，全带 hreflang 三连（zh-CN / en `?lang=en` / x-default）
+- **Google AdSense**（2026-09-06 接入）：`ca-pub-7103529190038161`；验证代码在全部 **63 个页面**的 `<head>`（含 404；2026-10-13 补齐此前唯一漏掉的 `/barcode/`）；`dist/ads.txt` 已部署（Google 对每个域名独立检查 ads.txt，**根域 cataito.com 的 ads.txt 需在母站部署**）；隐私政策已含广告披露。条目 cataito.com 状态「正在准备→审核中」，过审后广告投放与收益计入该条目
+- **og:image（2026-10-16 已闭环）**：全部页面 `<head>` 均有静态 `og:image` + width + height + `twitter:image` 四行（2026-10-16 补齐 49 页），`bindOgImage()` 保留但提前返回。图片本体已于 2026-10-13 按「中性极简」重制（1200×630，47KB），源文件 `og-image-source.html`（仓库根，不公开），重生成：`chrome --headless=new --window-size=1200,630 --screenshot` 该文件
 
 ## 七、本地开发与测试
 

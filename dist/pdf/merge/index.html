@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>合并 PDF — 免费在线 PDF 合并工具 | CATAITO</title>
+<meta name="title-zh" content="合并 PDF — 免费在线 PDF 合并工具 | CATAITO">
+<meta name="title-en" content="Merge PDF — Free Online PDF Merger | CATAITO">
+<meta name="description" content="免费在线合并 PDF：多个 PDF 按顺序合成为一个文件，可上下移动调整先后顺序，最多 20 个。纯浏览器本地处理，文件绝不上传服务器。">
+<meta name="theme-color" content="#ffffff">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="CATAITO 工具箱">
+<meta property="og:title" content="合并 PDF — 免费在线 PDF 合并工具">
+<meta property="og:description" content="多个 PDF 按顺序合成为一个文件，顺序可调，纯本地处理不上传。">
+<meta property="og:url" content="https://tools.cataito.com/pdf/merge/">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:locale:alternate" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="合并 PDF">
+<meta name="twitter:description" content="免费在线合并 PDF，纯本地处理。">
+<link rel="icon" type="image/png" href="/assets/img/cataito-logo.png">
+<link rel="canonical" href="https://tools.cataito.com/pdf/merge/">
+<meta property="og:image" content="https://tools.cataito.com/assets/img/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:image" content="https://tools.cataito.com/assets/img/og-image.png">
+<link rel="stylesheet" href="/assets/css/site.css">
+<script src="/assets/js/theme-init.js"></script>
+<script>
+  (function () {
+    try {
+      var l = localStorage.getItem('cataito-lang');
+      document.documentElement.setAttribute('lang', (l === 'en') ? 'en' : 'zh-CN');
+    } catch (e) {}
+  })();
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Merge PDF",
+  "alternateName": "合并 PDF",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "Any",
+  "url": "https://tools.cataito.com/pdf/merge/",
+  "inLanguage": ["zh-CN", "en"],
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "description": "免费在线合并 PDF：多个 PDF 按顺序合成为一个文件，顺序可调，纯浏览器本地处理，文件不上传。"
+}
+</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7103529190038161" crossorigin="anonymous"></script>
+</head>
+<body>
+<div id="site-header"></div>
+<main class="site-main">
+  <div class="t-head">
+    <nav class="breadcrumb"><a href="/" data-i18n="crumb_home">首页</a><span class="sep">/</span><span data-i18n="pdfm_name">合并 PDF</span></nav>
+    <h1 class="page-h1" data-i18n="pdfm_name">合并 PDF</h1>
+    <p class="page-sub" data-i18n="pdfm_desc">把多个 PDF 按顺序合并成一个文件：可上下移动调整先后，加密或损坏的文件自动标记跳过。纯浏览器本地处理，文件绝不上传服务器。</p>
+  </div>
+
+  <section class="t-card t-flow">
+    <div id="pdfm-dropzone" class="t-drop" tabindex="0">
+      <input type="file" id="pdfm-file" accept="application/pdf,.pdf" multiple hidden>
+      <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="11" height="14" rx="1.5"/><path d="M6.5 9h4M6.5 12h4M6.5 15h2.5"/><path d="M16.5 10v6M13.5 13h6"/></svg>
+      <span class="t-drop-title" data-i18n="pdfm_upload">点击或拖入 PDF（可多选，按顺序合并）</span>
+      <span class="t-drop-hint" data-i18n="pdfm_dz_hint">最多 20 个文件 · 全程本地处理，不上传</span>
+    </div>
+
+    <div id="pdfm-list" class="t-list"></div>
+    <p id="pdfm-empty" class="t-empty" data-i18n="pdfm_empty">还没有 PDF 文件，先添加几个试试。</p>
+
+    <div id="pdfm-bar" class="t-bar" hidden>
+      <div class="t-bar-stats" id="pdfm-bar-stats"></div>
+      <div class="t-bar-actions">
+        <button type="button" class="t-btn" id="pdfm-add" data-i18n="pdfm_add_more">继续添加</button>
+        <button type="button" class="t-btn" id="pdfm-clear" data-i18n="pdfm_clear_all">清空全部</button>
+        <button type="button" class="t-btn primary" id="pdfm-gen" data-i18n="pdfm_gen">合并并下载 PDF</button>
+      </div>
+    </div>
+
+    <p class="t-note" data-i18n="pdfm_note">列表顺序即合并后的页面顺序，可用 ▲▼ 调整；加密或损坏的文件会标记为「已跳过」，不影响其余文件。</p>
+  </section>
+
+  <section class="t-prose">
+    <h2 data-i18n="pdfm_how_h">怎么用</h2>
+    <ol class="t-steps">
+      <li data-i18n-html="pdfm_how_1"><strong>按顺序添加</strong>：点击或拖入多个 PDF（最多 20 个），列表顺序就是合并后的页面顺序，可用每行的 ▲▼ 调整。</li>
+      <li data-i18n-html="pdfm_how_2"><strong>核对列表</strong>：每个文件会显示页数与体积；加密或无法读取的文件会标记为「已跳过」，不影响其余文件合并。</li>
+      <li data-i18n-html="pdfm_how_3"><strong>合并下载</strong>：点「合并并下载 PDF」，几秒内拿到单个 merged.pdf，页面顺序与列表一致。</li>
+      <li data-i18n-html="pdfm_how_4"><strong>隐私</strong>：合并全部在你的浏览器里完成（本地解析 PDF 结构），文件不经过网络，断网也能用。</li>
+    </ol>
+
+    <h2 data-i18n="pdfm_faq_h">常见问题</h2>
+    <div class="t-faq">
+      <div class="t-faq-item">
+        <p class="t-faq-q" data-i18n="pdfm_faq_1_q">PDF 文件会被上传到服务器吗？</p>
+        <p class="t-faq-a" data-i18n="pdfm_faq_1_a">不会。合并在你的浏览器里本地完成（页面只在文件之间搬运），文件不经过网络，合同、账单、证件材料都可以放心合并。</p>
+      </div>
+      <div class="t-faq-item">
+        <p class="t-faq-q" data-i18n="pdfm_faq_2_q">最多能合并多少个 PDF？</p>
+        <p class="t-faq-a" data-i18n="pdfm_faq_2_a">单次最多 20 个文件。数量更多时建议分批合并：先把 20 个合成一个，再把结果与其他批次继续合并。</p>
+      </div>
+      <div class="t-faq-item">
+        <p class="t-faq-q" data-i18n="pdfm_faq_3_q">加密的 PDF 能合并吗？</p>
+        <p class="t-faq-a" data-i18n="pdfm_faq_3_a">不能。带打开密码的 PDF 无法被解析，会被标记为「已跳过」。请先用密码在 PDF 阅读器中打开并另存为无密码副本，再回来合并。</p>
+      </div>
+      <div class="t-faq-item">
+        <p class="t-faq-q" data-i18n="pdfm_faq_4_q">合并会改变页面大小或清晰度吗？</p>
+        <p class="t-faq-a" data-i18n="pdfm_faq_4_a">不会。合并只做「页面搬运」，每页保持原始尺寸与内容，不重编码、不缩放。输出文件里各部分的页面尺寸可以不同（例如 A4 混着 Letter），这是 PDF 的正常能力，打印或阅读时互不影响。</p>
+      </div>
+    </div>
+
+    <h2 data-i18n="related_guides">相关指南</h2>
+    <div class="t-guide-links">
+      <a class="t-guide-link" href="/guides/merge-pdf-guide/">
+        <p class="t-guide-link-title" data-i18n="gd_pmg_short">PDF 合并指南</p>
+        <p class="t-guide-link-desc" data-i18n="gd_pmg_card_desc">哪些文件适合合并成一份、怎么决定先后顺序、超大合并失败怎么办，以及云上传合并工具的隐私风险。</p>
+      </a>
+      <a class="t-guide-link" href="/guides/split-pdf-guide/">
+        <p class="t-guide-link-title" data-i18n="gd_psp_short">PDF 拆分指南</p>
+        <p class="t-guide-link-desc" data-i18n="gd_psp_card_desc">每 N 页拆一份、按页码范围拆、提取或删除指定页、批量旋转——页码范围语法的写法与拆分文件的命名规则。</p>
+      </a>
+    </div>
+  </section>
+</main>
+
+<div id="site-footer"></div>
+<div id="pdfm-toast" class="t-toast">
+  <span class="t-toast-ic">
+    <svg class="ic-ok" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+    <svg class="ic-err" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+  </span>
+  <span class="t-toast-title"></span>
+</div>
+
+<script src="/assets/js/pdf-lib.min.js" defer></script>
+<script src="/assets/js/site.js" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+(function () {
+  'use strict';
+  var t = function (k, vars) { return (window.CATAITO_I18N && window.CATAITO_I18N.t) ? window.CATAITO_I18N.t(k, vars) : k; };
+  var MAX_FILES = 20;
+  var items = [];   /* { id, file, pages, doc, status: 'loading'|'ok'|'bad', reason: 'read'|'encrypted' } */
+  var seq = 0;
+
+  /* ---------- 工具函数 ---------- */
+  function fmtSize(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  }
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+  function blobToU8(blob) {
+    return blob.arrayBuffer ? blob.arrayBuffer().then(function (b) { return new Uint8Array(b); })
+      : new Promise(function (resolve) {
+          var r = new FileReader();
+          r.onload = function () { resolve(new Uint8Array(r.result)); };
+          r.readAsArrayBuffer(blob);
+        });
+  }
+  function isPdfFile(f) {
+    var name = (f.name || '').toLowerCase();
+    return f.type === 'application/pdf' || f.type === 'application/x-pdf' || /\.pdf$/.test(name);
+  }
+  function loadPdf(file) {
+    return blobToU8(file).then(function (u8) {
+      if (!window.PDFLib || !window.PDFLib.PDFDocument) throw new Error('lib');
+      return window.PDFLib.PDFDocument.load(u8, { ignoreEncryption: true });
+    });
+  }
+  function downloadBlob(blob, name) {
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = name;
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(function () { URL.revokeObjectURL(a.href); }, 4000);
+  }
+
+  /* ---------- 渲染 ---------- */
+  function renderRow(item, idx, total) {
+    var row = document.getElementById('pdfm-row-' + item.id);
+    if (!row) return;
+    var meta;
+    if (item.status === 'ok') {
+      meta = '<span class="pdfm-page-no">#' + (idx + 1) + '</span> · ' +
+        t('pdfm_pages', { n: item.pages }) + ' · ' + fmtSize(item.file.size);
+    } else if (item.status === 'bad') {
+      meta = '<span class="pdfm-page-no">#' + (idx + 1) + '</span> · ' +
+        '<span class="pdfm-badnote">' + esc(t(item.reason === 'encrypted' ? 'pdfm_bad_encrypted' : 'pdfm_bad_read')) + '</span>';
+    } else {
+      meta = '<span class="pdfm-page-no">#' + (idx + 1) + '</span> · ' + esc(t('pdfm_reading'));
+    }
+    row.className = 't-row' + (item.status === 'bad' ? ' is-bad' : '');
+    row.innerHTML =
+      '<div class="t-thumb pdfm-thumb">' +
+        '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h6"/></svg>' +
+      '</div>' +
+      '<div class="t-row-main">' +
+        '<div class="t-row-name" title="' + esc(item.file.name) + '">' + esc(item.file.name) + '</div>' +
+        '<div class="t-row-meta">' + meta + '</div>' +
+      '</div>' +
+      '<div class="pdfm-row-actions">' +
+        '<button type="button" class="t-icon-btn" data-act="up" data-i18n-title="pdfm_up"' + (idx === 0 ? ' disabled' : '') + '>' +
+          '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg>' +
+        '</button>' +
+        '<button type="button" class="t-icon-btn" data-act="dn" data-i18n-title="pdfm_dn"' + (idx === total - 1 ? ' disabled' : '') + '>' +
+          '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="m19 12-7 7-7-7"/></svg>' +
+        '</button>' +
+        '<button type="button" class="t-icon-btn danger" data-act="rm" data-i18n-title="pdfm_remove">' +
+          '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>' +
+        '</button>' +
+      '</div>';
+    if (window.CATAITO_I18N) window.CATAITO_I18N.apply();
+  }
+  function renderList() {
+    var list = document.getElementById('pdfm-list');
+    list.innerHTML = '';
+    items.forEach(function (item, idx) {
+      var row = document.createElement('div');
+      row.className = 't-row';
+      row.id = 'pdfm-row-' + item.id;
+      list.appendChild(row);
+      renderRow(item, idx, items.length);
+    });
+    document.getElementById('pdfm-empty').style.display = items.length ? 'none' : '';
+    document.getElementById('pdfm-bar').hidden = !items.length;
+    renderBar();
+  }
+  function renderBar() {
+    if (!items.length) return;
+    var ok = 0, total = 0;
+    items.forEach(function (it) {
+      if (it.status === 'ok') { ok++; total += it.file.size; }
+    });
+    document.getElementById('pdfm-bar-stats').textContent =
+      t('pdfm_bar_stats', { ok: ok, skipped: items.length - ok, size: fmtSize(total) });
+  }
+
+  /* ---------- 添加 / 移除 / 排序 ---------- */
+  function addFiles(fileList) {
+    var added = 0;
+    var files = Array.prototype.slice.call(fileList || []);
+    for (var i = 0; i < files.length; i++) {
+      var f = files[i];
+      if (!isPdfFile(f)) { showToast(t('pdfm_toast_type'), true); continue; }
+      if (items.length >= MAX_FILES) { showToast(t('pdfm_toast_too_many', { n: MAX_FILES }), true); break; }
+      var item = { id: ++seq, file: f, pages: 0, doc: null, status: 'loading', reason: '' };
+      items.push(item);
+      added++;
+      (function (it) {
+        loadPdf(it.file).then(function (doc) {
+          if (doc.isEncrypted) {
+            it.status = 'bad'; it.reason = 'encrypted';
+          } else {
+            it.status = 'ok'; it.doc = doc; it.pages = doc.getPageCount();
+          }
+          renderList();
+        }).catch(function () {
+          it.status = 'bad'; it.reason = 'read';
+          renderList();
+        });
+      })(item);
+    }
+    if (added) renderList();
+  }
+  function removeItem(id) {
+    for (var i = 0; i < items.length; i++) {
+      if (items[i].id === id) { items.splice(i, 1); break; }
+    }
+    renderList();
+  }
+  function moveItem(id, dir) {
+    for (var i = 0; i < items.length; i++) {
+      if (items[i].id === id) {
+        var j = i + dir;
+        if (j < 0 || j >= items.length) return;
+        var tmp = items[i]; items[i] = items[j]; items[j] = tmp;
+        break;
+      }
+    }
+    renderList();
+  }
+  function clearAll() {
+    items = [];
+    renderList();
+  }
+
+  /* ---------- 合并 ---------- */
+  async function merge() {
+    if (!items.length) { showToast(t('pdfm_toast_empty'), true); return; }
+    if (items.some(function (it) { return it.status === 'loading'; })) { showToast(t('pdfm_toast_loading'), true); return; }
+    var ok = items.filter(function (it) { return it.status === 'ok'; });
+    if (!ok.length) { showToast(t('pdfm_toast_none'), true); return; }
+    if (!window.PDFLib || !window.PDFLib.PDFDocument) { showToast(t('pdfm_toast_err'), true); return; }
+    var btn = document.getElementById('pdfm-gen');
+    btn.disabled = true;
+    document.body.classList.add('pdfm-busy');
+    try {
+      var out = await window.PDFLib.PDFDocument.create();
+      for (var i = 0; i < ok.length; i++) {
+        var src = ok[i].doc;
+        var pages = await out.copyPages(src, src.getPageIndices());
+        for (var p = 0; p < pages.length; p++) out.addPage(pages[p]);
+      }
+      var u8 = await out.save();
+      downloadBlob(new Blob([u8], { type: 'application/pdf' }), 'merged.pdf');
+      showToast(t('pdfm_toast_done', { size: fmtSize(u8.length) }));
+    } catch (e) {
+      showToast(t('pdfm_toast_err'), true);
+    } finally {
+      btn.disabled = false;
+      document.body.classList.remove('pdfm-busy');
+    }
+  }
+
+  /* ---------- Toast ---------- */
+  var toastTimer = null;
+  function showToast(msg, isErr) {
+    var el = document.getElementById('pdfm-toast');
+    el.querySelector('.t-toast-title').textContent = msg;
+    el.classList.toggle('error', !!isErr);
+    el.classList.add('show');
+    if (toastTimer) clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { el.classList.remove('show'); }, 2600);
+  }
+
+  /* ---------- 事件绑定 ---------- */
+  var dz = document.getElementById('pdfm-dropzone');
+  var fileInput = document.getElementById('pdfm-file');
+  dz.addEventListener('click', function () { fileInput.click(); });
+  dz.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fileInput.click(); } });
+  fileInput.addEventListener('change', function (e) { addFiles(e.target.files); fileInput.value = ''; });
+  ['dragenter', 'dragover'].forEach(function (ev) {
+    dz.addEventListener(ev, function (e) { e.preventDefault(); dz.classList.add('is-over'); });
+  });
+  ['dragleave', 'drop'].forEach(function (ev) {
+    dz.addEventListener(ev, function (e) { e.preventDefault(); dz.classList.remove('is-over'); });
+  });
+  dz.addEventListener('drop', function (e) {
+    var dt = e.dataTransfer;
+    if (dt && dt.files && dt.files.length) addFiles(dt.files);
+  });
+
+  document.getElementById('pdfm-list').addEventListener('click', function (e) {
+    var btn = e.target.closest ? e.target.closest('.t-icon-btn') : null;
+    if (!btn || btn.disabled) return;
+    var row = btn.closest('.t-row');
+    if (!row) return;
+    var id = parseInt(row.id.replace('pdfm-row-', ''), 10);
+    var act = btn.getAttribute('data-act');
+    if (act === 'rm') removeItem(id);
+    else if (act === 'up') moveItem(id, -1);
+    else if (act === 'dn') moveItem(id, 1);
+  });
+  document.getElementById('pdfm-add').addEventListener('click', function () { fileInput.click(); });
+  document.getElementById('pdfm-clear').addEventListener('click', clearAll);
+  document.getElementById('pdfm-gen').addEventListener('click', merge);
+
+  /* 语言切换时刷新动态文本 */
+  document.addEventListener('cataito-lang-change', function () {
+    renderList();
+  });
+})();
+});
+</script>
+
+<style>
+  /* 本页专属规则；通用组件已复用 /assets/css/site.css 的 .t-* 共享组件层 */
+  .pdfm-row-actions { display: flex; gap: 6px; flex: none; }
+  .pdfm-page-no { font-family: var(--font-mono); color: var(--accent); }
+  .pdfm-badnote { color: var(--text-3); }
+  .pdfm-thumb { display: flex; align-items: center; justify-content: center; color: var(--text-3); }
+  .t-row.is-bad .t-row-main { opacity: .55; }
+  .t-icon-btn:disabled { opacity: .3; cursor: default; }
+  body.pdfm-busy .t-row { opacity: .55; }
+  @media (max-width: 560px) {
+    .t-bar { flex-direction: column; align-items: stretch; }
+    .t-bar-actions { width: 100%; }
+    .t-bar-actions .t-btn { flex: 1; }
+  }
+</style>
+</body>
+</html>

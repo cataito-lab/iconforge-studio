@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PDF 拆分完全指南：按页拆分、提取、删页与旋转 | CATAITO</title>
+<meta name="title-zh" content="PDF 拆分完全指南：按页拆分、提取、删页与旋转 | CATAITO">
+<meta name="title-en" content="PDF Split Guide: Ranges, Extract, Remove & Rotate | CATAITO">
+<meta name="description" content="PDF 拆分完全指南：每 N 页拆一份、页码范围语法详解（1-3, 5, 8-10）、提取与删页的区别、批量旋转横向扫描件、输出文件命名与 ZIP 打包。附免费在线拆分工具，纯浏览器本地处理。">
+<meta name="theme-color" content="#ffffff">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="CATAITO 工具箱">
+<meta property="og:title" content="PDF 拆分完全指南">
+<meta property="og:description" content="页码范围怎么写、提取与删页的区别、批量旋转与输出命名。">
+<meta property="og:url" content="https://tools.cataito.com/guides/split-pdf-guide/">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:locale:alternate" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="PDF 拆分完全指南">
+<meta name="twitter:description" content="按页拆分、提取、删页与旋转的操作指南。">
+<link rel="canonical" href="https://tools.cataito.com/guides/split-pdf-guide/">
+<meta property="og:image" content="https://tools.cataito.com/assets/img/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:image" content="https://tools.cataito.com/assets/img/og-image.png">
+<link rel="icon" type="image/png" href="/assets/img/cataito-logo.png">
+<link rel="stylesheet" href="/assets/css/site.css">
+<script src="/assets/js/theme-init.js"></script>
+<script>
+  (function () {
+    try {
+      var l = localStorage.getItem('cataito-lang');
+      document.documentElement.setAttribute('lang', (l === 'en') ? 'en' : 'zh-CN');
+      if (l === 'en') document.documentElement.classList.add('lang-en');
+    } catch (e) {}
+  })();
+</script>
+<style>
+  .guide-wrap { max-width: 760px; margin: 0; }
+  .guide-meta { font-size: 13px; color: var(--text-3); margin: 0 0 6px; }
+  .page-sub { margin-bottom: 10px; }
+  .article { font-size: 15px; line-height: 1.85; color: var(--text); }
+  .article h2 {
+    font-size: 21px; font-weight: 700; letter-spacing: -.3px;
+    margin: 44px 0 14px; padding-top: 16px; border-top: 1px solid var(--border); color: var(--text);
+  }
+  .article h3 { font-size: 16.5px; font-weight: 650; margin: 26px 0 10px; color: var(--text); }
+  .article p { margin: 0 0 14px; color: var(--text-2); }
+  .article strong { color: var(--text); font-weight: 650; }
+  .article a { color: var(--accent); text-decoration: none; }
+  .article a:hover { text-decoration: underline; }
+  .article ul, .article ol { margin: 0 0 16px; padding-left: 22px; color: var(--text-2); }
+  .article li { margin: 6px 0; }
+  .article code {
+    font-family: var(--font-mono);
+    font-size: 13px; background: var(--card-2); border: 1px solid var(--border);
+    border-radius: 3px; padding: 1px 6px; color: var(--text);
+  }
+  .article pre {
+    background: var(--card-2); border: 1px solid var(--border); border-radius: var(--radius-sm);
+    padding: 14px 16px; margin: 14px 0 18px; overflow-x: auto;
+  }
+  .article pre code { background: none; border: none; padding: 0; font-size: 12.5px; line-height: 1.7; }
+  .article table {
+    width: 100%; border-collapse: collapse; margin: 18px 0 22px;
+    font-size: 13.5px; background: var(--card);
+    border: 1px solid var(--border); border-radius: var(--radius-sm); overflow: hidden;
+  }
+  .article th, .article td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--border); }
+  .article th { background: var(--card-2); color: var(--text); font-weight: 650; white-space: nowrap; }
+  .article td { color: var(--text-2); }
+  .article tr:last-child td { border-bottom: none; }
+  .toc {
+    background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 16px 18px; margin: 20px 0 8px; box-shadow: var(--shadow-sm);
+  }
+  .toc-title { font-size: 13px; font-weight: 650; color: var(--text); margin: 0 0 10px; }
+  .toc ol { margin: 0; padding-left: 20px; font-size: 13.5px; }
+  .toc li { margin: 5px 0; }
+  .toc a { color: var(--text-2); text-decoration: none; }
+  .toc a:hover { color: var(--accent); }
+  .cta-box {
+    background: linear-gradient(135deg, var(--accent-soft), var(--accent-soft-2));
+    border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent); border-radius: var(--radius);
+    padding: 20px 22px; margin: 34px 0 10px; text-align: center;
+  }
+  .cta-box .cta-title { font-size: 17px; font-weight: 700; color: var(--text); margin: 0 0 6px; }
+  .cta-box .cta-sub { font-size: 13.5px; color: var(--text-2); margin: 0 0 14px; }
+  .cta-btn {
+    display: inline-block; background: var(--accent); color: #fff; text-decoration: none;
+    font-size: 14px; font-weight: 600; padding: 11px 26px; border-radius: var(--radius-sm);
+    box-shadow: 0 6px 18px var(--accent-glow); transition: background .15s;
+  }
+  .cta-btn:hover { background: var(--accent-hover); }
+  .article a.cta-btn, .article .cta-btn { color: #fff; text-decoration: none; }
+  .article a.cta-btn:hover { color: #fff; text-decoration: none; background: var(--accent-hover); }
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "PDF 拆分完全指南：按页拆分、提取、删页与旋转",
+  "description": "详解每 N 页拆一份、页码范围语法（1-3, 5, 8-10）、提取与删页的区别、批量旋转，以及拆分文件的命名规则。",
+  "inLanguage": "zh-CN",
+  "datePublished": "2026-10-31",
+  "dateModified": "2026-10-31",
+  "author": { "@type": "Organization", "name": "CATAITO", "url": "https://tools.cataito.com/" },
+  "publisher": { "@type": "Organization", "name": "CATAITO 工具箱", "url": "https://tools.cataito.com/" },
+  "mainEntityOfPage": "https://tools.cataito.com/guides/split-pdf-guide/"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "页码范围「1-3, 5, 8-10」是什么意思？",
+      "acceptedAnswer": { "@type": "Answer", "text": "这是三段页码：第 1 到 3 页、第 5 页、第 8 到 10 页。逗号分隔每一段，单独一个数字表示一页，用连字符连接起止页表示区间。中文逗号、顿号、分号也能识别，页码从 1 开始。" }
+    },
+    {
+      "@type": "Question",
+      "name": "拆分后文件的内容和画质会变吗？",
+      "acceptedAnswer": { "@type": "Answer", "text": "不会。拆分是把页面原样搬进新文件，不重新编码、不缩放、不加水印，画质与内容与原文件完全一致。" }
+    },
+    {
+      "@type": "Question",
+      "name": "自定义范围的重叠页会重复出现吗？",
+      "acceptedAnswer": { "@type": "Answer", "text": "不会。重叠的区间会自动合并成一段（例如 1-3 与 2-5 合并为 1-5），保证每一页只出现在一个输出文件里，不会重复。" }
+    },
+    {
+      "@type": "Question",
+      "name": "怎么把一份 PDF 拆成单页？",
+      "acceptedAnswer": { "@type": "Answer", "text": "用「每 N 页一档」模式并把 N 设为 1，每一页各成一个文件，多个输出自动打包为 ZIP。文件很多时注意输出上限（本站为 200 个），超过请分批处理。" }
+    },
+    {
+      "@type": "Question",
+      "name": "「提取所选页」和「删页」有什么区别？",
+      "acceptedAnswer": { "@type": "Answer", "text": "方向相反的两个操作：提取是「只要这几页」——选中的页合成一个新文件；删页是「去掉这几页」——选中的页被丢弃，其余保留为一个文件。要留下的页少用提取，要删的页少用删页。" }
+    },
+    {
+      "@type": "Question",
+      "name": "旋转保存后打印方向也会转过来吗？",
+      "acceptedAnswer": { "@type": "Answer", "text": "会。旋转写入的是页面自身的 /Rotate 属性，所有 PDF 阅读器和打印机都会遵循它，保存后查看与打印都是转向后的方向。" }
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "首页", "item": "https://tools.cataito.com/" },
+    { "@type": "ListItem", "position": 2, "name": "使用指南", "item": "https://tools.cataito.com/guides/" },
+    { "@type": "ListItem", "position": 3, "name": "PDF 拆分完全指南", "item": "https://tools.cataito.com/guides/split-pdf-guide/" }
+  ]
+}
+</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7103529190038161" crossorigin="anonymous"></script>
+</head>
+<body>
+<div id="site-header"></div>
+
+<main class="site-main">
+  <div class="guide-wrap">
+    <nav class="breadcrumb"><a href="/" data-i18n="crumb_home">首页</a><span class="sep">/</span><a href="/guides/" data-i18n="nav_guides">使用指南</a><span class="sep">/</span><span data-i18n="gd_psp_short">PDF 拆分指南</span></nav>
+    <p class="guide-meta"><span data-i18n="gd_published">发布于</span> 2026-10-31 · CATAITO</p>
+    <h1 class="page-h1" data-i18n="gd_psp_h1">PDF 拆分完全指南：按页拆分、提取、删页与旋转</h1>
+    <p class="page-sub" data-i18n="gd_psp_sub">一份 300 页的扫描件要按章节发给三个人、一大份合同只需要其中两页、扫描歪了要整体转向——这些都是「按页处理」。本文讲清每 N 页拆一份、页码范围的写法、提取与删页的区别、批量旋转，以及拆分文件的命名规则。附免费在线拆分工具，纯浏览器本地处理。</p>
+
+    <div class="article lb-zh">
+      <div class="toc">
+        <p class="toc-title">目录</p>
+        <ol>
+          <li><a href="#modes">四种按页操作怎么选</a></li>
+          <li><a href="#syntax">页码范围语法详解</a></li>
+          <li><a href="#extract">提取与删页：方向相反的两件事</a></li>
+          <li><a href="#rotate">批量旋转：歪的扫描件救回来</a></li>
+          <li><a href="#naming">输出命名与 ZIP 打包</a></li>
+          <li><a href="#faq">常见问题</a></li>
+        </ol>
+      </div>
+
+      <h2 id="modes">四种按页操作怎么选</h2>
+      <p>「拆分 PDF」其实是一个操作族，按你要的结果选模式：</p>
+      <table>
+        <thead><tr><th>模式</th><th>输入 → 输出</th><th>典型场景</th></tr></thead>
+        <tbody>
+          <tr><td>每 N 页一档</td><td>1 个文件 → 多个等长文件</td><td>按固定厚度分发：300 页按 50 页一份发给 6 个人</td></tr>
+          <tr><td>自定义范围</td><td>1 个文件 → 多个不等长文件</td><td>按章节切：1-12 章一份、13-20 章一份</td></tr>
+          <tr><td>提取所选页</td><td>1 个文件 → 1 个新文件</td><td>只要合同里的签字页和金额页</td></tr>
+          <tr><td>删页</td><td>1 个文件 → 1 个瘦身后文件</td><td>去掉空白页、重复页、作废页</td></tr>
+          <tr><td>旋转</td><td>1 个文件 → 1 个转向后文件</td><td>横向扫描的页面批量转向</td></tr>
+        </tbody>
+      </table>
+      <p>前两种「一拆多」的输出自动打包成 ZIP；后三种「一改一」的结果直接下载单个 PDF。</p>
+
+      <h2 id="syntax">页码范围语法详解</h2>
+      <p>「自定义范围」「提取」「删页」「旋转」共用同一套页码语法：</p>
+      <pre><code>2          → 第 2 页
+1-3        → 第 1 到 3 页
+1-3, 5     → 第 1-3 页 + 第 5 页
+1-3, 5, 8-10 → 三段：1-3、5、8-10</code></pre>
+      <p>规则要点：</p>
+      <ul>
+        <li><strong>逗号分隔</strong>：英文逗号、中文逗号、顿号、分号都能识别，随手输入不会报错。</li>
+        <li><strong>页码从 1 开始</strong>：第 1 页就是 1，与阅读器页码栏一致。</li>
+        <li><strong>区间必须从小到大</strong>：<code>5-2</code> 不合法；工具会直接指出是哪一段写错了。</li>
+        <li><strong>超出总页数会报错</strong>：10 页的文件里写 <code>15</code> 会被拒绝，防止拿到空文件。</li>
+      </ul>
+      <p>「自定义范围」模式还有一条特殊规则：<strong>重叠区间自动合并</strong>——<code>1-3</code> 与 <code>2-5</code> 合并为 <code>1-5</code>，保证每页只出现在一个输出文件里，不会重复出现在两份文件中。</p>
+
+      <h2 id="extract">提取与删页：方向相反的两件事</h2>
+      <p>这两个模式容易混淆，一句话区分：<strong>提取是「只要这几页」，删页是「去掉这几页」</strong>。</p>
+      <ul>
+        <li>300 页合同只要签字页（第 4 页）和报价页（第 40 页）→ <strong>提取</strong> <code>4, 40</code>，得到 2 页的新文件。</li>
+        <li>300 页报告要删掉空白页（第 11、87 页）→ <strong>删页</strong> <code>11, 87</code>，得到 298 页的文件。</li>
+      </ul>
+      <p>经验法则：<strong>要留下的页少用提取，要删的页少用删页</strong>——输入的页码越少越不容易出错。</p>
+
+      <h2 id="rotate">批量旋转：歪的扫描件救回来</h2>
+      <p>扫描仪进纸方向不对、手机拍照扫描横竖混排，都会产生「横躺」的页面。旋转模式两个参数：</p>
+      <ul>
+        <li><strong>哪些页</strong>：留空就是全部页；也可以只写 <code>3-7</code> 这类局部范围。</li>
+        <li><strong>角度</strong>：顺时针 90° / 180° / 270°。横躺 90° 的页面转 270°（即逆时针 90°）就正了。</li>
+      </ul>
+      <p>旋转写入的是页面自身的 <code>/Rotate</code> 属性——所有阅读器与打印机都会遵循，<strong>保存后查看和打印都是转向后的方向</strong>，不用再手动设置。</p>
+
+      <h2 id="naming">输出命名与 ZIP 打包</h2>
+      <p>输出文件的命名规则一目了然：</p>
+      <table>
+        <thead><tr><th>操作</th><th>输出文件名（原文件为 报告.pdf）</th></tr></thead>
+        <tbody>
+          <tr><td>每 N 页 / 自定义范围</td><td><code>报告-1-3.pdf</code>、<code>报告-4-6.pdf</code>、<code>报告-5.pdf</code>（单页不含区间）</td></tr>
+          <tr><td>提取</td><td><code>报告-extracted.pdf</code></td></tr>
+          <tr><td>删页</td><td><code>报告-trimmed.pdf</code></td></tr>
+          <tr><td>旋转</td><td><code>报告-rotated.pdf</code></td></tr>
+        </tbody>
+      </table>
+      <p>多个输出会自动打包成一个 <code>报告-split.zip</code>，解压后按文件名排序即可直接使用。全部处理在浏览器本地完成，文件不经过网络。</p>
+
+      <h2 id="faq">常见问题</h2>
+      <div class="faq-item"><p class="faq-q">Q：页码范围「1-3, 5, 8-10」是什么意思？</p><p class="faq-a">A：三段页码：1 到 3 页、第 5 页、8 到 10 页。逗号分隔，单数字是一页，连字符是区间，页码从 1 开始。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：拆分后文件的内容和画质会变吗？</p><p class="faq-a">A：不会。拆分只搬运页面，不重编码、不缩放，画质与内容与原文件一致。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：自定义范围的重叠页会重复出现吗？</p><p class="faq-a">A：不会。重叠区间自动合并（1-3 与 2-5 → 1-5），每页只出现在一个输出文件里。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：怎么把一份 PDF 拆成单页？</p><p class="faq-a">A：「每 N 页一档」把 N 设为 1，输出自动打包 ZIP；注意输出上限（本站 200 个）。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：「提取所选页」和「删页」有什么区别？</p><p class="faq-a">A：提取是「只要这几页」，删页是「去掉这几页」。留下的少用提取，要删的少用删页。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：旋转保存后打印方向也会转过来吗？</p><p class="faq-a">A：会。旋转写入页面 /Rotate 属性，阅读器与打印机都会遵循。</p></div>
+
+      <div class="cta-box">
+        <p class="cta-title">免费在线拆分 PDF</p>
+        <p class="cta-sub">每 N 页 / 自定义范围 / 提取 / 删页 / 旋转 · 多输出自动 ZIP · 纯浏览器本地处理</p>
+        <a class="cta-btn" href="/pdf/split/">打开拆分 PDF 工具 →</a>
+      </div>
+
+      <div class="t-guide-links">
+        <a class="t-guide-link" href="/guides/merge-pdf-guide/">
+          <p class="t-guide-link-title" data-i18n="gd_pmg_short">PDF 合并指南</p>
+          <p class="t-guide-link-desc" data-i18n="gd_pmg_card_desc">哪些文件适合合并成一份、怎么决定先后顺序、超大合并失败怎么办，以及云上传合并工具的隐私风险。</p>
+        </a>
+        <a class="t-guide-link" href="/guides/compress-pdf-guide/">
+          <p class="t-guide-link-title" data-i18n="gd_pcd_short">PDF 压缩指南</p>
+          <p class="t-guide-link-desc" data-i18n="gd_pcd_card_desc">PDF 为什么会那么大（扫描图、嵌入字体）、三档强度的取舍、哪些文件压不动，以及云端压缩与本地压缩的隐私差别。</p>
+        </a>
+        <a class="t-guide-link" href="/guides/jpg-to-pdf-guide/">
+          <p class="t-guide-link-title" data-i18n="gd_i2p_short">JPG 转 PDF 指南</p>
+          <p class="t-guide-link-desc" data-i18n="gd_i2p_card_desc">哪些场景必须用 PDF、页面尺寸与边距选择、画质与体积取舍、多图排序技巧，以及云上传工具的隐私风险。</p>
+        </a>
+      </div>
+    </div>
+
+    <div class="article lb-en">
+      <div class="toc">
+        <p class="toc-title">Table of Contents</p>
+        <ol>
+          <li><a href="#modes-en">Choosing an Operation</a></li>
+          <li><a href="#syntax-en">Range Syntax in Detail</a></li>
+          <li><a href="#extract-en">Extract vs Remove</a></li>
+          <li><a href="#rotate-en">Bulk Rotation for Sideways Scans</a></li>
+          <li><a href="#naming-en">Output Naming &amp; ZIP</a></li>
+          <li><a href="#faq-en">FAQ</a></li>
+        </ol>
+      </div>
+
+      <h2 id="modes-en">Choosing an Operation</h2>
+      <p>"Split PDF" is really a family of page-level operations. Pick by the result you want:</p>
+      <table>
+        <thead><tr><th>Mode</th><th>Input → Output</th><th>Typical use</th></tr></thead>
+        <tbody>
+          <tr><td>Every N pages</td><td>1 file → several equal files</td><td>Fixed-size distribution: 300 pages split by 50 for six people</td></tr>
+          <tr><td>Custom ranges</td><td>1 file → several unequal files</td><td>By chapter: pages 1-12 in one file, 13-20 in another</td></tr>
+          <tr><td>Extract pages</td><td>1 file → 1 new file</td><td>You only need the signature page and the pricing page</td></tr>
+          <tr><td>Remove pages</td><td>1 file → 1 slimmer file</td><td>Drop blank, duplicate, or voided pages</td></tr>
+          <tr><td>Rotate</td><td>1 file → 1 turned file</td><td>Batch-fix landscape-scanned pages</td></tr>
+        </tbody>
+      </table>
+      <p>The first two "one-to-many" modes zip their outputs automatically; the three "one-to-one" edits download a single PDF directly.</p>
+
+      <h2 id="syntax-en">Range Syntax in Detail</h2>
+      <p>"Custom ranges", "extract", "remove", and "rotate" share one page-range syntax:</p>
+      <pre><code>2          → page 2
+1-3        → pages 1 to 3
+1-3, 5     → pages 1-3 plus page 5
+1-3, 5, 8-10 → three parts: 1-3, 5, 8-10</code></pre>
+      <p>The rules:</p>
+      <ul>
+        <li><strong>Comma-separated</strong>: English commas, Chinese commas, enumeration commas, and semicolons all work.</li>
+        <li><strong>Pages start at 1</strong>: matching the page field in your PDF reader.</li>
+        <li><strong>Ranges go small-to-large</strong>: <code>5-2</code> is invalid; the tool points at the offending part.</li>
+        <li><strong>Out-of-range fails loudly</strong>: page 15 in a 10-page file is rejected, so you never get an empty file.</li>
+      </ul>
+      <p>One special rule in "Custom ranges": <strong>overlapping ranges merge</strong> — <code>1-3</code> and <code>2-5</code> become <code>1-5</code>, so every page lands in exactly one output file.</p>
+
+      <h2 id="extract-en">Extract vs Remove</h2>
+      <p>These two are easily confused. One line: <strong>extract means "keep only these pages"; remove means "drop these pages"</strong>.</p>
+      <ul>
+        <li>From a 300-page contract you need the signature page (4) and pricing page (40) → <strong>extract</strong> <code>4, 40</code> for a 2-page file.</li>
+        <li>A 300-page report has blank pages (11, 87) → <strong>remove</strong> <code>11, 87</code> for a 298-page file.</li>
+      </ul>
+      <p>Rule of thumb: <strong>few pages to keep → extract; few pages to drop → remove</strong> — shorter input means fewer mistakes.</p>
+
+      <h2 id="rotate-en">Bulk Rotation for Sideways Scans</h2>
+      <p>Wrong feeder direction or mixed phone-scan orientation leaves pages lying on their side. Rotation takes two parameters:</p>
+      <ul>
+        <li><strong>Which pages</strong>: empty means all; or a partial range like <code>3-7</code>.</li>
+        <li><strong>Angle</strong>: clockwise 90° / 180° / 270°. A page lying 90° sideways becomes upright with 270° (counterclockwise 90°).</li>
+      </ul>
+      <p>Rotation writes the page's own <code>/Rotate</code> attribute — every reader and printer honors it, so <strong>viewing and printing both come out turned</strong>, with no manual settings afterwards.</p>
+
+      <h2 id="naming-en">Output Naming &amp; ZIP</h2>
+      <p>Output names are self-explanatory (source file: report.pdf):</p>
+      <table>
+        <thead><tr><th>Operation</th><th>Output names</th></tr></thead>
+        <tbody>
+          <tr><td>Every N / custom ranges</td><td><code>report-1-3.pdf</code>, <code>report-4-6.pdf</code>, <code>report-5.pdf</code> (single pages omit the range)</td></tr>
+          <tr><td>Extract</td><td><code>report-extracted.pdf</code></td></tr>
+          <tr><td>Remove</td><td><code>report-trimmed.pdf</code></td></tr>
+          <tr><td>Rotate</td><td><code>report-rotated.pdf</code></td></tr>
+        </tbody>
+      </table>
+      <p>Multiple outputs are zipped into <code>report-split.zip</code>; unzip and the files sort themselves. Everything runs locally in your browser — files never touch the network.</p>
+
+      <h2 id="faq-en">FAQ</h2>
+      <div class="faq-item"><p class="faq-q">Q: What does "1-3, 5, 8-10" mean?</p><p class="faq-a">A: Three parts: pages 1-3, page 5, pages 8-10. Commas separate parts; a single number is one page; a hyphen joins a range; pages start at 1.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: Does splitting change content or quality?</p><p class="faq-a">A: No. Splitting only moves pages — no re-encoding, no scaling, identical content and quality.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: Do overlapping ranges duplicate pages?</p><p class="faq-a">A: No. Overlaps merge automatically (1-3 and 2-5 → 1-5), so each page lands in exactly one output.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: How do I split a PDF into single pages?</p><p class="faq-a">A: Set N to 1 in "Every N pages"; outputs are zipped automatically. Watch the output cap (200 here).</p></div>
+      <div class="faq-item"><p class="faq-q">Q: Extract vs remove — which one?</p><p class="faq-a">A: Extract keeps only the pages you list; remove drops them. Few pages to keep → extract; few to drop → remove.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: Will printing respect the rotation?</p><p class="faq-a">A: Yes. Rotation is written to the page's /Rotate attribute, which readers and printers both honor.</p></div>
+
+      <div class="cta-box">
+        <p class="cta-title">Free Online PDF Splitter</p>
+        <p class="cta-sub">Every N pages / ranges / extract / remove / rotate · Auto-zip · 100% browser-local</p>
+        <a class="cta-btn" href="/pdf/split/">Open Split PDF Tool →</a>
+      </div>
+
+      <div class="t-guide-links">
+        <a class="t-guide-link" href="/guides/merge-pdf-guide/">
+          <p class="t-guide-link-title" data-i18n="gd_pmg_short">PDF Merge Guide</p>
+          <p class="t-guide-link-desc" data-i18n="gd_pmg_card_desc">Which files belong together, how to decide the order, what to do when a huge merge fails, and upload-tool privacy risks.</p>
+        </a>
+        <a class="t-guide-link" href="/guides/compress-pdf-guide/">
+          <p class="t-guide-link-title" data-i18n="gd_pcd_short">PDF Compress Guide</p>
+          <p class="t-guide-link-desc" data-i18n="gd_pcd_card_desc">Why PDFs get huge (scans, embedded fonts), choosing a strength level, files that barely compress, and cloud vs local privacy.</p>
+        </a>
+        <a class="t-guide-link" href="/guides/jpg-to-pdf-guide/">
+          <p class="t-guide-link-title" data-i18n="gd_i2p_short">JPG to PDF Guide</p>
+          <p class="t-guide-link-desc" data-i18n="gd_i2p_card_desc">When PDF is the right format, choosing page size and margins, the quality/size trade-off, ordering tips, and upload-tool privacy risks.</p>
+        </a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<div id="site-footer"></div>
+<script src="/assets/js/site.js" defer></script>
+</body>
+</html>

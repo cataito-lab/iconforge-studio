@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PDF 压缩完全指南：文件为什么会大、怎么压才有效 | CATAITO</title>
+<meta name="title-zh" content="PDF 压缩完全指南：文件为什么会大、怎么压才有效 | CATAITO">
+<meta name="title-en" content="PDF Compress Guide: Why Files Get Huge and What Shrinks Them | CATAITO">
+<meta name="description" content="PDF 压缩完全指南：体积构成（扫描图、嵌入字体、冗余结构）、三档压缩强度的取舍、哪些文件压不动，以及云端压缩与本地压缩的隐私差别。附免费在线 PDF 压缩工具，纯浏览器本地处理。">
+<meta name="theme-color" content="#ffffff">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="CATAITO 工具箱">
+<meta property="og:title" content="PDF 压缩完全指南">
+<meta property="og:description" content="PDF 的体积都花在哪了、三档强度怎么选、哪些文件压不动，以及隐私考量。">
+<meta property="og:url" content="https://tools.cataito.com/guides/compress-pdf-guide/">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:locale:alternate" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="PDF 压缩完全指南">
+<meta name="twitter:description" content="为什么 PDF 那么大、怎么压才有效、隐私考量。">
+<link rel="canonical" href="https://tools.cataito.com/guides/compress-pdf-guide/">
+<meta property="og:image" content="https://tools.cataito.com/assets/img/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:image" content="https://tools.cataito.com/assets/img/og-image.png">
+<link rel="icon" type="image/png" href="/assets/img/cataito-logo.png">
+<link rel="stylesheet" href="/assets/css/site.css">
+<script src="/assets/js/theme-init.js"></script>
+<script>
+  (function () {
+    try {
+      var l = localStorage.getItem('cataito-lang');
+      document.documentElement.setAttribute('lang', (l === 'en') ? 'en' : 'zh-CN');
+      if (l === 'en') document.documentElement.classList.add('lang-en');
+    } catch (e) {}
+  })();
+</script>
+<style>
+  .guide-wrap { max-width: 760px; margin: 0; }
+  .guide-meta { font-size: 13px; color: var(--text-3); margin: 0 0 6px; }
+  .page-sub { margin-bottom: 10px; }
+  .article { font-size: 15px; line-height: 1.85; color: var(--text); }
+  .article h2 {
+    font-size: 21px; font-weight: 700; letter-spacing: -.3px;
+    margin: 44px 0 14px; padding-top: 16px; border-top: 1px solid var(--border); color: var(--text);
+  }
+  .article h3 { font-size: 16.5px; font-weight: 650; margin: 26px 0 10px; color: var(--text); }
+  .article p { margin: 0 0 14px; color: var(--text-2); }
+  .article strong { color: var(--text); font-weight: 650; }
+  .article a { color: var(--accent); text-decoration: none; }
+  .article a:hover { text-decoration: underline; }
+  .article ul, .article ol { margin: 0 0 16px; padding-left: 22px; color: var(--text-2); }
+  .article li { margin: 6px 0; }
+  .article code {
+    font-family: var(--font-mono);
+    font-size: 13px; background: var(--card-2); border: 1px solid var(--border);
+    border-radius: 3px; padding: 1px 6px; color: var(--text);
+  }
+  .article pre {
+    background: var(--card-2); border: 1px solid var(--border); border-radius: var(--radius-sm);
+    padding: 14px 16px; margin: 14px 0 18px; overflow-x: auto;
+  }
+  .article pre code { background: none; border: none; padding: 0; font-size: 12.5px; line-height: 1.7; }
+  .article table {
+    width: 100%; border-collapse: collapse; margin: 18px 0 22px;
+    font-size: 13.5px; background: var(--card);
+    border: 1px solid var(--border); border-radius: var(--radius-sm); overflow: hidden;
+  }
+  .article th, .article td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--border); }
+  .article th { background: var(--card-2); color: var(--text); font-weight: 650; white-space: nowrap; }
+  .article td { color: var(--text-2); }
+  .article tr:last-child td { border-bottom: none; }
+  .toc {
+    background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 16px 18px; margin: 20px 0 8px; box-shadow: var(--shadow-sm);
+  }
+  .toc-title { font-size: 13px; font-weight: 650; color: var(--text); margin: 0 0 10px; }
+  .toc ol { margin: 0; padding-left: 20px; font-size: 13.5px; }
+  .toc li { margin: 5px 0; }
+  .toc a { color: var(--text-2); text-decoration: none; }
+  .toc a:hover { color: var(--accent); }
+  .cta-box {
+    background: linear-gradient(135deg, var(--accent-soft), var(--accent-soft-2));
+    border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent); border-radius: var(--radius);
+    padding: 20px 22px; margin: 34px 0 10px; text-align: center;
+  }
+  .cta-box .cta-title { font-size: 17px; font-weight: 700; color: var(--text); margin: 0 0 6px; }
+  .cta-box .cta-sub { font-size: 13.5px; color: var(--text-2); margin: 0 0 14px; }
+  .cta-btn {
+    display: inline-block; background: var(--accent); color: #fff; text-decoration: none;
+    font-size: 14px; font-weight: 600; padding: 11px 26px; border-radius: var(--radius-sm);
+    box-shadow: 0 6px 18px var(--accent-glow); transition: background .15s;
+  }
+  .cta-btn:hover { background: var(--accent-hover); }
+  .article a.cta-btn, .article .cta-btn { color: #fff; text-decoration: none; }
+  .article a.cta-btn:hover { color: #fff; text-decoration: none; background: var(--accent-hover); }
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "PDF 压缩完全指南：文件为什么会大、怎么压才有效",
+  "description": "详解 PDF 的体积构成（扫描图、嵌入字体、冗余结构）、三档压缩强度的取舍、哪些文件压不动，以及云端压缩与本地压缩的隐私差别。",
+  "inLanguage": "zh-CN",
+  "datePublished": "2026-10-31",
+  "dateModified": "2026-10-31",
+  "author": { "@type": "Organization", "name": "CATAITO", "url": "https://tools.cataito.com/" },
+  "publisher": { "@type": "Organization", "name": "CATAITO 工具箱", "url": "https://tools.cataito.com/" },
+  "mainEntityOfPage": "https://tools.cataito.com/guides/compress-pdf-guide/"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "为什么我的 PDF 压缩后没变小？",
+      "acceptedAnswer": { "@type": "Answer", "text": "PDF 压缩主要针对内嵌图片。纯文字 PDF、已被优化过的 PDF，或图片以 PNG/Flate 等无损格式存储的文件，可压缩空间本来就小。带大量扫描图的 PDF 压缩效果最明显。" }
+    },
+    {
+      "@type": "Question",
+      "name": "压缩会影响文字清晰度吗？",
+      "acceptedAnswer": { "@type": "Answer", "text": "不会。文字与矢量图形是按原始数据保留的，压缩只重新编码内嵌的位图图片。任何强度档位下，文字始终和原文件一样清晰可选中、可检索。" }
+    },
+    {
+      "@type": "Question",
+      "name": "压缩强度选哪一档？",
+      "acceptedAnswer": { "@type": "Answer", "text": "网上传输（邮件附件、聊天工具）选「强力」；不确定就选默认的「均衡」；要打印或存档、对画质有要求选「轻微」。三档都只动图片，文字不受影响。" }
+    },
+    {
+      "@type": "Question",
+      "name": "压缩后的文件还能恢复吗？",
+      "acceptedAnswer": { "@type": "Answer", "text": "不能。图片降采样丢弃的像素无法找回，所以请始终保留原始文件。建议把压缩结果另存，原文件留在原地，确认效果后再处理原文件。" }
+    },
+    {
+      "@type": "Question",
+      "name": "带密码的加密 PDF 能压缩吗？",
+      "acceptedAnswer": { "@type": "Answer", "text": "不能。带打开密码的 PDF 无法被解析，工具会标记为跳过。请先用密码在 PDF 阅读器中打开并另存为无密码副本，再回来压缩。" }
+    },
+    {
+      "@type": "Question",
+      "name": "把文件上传到在线压缩工具安全吗？",
+      "acceptedAnswer": { "@type": "Answer", "text": "主流在线压缩器会把文件上传到服务器处理，扫描件、合同、档案类敏感文件不建议上传。纯浏览器本地压缩的工具文件不离开设备，断网也能用，对敏感材料更稳妥。" }
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "首页", "item": "https://tools.cataito.com/" },
+    { "@type": "ListItem", "position": 2, "name": "使用指南", "item": "https://tools.cataito.com/guides/" },
+    { "@type": "ListItem", "position": 3, "name": "PDF 压缩完全指南", "item": "https://tools.cataito.com/guides/compress-pdf-guide/" }
+  ]
+}
+</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7103529190038161" crossorigin="anonymous"></script>
+</head>
+<body>
+<div id="site-header"></div>
+
+<main class="site-main">
+  <div class="guide-wrap">
+    <nav class="breadcrumb"><a href="/" data-i18n="crumb_home">首页</a><span class="sep">/</span><a href="/guides/" data-i18n="nav_guides">使用指南</a><span class="sep">/</span><span data-i18n="gd_pcd_short">PDF 压缩指南</span></nav>
+    <p class="guide-meta"><span data-i18n="gd_published">发布于</span> 2026-10-31 · CATAITO</p>
+    <h1 class="page-h1" data-i18n="gd_pcd_h1">PDF 压缩完全指南：文件为什么会大、怎么压才有效</h1>
+    <p class="page-sub" data-i18n="gd_pcd_sub">一份扫描版合同 40MB 发不出去、一份幻灯片导出的 PDF 比原稿还大——先弄清体积都在哪，再决定怎么压。本文讲清 PDF 的体积构成（扫描图、嵌入字体、冗余结构）、三档压缩强度的取舍、哪些文件压不动，以及云端压缩与本地压缩的隐私差别。附免费在线 PDF 压缩工具，纯浏览器本地处理。</p>
+
+    <div class="article lb-zh">
+      <div class="toc">
+        <p class="toc-title">目录</p>
+        <ol>
+          <li><a href="#why">PDF 的体积都花在哪了</a></li>
+          <li><a href="#what-works">什么压缩是有效的</a></li>
+          <li><a href="#levels">三档强度怎么选</a></li>
+          <li><a href="#limits">哪些文件压不动</a></li>
+          <li><a href="#cloud">云端压缩 vs 本地压缩</a></li>
+          <li><a href="#faq">常见问题</a></li>
+        </ol>
+      </div>
+
+      <h2 id="why">PDF 的体积都花在哪了</h2>
+      <p>一个 PDF 动辄几十 MB，字节通常花在三个地方：</p>
+      <ul>
+        <li><strong>扫描图 / 内嵌照片（大头）</strong>：扫描仪默认 300 DPI 全彩输出，一页 A4 就是一张 2500×3500 像素的照片；100 页的扫描件等于 100 张高清照片，几十 MB 很正常。这是压缩空间最大的部分。</li>
+        <li><strong>嵌入字体</strong>：为了让没有安装该字体的电脑也能正确显示，PDF 会把用到的字体文件整个嵌进去，中文字体一套就能占 5–20MB。这部分通常不该动（动了会乱码）。</li>
+        <li><strong>冗余结构</strong>：编辑器反复保存会留下未引用的对象、旧版本页面数据。重新组织文件结构（对象流重存）能白捡一些体积。</li>
+      </ul>
+      <p>所以压缩 PDF 的正确思路是：<strong>结构重存打底，重点重编码内嵌图片，不动文字与字体</strong>。</p>
+
+      <h2 id="what-works">什么压缩是有效的</h2>
+      <p>有效的压缩几乎都围绕「图片重编码」：</p>
+      <ol class="t-steps">
+        <li><strong>降采样</strong>：屏幕阅读根本用不着 300 DPI——把长边 3500px 的扫描图降到 1600–2400px，肉眼在屏幕上几乎看不出差别，像素数量却少了 60–80%。</li>
+        <li><strong>JPEG 重编码</strong>：质量 60–88 的 JPEG 对扫描图和照片来说损失极小，体积却能再砍一半以上。</li>
+        <li><strong>结构重存</strong>：把对象重新组织成紧凑的跨引用流，对反复保存过的老文件有额外收益。</li>
+      </ol>
+      <p>本站的 <a href="/pdf/compress/">压缩 PDF 工具</a>把这三步做在一起：重建文件结构 + 找出内嵌 JPEG 大图按所选强度降采样重编码。一条原则是<strong>宁可不压也不弄坏</strong>——带透明通道（SMask）的图、非 JPEG 格式的图、过小的图一律不碰；只有真的变小了才替换回文件。</p>
+
+      <h2 id="levels">三档强度怎么选</h2>
+      <table>
+        <thead><tr><th>档位</th><th>参数</th><th>适合</th></tr></thead>
+        <tbody>
+          <tr><td>强力</td><td>长边 1600px · 质量 60</td><td>邮件附件、聊天工具等有体积限制的传输</td></tr>
+          <tr><td>均衡（默认）</td><td>长边 2400px · 质量 75</td><td>大多数场景：屏幕阅读清晰、体积明显下降</td></tr>
+          <tr><td>轻微</td><td>不缩放 · 质量 88</td><td>打印、存档等对画质有要求的场景</td></tr>
+        </tbody>
+      </table>
+      <p>三档都<strong>只动图片</strong>：文字与矢量内容按原始数据保留，可选中、可检索、可复制，任何档位下都不受影响。</p>
+
+      <h2 id="limits">哪些文件压不动</h2>
+      <p>压缩不是万能的，四类文件收益很小：</p>
+      <ul>
+        <li><strong>纯文字 PDF</strong>：没有大图可压，文字数据本身已经很小。</li>
+        <li><strong>已经优化过的 PDF</strong>：其他工具压过一遍的文件，二次压缩空间有限。</li>
+        <li><strong>图片是非 JPEG 格式</strong>（PNG / Flate 无损存储）的文件：本工具为保安全只重编码 JPEG 图片，无损格式的图不碰。</li>
+        <li><strong>体积主要来自嵌入字体的文件</strong>：动字体会乱码，属于「不该压的部分」。</li>
+      </ul>
+      <p>所以正常的工具会<strong>如实标注</strong>：压完没变小的文件显示「收益有限」而不是假装成功。遇到这类文件，出路是换格式或重新生成（比如从源头重新导出更小的 PDF），而不是反复硬压。</p>
+
+      <h2 id="cloud">云端压缩 vs 本地压缩</h2>
+      <p>主流在线压缩器（iLovePDF、Smallpdf 等）把文件上传到服务器压缩后再给下载链接。压缩的对象往往是<strong>扫描合同、档案、医疗单据</strong>这类敏感文件，值得三思：文件离开设备，你无法控制服务器端副本的留存周期，上传大文件也慢。</p>
+      <p>另一条路线是<strong>纯浏览器本地压缩</strong>：解析、重编码、重组全部在浏览器里完成，文件不经过网络，断网也能用。本站的 <a href="/pdf/compress/">压缩 PDF 工具</a>就是这一路线，处理多少文件都不上传、不排队、不限次。</p>
+
+      <h2 id="faq">常见问题</h2>
+      <div class="faq-item"><p class="faq-q">Q：为什么我的 PDF 压缩后没变小？</p><p class="faq-a">A：压缩主要针对内嵌图片。纯文字、已优化过、或图片是无损格式的文件本来就没什么可压的，工具会如实标注。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：压缩会影响文字清晰度吗？</p><p class="faq-a">A：不会。文字与矢量按原始数据保留，只重编码位图图片；文字始终可选中、可检索。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：压缩强度选哪一档？</p><p class="faq-a">A：网传选强力，犹豫选默认均衡，打印存档选轻微。三档都只动图片。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：压缩后的文件还能恢复吗？</p><p class="faq-a">A：不能，降采样丢弃的像素找不回来。请保留原始文件，确认压缩结果没问题后再处理原文件。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：带密码的加密 PDF 能压缩吗？</p><p class="faq-a">A：不能，会被标记跳过。先在阅读器里另存为无密码副本再压缩。</p></div>
+      <div class="faq-item"><p class="faq-q">Q：把文件上传到在线压缩工具安全吗？</p><p class="faq-a">A：主流工具会上传到服务器处理，敏感扫描件不建议。纯浏览器本地压缩文件不离开设备，更稳妥。</p></div>
+
+      <div class="cta-box">
+        <p class="cta-title">免费在线压缩 PDF</p>
+        <p class="cta-sub">三档强度 · 前后体积对比 · 文字不受影响 · 纯浏览器本地处理</p>
+        <a class="cta-btn" href="/pdf/compress/">打开压缩 PDF 工具 →</a>
+      </div>
+
+      <div class="t-guide-links">
+        <a class="t-guide-link" href="/guides/merge-pdf-guide/">
+          <p class="t-guide-link-title" data-i18n="gd_pmg_short">PDF 合并指南</p>
+          <p class="t-guide-link-desc" data-i18n="gd_pmg_card_desc">哪些文件适合合并成一份、怎么决定先后顺序、超大合并失败怎么办，以及云上传合并工具的隐私风险。</p>
+        </a>
+        <a class="t-guide-link" href="/guides/split-pdf-guide/">
+          <p class="t-guide-link-title" data-i18n="gd_psp_short">PDF 拆分指南</p>
+          <p class="t-guide-link-desc" data-i18n="gd_psp_card_desc">每 N 页拆一份、按页码范围拆、提取或删除指定页、批量旋转——页码范围语法的写法与拆分文件的命名规则。</p>
+        </a>
+        <a class="t-guide-link" href="/guides/jpg-to-pdf-guide/">
+          <p class="t-guide-link-title" data-i18n="gd_i2p_short">JPG 转 PDF 指南</p>
+          <p class="t-guide-link-desc" data-i18n="gd_i2p_card_desc">哪些场景必须用 PDF、页面尺寸与边距选择、画质与体积取舍、多图排序技巧，以及云上传工具的隐私风险。</p>
+        </a>
+      </div>
+    </div>
+
+    <div class="article lb-en">
+      <div class="toc">
+        <p class="toc-title">Table of Contents</p>
+        <ol>
+          <li><a href="#why-en">Where the Bytes Live</a></li>
+          <li><a href="#what-works-en">What Actually Shrinks Files</a></li>
+          <li><a href="#levels-en">Choosing a Strength Level</a></li>
+          <li><a href="#limits-en">Files That Barely Compress</a></li>
+          <li><a href="#cloud-en">Cloud vs Local Compression</a></li>
+          <li><a href="#faq-en">FAQ</a></li>
+        </ol>
+      </div>
+
+      <h2 id="why-en">Where the Bytes Live</h2>
+      <p>When a PDF weighs tens of megabytes, the bytes usually live in three places:</p>
+      <ul>
+        <li><strong>Scans and embedded photos (the big one)</strong>: scanners default to full-color 300 DPI — one A4 page is a 2500×3500-pixel photo; a 100-page scan is 100 of them. This is where compression wins the most.</li>
+        <li><strong>Embedded fonts</strong>: so text renders on machines without the font installed, PDFs embed the font files — a CJK font alone can weigh 5–20MB. This part usually shouldn't be touched (touching it breaks text).</li>
+        <li><strong>Redundant structure</strong>: repeated editor saves leave unreferenced objects and stale page data behind; reorganizing the file (object-stream rewrite) picks up some free savings.</li>
+      </ul>
+      <p>So the right mental model: <strong>structure rewrite as the baseline, re-encode embedded images as the lever, never touch text or fonts</strong>.</p>
+
+      <h2 id="what-works-en">What Actually Shrinks Files</h2>
+      <p>Effective compression is almost all about re-encoding images:</p>
+      <ol class="t-steps">
+        <li><strong>Downsampling</strong>: on-screen reading never needs 300 DPI — dropping a 3500px-long-edge scan to 1600–2400px is visually indistinguishable while cutting 60–80% of pixels.</li>
+        <li><strong>JPEG re-encoding</strong>: quality 60–88 costs scans and photos almost nothing visually while halving size again.</li>
+        <li><strong>Structure rewrite</strong>: re-packing objects into compact cross-reference streams gives older, repeatedly-saved files an extra shave.</li>
+      </ol>
+      <p>Our <a href="/pdf/compress/">Compress PDF tool</a> does all three: rebuild the file structure, find large embedded JPEGs, and downsample + re-encode them at the chosen strength. One principle governs it: <strong>never compress at the cost of breaking the file</strong> — images with transparency (SMask), non-JPEG images, and tiny images are left alone, and a replacement only lands if it's actually smaller.</p>
+
+      <h2 id="levels-en">Choosing a Strength Level</h2>
+      <table>
+        <thead><tr><th>Level</th><th>Parameters</th><th>Best for</th></tr></thead>
+        <tbody>
+          <tr><td>Strong</td><td>1600px long edge · quality 60</td><td>Size-limited transfers: email attachments, chat apps</td></tr>
+          <tr><td>Balanced (default)</td><td>2400px · quality 75</td><td>Most cases: crisp on screen, clearly smaller</td></tr>
+          <tr><td>Light</td><td>No resampling · quality 88</td><td>Print and archive — quality-sensitive work</td></tr>
+        </tbody>
+      </table>
+      <p>All three levels <strong>only touch images</strong>: text and vectors are kept as original data — selectable, searchable, copyable — unaffected at any strength.</p>
+
+      <h2 id="limits-en">Files That Barely Compress</h2>
+      <p>Compression isn't magic. Four kinds of files have little to gain:</p>
+      <ul>
+        <li><strong>Text-only PDFs</strong>: no big images to squeeze; text data is already tiny.</li>
+        <li><strong>Already-optimized PDFs</strong>: files another tool has compressed once have limited room left.</li>
+        <li><strong>Files whose images are non-JPEG</strong> (PNG / Flate lossless): to stay safe this tool only re-encodes JPEG images and leaves lossless ones alone.</li>
+        <li><strong>Files where fonts dominate</strong>: tampering with embedded fonts corrupts text — that's the "shouldn't compress" part.</li>
+      </ul>
+      <p>A trustworthy tool <strong>reports honestly</strong>: files that didn't shrink are marked "little to gain" instead of pretending success. For those, the way out is a different format or re-exporting from the source — not brute-forcing another pass.</p>
+
+      <h2 id="cloud-en">Cloud vs Local Compression</h2>
+      <p>Mainstream online compressors (iLovePDF, Smallpdf, etc.) upload your file to their servers and hand back a download link. What gets compressed is often exactly the sensitive kind — <strong>scanned contracts, archives, medical bills</strong> — so think twice: the file leaves your device, you don't control the server-side copy's lifetime, and big uploads are slow.</p>
+      <p>The alternative is <strong>in-browser local compression</strong>: parsing, re-encoding, and restructuring all happen in your browser with no network involved, offline included. Our <a href="/pdf/compress/">Compress PDF tool</a> works this way — no uploads, no queues, no limits, however many files you run.</p>
+
+      <h2 id="faq-en">FAQ</h2>
+      <div class="faq-item"><p class="faq-q">Q: Why didn't my PDF get smaller?</p><p class="faq-a">A: Compression targets embedded images. Text-only, already-optimized, or lossless-image files have little room — the tool marks them honestly.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: Does compression affect text sharpness?</p><p class="faq-a">A: No. Text and vectors are kept as original data; only bitmaps are re-encoded. Text stays selectable and searchable.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: Which strength level?</p><p class="faq-a">A: Strong for sharing, Balanced (default) when unsure, Light for print and archive. Images only, at every level.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: Can a compressed file be restored?</p><p class="faq-a">A: No — downsampled pixels are gone. Keep the original; only replace it after checking the result.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: Can I compress password-protected PDFs?</p><p class="faq-a">A: No — flagged and skipped. Save an unprotected copy from your PDF reader first.</p></div>
+      <div class="faq-item"><p class="faq-q">Q: Is it safe to upload files to an online compressor?</p><p class="faq-a">A: Mainstream tools upload to their servers. For sensitive scans, prefer a tool that compresses entirely in your browser.</p></div>
+
+      <div class="cta-box">
+        <p class="cta-title">Free Online PDF Compressor</p>
+        <p class="cta-sub">Three strength levels · Before/after sizes · Text untouched · 100% browser-local</p>
+        <a class="cta-btn" href="/pdf/compress/">Open Compress PDF Tool →</a>
+      </div>
+
+      <div class="t-guide-links">
+        <a class="t-guide-link" href="/guides/merge-pdf-guide/">
+          <p class="t-guide-link-title" data-i18n="gd_pmg_short">PDF Merge Guide</p>
+          <p class="t-guide-link-desc" data-i18n="gd_pmg_card_desc">Which files belong together, how to decide the order, what to do when a huge merge fails, and upload-tool privacy risks.</p>
+        </a>
+        <a class="t-guide-link" href="/guides/split-pdf-guide/">
+          <p class="t-guide-link-title" data-i18n="gd_psp_short">PDF Split Guide</p>
+          <p class="t-guide-link-desc" data-i18n="gd_psp_card_desc">Split every N pages or by ranges, extract or remove selected pages, rotate in bulk — range syntax and output naming.</p>
+        </a>
+        <a class="t-guide-link" href="/guides/jpg-to-pdf-guide/">
+          <p class="t-guide-link-title" data-i18n="gd_i2p_short">JPG to PDF Guide</p>
+          <p class="t-guide-link-desc" data-i18n="gd_i2p_card_desc">When PDF is the right format, choosing page size and margins, the quality/size trade-off, ordering tips, and upload-tool privacy risks.</p>
+        </a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<div id="site-footer"></div>
+<script src="/assets/js/site.js" defer></script>
+</body>
+</html>
